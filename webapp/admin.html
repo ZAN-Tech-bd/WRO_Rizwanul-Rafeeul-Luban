@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Museum — Admin</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="name" data-i18n="appName">Smart Museum</span>
+      <span class="tag" data-i18n="tagline">Robots Meet Culture</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="badge admin" data-i18n="adminBadge">Admin</span>
+      <span id="langBox"></span>
+    </div>
+  </header>
+
+  <main>
+    <div id="emergencySlot"></div>
+
+    <section class="stat-row">
+      <div class="stat"><div class="num" id="approvedNum">0</div><div class="lbl" data-i18n="visitorCount">Visitors inside</div></div>
+      <div class="stat"><div class="num" id="pendingNum">0</div><div class="lbl" data-i18n="waitingCount">Waiting</div></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="pendingTitle">Pending approvals</h2>
+      <div id="pending"></div>
+    </section>
+
+    <section class="card robot-card">
+      <h2><span class="dot" id="robotDot"></span><span data-i18n="robotStatus">Robot status</span></h2>
+      <div class="station" id="robotStation">—</div>
+      <div style="margin-top:10px;">
+        <button class="secondary" onclick="Hub.advanceRobot(); refresh()">▶ Advance robot (test)</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="healthTitle">Artifact health</h2>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="thArtifact">Artifact</th>
+            <th data-i18n="thTemp">Temp °C</th>
+            <th data-i18n="thHum">Humidity %</th>
+            <th data-i18n="thGas">Gas</th>
+            <th data-i18n="thStatus">Status</th>
+          </tr>
+        </thead>
+        <tbody id="healthBody"></tbody>
+      </table>
+      <p class="muted" style="margin-top:8px;">Temp/Hum/Gas are mock values now. In Phase 6 they arrive live from each artifact's DHT11 + MQ-135 over ESP-NOW.</p>
+    </section>
+
+    <section class="card">
+      <button id="emergBtn" class="danger block" onclick="toggleEmergency()"></button>
+    </section>
+
+    <p class="footer">Open <a href="index.html">index.html</a> in another tab to play a visitor.</p>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/hub.js"></script>
+  <script>
+    // classify one artifact's reading into good / watch / alert
+    function classify(temp, hum, gas) {
+      let s = "good";
+      if (temp > 31 || hum > 70 || gas > 500) s = "alert";
+      else if (temp >= 28 || hum <= 35 || gas >= 300) s = "watch";
+      return s;
+    }
+
+    function renderPending() {
+      const list = Hub.listPending();
+      const box = document.getElementById("pending");
+      if (!list.length) {
+        box.innerHTML = `<p class="muted" data-i18n="noPending">${t("noPending")}</p>`;
+        return;
+      }
+      box.innerHTML = list.map((r) => `
+        <div class="pending-item">
+          <span class="who">${r.id}</span>
+          <span class="actions">
+            <button class="green" onclick="doApprove('${r.id}')">${t("approve")}</button>
+            <button class="danger" onclick="doDeny('${r.id}')">${t("deny")}</button>
+          </span>
+        </div>`).join("");
+    }
+
+    function doApprove(id) { Hub.approve(id); refresh(); }
+    function doDeny(id)    { Hub.deny(id); refresh(); }
+
+    function renderHealth(health) {
+      const lang = getLang();
+      document.getElementById("healthBody").innerHTML = health.map((h) => {
+        const a = artifactByIdLocal(h.id);
+        const s = classify(h.temp, h.hum, h.gas);
+        return `
+          <tr>
+            <td>${a.emoji} ${a.name[lang]}</td>
+            <td>${h.temp}</td>
+            <td>${h.hum}</td>
+            <td>${h.gas}</td>
+            <td><span class="pill ${s}">${t(s)}</span></td>
+          </tr>`;
+      }).join("");
+    }
+
+    function artifactByIdLocal(id) { return ARTIFACTS.find((a) => a.id === id) || ARTIFACTS[0]; }
+
+    function renderEmergencyButton(on) {
+      const btn = document.getElementById("emergBtn");
+      btn.textContent = on ? t("emergencyOn") : t("emergencyOff");
+      btn.className = (on ? "red" : "danger") + " block";
+    }
+
+    function refresh() {
+      const state = Hub.getState();
+      document.getElementById("approvedNum").textContent = state.approved;
+      document.getElementById("pendingNum").textContent = state.pending;
+
+      const slot = document.getElementById("emergencySlot");
+      slot.innerHTML = state.emergency
+        ? `<div class="emergency-banner">${t("emergencyMsg")}</div>` : "";
+
+      const lang = getLang();
+      const cur = artifactByIdLocal(state.robot.station);
+      document.getElementById("robotStation").textContent = cur.emoji + " " + cur.name[lang];
+      document.getElementById("robotDot").className =
+        "dot" + (state.robot.status === "moving" ? " moving" : "");
+
+      renderPending();
+      renderHealth(state.health);
+      renderEmergencyButton(state.emergency);
+    }
+
+    function toggleEmergency() {
+      const on = !Hub.getState().emergency;
+      Hub.setEmergency(on);
+      refresh();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      mountLangToggle("langBox");
+      applyLang();
+      document.addEventListener("langchange", refresh);
+      Hub.subscribe(refresh); // live updates as visitors check in / sensors report
+    });
+  </script>
+</body>
+</html>

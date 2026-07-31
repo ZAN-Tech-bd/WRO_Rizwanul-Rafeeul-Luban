@@ -1,0 +1,191 @@
+/* =====================================================================
+   style.css — Smart Museum web app theme
+   Phone-first, museum colours (sand / terracotta / ink). Safe to tweak.
+   ===================================================================== */
+
+:root {
+  --sand:      #f6efe2;
+  --paper:     #fffdf8;
+  --ink:       #2b211a;
+  --terracotta:#c1502e;
+  --terracotta-dark:#9c3d22;
+  --gold:      #b8860b;
+  --green:     #2e7d32;
+  --yellow:    #c98a00;
+  --red:       #c62828;
+  --muted:     #7a6f63;
+  --line:      #e4d8c4;
+  --shadow:    0 2px 10px rgba(43, 33, 26, .08);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--sand);
+  color: var(--ink);
+  font-family: "Segoe UI", "Noto Sans Bengali", system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px 16px 64px;
+}
+
+/* ---------- top bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+.brand { display: flex; flex-direction: column; line-height: 1.15; }
+.brand .name { font-weight: 800; font-size: 1.1rem; color: var(--terracotta-dark); }
+.brand .tag  { font-size: .72rem; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+
+.badge {
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--sand);
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+.badge.visitor { background: #e8f0ff; color: #1a4fa0; border-color: #cfe0ff; }
+.badge.admin   { background: #fdecea; color: var(--red); border-color: #f7c8c2; }
+
+/* ---------- language toggle ---------- */
+.lang-toggle {
+  font-weight: 700;
+  font-size: .8rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--terracotta);
+  background: #fff;
+  color: var(--terracotta-dark);
+  cursor: pointer;
+}
+.lang-toggle:active { transform: scale(.96); }
+
+/* ---------- cards ---------- */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  margin: 14px 0;
+  box-shadow: var(--shadow);
+}
+.card h2 { margin: 0 0 10px; font-size: 1.05rem; }
+
+.muted { color: var(--muted); font-size: .85rem; }
+
+/* ---------- buttons ---------- */
+button, .btn {
+  font: inherit;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #fff;
+  background: var(--terracotta);
+}
+button:active, .btn:active { transform: scale(.98); }
+button.secondary { background: #fff; color: var(--terracotta-dark); border: 1px solid var(--terracotta); }
+button.green  { background: var(--green); }
+button.red    { background: var(--red); }
+button.danger { background: var(--red); }
+button.block  { width: 100%; }
+button:disabled { opacity: .5; cursor: default; }
+
+/* ---------- gate / check-in ---------- */
+.gate-hero { text-align: center; padding: 26px 16px; }
+.gate-hero .big { font-size: 3rem; }
+.scan-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.scan-row button { flex: 1 1 160px; }
+
+.spinner {
+  width: 26px; height: 26px;
+  border: 3px solid var(--line);
+  border-top-color: var(--terracotta);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 14px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.status-line { text-align: center; font-weight: 700; }
+.status-line.ok  { color: var(--green); }
+.status-line.bad { color: var(--red); }
+
+/* ---------- robot card ---------- */
+.robot-card .station { font-size: 1.3rem; font-weight: 800; color: var(--terracotta-dark); }
+.robot-card .narration { color: var(--muted); margin-top: 4px; }
+.dot { display:inline-block; width:10px; height:10px; border-radius:50%; background: var(--green); margin-right:6px; vertical-align: middle; }
+.dot.moving { background: var(--yellow); animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: .3; } }
+
+/* ---------- artifacts grid ---------- */
+.artifact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.artifact {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+.artifact .emoji { font-size: 1.8rem; }
+.artifact h3 { margin: 6px 0 2px; font-size: 1rem; }
+.artifact .display { font-size: .78rem; color: var(--gold); font-weight: 700; }
+.artifact p { margin: 8px 0 0; font-size: .9rem; }
+
+/* ---------- admin tables / lists ---------- */
+.stat-row { display: flex; gap: 12px; }
+.stat {
+  flex: 1; background: var(--paper); border: 1px solid var(--line);
+  border-radius: 12px; padding: 12px; text-align: center; box-shadow: var(--shadow);
+}
+.stat .num { font-size: 1.8rem; font-weight: 800; color: var(--terracotta-dark); }
+.stat .lbl { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; }
+
+.pill { font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.pill.good  { background: #e6f4ea; color: var(--green); }
+.pill.watch { background: #fff4e0; color: var(--yellow); }
+.pill.alert { background: #fdecea; color: var(--red); }
+
+.pending-item {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line);
+}
+.pending-item .who { font-weight: 700; }
+.pending-item .actions { display: flex; gap: 8px; }
+.pending-item button { padding: 8px 12px; font-size: .85rem; }
+
+/* ---------- emergency banner ---------- */
+.emergency-banner {
+  background: var(--red); color: #fff; font-weight: 800;
+  padding: 14px; border-radius: 12px; text-align: center;
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink { 50% { opacity: .55; } }
+
+.footer { text-align: center; color: var(--muted); font-size: .78rem; margin-top: 30px; }

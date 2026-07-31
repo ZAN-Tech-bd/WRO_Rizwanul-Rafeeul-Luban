@@ -1,0 +1,2 @@
+# For tools/generate_qr.py
+qrcode[pil]

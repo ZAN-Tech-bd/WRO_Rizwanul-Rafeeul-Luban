@@ -1,0 +1,27 @@
+# Local secrets and credentials (never commit these)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa
+secrets.json
+docker-compose.override.yml
+
+# Arduino / ESP32 build outputs
+build/
+*.bin
+*.elf
+*.map
+*.hex
+
+# PlatformIO outputs (if used for automated checks later)
+.pio/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Generated QR images (produced by tools/generate_qr.py)
+tools/qr_output/
+
