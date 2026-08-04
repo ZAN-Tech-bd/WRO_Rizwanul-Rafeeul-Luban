@@ -26,6 +26,12 @@ struct MuseumState {
   CheckInReq  requests[24];
   uint8_t     reqCount    = 0;
   uint16_t    approvedCount = 0;
+
+  // Latest photo pushed by the ESP-CAM over HTTP (/api/image/upload -> /last.jpg)
+  uint32_t    imageMs      = 0;   // millis() of the last received image
+  uint16_t    imageBytes   = 0;   // JPEG byte count
+  uint8_t     imageStation = 0;   // 1..N (0 = unknown)
+  uint16_t    imageSeq     = 0;   // bumped on every upload (dashboard reload cue)
 };
 
 extern MuseumState      gState;

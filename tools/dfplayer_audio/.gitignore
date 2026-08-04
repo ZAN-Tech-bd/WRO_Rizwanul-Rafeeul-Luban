@@ -1,0 +1,5 @@
+# Keep the staging dir clean: only the generator script, the four docs,
+# SHA256SUMS, and the 14 numeric mp3s are meant to be tracked.
+# The generator's intermediate segment wavs live in .gen_tmp and must never
+# be committed or copied to the SD card.
+.gen_tmp/

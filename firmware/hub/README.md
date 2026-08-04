@@ -17,9 +17,36 @@ peripheral (via Adafruit_NeoPixel), so WiFi traffic does **not** glitch them.
 |------|-----------|-------|
 | WS2812 strip DIN | **GPIO15** | one LED per station (7). VCC→5V, GND→GND |
 | Active buzzer **+** | **GPIO4** | **−** → GND. If it draws >20 mA, drive via a 2N2222 transistor instead of direct GPIO |
+| microSD **MISO** | **GPIO19** | camera photo storage (VSPI) — **optional** |
+| microSD **MOSI** | **GPIO23** | |
+| microSD **SCK** | **GPIO18** | |
+| microSD **CS** | **GPIO5** | |
+| microSD **VCC** | 5V | only for modules with an onboard AMS1117-3.3 + level shifter. A **bare** breakout must be fed 3.3V |
 | Power | 5V (USB or buck) | keep logic and motor rails separate on the *robot*; the hub is low-power |
 
 Pins are defined in [`include/config.h`](include/config.h:1) — change them there if needed.
+
+The microSD is genuinely optional: without a card the Hub keeps the photo
+gallery in LittleFS instead, and the dashboard behaves identically. The boot log
+says which one is in use (`[photos] backend=sd` or `backend=littlefs`).
+
+## Camera photos
+
+Every JPEG the ESP32-CAM uploads is stored as its own file under `/photos` on
+whichever backend mounted:
+
+```
+/photos/IMG_00001_S1.JPG      seq 00001, station 1 (jamdani)
+/photos/IMG_00002_S3.JPG      seq 00002, station 3 (liberation)
+```
+
+The sequence number and station live in the file name, so both survive a reboot
+without an index file. The Hub keeps the newest `GALLERY_MAX_PHOTOS` (default
+12, see `include/config.h`) and deletes older ones automatically — the card
+never fills up during a demo.
+
+The admin dashboard shows the newest photo large, the previous ones as a
+thumbnail strip, and opens any of them full-size on tap.
 
 ## Build & flash (PlatformIO)
 
@@ -66,14 +93,18 @@ Methods 2 and 3 both reach the same waiting → admin-approve → dashboard flow
 | Method + path | Returns |
 |---|---|
 | `GET /` , `/visitor.html`, `/admin.html`, `/css/…`, `/js/…` | the web app files (from LittleFS) |
-| `GET /api/state` | `{robot:{station,status}, emergency, approved, pending, health:[{id,temp,hum,gas}], requests:[{id,status}]}` |
+| `GET /api/state` | `{robot:{station,status}, emergency, approved, pending, health:[…], requests:[…], image:{bytes,station,seq,count,store}}` |
 | `POST /api/checkin` | `{id}` — visitor requests entry (in-page scanner) |
 | `GET /api/enter` | native-camera scan: creates a request, redirects to `/index.html?autoid=<id>` |
 | `GET /api/request?id=` | `{id,status}` (pending/approved/denied) |
 | `POST /api/approve?id=` · `POST /api/deny?id=` | admin decision |
 | `POST /api/emergency?on=1\|0` | toggle emergency |
 | `POST /api/robot/advance` | **test**: nudge the robot to the next station (no hardware needed) |
-| `POST /api/image/upload` · `GET /api/image` | ESP32-CAM photo (CAM phase) |
+| `POST /api/image/upload?station=N` | ESP32-CAM photo, `multipart/form-data` field `image` |
+| `GET /api/image` | the newest photo (never cached) |
+| `GET /api/image?seq=N` | one specific photo. A seq is written once and never rewritten, so this response is cacheable forever — that is what stops the thumbnail strip re-downloading on every poll |
+| `GET /api/gallery` | `{backend,count,max,newest,photos:[{seq,bytes,stationId,station,age}]}`, newest first. `age` is ms since arrival, or `-1` for photos recovered after a reboot |
+| `POST /api/gallery/clear` | delete every stored photo |
 
 ## Test it without any other hardware
 

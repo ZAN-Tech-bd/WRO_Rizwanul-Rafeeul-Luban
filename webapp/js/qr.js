@@ -7,11 +7,9 @@
 //    so live streaming would be blocked. A file/camera <input> works over
 //    plain HTTP — on a phone it still opens the camera to snap the QR.
 //
-//  Offline requirement:
-//    Download jsQR (a small free library) once and put it at:
-//        webapp/js/vendor/jsQR.js
-//    It is loaded by index.html. Without it, visitors use "Simulate".
-//    Get it from: https://github.com/cozmo/jsQR  (use jsQR.js, the plain file)
+//  Offline decoder:
+//    jsQR 1.4.0 is vendored at webapp/js/vendor/jsQR.js and loaded by
+//    index.html, so image decoding works without internet access.
 // =====================================================================
 
 const Qr = (() => {
@@ -20,26 +18,55 @@ const Qr = (() => {
     return typeof window.jsQR === "function";
   }
 
-  // Decode a single image File. Calls onResult(text) if a QR is found,
-  // otherwise onResult(null).
+  // Decode one camera/gallery image. Calls onResult(text, null) if a QR is
+  // found, otherwise onResult(null, error). Large phone photos are scaled down
+  // first so decoding stays responsive and does not allocate a huge canvas.
   function decodeFile(file, onResult) {
-    if (!available()) { onResult(null); return; }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onload = () => {
+    if (!available()) {
+      onResult(null, new Error("QR decoder is unavailable"));
+      return;
+    }
+    if (!file) {
+      onResult(null, new Error("No image was selected"));
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    const img = new Image();
+    let finished = false;
+
+    const finish = (text, error = null) => {
+      if (finished) return;
+      finished = true;
+      URL.revokeObjectURL(objectUrl);
+      onResult(text, error);
+    };
+
+    img.onload = () => {
+      try {
+        const sourceWidth = img.naturalWidth || img.width;
+        const sourceHeight = img.naturalHeight || img.height;
+        if (!sourceWidth || !sourceHeight) throw new Error("Image has no dimensions");
+
+        const maxDimension = 1600;
+        const scale = Math.min(1, maxDimension / Math.max(sourceWidth, sourceHeight));
         const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
+        canvas.width = Math.max(1, Math.round(sourceWidth * scale));
+        canvas.height = Math.max(1, Math.round(sourceHeight * scale));
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        if (!ctx) throw new Error("Canvas is unavailable");
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const code = window.jsQR(imageData.data, imageData.width, imageData.height);
-        onResult(code ? code.data : null);
-      };
-      img.src = e.target.result;
+        const code = window.jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: "attemptBoth"
+        });
+        finish(code ? code.data : null, code ? null : new Error("No QR code found"));
+      } catch (error) {
+        finish(null, error);
+      }
     };
-    reader.readAsDataURL(file);
+    img.onerror = () => finish(null, new Error("The selected image could not be opened"));
+    img.src = objectUrl;
   }
 
   // Fake a scan for demos / when no camera or library is present.

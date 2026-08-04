@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Museum — Check-in</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="name" data-i18n="appName">Smart Museum</span>
+      <span class="tag" data-i18n="tagline">Robots Meet Culture</span>
+    </div>
+    <div id="langBox"></div>
+  </header>
+
+  <main>
+    <section class="card gate-hero">
+      <div class="big">🎟️</div>
+      <h2 data-i18n="gateTitle">Visitor Check-in</h2>
+      <p class="muted" data-i18n="gateHint">Scan the QR code at the gate to request entry.</p>
+
+      <div class="scan-row" style="margin-top:16px;">
+        <label class="btn block camera-button">
+          <span data-i18n="gateScan">Scan QR</span>
+          <!-- The real input covers this button so mobile browsers receive a direct,
+               trusted tap. Do not add `hidden` or trigger it with JavaScript. -->
+          <input type="file" id="qrfile" accept="image/*" capture="environment" aria-label="Scan QR code" />
+        </label>
+        <button class="secondary block" id="simBtn" data-i18n="gateSimulate">Simulate scan (demo)</button>
+      </div>
+
+      <div id="statusArea" style="margin-top:8px;"></div>
+    </section>
+
+    <p class="footer">WRO 2026 · Robots Meet Culture · Elementary</p>
+  </main>
+
+  <!-- offline QR decoder: download jsQR.js into js/vendor/ (see README). Missing = use Simulate. -->
+  <script src="js/vendor/jsQR.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/hub.js"></script>
+  <script src="js/qr.js"></script>
+  <script>
+    const VALID_CHECKIN_VALUES = new Set([
+      "MUSEUM-ENTRY-2026",
+      "http://192.168.4.1/api/enter"
+    ]);
+    let myId = null;
+    let polling = false;
+
+    function setStatus(cls, text) {
+      const area = document.getElementById("statusArea");
+      area.innerHTML = "";
+      if (cls === "waiting") {
+        const spin = document.createElement("div"); spin.className = "spinner"; area.appendChild(spin);
+      }
+      const line = document.createElement("div");
+      line.className = "status-line " + (cls === "waiting" ? "" : cls);
+      line.textContent = text;
+      area.appendChild(line);
+    }
+
+    async function beginCheckIn() {
+      setStatus("waiting", t("gateWaiting"));
+      myId = await Hub.requestCheckIn();   // POST /api/checkin on the Hub
+      if (!polling) { polling = true; poll(); }
+    }
+
+    async function poll() {
+      const r = await Hub.getRequest(myId);  // GET /api/request?id=...
+      if (r && r.status === "approved") {
+        setStatus("ok", t("gateApproved"));
+        setTimeout(() => { window.location = "visitor.html?id=" + myId; }, 800);
+        return;
+      }
+      if (r && r.status === "denied") {
+        setStatus("bad", t("gateDenied"));
+        polling = false;
+        return;
+      }
+      setTimeout(poll, 800);
+    }
+
+    // Real QR scan: the camera-backed file input works on plain HTTP, unlike
+    // getUserMedia(), which phone browsers normally require HTTPS to use.
+    document.getElementById("qrfile").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!Qr.available()) {
+        setStatus("bad", t("gateScannerUnavailable"));
+        e.target.value = "";
+        return;
+      }
+
+      setStatus("waiting", t("gateReading"));
+      Qr.decodeFile(file, (text, error) => {
+        e.target.value = ""; // allow taking another photo of the same QR
+        if (error || !text) {
+          setStatus("bad", t("gateUnreadable"));
+          return;
+        }
+        if (!VALID_CHECKIN_VALUES.has(text.trim())) {
+          setStatus("bad", t("gateInvalid"));
+          return;
+        }
+        beginCheckIn();
+      });
+    });
+
+    // simulate (demo / no camera)
+    document.getElementById("simBtn").addEventListener("click", () => {
+      Qr.simulate();
+      beginCheckIn();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      mountLangToggle("langBox");
+      applyLang();
+
+      // Native-camera scan path: /api/enter created the request and redirected
+      // here with ?autoid=<id>. Skip the scan, go straight to waiting + polling.
+      const autoId = new URLSearchParams(location.search).get("autoid");
+      if (autoId) {
+        myId = autoId;
+        setStatus("waiting", t("gateWaiting"));
+        polling = true;
+        poll();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Museum — Admin</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="name" data-i18n="appName">Smart Museum</span>
+      <span class="tag" data-i18n="tagline">Robots Meet Culture</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="badge admin" data-i18n="adminBadge">Admin</span>
+      <span id="langBox"></span>
+    </div>
+  </header>
+
+  <main>
+    <div id="emergencySlot"></div>
+
+    <section class="stat-row">
+      <div class="stat"><div class="num" id="approvedNum">0</div><div class="lbl" data-i18n="visitorCount">Visitors inside</div></div>
+      <div class="stat"><div class="num" id="pendingNum">0</div><div class="lbl" data-i18n="waitingCount">Waiting</div></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="pendingTitle">Pending approvals</h2>
+      <div id="pending"></div>
+    </section>
+
+    <section class="card robot-card">
+      <h2><span class="dot" id="robotDot"></span><span data-i18n="robotStatus">Robot status</span></h2>
+      <div class="station" id="robotStation">—</div>
+      <div style="margin-top:10px;">
+        <button class="secondary" onclick="Hub.advanceRobot(); refresh()">▶ Advance robot (test)</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📷 <span data-i18n="cameraTitle">Camera</span>
+        <span id="imgBadge" class="muted" style="font-size:.8rem; font-weight:normal;"></span></h2>
+
+      <p id="imgHint" class="muted" data-i18n="cameraWaiting">Waiting for the ESP-CAM to send a photo…</p>
+
+      <figure id="shotLatest" class="shot-latest" hidden>
+        <img id="latestImg" alt="Latest ESP-CAM photo" />
+        <figcaption>
+          <span class="shot-when" id="latestWhen"></span>
+          <span class="shot-meta" id="latestMeta"></span>
+        </figcaption>
+      </figure>
+
+      <div id="shotStripWrap" hidden>
+        <h3 class="shot-heading" data-i18n="cameraEarlier">Earlier shots</h3>
+        <div id="shotStrip" class="shot-strip"></div>
+      </div>
+
+      <p class="shot-foot">
+        <span class="muted" id="shotStore"></span>
+        <button class="secondary shot-clear" id="shotClear" hidden
+                onclick="clearShots()" data-i18n="cameraClear">Clear photos</button>
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="healthTitle">Artifact health</h2>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="thArtifact">Artifact</th>
+            <th data-i18n="thTemp">Temp °C</th>
+            <th data-i18n="thHum">Humidity %</th>
+            <th data-i18n="thGas">Gas</th>
+            <th data-i18n="thStatus">Status</th>
+          </tr>
+        </thead>
+        <tbody id="healthBody"></tbody>
+      </table>
+      <p class="muted" style="margin-top:8px;">Temp/Hum/Gas are mock values now. In Phase 6 they arrive live from each artifact's DHT11 + MQ-135 over ESP-NOW.</p>
+    </section>
+
+    <section class="card">
+      <button id="emergBtn" class="danger block" onclick="toggleEmergency()"></button>
+    </section>
+
+    <p class="footer">Open <a href="index.html">index.html</a> in another tab to play a visitor.</p>
+  </main>
+
+  <!-- Full-size photo viewer. Hidden until a photo is tapped. -->
+  <div id="lightbox" class="lightbox" hidden onclick="closeShot(event)">
+    <button class="lightbox-close" onclick="closeShot()" aria-label="Close">✕</button>
+    <button class="lightbox-nav prev" onclick="stepShot(event, 1)" aria-label="Older">‹</button>
+    <img id="lightboxImg" alt="ESP-CAM photo" />
+    <button class="lightbox-nav next" onclick="stepShot(event, -1)" aria-label="Newer">›</button>
+    <p class="lightbox-cap" id="lightboxCap"></p>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/hub.js"></script>
+  <script>
+    // classify one artifact's reading into good / watch / alert
+    function classify(temp, hum, gas) {
+      let s = "good";
+      if (temp > 31 || hum > 70 || gas > 500) s = "alert";
+      else if (temp >= 28 || hum <= 35 || gas >= 300) s = "watch";
+      return s;
+    }
+
+    function renderPending() {
+      const list = Hub.listPending();
+      const box = document.getElementById("pending");
+      if (!list.length) {
+        box.innerHTML = `<p class="muted" data-i18n="noPending">${t("noPending")}</p>`;
+        return;
+      }
+      box.innerHTML = list.map((r) => `
+        <div class="pending-item">
+          <span class="who">${r.id}</span>
+          <span class="actions">
+            <button class="green" onclick="doApprove('${r.id}')">${t("approve")}</button>
+            <button class="danger" onclick="doDeny('${r.id}')">${t("deny")}</button>
+          </span>
+        </div>`).join("");
+    }
+
+    function doApprove(id) { Hub.approve(id); refresh(); }
+    function doDeny(id)    { Hub.deny(id); refresh(); }
+
+    function renderHealth(health) {
+      const lang = getLang();
+      document.getElementById("healthBody").innerHTML = health.map((h) => {
+        const a = artifactByIdLocal(h.id);
+        const s = classify(h.temp, h.hum, h.gas);
+        return `
+          <tr>
+            <td>${a.emoji} ${a.name[lang]}</td>
+            <td>${h.temp}</td>
+            <td>${h.hum}</td>
+            <td>${h.gas}</td>
+            <td><span class="pill ${s}">${t(s)}</span></td>
+          </tr>`;
+      }).join("");
+    }
+
+    function artifactByIdLocal(id) { return ARTIFACTS.find((a) => a.id === id) || ARTIFACTS[0]; }
+
+    function renderEmergencyButton(on) {
+      const btn = document.getElementById("emergBtn");
+      btn.textContent = on ? t("emergencyOn") : t("emergencyOff");
+      btn.className = (on ? "red" : "danger") + " block";
+    }
+
+    // ---- ESP-CAM gallery ------------------------------------------------
+    // /api/state carries only the newest seq (it is polled every 1.5 s and must
+    // stay small). The full photo list is fetched from /api/gallery only when
+    // that seq actually changes, so idle polling costs one tiny JSON.
+    let shots = [];         // newest first, straight from /api/gallery
+    let shotSeq = -1;       // newest seq the strip was built for
+    let galleryBusy = false;
+
+    function shotLabel(p) {
+      const a = p.station ? ARTIFACTS.find((x) => x.id === p.station) : null;
+      const where = a ? a.emoji + " " + a.name[getLang()] : "";
+      if (p.age < 0) return where || t("cameraEarlierBoot");
+      const secs = Math.round(p.age / 1000);
+      const when = secs < 60 ? secs + "s " + t("cameraAgo")
+                             : Math.round(secs / 60) + "m " + t("cameraAgo");
+      return where ? where + " · " + when : when;
+    }
+
+    function renderGallery() {
+      const hint    = document.getElementById("imgHint");
+      const latest  = document.getElementById("shotLatest");
+      const stripW  = document.getElementById("shotStripWrap");
+      const clearBt = document.getElementById("shotClear");
+
+      if (!shots.length) {
+        hint.hidden = false; latest.hidden = true; stripW.hidden = true;
+        clearBt.hidden = true;
+        return;
+      }
+      hint.hidden = true;
+      latest.hidden = false;
+      clearBt.hidden = false;
+
+      const top = shots[0];
+      const img = document.getElementById("latestImg");
+      const url = Hub.photoUrl(top.seq);
+      if (img.getAttribute("src") !== url) img.src = url;   // only reload on change
+      img.onclick = () => openShot(0);
+      document.getElementById("latestWhen").textContent = shotLabel(top);
+      document.getElementById("latestMeta").textContent = "#" + top.seq + " · " + top.bytes + " B";
+
+      const older = shots.slice(1);
+      stripW.hidden = older.length === 0;
+      document.getElementById("shotStrip").innerHTML = older.map((p, i) => `
+        <button class="shot-thumb" onclick="openShot(${i + 1})" title="#${p.seq}">
+          <img src="${Hub.photoUrl(p.seq)}" alt="Photo ${p.seq}" loading="lazy" />
+          <span class="shot-thumb-cap">#${p.seq}</span>
+        </button>`).join("");
+    }
+
+    async function refreshGallery(force) {
+      if (galleryBusy) return;
+      galleryBusy = true;
+      try {
+        const g = await Hub.getGallery();
+        shots = g.photos || [];
+        shotSeq = g.newest || 0;
+        document.getElementById("shotStore").textContent =
+          g.count ? `${g.count}/${g.max} ${t("cameraStored")} · ${g.backend}` : "";
+        renderGallery();
+      } catch (e) { /* Hub busy — the next state poll retries */ }
+      finally { galleryBusy = false; }
+    }
+
+    // Called on every /api/state poll: cheap, and only hits /api/gallery when a
+    // genuinely new photo has landed.
+    function renderImage(image) {
+      const badge = document.getElementById("imgBadge");
+      if (!image) { badge.textContent = ""; return; }
+      badge.textContent = image.bytes
+        ? "#" + image.seq + " · " + image.bytes + " B" + (image.station ? " @ " + image.station : "")
+        : "";
+      if (image.seq !== shotSeq) refreshGallery();
+    }
+
+    function clearShots() {
+      if (!confirm(t("cameraClearAsk"))) return;
+      Hub.clearGallery();
+      shots = []; shotSeq = 0;
+      renderGallery();
+      setTimeout(refreshGallery, 400);   // let the Hub finish deleting
+    }
+
+    // ---- full-size viewer ----
+    let shotIndex = -1;
+    function openShot(i) {
+      if (i < 0 || i >= shots.length) return;
+      shotIndex = i;
+      const p = shots[i];
+      document.getElementById("lightboxImg").src = Hub.photoUrl(p.seq);
+      document.getElementById("lightboxCap").textContent =
+        "#" + p.seq + " · " + p.bytes + " B · " + shotLabel(p);
+      document.getElementById("lightbox").hidden = false;
+      document.body.style.overflow = "hidden";
+    }
+    function closeShot(e) {
+      // Clicking the photo itself must not close the viewer, only the backdrop.
+      if (e && e.target && e.target.id === "lightboxImg") return;
+      document.getElementById("lightbox").hidden = true;
+      document.body.style.overflow = "";
+      shotIndex = -1;
+    }
+    function stepShot(e, delta) {
+      if (e) e.stopPropagation();
+      const next = shotIndex + delta;
+      if (next >= 0 && next < shots.length) openShot(next);
+    }
+    document.addEventListener("keydown", (e) => {
+      if (document.getElementById("lightbox").hidden) return;
+      if (e.key === "Escape")     closeShot();
+      if (e.key === "ArrowLeft")  stepShot(null, 1);   // left = older
+      if (e.key === "ArrowRight") stepShot(null, -1);  // right = newer
+    });
+
+    function refresh() {
+      const state = Hub.getState();
+      document.getElementById("approvedNum").textContent = state.approved;
+      document.getElementById("pendingNum").textContent = state.pending;
+
+      const slot = document.getElementById("emergencySlot");
+      slot.innerHTML = state.emergency
+        ? `<div class="emergency-banner">${t("emergencyMsg")}</div>` : "";
+
+      const lang = getLang();
+      const cur = artifactByIdLocal(state.robot.station);
+      document.getElementById("robotStation").textContent = cur.emoji + " " + cur.name[lang];
+      document.getElementById("robotDot").className =
+        "dot" + (state.robot.status === "moving" ? " moving" : "");
+
+      renderPending();
+      renderHealth(state.health);
+      renderEmergencyButton(state.emergency);
+      renderImage(state.image);
+    }
+
+    function toggleEmergency() {
+      const on = !Hub.getState().emergency;
+      Hub.setEmergency(on);
+      refresh();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      mountLangToggle("langBox");
+      applyLang();
+      document.addEventListener("langchange", refresh);
+      document.addEventListener("langchange", renderGallery); // relabel the shots
+      Hub.subscribe(refresh); // live updates as visitors check in / sensors report
+      refreshGallery();       // photos already on the card show up immediately
+    });
+  </script>
+</body>
+</html>

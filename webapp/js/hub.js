@@ -98,6 +98,20 @@ const Hub = (() => {
     if (REAL) { fire("/api/emergency?on=" + (on ? 1 : 0)); return; }
     wr(K_EMERG, !!on);
   }
+  // ---- ESP-CAM gallery -------------------------------------------------
+  // The Hub keeps the newest N photos; /api/gallery lists them newest-first.
+  // Off the Hub there is no camera, so the mock returns an empty gallery and
+  // the admin page simply shows its "waiting for a photo" hint.
+  async function getGallery() {
+    if (!REAL) return { backend: "mock", count: 0, max: 0, newest: 0, photos: [] };
+    const r = await fetch("/api/gallery");
+    return await r.json();
+  }
+  // A seq is written once and never rewritten, so this URL is safe to cache —
+  // that is what stops every thumbnail re-downloading on each poll.
+  function photoUrl(seq) { return "/api/image?seq=" + encodeURIComponent(seq); }
+  function clearGallery() { fire("/api/gallery/clear"); }
+
   function advanceRobot() { // admin "test" button
     if (REAL) { fire("/api/robot/advance"); return; }
     const cur = rd(K_ROBOT, { station: ARTIFACTS[0].id, status: "narrating" });
@@ -108,5 +122,6 @@ const Hub = (() => {
   }
 
   return { subscribe, getState, listPending, countApproved, countPending,
-           requestCheckIn, getRequest, approve, deny, setEmergency, advanceRobot };
+           requestCheckIn, getRequest, approve, deny, setEmergency, advanceRobot,
+           getGallery, photoUrl, clearGallery };
 })();

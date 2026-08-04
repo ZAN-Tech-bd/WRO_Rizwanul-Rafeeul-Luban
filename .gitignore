@@ -25,3 +25,11 @@ Thumbs.db
 # Generated QR images (produced by tools/generate_qr.py)
 tools/qr_output/
 
+# Python virtual environments and caches (never commit these)
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+

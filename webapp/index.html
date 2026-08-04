@@ -22,10 +22,14 @@
       <p class="muted" data-i18n="gateHint">Scan the QR code at the gate to request entry.</p>
 
       <div class="scan-row" style="margin-top:16px;">
-        <button class="block" onclick="document.getElementById('qrfile').click()" data-i18n="gateScan">Scan QR</button>
+        <label class="btn block camera-button">
+          <span data-i18n="gateScan">Scan QR</span>
+          <!-- The real input covers this button so mobile browsers receive a direct,
+               trusted tap. Do not add `hidden` or trigger it with JavaScript. -->
+          <input type="file" id="qrfile" accept="image/*" capture="environment" aria-label="Scan QR code" />
+        </label>
         <button class="secondary block" id="simBtn" data-i18n="gateSimulate">Simulate scan (demo)</button>
       </div>
-      <input type="file" id="qrfile" accept="image/*" capture="environment" hidden />
 
       <div id="statusArea" style="margin-top:8px;"></div>
     </section>
@@ -39,6 +43,10 @@
   <script src="js/hub.js"></script>
   <script src="js/qr.js"></script>
   <script>
+    const VALID_CHECKIN_VALUES = new Set([
+      "MUSEUM-ENTRY-2026",
+      "http://192.168.4.1/api/enter"
+    ]);
     let myId = null;
     let polling = false;
 
@@ -75,16 +83,31 @@
       setTimeout(poll, 800);
     }
 
-    // real QR scan: visitor snaps/takes a photo of the gate QR code
+    // Real QR scan: the camera-backed file input works on plain HTTP, unlike
+    // getUserMedia(), which phone browsers normally require HTTPS to use.
     document.getElementById("qrfile").addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (!file) return;
-      if (!Qr.available()) { beginCheckIn(); return; } // no library -> behave like simulate
-      Qr.decodeFile(file, (text) => {
-        if (text) beginCheckIn();
-        else setStatus("bad", getLang() === "bn" ? "পড়া যায়নি, আবার চেষ্টা করুন বা Simulate ব্যবহার করুন।" : "Couldn't read it — try again or use Simulate.");
+
+      if (!Qr.available()) {
+        setStatus("bad", t("gateScannerUnavailable"));
+        e.target.value = "";
+        return;
+      }
+
+      setStatus("waiting", t("gateReading"));
+      Qr.decodeFile(file, (text, error) => {
+        e.target.value = ""; // allow taking another photo of the same QR
+        if (error || !text) {
+          setStatus("bad", t("gateUnreadable"));
+          return;
+        }
+        if (!VALID_CHECKIN_VALUES.has(text.trim())) {
+          setStatus("bad", t("gateInvalid"));
+          return;
+        }
+        beginCheckIn();
       });
-      e.target.value = ""; // allow re-scanning the same file
     });
 
     // simulate (demo / no camera)

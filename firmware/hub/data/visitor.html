@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Museum — Visitor</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="name" data-i18n="appName">Smart Museum</span>
+      <span class="tag" data-i18n="tagline">Robots Meet Culture</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="badge visitor" data-i18n="visitorBadge">Visitor</span>
+      <span id="langBox"></span>
+    </div>
+  </header>
+
+  <main>
+    <div id="emergencySlot"></div>
+
+    <section class="card robot-card">
+      <h2><span class="dot" id="robotDot"></span><span data-i18n="robotNow">The robot is at</span></h2>
+      <div class="station" id="robotStation">—</div>
+      <div class="narration"><span data-i18n="narrating">Now explaining</span>: <span id="robotNarration">…</span></div>
+      <div class="narration"><span data-i18n="nextStation">Next stop</span>: <span id="robotNext">…</span></div>
+    </section>
+
+    <section class="card">
+      <p style="margin:0;" data-i18n="queueWait">Please wait your turn and follow the queue.</p>
+    </section>
+
+    <h2 data-i18n="artifactsTitle" style="margin:18px 2px 4px;">Our Artifacts</h2>
+    <div class="artifact-grid" id="artifacts"></div>
+
+    <p class="footer" id="visitorIdNote"></p>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/hub.js"></script>
+  <script>
+    function artifactById(id) { return ARTIFACTS.find((a) => a.id === id) || ARTIFACTS[0]; }
+
+    function renderArtifacts() {
+      const lang = getLang();
+      document.getElementById("artifacts").innerHTML = ARTIFACTS.map((a) => `
+        <div class="artifact">
+          <div class="emoji">${a.emoji}</div>
+          <h3>${a.name[lang]}</h3>
+          <div class="display">${t("display")}: ${a.display[lang]}</div>
+          <p>${a.desc[lang]}</p>
+        </div>`).join("");
+    }
+
+    function render(state) {
+      // emergency banner
+      const slot = document.getElementById("emergencySlot");
+      slot.innerHTML = state.emergency
+        ? `<div class="emergency-banner" data-i18n="emergencyMsg">${t("emergencyMsg")}</div>` : "";
+
+      // robot card
+      const lang = getLang();
+      const cur = artifactById(state.robot.station);
+      const idx = ARTIFACTS.findIndex((a) => a.id === cur.id);
+      const next = ARTIFACTS[(idx + 1) % ARTIFACTS.length];
+      document.getElementById("robotStation").textContent = cur.emoji + " " + cur.name[lang];
+      document.getElementById("robotNarration").textContent = cur.name[lang];
+      document.getElementById("robotNext").textContent = next.emoji + " " + next.name[lang];
+      const dot = document.getElementById("robotDot");
+      dot.className = "dot" + (state.robot.status === "moving" ? " moving" : "");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      mountLangToggle("langBox");
+      applyLang();
+      renderArtifacts();
+
+      // show the visitor's approval state if they came from check-in
+      const id = new URLSearchParams(location.search).get("id");
+      if (id) {
+        const note = document.getElementById("visitorIdNote");
+        note.textContent = id;
+        Hub.getRequest(id).then((r) => { if (r) note.textContent = id + " · " + r.status; });
+      }
+
+      document.addEventListener("langchange", renderArtifacts);
+      Hub.subscribe(render); // live robot + emergency updates
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+track,language,station_id,station_index,artifact_en,artifact_bn,audio_kind,root_hz,spokentext_en,duration_s,max_volume_db,size_bytes,sha256
+0001.mp3,English,jamdani,1,Jamdani Saree,জামদানি শাড়ি,speech+bell,261.63,"Station 1. Jamdani Saree.",4.022813,-4.4,64365,66e5c45486fcad00e103e91cedeb4480a060bcbcf238e66e7e79b9c0f673ae7f
+0002.mp3,English,nakshi,2,Nakshi Kantha,নকশি কাঁথা,speech+bell,293.66,"Station 2. Nakshi Kantha.",3.474250,-2.9,55588,ec4a6bc999f30070d8a5201ed232effe6582b6e99c64506a2f31b3c39edc2062
+0003.mp3,English,liberation,3,Liberation War Artifacts,মুক্তিযুদ্ধের নিদর্শন,speech+bell,329.63,"Station 3. Liberation War Artifacts.",4.440813,-4.0,71053,9efca9259947f711f5ee279a4bb7994271b54ebcd15a9b3d269d0d43c156eb48
+0004.mp3,English,terracotta,4,Terracotta Plaques,টেরাকোটা ফলক,speech+bell,392.00,"Station 4. Terracotta Plaques.",3.657125,-3.7,58514,0a95604d8549067ad0f1d146834a7a8371eb559d4a19e03c6d83ea240cff4412
+0005.mp3,English,ektara,5,Ektara,একতারা,speech+bell,440.00,"Station 5. Ektara.",3.317500,-4.0,53080,74530632f262dc8451e3c1002bc20412f5efc37fa33c43157297d408412957cf
+0006.mp3,English,palki,6,"Palki (Palanquin)",পালকি,speech+bell,523.25,"Station 6. Palki Palanquin.",4.101188,-2.1,65619,ccb258fa8c921faea19e9c14a132551e71fdccdc4c15b4a95882c7c6877b1acb
+0007.mp3,English,tiger,7,Royal Bengal Tiger,রয়েল বেঙ্গল টাইগার,speech+bell,587.33,"Station 7. Royal Bengal Tiger.",4.388563,-2.1,70217,e1a5386117fb1591da90905da38ecec162711837afb3fe267ee4bef97fec9b40
+0008.mp3,Bangla,jamdani,1,Jamdani Saree,জামদানি শাড়ি,chime_motif,261.63,,3.944438,-4.4,63111,dffab9a182560f47d3ca9ca8bebdeef0adb17a2f1a89488d4bbf2364144b7b9c
+0009.mp3,Bangla,nakshi,2,Nakshi Kantha,নকশি কাঁথা,chime_motif,293.66,,3.944438,-4.4,63111,ee505ecad34e5095a2aef30ee9e97ed30c634b38bac280144562166932c1ef19
+0010.mp3,Bangla,liberation,3,Liberation War Artifacts,মুক্তিযুদ্ধের নিদর্শন,chime_motif,329.63,,3.944438,-4.4,63111,f66a7d6f4195d94b26e85b265c174f13e7e53bb3a34ea14281e3bd4f37558e8e
+0011.mp3,Bangla,terracotta,4,Terracotta Plaques,টেরাকোটা ফলক,chime_motif,392.00,,3.944438,-4.4,63111,03380c731d00dd5e5a3b6319705cd70a41aaffdb05c5fe501e339a3e0a28f735
+0012.mp3,Bangla,ektara,5,Ektara,একতারা,chime_motif,440.00,,3.944438,-4.4,63111,c3f6fdad4be69d664b4c690e56e2ba0481b120e4ec9468d74f13dde83ffb488b
+0013.mp3,Bangla,palki,6,"Palki (Palanquin)",পালকি,chime_motif,523.25,,3.944438,-4.4,63111,da50df1b4419b4e185882c39b84e91fe8cfbbb3fc5669faf8cff8389684ca01b
+0014.mp3,Bangla,tiger,7,Royal Bengal Tiger,রয়েল বেঙ্গল টাইগার,chime_motif,587.33,,3.944438,-4.4,63111,54729d45b812c7d784e5aa563a3e1012fac3ee358fad51106e5315656d71e7e0

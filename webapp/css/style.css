@@ -108,13 +108,30 @@ button.green  { background: var(--green); }
 button.red    { background: var(--red); }
 button.danger { background: var(--red); }
 button.block  { width: 100%; }
+.btn.block    { width: 100%; }
 button:disabled { opacity: .5; cursor: default; }
 
 /* ---------- gate / check-in ---------- */
 .gate-hero { text-align: center; padding: 26px 16px; }
 .gate-hero .big { font-size: 3rem; }
 .scan-row { display: flex; gap: 10px; flex-wrap: wrap; }
-.scan-row button { flex: 1 1 160px; }
+.scan-row button, .scan-row .btn { flex: 1 1 160px; }
+.camera-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 48px;
+}
+.camera-button input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
 
 .spinner {
   width: 26px; height: 26px;
@@ -179,6 +196,99 @@ th { color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-s
 .pending-item .who { font-weight: 700; }
 .pending-item .actions { display: flex; gap: 8px; }
 .pending-item button { padding: 8px 12px; font-size: .85rem; }
+
+/* ---------- ESP-CAM gallery ---------- */
+/* The newest photo is shown large; older ones become a scrolling thumbnail
+   strip. QVGA JPEGs are only 320x240, so the big one is capped and pixel-
+   snapped (image-rendering) instead of being blown up smoothly. */
+.shot-latest { margin: 0; }
+.shot-latest img {
+  display: block;
+  width: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  background: #14100d;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+}
+.shot-latest figcaption {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 8px; margin-top: 6px; font-size: .82rem;
+}
+.shot-latest .shot-when { font-weight: 700; }
+.shot-latest .shot-meta { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.shot-heading {
+  margin: 14px 0 6px; font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
+}
+.shot-strip {
+  display: flex; gap: 8px; overflow-x: auto;
+  padding-bottom: 6px; scrollbar-width: thin;
+}
+.shot-thumb {
+  flex: 0 0 auto; position: relative;
+  padding: 0; border: 1px solid var(--line); border-radius: 8px;
+  background: #14100d; overflow: hidden; cursor: zoom-in; line-height: 0;
+}
+.shot-thumb img { display: block; width: 92px; height: 69px; object-fit: cover; }
+.shot-thumb-cap {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, .55); color: #fff;
+  font-size: .62rem; font-weight: 700; line-height: 1.6;
+  text-align: center; letter-spacing: .02em;
+}
+.shot-thumb:hover { border-color: var(--terracotta); }
+
+.shot-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin: 10px 0 0;
+}
+.shot-clear { padding: 6px 12px; font-size: .78rem; }
+
+/* full-size viewer */
+.lightbox {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 20px;
+  background: rgba(20, 16, 13, .92);
+}
+.lightbox[hidden] { display: none; }
+.lightbox img {
+  /* Scale a 320x240 QVGA frame UP to fill the viewer instead of sitting at its
+     native size. width+height together with contain keeps the 4:3 aspect, and
+     pixelated upscaling stays crisp rather than going soft. */
+  width: min(88vw, 760px);
+  height: min(72vh, 570px);
+  object-fit: contain;
+  border-radius: 10px; background: #000;
+  image-rendering: pixelated;
+}
+.lightbox-cap {
+  position: absolute; left: 0; right: 0; bottom: 18px;
+  margin: 0; text-align: center; color: #f6efe2;
+  font-size: .85rem; font-variant-numeric: tabular-nums;
+}
+.lightbox-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 40px; height: 40px; padding: 0; border-radius: 50%;
+  background: rgba(255, 255, 255, .14); color: #fff; font-size: 1.1rem;
+}
+.lightbox-nav {
+  flex: 0 0 auto;
+  width: 44px; height: 44px; padding: 0; border-radius: 50%;
+  background: rgba(255, 255, 255, .14); color: #fff; font-size: 1.6rem;
+  line-height: 1;
+}
+.lightbox-close:hover, .lightbox-nav:hover { background: rgba(255, 255, 255, .28); }
+
+@media (max-width: 480px) {
+  .lightbox { padding: 10px; }
+  .lightbox-nav { position: absolute; bottom: 54px; }
+  .lightbox-nav.prev { left: 16px; }
+  .lightbox-nav.next { right: 16px; }
+}
 
 /* ---------- emergency banner ---------- */
 .emergency-banner {

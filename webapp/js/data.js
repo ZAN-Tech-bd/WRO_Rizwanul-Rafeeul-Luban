@@ -88,6 +88,10 @@ const I18N = {
   gateHint:     { en: "Scan the QR code at the gate to request entry.", bn: "প্রবেশের অনুরোধ করতে গেটের কিউআর কোড স্ক্যান করুন।" },
   gateScan:     { en: "Scan QR",                 bn: "কিউআর স্ক্যান" },
   gateSimulate: { en: "Simulate scan (demo)",    bn: "সিমুলেট স্ক্যান (ডেমো)" },
+  gateReading:  { en: "Reading QR code…",        bn: "কিউআর কোড পড়া হচ্ছে…" },
+  gateUnreadable:{ en: "QR code not found. Hold the camera steady and try again.", bn: "কিউআর কোড পাওয়া যায়নি। ক্যামেরা স্থির রেখে আবার চেষ্টা করুন।" },
+  gateInvalid:  { en: "This is not the museum entry QR code.", bn: "এটি মিউজিয়ামের প্রবেশ কিউআর কোড নয়।" },
+  gateScannerUnavailable:{ en: "QR scanner failed to load. Please use the native check-in QR.", bn: "কিউআর স্ক্যানার লোড হয়নি। নেটিভ চেক-ইন কিউআর ব্যবহার করুন।" },
   gateWaiting:  { en: "Waiting for admin approval…", bn: "অ্যাডমিনের অনুমোদনের জন্য অপেক্ষা করা হচ্ছে…" },
   gateApproved: { en: "Approved! Opening dashboard…", bn: "অনুমোদিত! ড্যাশবোর্ড খোলা হচ্ছে…" },
   gateDenied:   { en: "Not approved. Please see the desk.", bn: "অনুমোদিত হয়নি। ডেস্কে যোগাযোগ করুন।" },
@@ -117,7 +121,15 @@ const I18N = {
   robotStatus:  { en: "Robot status",            bn: "রোবটের অবস্থা" },
   good:         { en: "Good",                    bn: "ভালো" },
   watch:        { en: "Watch",                   bn: "সতর্ক" },
-  alert:        { en: "Alert",                   bn: "সংকেত" }
+  alert:        { en: "Alert",                   bn: "সংকেত" },
+  cameraTitle:  { en: "Camera",                  bn: "ক্যামেরা" },
+  cameraWaiting:{ en: "Waiting for the ESP-CAM to send a photo — send SHOOT on the camera's serial console.", bn: "ESP-CAM থেকে ছবি আসার অপেক্ষা — ক্যামেরার সিরিয়ালে SHOOT পাঠান।" },
+  cameraEarlier:{ en: "Earlier shots",           bn: "আগের ছবি" },
+  cameraEarlierBoot:{ en: "before this restart", bn: "এই রিস্টার্টের আগে" },
+  cameraAgo:    { en: "ago",                     bn: "আগে" },
+  cameraStored: { en: "stored",                  bn: "সংরক্ষিত" },
+  cameraClear:  { en: "Clear photos",            bn: "ছবি মুছুন" },
+  cameraClearAsk:{ en: "Delete every stored photo?", bn: "সংরক্ষিত সব ছবি মুছে ফেলবেন?" }
 };
 
 // ---- language helpers -------------------------------------------------
