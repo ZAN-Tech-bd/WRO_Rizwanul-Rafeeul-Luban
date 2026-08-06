@@ -95,7 +95,7 @@ FIND
 ```
 REPLACE
 ```
-  visitorCount: { en: "Visitors inside",         bn: "ভেতরে দর্শনার্থী" },
+  visitorCount: { en: "Visitors inside",         bn: "দর্শনার্থী ভেতরে" },
 ```
 
 ### A6. Emergency banner — the one line that must be unambiguous
@@ -127,7 +127,7 @@ FIND
 ```
 REPLACE
 ```
-  alert:        { en: "Alert",                   bn: "বিপদ" },
+  alert:        { en: "Alert",                   bn: "বিপদ!" },
 ```
 `সংকেত` = "signal", which tells a judge nothing. The red pill should read `বিপদ`.
 

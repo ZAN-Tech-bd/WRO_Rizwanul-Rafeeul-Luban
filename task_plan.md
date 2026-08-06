@@ -1,5 +1,133 @@
 # Smart Museum Implementation Plan
 
+## Active Migration — Nano LFR/RFID + ESP32 Companion (2026-08-06)
+
+### Goal
+
+Move real-time line following, L298N motor control, and RC522 card detection to an Arduino Nano; stop once for every newly presented card and send a framed UID event to the ESP32 over a Nano SoftwareSerial link. Repurpose the ESP32 robot target as a validated event receiver while reserving its GPIO16/17 UART for the planned DFPlayer.
+
+### Phases
+
+| Phase | Status | Outcome |
+|---|---|---|
+| N1. Lock split architecture and wiring | in progress | Nano hardware SPI forces a conflict-free motor remap; UART and voltage boundaries are being documented before code. |
+| N2. Implement Nano PlatformIO target | pending | Preserve weighted active-low PD algorithm, measured left/right trim, RC522 polling, one-shot card stop, and bounded ASCII event protocol. |
+| N3. Repurpose ESP32 robot target | pending | Remove direct motor ownership; receive, validate, acknowledge, and expose Nano RFID events without consuming DFPlayer UART pins. |
+| N4. Build and statically verify both targets | pending | Compile Nano and ESP32 independently and run targeted diff/static checks. |
+| N5. Publish exact bring-up procedure | pending | Wiring, level shifting, sensor/motor/card/UART test order, and physical acceptance gates documented. |
+
+### Locked migration decisions
+
+- Nano IR inputs remain A0–A4 in physical far-left to far-right order; active-low interpretation and the supplied integer weighted-error calculation are preserved.
+- Nano hardware SPI is fixed to D11 MOSI, D12 MISO, and D13 SCK. RC522 uses D10 SS and D4 RST. The RC522 is 3.3 V-only: Nano-to-RC522 SS/MOSI/SCK/RST require 5 V→3.3 V level shifting; RC522 MISO can drive Nano D12 directly.
+- Current chassis mapping remains channel A = physical left and channel B = physical right. Nano motor map: D5 ENA/left PWM, D7/D8 IN1/IN2, D6 ENB/right PWM, D9/A5 IN3/IN4.
+- Nano SoftwareSerial uses D2 RX and D3 TX at 9600 baud. Nano D3 is 5 V logic and reaches ESP32 GPIO25 RX through a 1 kΩ/2 kΩ divider. ESP32 GPIO26 TX may return ACK data to Nano D2 through a 1 kΩ series resistor. Grounds are common.
+- ESP32 GPIO16 RX / GPIO17 TX remain reserved for DFPlayer UART2. Moving RFID and motors to Nano frees the old ESP32 motor/SPI pins.
+- RFID messages are bounded ASCII frames containing protocol version, sequence, UID, SAK, and PICC type plus an XOR checksum. UID is an identifier, not a secure authentication credential.
+- A newly read card stops the motors immediately, emits one event, remains stopped for a configurable timeout, then resumes. `PICC_HaltA()` prevents repeated events while the same card remains on the antenna; removing and presenting it again creates a new event.
+
+## Active Implementation — ESP32 Line-Following Robot (2026-08-06)
+
+### Architecture migration — Nano motion/RFID + ESP32 application controller
+
+- User superseded the single-ESP32 motion architecture: an Arduino Nano ATmega328P will own the five IR sensors, L298N, line-following loop, and RC522; it will send distinct RFID events to the ESP32 over a separate UART link.
+- Nano hardware SPI is fixed to D10 SS, D11 MOSI, D12 MISO, and D13 SCK. Therefore the supplied Arduino motor allocation on D10/D11/D12 cannot coexist with the RC522 and must be remapped before wiring or firmware implementation.
+- PlatformIO exposes `nanoatmega328` (classic bootloader) and `nanoatmega328new` (new bootloader). The maintained RC522 package is `miguelbalboa/MFRC522@1.4.12`.
+- Electrical boundary: Nano TX is nominally 5 V and must not drive an ESP32 RX directly; use a resistor divider or proper unidirectional level shift. ESP32 TX at 3.3 V can normally drive the Nano RX, with common ground mandatory.
+- Final Nano allocation after the user's rewiring request: IR=A0–A4; four L298N direction wires IN1/IN2/IN3/IN4 move in order from D9–D12 to D2–D5; PWM ENA=D6 and ENB=D9; RC522 RST=A5 and fixed SPI SS/MOSI/MISO/SCK=D10/D11/D12/D13. Nano hardware UART D0/D1 is the ESP link and must be disconnected during Nano upload/USB monitoring.
+- Final ESP allocation follows the user's physical UART wiring: Nano events use hardware UART1 RX/TX=GPIO16/GPIO17. The existing DFPlayer moves to hardware UART2 RX/TX=GPIO25/GPIO26. This permits both links without adding a module.
+- Protocol direction: each accepted UID causes an immediate bounded five-second Nano stop and a checksummed sequenced `RFID` event carrying UID, SAK, and PICC type. Nano retries until `ACK` or the stop expires, then resumes regardless so a failed UART cannot immobilize it. ESP validates and deduplicates retries, ACKs every valid frame, maps the seven supplied cards to points 1–7, and plays the matching DFPlayer `/mp3/0001.mp3`–`0007.mp3` track.
+
+### Goal
+
+Convert the working Arduino five-sensor/L298N line follower to the confirmed 30-pin ESP32-WROOM-32 robot target, publish the exact electrical wiring before firmware changes, preserve the original PD/T-junction/line-recovery behavior, and prove the PlatformIO build.
+
+### Phases
+
+| Phase | Status | Outcome |
+|---|---|---|
+| L1. Restore and reconcile context | complete | Existing robot plan, skeleton target, PlatformIO configuration, repository changes, and the supplied Arduino behavior were recovered. |
+| L2. Lock Phase-1 wiring | complete | GPIO map and exact ESP32↔IR-array↔L298N wiring are published; channel A is right and channel B is left to preserve the working Arduino convention. |
+| L3. Configure PlatformIO | complete | Existing `firmware/robot/` target retained, pinned to Espressif32 platform 6.5.0 / Arduino-ESP32 2.x LEDC API, with no unused Phase-2/3 dependencies. |
+| L4. Port line-following firmware | complete | ESP32 LEDC motor PWM, five configurable-polarity sensors, exact weighted error arithmetic, PD steering, last-edge recovery, and all-five right turn implemented. |
+| L5. Build and document | complete (software) | PlatformIO build and cppcheck pass; README and wiring plan cover exact connections, startup motor gate, diagnostics, calibration, and safe bring-up. Physical direction/polarity/tuning tests remain hardware gates. |
+
+### Locked Phase-1 decisions
+
+- Controller is the confirmed DOIT-style 30-pin ESP32-WROOM-32 DevKit (`esp32dev` PlatformIO board).
+- IR array is powered from 3.3 V and presents five digital outputs in physical far-left to far-right order on GPIO36, 39, 34, 35, and 32.
+- The supplied Arduino sketch treats a LOW sensor output as line detected. Preserve that as the default but expose one configuration constant so measured opposite-polarity arrays can be corrected without rewriting the algorithm.
+- Initial software preserved the original Arduino L298N convention, but physical calibration superseded it: the installed chassis has channel A (`ENA`, `IN1`, `IN2`, `OUT1/OUT2`) on the robot's left motor and channel B (`ENB`, `IN3`, `IN4`, `OUT3/OUT4`) on the right motor. Firmware/docs now match the measured robot.
+- ESP32 motor pins are GPIO25/26/27 for channel A and GPIO13/14/33 for channel B. The user intentionally swapped the former GPIO16/GPIO33 roles after wheels-up calibration: GPIO33 is now L298N IN4, while GPIO16 is reserved as DFPlayer UART2 RX. ENA/ENB jumpers must be removed.
+- Motor power and L298N 5 V logic power come from regulated external rails with common ground; motors must never be powered from the ESP32.
+- Phase 1 implements only line following. RC522, DFPlayer, WS2812B, camera, and display integration remain later phases and must not complicate this build.
+- Preserve the supplied control constants and decisions initially: `kp=1`, `kd=1`, curve base 160/160, center speed 150, recovery speed 180, right-turn speed 100 for 500 ms, no-line sentinel behavior, and a 5 ms delay after error changes.
+
+### Verification
+
+- `pio run -d firmware/robot`: PASS. PlatformIO Espressif32 6.5.0 resolved Arduino-ESP32 2.0.14; RAM 21,480 bytes (6.6%), application flash 270,233 bytes (20.6%).
+- `pio check -d firmware/robot --skip-packages`: PASS with no high/medium findings. The low-only reports are framework-entry-point awareness (`setup`/`loop`) and compile-time motor-gate constant folding, not firmware defects.
+- `git diff --check` on robot firmware/docs/planning files: PASS.
+- No firmware upload or physical motor test was attempted because no exact robot ESP32 serial device or connected/wired chassis was established in this request.
+
+### Physical calibration session — 2026-08-06
+
+- The user reported the robot ESP32 and wiring are now connected and requested flashing plus full calibration.
+- Fresh USB inventory found exactly one new serial adapter: CH340 `1a86:7523`, by-id `usb-1a86_USB_Serial-if00-port0`, kernel path `/dev/ttyUSB0`, connected at 17:11:52–17:11:53 Asia/Dhaka on USB path `3-2`. No process owns the port.
+- Calibration must begin with the compile-time motor gate disabled; only after sensor order/polarity/stability are measured may motor tests run with wheels raised.
+- Sensor-only image flashed successfully to the identified ESP32-D0WD-V3 revision 3.1, MAC `1c:c3:ab:3c:8c:38`; all flash regions passed esptool hash verification.
+- Physical black-line/light-background calibration passed: background `00000` was stable for 42/42 samples; individual physical channels produced far-left `10000` (24/24), left `01000` (24/24), centre `00100` (24 stable samples plus one prior-position transition), right `00010` (24 stable plus one transition), far-right `00001` (24 stable plus one transition); all-black produced `11111` for a final 17/17 stable capture. Wiring order and active-low polarity are confirmed.
+- Motor-channel isolation proved the installed output pairs were opposite the initial software labels: a software-left/channel-B command moved the robot's physical right wheel forward; software-right/channel-A moved its physical left wheel forward. Both channels work. Semantic left/right pin assignments were swapped in firmware instead of changing the already-secure motor wiring.
+- Corrected-map wheels-up calibration passed in both directions. Forward start threshold: physical left is still at 160 and rotates continuously at 180; physical right is still at 140, only twitches at 160/180, and rotates continuously at 190. At equal PWM 220 the left is faster; left=200/right=220 is approximately speed-matched. The right-pivot pair left=+200/right=-220 is direction-correct and approximately matched.
+- Before the first wheels-down run, calibration `AUTO` was changed from unbounded operation to a required 1–5000 ms duration. Timeout forces a stop and full disarm; autonomous-at-boot remains disabled. The measured 200/220 baseline plus provisional 250 ms pivot build successfully (RAM 21,552 B / 6.6%; application flash 273,109 B / 20.8%), cppcheck passes with only its three expected Arduino/constant-folding low findings, and targeted `git diff --check` passes.
+- The user then requested a GPIO16/GPIO33 role swap: right-motor L298N IN4 moves from GPIO16 to GPIO33, and future DFPlayer TX/UART2 RX moves from GPIO33 to GPIO16; UART2 TX remains GPIO17 through 1 kΩ to DFPlayer RX. Because the prior direction tests used IN4 on GPIO16, the new physical wire and rebuilt image require one wheels-up right-motor forward/reverse recheck before any floor run.
+- **Swap validated on hardware.** After the user physically moved IN4 to GPIO33 (GPIO16 disconnected, wheels raised, motor rail off), the guarded image was flashed and a timed `MOTOR 0 200 700` right-wheel test drove the physical right wheel **forward**, confirming GPIO33→IN4 preserves the previously measured direction. All prior motor calibration (left=200/right=220, thresholds, pivot) remains valid under the new pin map.
+- Post-swap verification passes: the safe calibration image rebuilds at 21,552 B RAM (6.6%) and 273,109 B application flash (20.8%); cppcheck remains zero high/medium with three expected low findings; targeted `git diff --check` passes. The image is intentionally not flashed until the user physically moves L298N IN4 from GPIO16 to GPIO33, preventing firmware/wiring mismatch during a motor test.
+- The user confirmed IN4 was physically moved to GPIO33, GPIO16 was left disconnected, wheels were raised, and the motor rail was off. A fresh identity gate found only the expected CH340 `1a86:7523` at stable by-id `usb-1a86_USB_Serial-if00-port0` -> `/dev/ttyUSB0`, with no owner. Upload to the same ESP32-D0WD-V3 rev 3.1 / MAC `1c:c3:ab:3c:8c:38` passed all flash hash checks. A deliberate boot capture reported `RIGHT = ENB13 IN3=14 IN4=33`, autonomous output `DISABLED`, and `calibration mode; motors disabled`; the new map is live and stopped.
+
+## Current Hardware Planning — Track Hub and Robot (2026-08-05)
+
+### Goal
+
+Produce two implementation-ready, electrically safe wiring plans for the 30-pin ESP32-WROOM-32 platform:
+
+1. Finalize the track Hub while preserving its existing microSD interface: one 56-pixel WS2812B chain, four real DHT11/MQ-135 pairs, three honestly simulated station pairs, four shared-command SG90 servos, buzzer, and latched emergency button.
+2. Design the robot around a separate main ESP32 controlling DFPlayer/audio, a five-channel IR array, L298N dual motor driver, RC522 over SPI, and one eight-pixel WS2812B board. Treat the fixed-screen Arduino + display shield and unchanged ESP32-CAM as separately powered assemblies with no main-ESP32 data link.
+
+### Phases
+
+| Phase | Status | Outcome |
+|---|---|---|
+| H1. Restore and reconcile context | complete | Existing Hub source, stale wiring plan, exact 56-pixel LED topology, and user decisions recovered. |
+| H2. Finalize track electrical architecture | complete | Existing SD retained on GPIO18/19/23/5; real sensor pairs distributed at stations 1/3/5/7; stations 2/4/6 simulated with source flags; final GPIO map, 56-pixel chain, 5 V/10 A distribution, protection, validation, and BOM documented. |
+| R1. Gather robot module constraints | complete | Confirmed 30-pin ESP32, 3.3 V five-output IR array, two 6 V TT motors, 3S source, L298N, DFPlayer + LM386, 4-ohm/3 W speaker, one eight-pixel board, and no Mega data link. |
+| R2. Allocate robot GPIO and buses | complete | Boot-safe map assigns five IR inputs, dual motor PWM/direction, RC522 VSPI, DFPlayer UART2, and WS2812B while preserving USB UART and strapping pins. |
+| R3. Design robot power/audio architecture | complete | Separate 6 V motor and 5 V logic bucks plus dedicated camera/Mega branches, star grounding, suppression, correct DAC-to-LM386 path, and validation gates documented. |
+| D1. Publish plans for approval | in progress | Both plan documents and BOMs now reflect final hardware choices, including the locked 74HCT125 and HW-209 rejection; present them and obtain user approval before implementation. |
+
+### Locked decisions
+
+- The seven track LED boards follow track order and form one DOUT-to-DIN chain: 56 pixels on one data GPIO.
+- Hub microSD remains enabled and unchanged on SCK GPIO18, MISO GPIO19, MOSI GPIO23, and CS GPIO5.
+- Track stations 1, 3, 5, and 7 have real DHT11/MQ-135 pairs. Stations 2, 4, and 6 are generated from neighboring valid measurements and remain explicitly marked simulated/degraded/unknown.
+- The locally available 74HCT125 DIP-14 is locked as the 5 V push-pull WS2812B buffer for both Hub and robot. The pictured HW-209 BSS138/passive-pull-up board is not used for final LED data.
+- Track emergency behavior is latch ON after a short press; clear from the admin dashboard or after a continuous five-second hold. Future Hub-to-robot signaling will use UDP.
+- Robot firmware implementation was not part of the 2026-08-05 planning phase; the 2026-08-06 Phase-1 LFR request above explicitly supersedes that earlier scope boundary.
+- The Arduino + shield and ESP32-CAM are separate robot assemblies; each receives regulated power from the robot distribution system and neither communicates with the main robot ESP32 in this design.
+- Do not provide effort/time estimates.
+- The command-execution tool is not exposed in the current Architect tool surface, so the skill-requested `git diff --stat` check cannot be run here; use the supplied workspace state and direct file reads instead.
+- Track plan: `plans/hub-sensor-wiring.md`.
+- Robot plan: `plans/robot-wiring.md`.
+
+## Auxiliary Diagnosis — pskill9 Web Search MCP
+
+| Phase | Status | Purpose |
+|---|---|---|
+| Reproduce and isolate | complete | Confirm whether the empty result is query-specific, MCP transport-related, or provider-specific. |
+| Inspect implementation and upstream response | complete | Identified the installed server as a stale Google HTML scraper (`/home/user/.pskill9-web-search/build/index.js`); Google currently returns a 91 KB consent/interstitial-style page with zero `div.g` result containers. |
+| Report remediation | complete | Root cause: Google scrape serves an unparseable page that the stale scraper reports as an empty array. Fix applied. |
+| Implement remediation | complete | Patched the installed `build/index.js` (v0.1.0 -> v0.2.0): modern UA/headers, `hl=en`+`num`, multi-selector extraction, blocked/interstitial detection, DuckDuckGo HTML fallback with URL dedup, and a descriptive error when both providers yield zero results. Backed up the original to `build/index.js.bak-20260805-134628`. Validated end-to-end over MCP stdio: two queries returned 5 and 3 unique relevant results via the fallback; `node --check` passes. |
+
 ## Goal (updated 2026-08-04)
 
 ## Lessons Learned — ESP-CAM→Hub image pipeline (DO NOT REPEAT)
@@ -103,6 +231,13 @@ A concise project map and evidence-based readiness assessment, including:
 
 | Error | Attempt | Resolution |
 |---|---:|---|
+| PlatformIO 6.5.0 resolved Arduino-ESP32 2.0.14 although an older project comment expected 2.0.17 | 1 | The required legacy channel-based LEDC API is present and the build passes. Record the actual resolved version rather than claiming 2.0.17; reproducibility remains pinned at the PlatformIO platform/package level available in this environment. |
+| Calibration-command build failed because `handleCommand()` called `readSensors()` before its definition | 1 | Added a local forward declaration after `SensorReading`; no upload occurred in the failed command because command chaining stopped at compile failure. |
+| Resume-checkpoint patch targeted wording from this plan rather than the exact progress-log line | 1 | The patch failed atomically and changed no file. Re-read the exact `progress.md` text and applied a smaller context-accurate patch. |
+| Nano/ESP wiring-plan patch was truncated before its end marker | 2 | Both malformed patches were rejected atomically and changed no file. Stop using broad patch payloads; migrate the document with small section-scoped patches. |
+| PlatformIO Nano-board JSON filter command had an unterminated shell quote | 1 | The command failed before execution and changed nothing. Replaced it with simple `pio boards atmelavr | grep` queries, which identified the exact board IDs. |
+| First shared robot-link header patch was truncated before `*** End Patch` | 1 | The patch parser rejected it atomically, so no partial header existed. Retried with a complete bounded patch. |
+| A web-search tool call was accidentally issued without its required query while researching robot modules; the mode adapter then reported the direct MCP tool name unavailable | 1 | No research result or file change occurred. Do not repeat the malformed call; use existing primary documentation already recovered or the current mode's generic MCP adapter only if another source is necessary. |
 | `ModuleNotFoundError: No module named 'qrcode'` while generating gate QR images | 1 | Install the QR utility dependencies from the project requirements, then rerun generation. |
 | QR output verification wrapper used Bash-only `compgen` under `/bin/sh` | 1 | Do not infer generation failure from the wrapper; inspect the output directory with a portable file-list operation. |
 | Mobile `Scan QR` control does not open a camera/picker on the user's phone | 1 | Root cause in source: a scripted click targets an input with the `hidden` attribute, which some mobile browsers suppress; the referenced offline decoder is also absent. Replace it with a direct user-activated file input and bundle the decoder. |
