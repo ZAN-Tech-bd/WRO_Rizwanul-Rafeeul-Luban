@@ -1,5 +1,15 @@
 # Project Audit Progress
 
+## Session: 2026-08-08 — Debug ESP32 browser buttons
+
+- User confirmed the physical LFR on/off + track-1 sequence was visible during the laptop's direct endpoint test, but neither phone nor laptop browser buttons trigger any action.
+- Corrected prior overclaim: `curl` proved routes, UART, motors, and the DFPlayer command path; it did not prove rendered `onclick`/`fetch()` execution.
+- Began a browser-level reproduction phase. Planned fix is progressive enhancement: controls must submit ordinary same-origin HTTP requests without requiring JavaScript, with no-cache response headers and an on-page firmware revision marker.
+- First Firefox WebDriver run was rejected as invalid evidence: `/dev/ttyUSB1` had disappeared before serial capture and navigation timed out before any click. Cleanup restored the laptop's `Lovly` profile. Next run will rediscover board paths and gate browser startup on successful HTTP reachability.
+- Replaced the JavaScript-only page with ordinary same-origin GET forms, post-command 303 redirects, no-cache headers, request validation, a persistent status message, Wi-Fi AP sleep disabled, and the visible/runtime marker `WEB-FORMS-v2`. PlatformIO compiled and generated the image successfully (45,304 B RAM; 782,097 B application flash); a Bash-only wrapper post-check then failed under `/bin/sh`, after the successful build had completed.
+- Positively reidentified the remaining CH340 `/dev/ttyUSB0` as ESP32-D0WD-V3 rev 3.1 / MAC `1c:c3:ab:3c:8c:38`, uploaded the corrected image (788,672 B written, hash verified), and captured the unique live boot markers `ESP32 MP3 Player Starting... WEB-FORMS-v2` plus `Web Server Started!`.
+- Fresh AP gate passed: laptop joined `ESP32-MP3`, got `192.168.4.2/24` and the correct route to `192.168.4.1`; root returned HTTP 200, 2,886 bytes, no-store/no-cache headers, and the visible `WEB-FORMS-v2` marker. A final nested-quote diagnostic failed after those checks; EXIT cleanup restored `Lovly`.
+
 ## Session: 2026-08-06 — Split robot control between Nano and ESP32
 
 - Reconciliation gate: discovered two untracked shared UART protocol headers created during overlapping workspace activity. Inspected both and paused controller implementation until one bounded frame contract is selected; no tracked firmware was removed or overwritten.

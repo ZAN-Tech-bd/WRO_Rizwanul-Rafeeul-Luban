@@ -1,5 +1,30 @@
 # Smart Museum Implementation Plan
 
+## Active Debug — ESP32 Browser Controls (2026-08-08)
+
+### Goal
+
+Reproduce actual browser button clicks against the physical `ESP32-MP3` SoftAP, identify why the JavaScript-driven UI triggers neither audio nor LFR while direct HTTP endpoint requests work, replace the fragile browser path, upload the corrected firmware, and verify real browser clicks end-to-end.
+
+### Phases
+
+| Phase | Status | Outcome |
+|---|---|---|
+| B1. Correct prior conclusion and restore context | complete | Phone-only routing hypothesis is disproven by the same failure from the laptop; direct `curl` endpoint success did not validate browser JavaScript. |
+| B2. Reproduce with a real browser and inspect runtime | in progress | Exercise actual rendered buttons and capture browser console/network plus ESP32/Nano serial evidence. |
+| B3. Implement browser-robust controls | pending | Replace JavaScript-only actions with ordinary HTML navigation/forms, add cache prevention and a visible firmware marker. |
+| B4. Build and upload ESP32 firmware | pending | Compile and flash the positively identified ESP32 without altering the Nano image. |
+| B5. Verify actual browser clicks and hardware effects | pending | Prove rendered controls trigger LFR start/stop and DFPlayer commands, with the robot left stopped. |
+
+### Errors Encountered
+
+| Error | Attempt | Resolution |
+|---|---:|---|
+| Declared the web UI healthy after testing endpoint URLs with `curl`, not rendered browser button clicks | 1 | Retract the conclusion; reproduce through a real browser and require console/network plus hardware evidence before acceptance. |
+| First Firefox WebDriver click test started after `/dev/ttyUSB1` disappeared and navigation to the ESP32 timed out | 1 | No browser/UI conclusion is valid from this run. Rediscover current USB identities and Wi-Fi state, positively bind ports again, prove `192.168.4.1` reachable, then rerun with shorter bounded navigation timeouts. |
+| Build wrapper ended with `/bin/sh: Bad substitution` after PlatformIO had already printed `SUCCESS` | 1 | Firmware compilation and image generation passed; only the Bash-only `${PIPESTATUS[0]}` post-check failed under `/bin/sh`. Use direct PlatformIO exit status or explicitly invoke Bash; no rebuild logic/source change is required. |
+| Post-fetch HTML-count diagnostic had a nested-quote syntax error | 1 | The gated network evidence before that line is valid: association succeeded, address/route were correct, HTTP 200 returned 2,886 bytes with no-cache headers, and `WEB-FORMS-v2` was present. Keep the next browser harness quoting simple; EXIT cleanup restored `Lovly`. |
+
 ## Active Migration — Nano LFR/RFID + ESP32 Companion (2026-08-06)
 
 ### Goal
