@@ -16,6 +16,8 @@
   The Nano prints back "STATE:RUNNING" / "STATE:STOPPED" after every change
   and "READY:STOPPED" once at startup, so the ESP32 can confirm the state.
 
+  Speed: set SPEED_PERCENT below (100 = the original tuned speeds).
+
   Wiring (as provided):
     Nano D1 (TX) --10k--+ (node) -- ESP32 D25 (RX)
                         + (node) --20k-- GND        (5V -> ~3.3V divider)
@@ -43,11 +45,26 @@ const int irPins[5] = {A0, A1, A2, A3, A4};
 void wheel(int lm, int rm);
 int s[5] = {0, 0, 0, 0, 0};
 int i, lastSensor, lastError;
-int uturn = 180;
-int base_L = 160;
-int base_R = 160;
-float kp = 1;
-float kd = 1;
+
+/* ------------------------- Speed scaling (added) -------------------------
+   SPEED_PERCENT = 100 means the original tuned speeds (u-turn 180, curve
+   base 160, straight 150, T-junction 100 out of 255). Lower it to slow the
+   whole robot down; raise it to speed back up. This is the ONLY number to
+   change -- every speed below, including the PD correction, scales with it,
+   so the steering keeps the same shape at any setting.
+   -------------------------------------------------------------------------- */
+const int SPEED_PERCENT = 35;
+
+int uturn          = 180 * SPEED_PERCENT / 100;   // 35% -> 63
+int base_L         = 160 * SPEED_PERCENT / 100;   // 35% -> 56
+int base_R         = 160 * SPEED_PERCENT / 100;   // 35% -> 56
+int straight_speed = 150 * SPEED_PERCENT / 100;   // 35% -> 52
+int turn_speed     = 100 * SPEED_PERCENT / 100;   // 35% -> 35
+
+// Scaled with the speeds so the correction stays proportional to the base
+// throttle; an unscaled kp/kd would steer far harder at reduced speed.
+float kp = 1.0 * SPEED_PERCENT / 100;             // 35% -> 0.35
+float kd = 1.0 * SPEED_PERCENT / 100;             // 35% -> 0.35
 
 /* ---------------------- ESP32 link state (added) ---------------------- */
 const unsigned long LINK_BAUD = 9600;   // MUST match the ESP32 side
@@ -195,7 +212,7 @@ int readSensor() {
 void turnRight() {
   // This function will turn the robot to the right.
   // Adjust the turning duration and speed as needed.
-  wheel(100, -100);                     // turn right
+  wheel(turn_speed, -turn_speed);       // turn right
   delay(500);                           // adjust the delay for a proper right turn
 }
 
@@ -217,8 +234,8 @@ void line_follow() {
 
     // Check for straight line detection (you can adjust the threshold as needed)
     if (abs(error) < 10) {
-      // Straight line detected - increase speed to 150
-      wheel(150 + corr, 150 - corr);
+      // Straight line detected - run at the straight-line speed
+      wheel(straight_speed + corr, straight_speed - corr);
     } else {
       // Not a straight line, use the base speed
       wheel(base_L + corr, base_R - corr);

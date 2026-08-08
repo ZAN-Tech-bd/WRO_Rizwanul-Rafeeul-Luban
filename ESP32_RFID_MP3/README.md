@@ -27,17 +27,18 @@ Put MP3 files on the SD card in a folder named `MP3` as `0001.mp3` ... `0007.mp3
 
 ## UID -> Track map
 
-| Track (mp3) | RFID UID (hex)   |
-|------------:|------------------|
-| 0002        | `64 14 F6 B3`    |
-| 0003        | `4A 6B DF 34`    |
-| 0004        | `D8 36 D4 B9`    |
-| 0005        | `94 60 6B B2`    |
-| 0006        | `18 48 F4 BA`    |
-| 0007        | `94 58 1A B3`    |
-| 0008        | `09 4C B1 92`    |
+| Track (mp3) | RFID UID (hex) | Label   |
+|------------:|----------------|---------|
+| 0001        | `18 C4 0F BA`  | START   |
+| 0002        | `64 14 F6 B3`  | Track 2 |
+| 0003        | `4A 6B DF 34`  | Track 3 |
+| 0004        | `D8 36 D4 B9`  | Track 4 |
+| 0005        | `94 60 6B B2`  | Track 5 |
+| 0006        | `18 48 F4 BA`  | Track 6 |
+| 0007        | `94 58 1A B3`  | Track 7 |
+| 0008        | `09 4C B1 92`  | Track 8 |
 
-`0001.mp3` is reserved for the "tour start" intro and has no card.
+The START card (`18 C4 0F BA`) plays `0001.mp3` (tour intro).
 
 > All UIDs are full 4-byte values, stored in the same byte order the reader prints.
 
