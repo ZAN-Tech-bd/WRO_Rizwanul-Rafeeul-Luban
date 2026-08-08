@@ -26,7 +26,8 @@
   UID -> Track table
     Bytes are in the SAME order the reader prints them, i.e.
     "Card UID: 64 14 F6 B3"  ->  {0x64, 0x14, 0xF6, 0xB3}.
-    All entries are full 4-byte UIDs.
+    0001.mp3 is reserved for the "tour start" intro (no card); cards map
+    to tracks 2..8. All entries are full 4-byte UIDs.
   ----------------------------------------------------------------------
 */
 
@@ -63,13 +64,13 @@ struct RfidTrack {
 };
 
 const RfidTrack TRACKS[] = {
-  { {0x64, 0x14, 0xF6, 0xB3}, 4, 1 },   // 6414F6B3
-  { {0x4A, 0x6B, 0xDF, 0x34}, 4, 2 },   // 4A6BDF34
-  { {0xD8, 0x36, 0xD4, 0xB9}, 4, 3 },   // D836D4B9
-  { {0x94, 0x60, 0x6B, 0xB2}, 4, 4 },   // 94606BB2
-  { {0x18, 0x48, 0xF4, 0xBA}, 4, 5 },   // 1848F4BA
-  { {0x94, 0x58, 0x1A, 0xB3}, 4, 6 },   // 94581AB3
-  { {0x09, 0x4C, 0xB1, 0x92}, 4, 7 },   // 094CB192
+  { {0x64, 0x14, 0xF6, 0xB3}, 4, 2 },   // 6414F6B3 -> 0002.mp3
+  { {0x4A, 0x6B, 0xDF, 0x34}, 4, 3 },   // 4A6BDF34 -> 0003.mp3
+  { {0xD8, 0x36, 0xD4, 0xB9}, 4, 4 },   // D836D4B9 -> 0004.mp3
+  { {0x94, 0x60, 0x6B, 0xB2}, 4, 5 },   // 94606BB2 -> 0005.mp3
+  { {0x18, 0x48, 0xF4, 0xBA}, 4, 6 },   // 1848F4BA -> 0006.mp3
+  { {0x94, 0x58, 0x1A, 0xB3}, 4, 7 },   // 94581AB3 -> 0007.mp3
+  { {0x09, 0x4C, 0xB1, 0x92}, 4, 8 },   // 094CB192 -> 0008.mp3
 };
 const int TRACK_COUNT = sizeof(TRACKS) / sizeof(TRACKS[0]);
 
