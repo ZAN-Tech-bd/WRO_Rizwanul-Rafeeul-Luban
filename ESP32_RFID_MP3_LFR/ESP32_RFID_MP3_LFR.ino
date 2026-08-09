@@ -79,6 +79,7 @@
 #include <MFRC522Debug.h>
 #include <SoftwareSerial.h>
 #include "TunerPage.h"
+#include "RailPage.h"
 #include <esp_now.h>
 #include "EspNowCompat.h"     // one recv-callback signature for core 2.x and 3.x
 #include "MuseumProtocol.h"   // shared packet: firmware/common (symlinked here)
@@ -959,6 +960,12 @@ void handleTuner() {
 }
 
 
+void handleRail() {
+    addNoCacheHeaders();
+    server.send_P(200, "text/html; charset=utf-8", railPage);
+}
+
+
 // The Nano protocol is newline-delimited, so a query argument must never be
 // able to smuggle one through and inject a second command.
 String sanitizeArg(const String& in) {
@@ -1006,7 +1013,8 @@ void handleTuneCmd() {
 
     if (c == "START")      lfrStart();      // keeps lfrRunning in step
     else if (c == "STOP")  lfrStop();
-    else if (c == "RAMP" || c == "SAVE" || c == "LOAD" || c == "GET")
+    else if (c == "RAMP" || c == "SAVE" || c == "LOAD" || c == "GET" ||
+             c == "MAN")
         sendNano(c.c_str());
     else {
         server.send(400, "text/plain", "bad cmd");
@@ -1226,6 +1234,7 @@ void setup() {
     // links and redirects never depend on the build.
     server.on("/mp3", handleRoot);
     server.on("/tuner", handleTuner);
+    server.on("/rail", handleRail);     // drivetrain characterisation rig
 #if WEB_MODE == WEB_TUNER
     server.on("/", handleTuner);
 #else

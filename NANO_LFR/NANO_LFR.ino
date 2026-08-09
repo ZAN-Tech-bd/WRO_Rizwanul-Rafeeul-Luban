@@ -121,6 +121,18 @@ int junction_inner = -40;  // JUNCI (inner side)
    wins over this setting. */
 int lost_dir = 2;
 
+/* ML / MR -- rail-test mode. Drives each side at a fixed PWM and ignores the
+   line sensors entirely, so the drivetrain can be characterised on a straight
+   rail rather than inferred from line-following behaviour. Two things worth
+   measuring here:
+     * the PWM at which each side actually starts (they are rarely equal),
+     * the ML/MR pair that tracks straight -- mismatched motors are a common
+       cause of veer that looks like a steering bug.
+   These deliberately BYPASS the min_drive floor: a characterisation rig must
+   report exactly what was asked for, not a silently corrected value. */
+int man_left  = 0;   // ML
+int man_right = 0;   // MR
+
 // Complete one-line samples are useful for diagnosis, but printing every
 // control-loop pass would saturate the shared 9600-baud ESP32 link. At 125 ms,
 // each ~60-character line finishes comfortably before the next sample.
@@ -144,6 +156,7 @@ const char* motionMode = "STOP";
 const unsigned long LINK_BAUD = 9600;   // MUST match the ESP32 side
 bool running = false;                   // robot starts STOPPED by default
 bool rampMode = false;                  // MIN_DRIVE ramp test in progress
+bool manualMode = false;                // rail test: fixed ML/MR, sensors ignored
 char rxBuf[24];                         // fits the longest "SET <key> <value>"
 uint8_t rxLen = 0;
 /* ---------------------------------------------------------------------- */
@@ -165,6 +178,10 @@ void loop() {
   if (rampMode) {
     readSensor();                       // keep the telemetry line meaningful
     rampStep();
+  } else if (manualMode) {
+    readSensor();                       // sensors reported but NOT acted on
+    motionMode = "MANUAL";
+    wheelRaw(man_left, man_right);      // raw: no floor, no steering logic
   } else if (running) {
     line_follow();
   } else {
@@ -198,12 +215,14 @@ const TuneEntry tuneTable[] = {
   {"JUNC", &junction_speed},
   {"JUNCI", &junction_inner},
   {"LDIR", &lost_dir},
+  {"ML", &man_left},
+  {"MR", &man_right},
 };
 const uint8_t TUNE_COUNT = sizeof(tuneTable) / sizeof(tuneTable[0]);
 
 // Bump TUNE_MAGIC whenever the table layout changes: a mismatch makes the
 // Nano ignore the stale EEPROM image and fall back to the defaults above.
-const uint16_t TUNE_MAGIC = 0x4C03;   // bumped: SRCHI/JUNCI added to the table
+const uint16_t TUNE_MAGIC = 0x4C04;   // bumped: ML/MR added to the table
 
 void tuneReport() {
   Serial.print(F("TUNE"));
@@ -355,11 +374,19 @@ void processCommand(const char *cmd) {
     rampStart();
     return;
   }
+  if (strcmp(cmd, "MAN") == 0) {
+    running = false;
+    manualMode = true;
+    Serial.println(F("MANUAL:ON"));
+    return;
+  }
 
   if (strcmp(cmd, "STOP") == 0 || strcmp(cmd, "0") == 0) {
     running = false;
+    manualMode = false;                 // STOP always means all motors idle
   } else if (strcmp(cmd, "START") == 0 || strcmp(cmd, "1") == 0) {
     running = true;
+    manualMode = false;                 // line following takes over from the rig
   } else {
     // any other signal (GO, T, TOGGLE, ...) flips the running state
     running = !running;
