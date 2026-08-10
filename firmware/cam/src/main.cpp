@@ -25,7 +25,12 @@
 //  QVGA 320x240, 1 fb in PSRAM) are the ones that previously produced a stable
 //  PID 0x2145 detection on this exact board (see "ESP32 CAM.pdf").
 //
-//  Commands (USB serial @115200, case-insensitive, newline-terminated):
+//  Commands arrive from TWO sources, both line-oriented and case-insensitive:
+//    * the USB console @115200, and
+//    * the guide ESP32's trigger wire on UART1 (GPIO13, 9600, RX only), which
+//      sends "SHOOT <station>" each time the robot reads a station RFID card.
+//
+//  Commands:
 //     CAPTURE [station]   acquire a frame, convert to JPEG, upload to Hub
 //     STATUS              print camera/SD/PSRAM/heap diagnostics
 //     LIST                list saved photos in /photos (name + size)
@@ -58,9 +63,16 @@ static void  notifyHubImageReady(uint8_t stationId);
 static bool  uploadToHubJpeg(const uint8_t *jpeg, size_t jpegLen, uint16_t stationId);
 static void  sendLastPhoto(uint16_t stationId);
 
-// --- Bounded line-oriented command buffer (no dynamic String) --------------
+// --- Bounded line-oriented command buffers (no dynamic String) -------------
+// One per command source: the USB console and the robot link each need their
+// own buffer, or a half-typed USB line would be spliced into a robot command.
 static char  g_cmdBuf[CMD_BUF_LEN];
 static int   g_cmdLen = 0;
+static char  g_linkBuf[CMD_BUF_LEN];
+static int   g_linkLen = 0;
+
+// UART1: the guide ESP32's "SHOOT <station>" trigger (RX only, see config.h).
+static HardwareSerial RobotLink(1);
 
 // ---------------------------------------------------------------------------
 //  Small helpers
@@ -441,6 +453,25 @@ static void handleCommand(char *line) {
   }
 }
 
+// Drain one command source into its own line buffer and dispatch complete
+// lines. `tag` non-null echoes each accepted line to the USB console, so a
+// robot-triggered capture is visible while you watch the monitor.
+static void pumpCommandStream(Stream &io, char *buf, int &len, const char *tag) {
+  while (io.available()) {
+    char c = (char)io.read();
+    if (c == '\n' || c == '\r') {
+      if (len > 0) {
+        buf[len] = '\0';
+        if (tag) Serial.printf("[%s] <- \"%s\"\n", tag, buf);
+        handleCommand(buf);
+      }
+      len = 0;
+    } else if (len < (int)(CMD_BUF_LEN - 1)) {
+      buf[len++] = c;   // silently drop chars beyond the buffer
+    }
+  }
+}
+
 // ===========================================================================
 //  Hub integration: join the Hub SoftAP, then POST each JPEG to the dashboard.
 // ===========================================================================
@@ -578,6 +609,12 @@ void setup() {
   initCamera();
   Serial.println(F("[sd] optional backup not mounted at boot; send INIT to try an SD card."));
 
+  // ---- Robot trigger link: the guide ESP32 sends "SHOOT <station>". ----
+  RobotLink.begin(ROBOT_LINK_BAUD, SERIAL_8N1,
+                  ROBOT_LINK_RX_GPIO, ROBOT_LINK_TX_GPIO);
+  Serial.printf("[link] robot trigger ready on GPIO%d @ %d baud (RX only)\n",
+                ROBOT_LINK_RX_GPIO, ROBOT_LINK_BAUD);
+
   // Flash LED off by default (reliability first; brownout-prone rail).
   pinMode(FLASH_LED_GPIO, OUTPUT);
   digitalWrite(FLASH_LED_GPIO, LOW);
@@ -594,19 +631,10 @@ void setup() {
 }
 
 void loop() {
-  // Line-oriented, hard-bounded serial command reader.
-  while (Serial.available()) {
-    char c = (char)Serial.read();
-    if (c == '\n' || c == '\r') {
-      if (g_cmdLen > 0) {
-        g_cmdBuf[g_cmdLen] = '\0';
-        handleCommand(g_cmdBuf);
-      }
-      g_cmdLen = 0;
-    } else if (g_cmdLen < (int)(sizeof(g_cmdBuf) - 1)) {
-      g_cmdBuf[g_cmdLen++] = c;   // silently drop chars beyond the buffer
-    }
-  }
+  // Two independent command sources: the USB console and the robot's trigger
+  // wire. Both speak the same line protocol and share one dispatcher.
+  pumpCommandStream(Serial,    g_cmdBuf,  g_cmdLen,  nullptr);
+  pumpCommandStream(RobotLink, g_linkBuf, g_linkLen, "link");
 
   // Auto-capture timer (CAPTURE + push to Hub). Skipped when g_autoMs == 0.
   if (g_autoMs && (millis() - g_autoLast) >= g_autoMs) {

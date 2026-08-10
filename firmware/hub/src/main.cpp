@@ -41,6 +41,12 @@ SemaphoreHandle_t gStateMutex = nullptr;
 // ESP-NOW inbox (filled in the wifi callback on Core 0, drained in loop on Core 1)
 QueueHandle_t espnowQ = nullptr;
 
+// ESP-NOW outbox bookkeeping. Everything is transmitted from Core 1 (loop), so
+// there is exactly one sender task; Core 0 web handlers and the button only
+// raise gEmergencyDirty. Declared up here because processMessage() sets it.
+uint16_t      gEspnowSeq      = 0;
+volatile bool gEmergencyDirty = true;   // true -> announce on the very first loop
+
 // JPEG uploads must never pass through Arduino String: JPEG data contains
 // embedded NUL bytes. WebServer's multipart HTTPUpload callback delivers each
 // file chunk unchanged and follows the core's stable, standard upload path.
@@ -173,9 +179,15 @@ void processMessage(const museum::MuseumMessage& m) {
       gState.robotMs = millis();
       break;
     }
-    case museum::MSG_EMERGENCY:
-      gState.emergency = (m.flags & museum::FLAG_EMERGENCY_ACTIVE);
+    case museum::MSG_EMERGENCY: {
+      // Raised by a physical emergency-button node. Relay it to the robot at
+      // once instead of waiting for the next timed broadcast. Only a real
+      // change is marked dirty, so two nodes cannot echo each other forever.
+      const bool on = (m.flags & museum::FLAG_EMERGENCY_ACTIVE) != 0;
+      if (on != gState.emergency) gEmergencyDirty = true;
+      gState.emergency = on;
       break;
+    }
     case museum::MSG_HEALTH: {
       const char* nm = stationName(m.stationId);
       if (!nm[0]) break;
@@ -188,6 +200,38 @@ void processMessage(const museum::MuseumMessage& m) {
     default: break;  // HEARTBEAT etc. ignored for now
   }
   stateUnlock();
+}
+
+// =====================================================================
+//  ESP-NOW send: emergency state -> the robot (and any other node)
+// =====================================================================
+void broadcastEmergency(bool on) {
+  museum::MuseumMessage m = museum::makeMessage(museum::MSG_EMERGENCY, HUB_NODE_ID);
+  m.flags    = museum::FLAG_DEVICE_ONLINE;
+  if (on) m.flags |= museum::FLAG_EMERGENCY_ACTIVE;
+  m.sequence = ++gEspnowSeq;
+  m.uptimeMs = millis();
+  museum::finalizeMessage(m);   // fields changed since makeMessage: re-checksum
+
+  esp_now_send(museum::kBroadcastAddress,
+               reinterpret_cast<const uint8_t*>(&m), sizeof(m));
+}
+
+// Re-announce on every change and then on a slow timer, so late/rebooted nodes
+// pick the state up without the Hub tracking who is listening.
+void pumpEmergencyBroadcast() {
+  static uint32_t lastSend = 0;
+  const uint32_t now = millis();
+
+  if (!gEmergencyDirty && (now - lastSend) < EMERGENCY_BROADCAST_MS) return;
+
+  stateLock();
+  const bool on = gState.emergency;
+  stateUnlock();
+
+  gEmergencyDirty = false;
+  lastSend        = now;
+  broadcastEmergency(on);
 }
 
 // =====================================================================
@@ -280,6 +324,9 @@ void handleDeny() {
 void handleEmergency() {
   int on = server.arg("on").toInt();
   stateLock(); gState.emergency = (on != 0); stateUnlock();
+  // Core 1 does the actual ESP-NOW send on its next pass (~5 ms) so all
+  // transmits stay on one task.
+  gEmergencyDirty = true;
   server.send(200, "application/json", "{\"ok\":true}");
 }
 void handleAdvance() {  // test button: nudge the mock robot to the next station
@@ -618,16 +665,153 @@ void updateLeds() {
 
   pixels.clear();
   if (em) {
-    if (now - lastBlink > 250) { lastBlink = now; blinkOn = !blinkOn; digitalWrite(BUZZER_PIN, blinkOn ? HIGH : LOW); }
+    // The buzzer is owned by updateSiren() now, so this only blinks the LEDs.
+    if (now - lastBlink > 250) { lastBlink = now; blinkOn = !blinkOn; }
     uint32_t c = blinkOn ? pixels.Color(255, 0, 0) : 0;
     for (uint8_t i = 0; i < STATION_COUNT; i++) pixels.setPixelColor(i, c);
   } else {
-    digitalWrite(BUZZER_PIN, LOW);
     int idx = -1;
     for (uint8_t i = 0; i < STATION_COUNT; i++) if (strcmp(st, STATION_IDS[i]) == 0) { idx = i; break; }
     if (idx >= 0) pixels.setPixelColor(idx, moving ? pixels.Color(0, 0, 255) : pixels.Color(0, 200, 0));
   }
   pixels.show();
+}
+
+// =====================================================================
+//  Emergency button + siren  --  lifted from the proven Emergency_Switch.ino
+//  (Emergency_Switch/Emergency_Switch.ino), kept deliberately verbatim.
+//
+//  Press to arm, hold 3 s to silence, millis()-timed throughout so it never
+//  blocks the ESP-NOW drain or the LED show it now shares Core 1 with.
+//
+//  Only two things were added for the Hub: alarmActive is mirrored into the
+//  shared gState.emergency (so the dashboard and the robot see it), and it is
+//  mirrored back (so clearing from the dashboard also stops the siren).
+//
+//  tone() needs a PASSIVE buzzer -- the one this sketch was built against. For
+//  a plain ACTIVE buzzer, swap the tone() call in updateSiren() for
+//  digitalWrite(BUZZER_PIN, HIGH)/(…, LOW): same wail rhythm, no pitch sweep.
+// =====================================================================
+
+// The merged code calls it BUTTON_PIN; the Hub's config.h names it explicitly.
+const uint8_t BUTTON_PIN = EMERGENCY_BUTTON_PIN;
+
+// ---- Siren tone settings ----
+const int freqLow  = 600;                     // Hz, "low" note
+const int freqHigh = 1200;                    // Hz, "high" note
+const unsigned long toneSwitchInterval = 400; // ms between notes (lower = faster wail)
+
+// ---- Hold-to-stop setting ----
+const unsigned long holdTimeToStop = 3000;    // ms held to silence the alarm
+
+// ---- Debounce setting ----
+const unsigned long debounceDelay = 50;       // ms
+
+// ---- State ----
+bool alarmActive = false;
+
+bool lastRawReading = LOW;
+bool debouncedState = LOW;
+bool previousDebouncedState = LOW;
+unsigned long lastDebounceTime = 0;
+
+unsigned long pressStartTime = 0;
+bool timingHold = false;
+
+bool sirenHighPhase = false;
+unsigned long lastToneSwitchTime = 0;
+
+// Hub addition: publish a button-driven change to the rest of the system.
+void publishAlarm(bool on) {
+  bool changed = false;
+  stateLock();
+  if (gState.emergency != on) { gState.emergency = on; changed = true; }
+  stateUnlock();
+  if (changed) gEmergencyDirty = true;   // -> ESP-NOW, on the next loop pass
+}
+
+// Hub addition: the dashboard (and an emergency-button node) can also change
+// the state. Adopt it, and silence the siren on the way down -- tone() runs
+// until it is stopped, and the original's only noTone() is on the hold path.
+void syncAlarmFromState() {
+  stateLock();
+  const bool on = gState.emergency;
+  stateUnlock();
+
+  if (on == alarmActive) return;
+
+  alarmActive = on;
+  if (alarmActive) {
+    lastToneSwitchTime = millis() - toneSwitchInterval;   // start wailing at once
+  } else {
+    noTone(BUZZER_PIN);
+    digitalWrite(BUZZER_PIN, LOW);
+    timingHold = false;
+  }
+}
+
+// Debounces the raw pin reading into debouncedState
+void updateButton() {
+  bool rawReading = digitalRead(BUTTON_PIN);
+
+  if (rawReading != lastRawReading) {
+    lastDebounceTime = millis();
+  }
+
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+    debouncedState = rawReading;
+  }
+
+  lastRawReading = rawReading;
+}
+
+// Handles arming the alarm on press, and disarming it on a 3s hold
+void handleAlarmLogic() {
+  bool pressedNow    = (debouncedState == HIGH);
+  bool pressedBefore = (previousDebouncedState == HIGH);
+
+  // Rising edge: button just got pressed
+  if (pressedNow && !pressedBefore) {
+    if (!alarmActive) {
+      alarmActive = true;
+      Serial.println("Alarm triggered!");
+      // force the siren to start sounding immediately, not after the first interval
+      lastToneSwitchTime = millis() - toneSwitchInterval;
+      publishAlarm(true);                       // Hub addition
+    }
+    pressStartTime = millis();
+    timingHold = true;
+  }
+
+  // Falling edge: button just got released
+  if (!pressedNow && pressedBefore) {
+    timingHold = false;
+  }
+
+  // While alarm is active and button is being held, watch the hold duration
+  if (alarmActive && pressedNow && timingHold) {
+    if (millis() - pressStartTime >= holdTimeToStop) {
+      alarmActive = false;
+      timingHold = false;
+      noTone(BUZZER_PIN);
+      digitalWrite(BUZZER_PIN, LOW);
+      Serial.println("Alarm silenced (held 3s)");
+      publishAlarm(false);                      // Hub addition
+    }
+  }
+
+  previousDebouncedState = debouncedState;
+}
+
+// Alternates between two tones for a siren effect, purely millis()-timed
+void updateSiren() {
+  if (!alarmActive) return;
+
+  if (millis() - lastToneSwitchTime >= toneSwitchInterval) {
+    lastToneSwitchTime = millis();
+    sirenHighPhase = !sirenHighPhase;
+    tone(BUZZER_PIN, sirenHighPhase ? freqHigh : freqLow);
+  }
 }
 
 // =====================================================================
@@ -640,6 +824,12 @@ void setup() {
 
   pixels.begin(); pixels.clear(); pixels.show();
   pinMode(BUZZER_PIN, OUTPUT); digitalWrite(BUZZER_PIN, LOW);
+  // The module has its own pull-down and outputs HIGH when pressed. The
+  // internal pull-down is added on top so that an UNWIRED GPIO21 reads a solid
+  // LOW instead of floating -- a floating pin here would randomly latch the
+  // emergency and send the robot into evacuation. Harmless when the module is
+  // fitted: its drive easily overcomes the ~45k internal resistor.
+  pinMode(BUTTON_PIN, INPUT_PULLDOWN);
   randomSeed(esp_random());   // otherwise every boot mints the same visitor ids
   stateInit();
 
@@ -716,6 +906,16 @@ void loop() {  // Core 1
   museum::MuseumMessage m;
   while (espnowQ && xQueueReceive(espnowQ, &m, 0) == pdTRUE) processMessage(m);
   settleRobotMotion();
+
+  // Emergency switch (merged Emergency_Switch.ino), in its original order.
+  syncAlarmFromState();   // adopt dashboard/ESP-NOW changes first
+  updateButton();
+  handleAlarmLogic();
+  updateSiren();
+
+  // After processMessage and the button: an emergency raised by either is
+  // relayed to the robot on this same pass.
+  pumpEmergencyBroadcast();
   updateLeds();
   vTaskDelay(5);
 }

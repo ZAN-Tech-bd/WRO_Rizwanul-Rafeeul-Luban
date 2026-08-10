@@ -1,5 +1,63 @@
 # Project Audit Findings
 
+## 2026-08-10 — RFID rail narration stop/resume behavior
+
+- The standalone target for the requested change is `ESP32_RFID_MP3_RAIL/ESP32_RFID_MP3.ino`; it currently starts the Nano immediately for the start card, but station cards do not explicitly stop the Nano before audio and there is no playback-finished/resume state machine.
+- Required behavior is: mapped audio RFID -> send Nano `STOP` before playback -> send `START` only after DFPlayer reports the track finished; the end UID `A3 C0 38 15` sends `STOP`, plays no audio, and latches the rail stopped.
+- The stop latch must prevent station audio completion, manual playback, or timeout fallback from starting the rail. Only the start UID `18 C4 0F BA` clears the latch and can resume the rail.
+- The existing integrated `ESP32_RFID_MP3_LFR` controller already demonstrates the needed DFPlayer finished-event guard (`NARRATION_MIN_MS`) and timeout fallback (`NARRATION_MAX_MS`), but the standalone rail target needs a smaller equivalent implementation.
+- The DFPlayer error path must not auto-start after a failed/no-audio playback; when audio is unavailable, the rail remains stopped until the explicit start card is scanned.
+
+## 2026-08-10 — ESP32 RFID rail start/end cards
+
+- The requested target is `ESP32_RFID_MP3_RAIL/ESP32_RFID_MP3.ino`, not the already-integrated `ESP32_RFID_MP3_LFR` target.
+- The rail target currently maps only station UIDs to tracks 2–8 and has no Nano UART. Its serial monitor commands control only DFPlayer playback and volume.
+- The requested start UID is `18 C4 0F BA` and should map to `0001.mp3`; the requested end/stop UID is `A3 C0 38 15` and should produce no new audio.
+- Because this target is paired with `NANO_LFR_RAIL`, the useful interpretation of the start/end cards is to add the existing 9600-baud newline UART contract: start card sends `START`, end card sends `STOP`. Use ESP32 UART1 GPIO25 RX/GPIO26 TX, matching the other RFID/LFR controller and its documented Nano wiring.
+- The end card must be distinguishable from an unknown UID even though it has no track. A mapped action/entry-index result is safer than using track `0` as both “no audio” and “unknown.”
+- Implementation/build result: `ESP32_RFID_MP3_RAIL/ESP32_RFID_MP3.ino` now uses mapped track `1` for START and track `0` for the STOP/no-audio action, sends newline-terminated Nano commands over UART1 GPIO25/26, and builds successfully for `esp32dev` at 21,864 B RAM / 282,981 B application flash.
+- Hardware upload and physical RFID/Nano verification were not performed for this request.
+- Follow-up hardware flash succeeded after the user connected the Nano: `/dev/ttyUSB0` was the CH340 at USB path `3-2`; `nanoatmega328new` upload wrote and verified 4,092 bytes, and boot capture returned `READY:STOPPED`.
+- ESP32 follow-up flash succeeded to `/dev/ttyUSB1` after the second CH340 appeared at USB path `3-1`; esptool identified ESP32-D0WD-V3 rev 3.1 / MAC `1c:c3:ab:3c:8c:38`, wrote 283,344 application bytes, and verified all flash hashes. Passive post-reset capture was empty because it started too late; interactive PlatformIO monitor cannot run in the non-TTY tool terminal, so an explicit reset plus pyserial capture remains the runtime verification method.
+- Explicit reset plus pyserial capture verified the ESP32 runtime markers, RFID initialization, Nano UART initialization, and boot-time `STOP` transmission. The same capture reported `DFPlayer ERROR! Check wiring / SD card.` and audio disabled, so the firmware path is verified but DFPlayer/SD hardware is not.
+
+## 2026-08-10 — Nano rail controller ↔ ESP32 RFID/MP3 integration
+
+- User locked a Nano-only adaptation: `ESP32_RFID_MP3_LFR/` must not be modified. Compatibility must therefore be achieved entirely by implementing the companion's existing UART contract on the Nano.
+- `NANO_LFR/NANO_LFR.ino` is not a simple motor sketch. It is a five-sensor, active-low line follower with rule-based straight/curve/sharp/search/junction steering, UART START/STOP control, sensor/motor telemetry, live `SET` tuning, EEPROM persistence, a minimum-drive ramp, and a manual rail-test mode.
+- The companion `ESP32_RFID_MP3_LFR` depends only on a small subset of that Nano behavior for the tour: newline-delimited `START` and `STOP` at 9600 baud, plus `READY:STOPPED`, `STATE:RUNNING`, and `STATE:STOPPED` replies. It sends STOP before station narration, START after narration, START for the silent tour-start card/emergency evacuation, and STOP at the evacuation exit.
+- The calibrated `NANO_RAIL` behavior is physically different from line following: fixed forward PWM left=150/right=210 and active braking. Its current `F`/`S` protocol and human-oriented status output are not directly compatible with the ESP32's deterministic `START`/`STOP` protocol and state parser.
+- Existing `NANO_LFR` logical motor mapping is crossed: `wheelRaw(lm, rm)` sends `lm` through IN3/IN4 + ENB and `rm` through IN1/IN2 + ENA. The calibrated `NANO_RAIL` sketch names ENA/IN1/IN2 as left and ENB/IN3/IN4 as right. Copying 150/210 without reconciling this mapping can silently swap the tuned wheel PWMs.
+- Existing `NANO_LFR` zero command sets both direction inputs HIGH but then writes enable PWM 0. That disables the bridge and does not provide the active HIGH/HIGH, enable-ON braking that physically stopped the rail robot. A dedicated brake path must write both direction inputs HIGH and ENA/ENB=255.
+- If the final robot is rail-guided rather than line-guided, retaining the sensor steering, `MIN/BASE/CO/CI/SO/SI/...` tuning table, EEPROM image, RAMP, and junction/search logic adds failure modes without adding useful behavior. The clean design is a small rail state machine that starts braked, drives only forward at 150/210 on START, and hard-brakes on STOP.
+- For robust Nano memory use, the final UART parser should reuse the existing fixed-size, newline-delimited character buffer rather than `String::readStringUntil()`. Commands should be case-insensitive but deterministic; unknown input must report an error and must never toggle motion.
+- The ESP32 currently sets `lfrRunning` optimistically as soon as it transmits START/STOP, then corrects it from Nano replies. Basic compatibility requires no ESP32 change if the Nano preserves the expected replies. Stronger integration would add command acknowledgement timeout/retry and avoid beginning narration/photo work until STOP is confirmed or a bounded fail-safe expires.
+- `NANO_LFR/platformio.ini` still exposes both old- and new-bootloader environments. The attached Nano has already been proven as `nanoatmega328new`; the adapted target should retain only the new-bootloader environment to remove ambiguity.
+
+## 2026-08-08 — Active Nano LFR correction
+
+- User reports the current robot mostly drives straight and does not slow/steer adequately when the line bends left or right. Requested master speed is 38%.
+- Required Nano diagnostic is one serial line containing all five normalized logical sensor values (`s1` through `s5`) so the physical pattern can be observed while testing.
+- The Nano hardware UART is simultaneously the ESP32 command link at 9600 baud, so printing on every unrestricted control-loop iteration would saturate the link and can delay `START`/`STOP`. The implementation must rate-limit complete sensor lines while still printing continuously enough for diagnosis.
+- Current repository status contains substantial pre-existing modifications, including both `NANO_LFR/NANO_LFR.ino` and `ESP32_RFID_MP3_LFR/ESP32_RFID_MP3_LFR.ino`. Those edits must be inspected and preserved rather than replaced wholesale.
+- Audio suppression belongs on the active ESP32 RFID/DFPlayer mapping path, not in the Nano line sensor algorithm. The exact configured start UID and active companion target still need source inspection.
+- Active Nano source is `NANO_LFR/NANO_LFR.ino`; it currently uses `SPEED_PERCENT=40`, active-low normalized sensors on A0–A4, and a 9600-baud D0/D1 ESP32 link.
+- Root cause of weak steering is visible in source: speed and both PD gains are scaled together. At 40%, `kp=kd=0.40`; a steady far-edge error of ±20 therefore changes each wheel by only about 8 PWM counts. Both wheels remain forward and close in speed, so the chassis mostly continues straight.
+- Current bend logic is inverted from the requested behavior: straight base is PWM 60, while a non-straight path uses the higher PWM 64 base. It therefore speeds up slightly on bends rather than slowing.
+- The current all-five pattern (`11111`) always performs a blocking 500 ms right pivot. It cannot select a left versus right branch from an ambiguous all-five reading and it blocks serial stop processing for half a second. Revised steering should avoid long blocking decisions and use the measured error/edge pattern for ordinary bends.
+- Active merged ESP32 source maps start UID `18 C4 0F BA` to track 1 and currently calls `playTrack(1)`, then waits for narration completion before sending Nano `START`. The requested behavior should special-case that mapped start entry: skip DFPlayer playback and start the Nano immediately, while leaving tracks 2–8 unchanged.
+- Nano telemetry currently has no sensor output. The ESP32 forwards complete Nano lines to USB, but its inbound `nanoBuf[32]` is too small for a readable `S1=... S5=...` line plus steering state; it must be enlarged if detailed telemetry is emitted.
+- Implemented telemetry format is `S1=<0|1> S2=<0|1> S3=<0|1> S4=<0|1> S5=<0|1> E=<value|LOST> M=<mode> L=<signed PWM> R=<signed PWM>`. It is emitted every 125 ms (~8 Hz), not every unbounded loop pass, because the UART is only 9600 baud and also carries safety-critical START/STOP commands.
+- Implemented 38% commands: straight 57/57; ordinary left 24/57; ordinary right 57/24; sharp left 5/62; sharp right 62/5; lost-line search ±41; all-five junction pivot ±38. Values remain within the existing signed `wheel()`/PWM model.
+- Sensor direction history now updates only when exactly one outer edge is active. This prevents `11111` from always overwriting history as left merely because S1 was checked before S5.
+- All-five junction steering is now non-blocking and follows the last unambiguous edge (default right when no history), replacing the unconditional blocking 500 ms right pivot. This keeps UART STOP processing responsive.
+- Both affected targets compile: Nano `nano_new` uses 330/2048 B RAM (16.1%) and 4302/30720 B flash (14.0%); merged ESP32 uses 46,328/327,680 B RAM (14.1%) and 815,625/1,310,720 B app flash (62.2%).
+- Fresh hardware inventory found no `/dev/ttyUSB*` or `/dev/ttyACM*`, no `/dev/serial/by-id` entries, and no USB serial-class adapter in `lsusb`. Previous `/dev/ttyUSB0` identities are stale and cannot safely be reused for flashing.
+- After the ESP32 was plugged in, `/dev/ttyUSB0` reappeared as an unowned CH340; a read-only `esptool chip_id` positively identified ESP32-D0WD-V3 rev v3.1, MAC `1c:c3:ab:3c:8c:38` before any write.
+- After the Nano was plugged in, a second CH340 appeared at `/dev/ttyUSB1` (USB path `04:00.4:2`, distinct from the ESP32 at `04:00.4:1`); avrdude read signature `0x1e950f` (ATmega328P). Both CH340s share VID:PID `1a86:7523`, so they were distinguished by USB path and the esptool/avrdude probe, not by name alone.
+- ESP32 flash and runtime verified: all region hashes verified; boot log showed `RFID-MP3-LFR-v3-silent-start`, `-> Nano: STOP`, and `<- Nano: STATE:STOPPED`.
+- Nano flash and runtime verified: 4302 bytes written and verified; boot/telemetry showed `READY:STOPPED` then `S1=0 S2=1 S3=1 S4=0 S5=0 E=-5 M=STOP L=0 R=0`, repeated at ~8 Hz (rate-limited by `SENSOR_REPORT_MS=125`). Live sensors (S2/S3 active) confirm polarity is correct and telemetry is flowing.
+
 ## 2026-08-08 — ESP32 MP3/LFR Browser-Control Diagnosis
 
 - The physical sequence LFR ON → LFR OFF → track 1 was generated by the laptop's direct HTTP `curl` requests, not by clicking the rendered page. It proves the HTTP handlers and hardware command paths, but not the page's JavaScript.

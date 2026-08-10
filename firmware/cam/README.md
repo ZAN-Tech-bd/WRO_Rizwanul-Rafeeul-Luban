@@ -1,11 +1,13 @@
 # Cam — ESP32S-CAM (GC2145) photo node (PlatformIO project)
 
-Captures a still photo on a USB-serial command and saves it as a JPEG on the
-module's **own onboard microSD** card (`/photos/IMG_####.JPG`). **No Wi-Fi and
-no Hub upload yet** — that is a single clearly-marked seam for later.
+Captures a still photo on a USB-serial command, saves it as a JPEG on the
+module's **own onboard microSD** card (`/photos/IMG_####.JPG`), and — if the
+Hub's `MuseumHub` WiFi is reachable — **uploads it to the Hub** at
+`/api/image/upload` plus a `MSG_IMAGE_READY` ping over ESP-NOW.
 
-> Status: ✅ **command-driven capture-to-SD firmware** (GC2145 + SD_MMC 1-bit).
-> Network/Hub upload is intentionally **not** implemented in this phase.
+> Status: ✅ **capture-to-SD firmware** (GC2145 + SD_MMC 1-bit) **+ Hub upload**
+> (WiFi STA join, HTTP POST, ESP-NOW ready-ping). SD capture works with no Hub
+> present; the upload step is skipped (not required) when the Hub is unreachable.
 
 ---
 
@@ -71,19 +73,42 @@ received"). Upload speed is fixed at **115200** for reliability on the CAM-MB.
 
 ---
 
-## Serial commands (USB @115200, case-insensitive, newline-terminated)
+## Commands (case-insensitive, newline-terminated)
 
 | Command | Action |
 |---------|--------|
-| `CAPTURE [station]` | Acquire one RGB565 frame → software JPEG → save `/photos/IMG_####.JPG`. Optional integer station id is echoed in the result. |
-| `STATUS` | Camera/SD/PSRAM/heap/card diagnostics (PID, card type, sizes, free space, photo count). |
-| `LIST` | List saved photos in `/photos` (name + size). |
+| `SHOOT [station]` | Ensure Wi-Fi, then capture → software JPEG → POST to the Hub. **This is what the robot sends.** |
+| `CAPTURE [station]` | Capture → JPEG in RAM → upload if Wi-Fi is already up (SD backup optional). |
+| `SEND [station]` | Re-upload the last RAM-cached JPEG (e.g. after a Hub reboot). |
+| `WIFI` | Join `MuseumHub`, or print the current connection. |
+| `AUTO <ms>` | Auto capture+upload every `<ms>` (min 1000). `AUTO` alone stops it. |
+| `STATUS` | Camera/SD/PSRAM/heap/Wi-Fi diagnostics. |
+| `LIST` | List SD backup photos in `/photos` (name + size). |
 | `INIT` | Re-initialise camera and SD without rebooting (bring-up retry). |
 | `FLASH ON` / `FLASH OFF` | Toggle the onboard flash LED (optional). |
 | `HELP` | Show the command list. |
 
-The input line buffer is hard-bounded (no dynamic `String`); the command verb is
-upper-cased, the optional numeric argument is left as-is.
+Each source has its own hard-bounded line buffer (no dynamic `String`), so a
+half-typed USB line can never be spliced into a robot command. The verb is
+upper-cased; the optional numeric argument is left as-is.
+
+### Robot trigger link (UART1, RX only)
+
+| Cam | Guide ESP32 | Notes |
+|-----|-------------|-------|
+| GPIO13 (RX) | GPIO27 (TX) | 9600 baud, 3.3 V both sides — **no divider** |
+| GND | GND | common ground is mandatory |
+
+The guide ESP32 sends `SHOOT <station>` when it reads a station RFID card
+(every card except the tour-start card). Nothing is sent back — the cam's
+replies go to its own USB console, where robot-triggered lines are echoed as
+`[link] <- "SHOOT 3"`.
+
+GPIO13 is free because `SD_MMC` runs in 1-bit mode (GPIO2/14/15 only). It is
+deliberately **not** U0RXD: sharing that pin would put the CAM-MB's CH340
+driver and the robot's TX driver on the same net and cost you the USB console.
+
+**Disconnect this wire while flashing the cam**, then reconnect.
 
 ### Filenames / collision safety
 Photos are written to a predictable folder with a zero-padded, never-overwriting
@@ -143,15 +168,17 @@ Boot (with FAT32 card):
 
 ---
 
-## Future Hub integration (not wired in this phase)
+## Hub integration (implemented)
 
-The integration point is a single stub: [`uploadToHubJpeg()`](src/main.cpp) in
-`src/main.cpp`. Later (after the core demo is solid) this node will:
+[`uploadToHubJpeg()`](src/main.cpp) in `src/main.cpp` runs after every successful
+capture:
 
-1. join the Hub's Wi-Fi **MuseumHub** as a client on channel 1 (it is a **client
+1. joins the Hub's Wi-Fi **MuseumHub** as a client on channel 1 (it is a **client
    only — it never hosts**),
-2. `POST http://192.168.4.1/api/image/upload` with the raw JPEG body just saved,
-3. send a `museum::MSG_IMAGE_READY` packet over ESP-NOW (channel 1).
+2. `POST http://192.168.4.1/api/image/upload` (multipart, field `image`) with
+   the JPEG just saved,
+3. sends a `museum::MSG_IMAGE_READY` packet over ESP-NOW (channel 1).
 
 The shared ESP-NOW packet is [`../common/MuseumProtocol.h`](../common/MuseumProtocol.h).
-Nothing in this phase joins Wi-Fi or performs any HTTP.
+If the Hub AP isn't in range, the WiFi join times out (`WIFI_CONNECT_TIMEOUT_MS`
+in `config.h`) and the photo stays SD-only — capture never blocks on the network.
