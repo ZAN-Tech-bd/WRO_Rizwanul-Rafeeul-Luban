@@ -2,7 +2,8 @@
   ESP32 RFID -> DFPlayer Mini + Nano rail controller
   =================================================
   Scans MIFARE cards with an MFRC522 reader (SPI), controls the Nano rail over
-  UART1, and plays the MP3 track mapped to that card's UID on DFPlayer UART2.
+  UART1, plays the MP3 track mapped to that card's UID on DFPlayer UART2, and
+  asks the ESP32-CAM to photograph each exhibit two seconds after stopping.
 
   RFID reader setup copied from your working MFRC522v2 sketch.
   DFPlayer setup copied from your working ESP32_MP3_LFR sketch.
@@ -29,6 +30,15 @@
     Nano D0 (RX) <------ ESP32 GPIO26 (TX)
     Common ground. Disconnect both wires while flashing the Nano.
 
+  ESP32-CAM trigger (software serial, TX only)
+    ESP32 GPIO14 (TX) -------> ESP32-CAM GPIO13 (RX)
+    Common ground. Both sides are 3.3 V, so no divider is needed.
+    Disconnect this wire while flashing the ESP32-CAM.
+
+  Service hotspot
+    Join ESP32-MP3-RAIL / museum2026, then open http://192.168.4.1/
+    The page tunes DFPlayer volume and shows a bounded robot event log.
+
   UID -> Track / rail action table
     Bytes are in the SAME order the reader prints them, i.e.
     "Card UID: 64 14 F6 B3"  ->  {0x64, 0x14, 0xF6, 0xB3}.
@@ -44,6 +54,10 @@
 #include <MFRC522DriverPinSimple.h>
 #include <MFRC522Debug.h>
 #include <DFRobotDFPlayerMini.h>
+#include <SoftwareSerial.h>
+#include <WiFi.h>
+#include <WebServer.h>
+#include "ControlPage.h"
 
 // ============================================================
 // DFPlayer (UART2)  -- proven setup from ESP32_MP3_LFR
@@ -75,6 +89,151 @@ HardwareSerial nanoSerial(1);
 const unsigned long NANO_BAUD = 9600;  // MUST match NANO_LFR_RAIL
 char nanoBuf[64];
 uint8_t nanoLen = 0;
+
+// ============================================================
+// ESP32-CAM trigger (GPIO14 software TX -> camera GPIO13 RX)
+// ============================================================
+// UART0 is the USB console, UART1 belongs to the Nano, and UART2 belongs to the
+// DFPlayer. This short, write-only 9600-baud link therefore uses software TX.
+#define CAM_TX 14
+const unsigned long CAM_BAUD = 9600;  // MUST match ROBOT_LINK_BAUD on the cam
+const unsigned long CAM_CAPTURE_DELAY_MS = 2000;
+SoftwareSerial camSerial;
+
+bool cameraTriggerPending = false;
+uint8_t pendingCameraStation = 0;
+unsigned long cameraTriggerDueMs = 0;
+
+// ============================================================
+// Service SoftAP + bounded robot event log
+// ============================================================
+const char *AP_SSID = "ESP32-MP3-RAIL";
+const char *AP_PASSWORD = "museum2026";
+const uint8_t AP_CHANNEL = 1;
+WebServer server(80);
+
+// A small chronological text tape is enough for field diagnosis and cannot
+// grow until it exhausts RAM. Whole oldest lines are evicted first.
+const size_t ROBOT_LOG_CAPACITY = 4096;
+char robotLog[ROBOT_LOG_CAPACITY];
+size_t robotLogLength = 0;
+uint32_t robotLogSequence = 0;
+
+String lastCardText = "No RFID scanned";
+String lastCameraText = "No photo triggered";
+
+void appendRobotLog(const String &event) {
+  char prefix[24];
+  snprintf(prefix, sizeof(prefix), "[%10lu ms] ", (unsigned long)millis());
+  String line = String(prefix) + event + '\n';
+
+  // A pathological caller cannot monopolize the entire tape.
+  if (line.length() >= ROBOT_LOG_CAPACITY) {
+    line = line.substring(line.length() - (ROBOT_LOG_CAPACITY - 2));
+    line += '\n';
+  }
+
+  const size_t needed = line.length();
+  while (robotLogLength + needed >= ROBOT_LOG_CAPACITY && robotLogLength > 0) {
+    size_t remove = 0;
+    while (remove < robotLogLength && robotLog[remove] != '\n') remove++;
+    if (remove < robotLogLength) remove++;
+    memmove(robotLog, robotLog + remove, robotLogLength - remove);
+    robotLogLength -= remove;
+  }
+
+  memcpy(robotLog + robotLogLength, line.c_str(), needed);
+  robotLogLength += needed;
+  robotLog[robotLogLength] = '\0';
+  robotLogSequence++;
+}
+
+void addNoCacheHeaders() {
+  server.sendHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+  server.sendHeader("Pragma", "no-cache");
+  server.sendHeader("Expires", "0");
+}
+
+String jsonEscape(const char *text) {
+  String out;
+  if (!text) return out;
+  out.reserve(strlen(text) + 32);
+  for (const unsigned char *p = (const unsigned char *)text; *p; ++p) {
+    switch (*p) {
+      case '\\': out += F("\\\\"); break;
+      case '"':  out += F("\\\""); break;
+      case '\n': out += F("\\n"); break;
+      case '\r': out += F("\\r"); break;
+      case '\t': out += F("\\t"); break;
+      default:
+        if (*p >= 0x20) out += (char)*p;
+        break;
+    }
+  }
+  return out;
+}
+
+void handleControlPage() {
+  addNoCacheHeaders();
+  server.send_P(200, "text/html; charset=utf-8", controlPage);
+}
+
+void handleApiState() {
+  String response;
+  response.reserve(robotLogLength + 320);
+  response = F("{\"volume\":");
+  response += currentVolume;
+  response += F(",\"audio\":");
+  response += audioReady ? F("true") : F("false");
+  response += F(",\"rail\":\"");
+  response += railStopLatched ? F("latched stopped") : (narrating ? F("stopped for audio") : F("running / armed"));
+  response += F("\",\"playback\":\"");
+  response += narrating ? F("station narration") : F("idle");
+  response += F("\",\"card\":\"");
+  response += jsonEscape(lastCardText.c_str());
+  response += F("\",\"camera\":\"");
+  response += jsonEscape(lastCameraText.c_str());
+  response += F("\",\"logSequence\":");
+  response += robotLogSequence;
+  response += F(",\"log\":\"");
+  response += jsonEscape(robotLog);
+  response += F("\"}");
+
+  addNoCacheHeaders();
+  server.send(200, "application/json; charset=utf-8", response);
+}
+
+void handleApiVolume() {
+  if (!server.hasArg("v")) {
+    server.send(400, "application/json", "{\"ok\":false,\"error\":\"missing_volume\"}");
+    return;
+  }
+
+  const String raw = server.arg("v");
+  char *end = nullptr;
+  const long requested = strtol(raw.c_str(), &end, 10);
+  if (raw.length() == 0 || *end != '\0' || requested < 0 || requested > 30) {
+    server.send(400, "application/json", "{\"ok\":false,\"error\":\"volume_must_be_0_to_30\"}");
+    return;
+  }
+
+  currentVolume = (int)requested;
+  if (audioReady) player.volume(currentVolume);
+  appendRobotLog("WEB volume set to " + String(currentVolume));
+  Serial.print(F("[web] volume set to "));
+  Serial.println(currentVolume);
+
+  addNoCacheHeaders();
+  server.send(200, "application/json", String("{\"ok\":true,\"volume\":") + currentVolume + "}");
+}
+
+void handleApiLogClear() {
+  robotLogLength = 0;
+  robotLog[0] = '\0';
+  robotLogSequence++;
+  appendRobotLog("WEB event tape cleared");
+  server.send(204, "text/plain", "");
+}
 
 // ============================================================
 // MFRC522 (SPI)
@@ -156,27 +315,92 @@ int trackForUid(const uint8_t *uid, uint8_t size) {
   return UNKNOWN_TRACK;
 }
 
+void cancelPendingPhoto(const char *reason) {
+  if (!cameraTriggerPending) return;
+
+  cameraTriggerPending = false;
+  pendingCameraStation = 0;
+  Serial.print(F("[cam] pending photo cancelled: "));
+  Serial.println(reason);
+  appendRobotLog(String("CAM pending photo cancelled: ") + reason);
+}
+
+// Tracks 2..8 map to exhibit stations 1..7. Scheduling is deliberately
+// non-blocking: RFID, DFPlayer, and Nano status handling continue during the
+// two-second settling period.
+void scheduleStationPhoto(uint8_t station) {
+  if (station < 1 || station > 7) return;
+
+  pendingCameraStation = station;
+  cameraTriggerDueMs = millis() + CAM_CAPTURE_DELAY_MS;
+  cameraTriggerPending = true;
+
+  Serial.print(F("[cam] station "));
+  Serial.print(station);
+  Serial.println(F(" photo scheduled in 2000 ms"));
+  appendRobotLog("CAM station " + String(station) + " scheduled in 2000 ms");
+}
+
+void sendCameraShoot(uint8_t station) {
+  camSerial.print(F("SHOOT "));
+  camSerial.println(station);
+
+  Serial.print(F("-> Cam: SHOOT "));
+  Serial.print(station);
+  Serial.println(F(" (rail stopped; audio playing)"));
+  lastCameraText = "SHOOT " + String(station) + " sent";
+  appendRobotLog(lastCameraText);
+}
+
+void pumpCameraTrigger() {
+  if (!cameraTriggerPending) return;
+
+  // A short/error-stopped narration must not take a late photo after motion
+  // may have resumed. The requirement is to shoot while station audio plays.
+  if (!narrating) {
+    cancelPendingPhoto("audio is no longer playing");
+    return;
+  }
+
+  // Signed subtraction is wrap-safe across the millis() rollover.
+  if ((int32_t)(millis() - cameraTriggerDueMs) < 0) return;
+
+  const uint8_t station = pendingCameraStation;
+  cameraTriggerPending = false;  // clear first: exactly one command per RFID tap
+  pendingCameraStation = 0;
+  sendCameraShoot(station);
+}
+
 void playTrack(int track) {
   Serial.print(F("-> DFPlayer: play track "));
   Serial.println(track);
+  if (!audioReady) {
+    appendRobotLog("AUDIO play rejected: DFPlayer offline");
+    return;
+  }
   player.playMp3Folder(track);   // plays /MP3/000X.mp3
+  appendRobotLog("AUDIO playing MP3/" + String(track) + " (volume " + String(currentVolume) + ")");
 }
 
 void startRailFromCard() {
+  cancelPendingPhoto("START card scanned");
   railStopLatched = false;
   narrating = false;
   resumeAfterAudio = false;
   if (audioReady) player.stop();
   Serial.println(F("START card -> clearing stop latch; rail starts after audio."));
+  appendRobotLog("RFID START card: stop latch cleared");
 }
 
 void stopRailFromCard() {
+  cancelPendingPhoto("END card scanned");
   railStopLatched = true;
   narrating = false;
   resumeAfterAudio = false;
   if (audioReady) player.stop();
   Serial.println(F("STOP card -> rail latched stopped; no audio."));
   sendNano("STOP");
+  appendRobotLog("RFID END card: rail latched stopped");
 }
 
 void beginAudio(int track, bool resumeAfterFinish) {
@@ -187,6 +411,7 @@ void beginAudio(int track, bool resumeAfterFinish) {
     narrating = false;
     resumeAfterAudio = false;
     Serial.println(F("Audio unavailable -> rail remains stopped."));
+    appendRobotLog("AUDIO unavailable: rail remains stopped");
     return;
   }
 
@@ -202,13 +427,16 @@ void finishAudio(bool allowResume) {
   if (!narrating) return;
 
   narrating = false;
+  cancelPendingPhoto("station audio finished");
   bool shouldResume = allowResume && resumeAfterAudio && !railStopLatched;
   resumeAfterAudio = false;
   if (shouldResume) {
     Serial.println(F("Audio finished -> restarting rail."));
     sendNano("START");
+    appendRobotLog("AUDIO finished: Nano START sent");
   } else {
     Serial.println(F("Audio finished -> rail remains stopped."));
+    appendRobotLog("AUDIO finished: rail remains stopped");
   }
 }
 
@@ -217,6 +445,7 @@ void sendNano(const char *cmd) {
   nanoSerial.print('\n');  // NANO_LFR_RAIL parses newline-terminated commands
   Serial.print(F("-> Nano: "));
   Serial.println(cmd);
+  appendRobotLog(String("NANO <- ") + cmd);
 }
 
 void pollNano() {
@@ -228,6 +457,7 @@ void pollNano() {
       if (nanoLen > 0) {
         Serial.print(F("<- Nano: "));
         Serial.println(nanoBuf);
+        appendRobotLog(String("NANO -> ") + nanoBuf);
       }
       nanoLen = 0;
       continue;
@@ -246,6 +476,8 @@ void setup() {
   Serial.println(F("================================"));
   Serial.println(F("ESP32 RFID -> DFPlayer"));
   Serial.println(F("================================"));
+  robotLog[0] = '\0';
+  appendRobotLog("BOOT ESP32 RFID/MP3 rail controller");
 
   // --- MFRC522 ---
   mfrc522.PCD_Init();
@@ -259,16 +491,47 @@ void setup() {
     Serial.println(F("DFPlayer ERROR! Check wiring / SD card."));
     Serial.println(F("Audio disabled. Serial commands still work."));
     audioReady = false;
+    appendRobotLog("AUDIO DFPlayer not connected");
   } else {
     Serial.println(F("DFPlayer connected."));
     audioReady = true;
     player.volume(currentVolume);
+    appendRobotLog("AUDIO DFPlayer connected; volume " + String(currentVolume));
   }
 
   // --- Nano rail controller (UART1) ---
   nanoSerial.begin(NANO_BAUD, SERIAL_8N1, NANO_RX, NANO_TX);
   Serial.println(F("Nano rail UART ready (9600, RX=25, TX=26)."));
   sendNano("STOP");  // safe state if the ESP32 rebooted while Nano was moving
+
+  // --- ESP32-CAM trigger (software serial, TX only) ---
+  camSerial.begin(CAM_BAUD, SWSERIAL_8N1, -1, CAM_TX);
+  Serial.println(F("Camera trigger ready (9600, TX=14 -> CAM RX=13)."));
+
+  // --- Service hotspot + web console ---
+  WiFi.mode(WIFI_AP);
+  WiFi.setSleep(false);
+  const bool apReady = WiFi.softAP(AP_SSID, AP_PASSWORD, AP_CHANNEL, false, 4);
+  if (apReady) {
+    appendRobotLog(String("WEB SoftAP ready at ") + WiFi.softAPIP().toString());
+    Serial.print(F("Web console: join "));
+    Serial.print(AP_SSID);
+    Serial.print(F(" / "));
+    Serial.print(AP_PASSWORD);
+    Serial.print(F(" then open http://"));
+    Serial.println(WiFi.softAPIP());
+  } else {
+    appendRobotLog("WEB SoftAP start FAILED");
+    Serial.println(F("Web console SoftAP FAILED."));
+  }
+
+  server.on("/", HTTP_GET, handleControlPage);
+  server.on("/api/state", HTTP_GET, handleApiState);
+  server.on("/api/volume", HTTP_POST, handleApiVolume);
+  server.on("/api/log/clear", HTTP_POST, handleApiLogClear);
+  server.onNotFound([]() { server.send(404, "text/plain", "Not found"); });
+  server.begin();
+  appendRobotLog("WEB server started");
 
   Serial.println(F("Serial: 1..9 = play track, +/- = volume, s = stop audio."));
   Serial.println();
@@ -278,6 +541,8 @@ void setup() {
 // LOOP
 // ============================================================
 void loop() {
+  server.handleClient();
+
   // ---------------- RFID ----------------
   if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
     uint8_t size = mfrc522.uid.size;
@@ -289,37 +554,49 @@ void loop() {
 
     Serial.print(F("Card UID: "));
     Serial.println(hex);
+    lastCardText = hex;
+    appendRobotLog("RFID read " + hex);
 
     int track = trackForUid(mfrc522.uid.uidByte, size);
 
     if (track == UNKNOWN_TRACK) {
       Serial.println(F("UID not in map -> no track."));
+      lastCardText += " (unknown)";
+      appendRobotLog("RFID unknown: no action");
     } else {
       bool same = sameUid(lastUid, lastUidSize, mfrc522.uid.uidByte, size);
       if (same && (millis() - lastPlayMs < DEBOUNCE_MS)) {
         Serial.println(F("Same card, skipping (debounce)."));
+        appendRobotLog("RFID duplicate ignored by debounce");
       } else {
         memcpy(lastUid, mfrc522.uid.uidByte, size);
         lastUidSize  = size;
         lastPlayMs   = millis();
 
         if (track == NO_AUDIO_TRACK) {
+          lastCardText += " (END)";
           stopRailFromCard();
         } else if (track == 1) {
+          lastCardText += " (START)";
           // Track 1 is the only card that clears the explicit STOP latch.
           startRailFromCard();
           beginAudio(track, true);   // start rail after intro audio finishes
         } else {
+          lastCardText += " (station " + String(track - 1) + ")";
           Serial.print(F("Mapped to track "));
           Serial.println(track);
           beginAudio(track, true);
+          // Only station tracks 2..8 take photos. Track 1 is START and track 0
+          // is END, so neither reaches this branch. If audio failed to start,
+          // narrating is false and no supposedly "while playing" shot is queued.
+          if (narrating) scheduleStationPhoto((uint8_t)(track - 1));
         }
       }
     }
   }
 
   // ---------------- DFPlayer status ----------------
-  if (player.available()) {
+  if (audioReady && player.available()) {
     uint8_t type = player.readType();
     int value = player.read();
     if (type == DFPlayerPlayFinished) {
@@ -329,6 +606,7 @@ void loop() {
     } else if (type == DFPlayerError) {
       Serial.print(F("DFPlayer error code: "));
       Serial.println(value);
+      appendRobotLog("AUDIO error " + String(value));
       if (narrating) {
         Serial.println(F("Audio error -> rail remains stopped."));
         finishAudio(false);
@@ -338,6 +616,7 @@ void loop() {
 
   if (narrating && millis() - audioStartMs > AUDIO_MAX_MS) {
     Serial.println(F("Audio timeout -> applying safe stopped state."));
+    appendRobotLog("AUDIO timeout: safe stopped state");
     finishAudio(false);
   }
 
@@ -352,16 +631,23 @@ void loop() {
       beginAudio(c - '0', false);
     } else if (c == '+') {
       if (currentVolume < 30) currentVolume++;
-      player.volume(currentVolume);
+      if (audioReady) player.volume(currentVolume);
       Serial.print(F("Volume: ")); Serial.println(currentVolume);
+      appendRobotLog("USB volume set to " + String(currentVolume));
     } else if (c == '-') {
       if (currentVolume > 0) currentVolume--;
-      player.volume(currentVolume);
+      if (audioReady) player.volume(currentVolume);
       Serial.print(F("Volume: ")); Serial.println(currentVolume);
+      appendRobotLog("USB volume set to " + String(currentVolume));
     } else if (c == 's' || c == 'S') {
       finishAudio(false);
       if (audioReady) player.stop();
       Serial.println(F("Audio stopped; rail state unchanged."));
+      appendRobotLog("USB audio stop; rail state unchanged");
     }
   }
+
+  // Non-blocking two-second station-photo delay. Keep this after audio/event
+  // handling so an audio finish/error in this pass cancels the shot first.
+  pumpCameraTrigger();
 }
