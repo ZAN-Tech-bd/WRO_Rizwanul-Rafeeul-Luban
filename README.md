@@ -27,7 +27,7 @@ A small autonomous guide robot travels a prepared, bordered track through a mode
 ## How the boards talk to each other
 - **Robot ↔ Nano** — UART @9600: Robot sends `START` / `STOP` / `SET ML n` / `SET MR n` / `GET` / `SAVE`; Nano replies `STATE:RUNNING` / `STATE:STOPPED` / `TUNE ML=n MR=n`.
 - **Robot → Camera** — one-way UART (GPIO14 → CAM GPIO13, 9600): sends `SHOOT <station>` ~2 s after stopping at a station.
-- **Robot → Display** — UART text commands: `FACE`, `LANG`, `STATION n m`, `MENU`, `EMERGENCY`.
+- **Robot → Display** — NC.
 - **Camera → Hub** — joins Hub Wi-Fi and `POST /api/image/upload` (multipart), plus a 1-packet ESP-NOW "image ready" ping.
 - **Hub ↔ Robot** — ESP-NOW on **Wi-Fi channel 1**: Hub broadcasts emergency + mute; Robot broadcasts its station / movement.
 
@@ -61,7 +61,7 @@ Full pin lists are in the comment block at the top of each `.ino` / `config.h`.
 |---|---|---|
 | Robot ↔ Nano | ESP32 GPIO26 (TX) → Nano D0 (RX); Nano D1 (TX) → ESP32 GPIO25 (RX) via 10k/20k divider | common GND; unplug while flashing the Nano |
 | Robot → Camera | ESP32 GPIO14 (TX) → CAM GPIO13 (RX) | 3.3 V both sides, no divider; unplug while flashing the CAM |
-| Robot → Display | ESP32 GPIO17 (TX) → Mega RX1 (pin 19) via 1k | common GND |
+| Robot → Display | NC | common GND |
 | Camera → Hub | over Wi-Fi `MuseumHub` | HTTP POST + ESP-NOW ping |
 | Hub ↔ Robot | ESP-NOW (no wire) | channel 1 on both |
 
