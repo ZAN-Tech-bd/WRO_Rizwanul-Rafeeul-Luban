@@ -66,7 +66,7 @@ Full pin lists are in the comment block at the top of each `.ino` / `config.h`.
 | Hub ↔ Robot | ESP-NOW (no wire) | channel 1 on both |
 
 ## Stations (seven)
-Jamdani Saree · Nakshi Kantha · Liberation War · Terracotta · Ektara · Palki · Royal Bengal Tiger — defined in [`MEGA_DISPLAY/display_config.h`](MEGA_DISPLAY/display_config.h) (`STATION_NAMES`). Audio is one bilingual track per station as `/MP3/0002.mp3`…`0008.mp3` on the DFPlayer SD card (`0001.mp3` = welcome, START card).
+Audio is one bilingual track per station as `/MP3/0002.mp3`…`0008.mp3` on the DFPlayer SD card (`0001.mp3` = welcome, START card).
 
 
 ## Credits & sources
