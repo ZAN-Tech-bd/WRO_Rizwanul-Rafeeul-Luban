@@ -79,15 +79,15 @@ button.danger{color:var(--red)}button:focus-visible,input:focus-visible{outline:
     <div><p class="eyebrow">On-board service panel</p><h1>Robot<br>Field Console</h1></div>
     <div class="address">ESP32-Robot-Main<br>192.168.4.1<br><span id="hubLink">Hub link …</span></div>
   </header>
-  <div class="alarm" id="alarm">Hub emergency active — every card except the END card is ignored.
-    <span id="alarmDetail">Running to the END card.</span></div>
+  <div class="alarm" id="alarm">Hub emergency active — every card except a stop card (END or D836D4B9) is ignored.
+    <span id="alarmDetail">Running to a stop card.</span></div>
   <div class="grid">
     <div class="stack">
       <section class="panel">
         <div class="panelHead"><h2>Speaker level</h2><span class="tag" id="audioTag">checking</span></div>
         <div class="body">
           <div class="readout"><span class="number" id="volumeValue">--</span><span class="scale">/ 30</span></div>
-          <input id="volume" type="range" min="0" max="30" step="1" value="20" aria-label="DFPlayer volume">
+          <input id="volume" type="range" min="0" max="30" step="1" value="25" aria-label="DFPlayer volume">
           <div class="ticks"><span>silent</span><span>field max</span></div>
           <p class="muteNote" id="muteNote" hidden>Hub mute is ON — the speaker is at 0 and this
             slider only sets the level to return to when the admin unmutes.</p>

@@ -97,7 +97,7 @@
 HardwareSerial dfSerial(2);
 DFRobotDFPlayerMini player;
 
-int currentVolume = 20;   // 0..30
+int currentVolume = 25;   // 0..30 (boot default; the field console can retune it)
 bool audioReady = false;
 
 // Hub mute (MSG_AUDIO). currentVolume above always holds the level the robot
@@ -109,6 +109,24 @@ bool audioMuted = false;
 // console or USB +/-) cannot quietly undo a mute the Hub is still holding.
 void applyVolumeToPlayer() {
   if (audioReady) player.volume(audioMuted ? 0 : currentVolume);
+}
+
+// Send the level a second time, a moment after it was set.
+//
+// MEASURED, so that the next person does not re-derive it: press 'v' and the
+// module reports its real volume register (0x43). It reads the correct value at
+// boot AND after a mute/unmute cycle, so the ESP32 is never sending a wrong
+// number -- what the module STORES is always right. Some DFPlayer modules still
+// do not fully re-apply output gain from the single command that brings them
+// back from 0, which a second identical command does fix.
+//
+// One deferred packet, non-blocking, and a no-op on a module that already
+// obeyed the first one. Use 'v' to confirm the register at any time.
+unsigned long volumeReassertAtMs = 0;   // 0 = nothing scheduled
+
+void scheduleVolumeReassert(unsigned long delayMs) {
+  volumeReassertAtMs = millis() + delayMs;
+  if (volumeReassertAtMs == 0) volumeReassertAtMs = 1;   // 0 means "unscheduled"
 }
 
 // Station audio pauses the drive and resumes it only after DFPlayer reports
@@ -277,8 +295,10 @@ void handleApiState() {
   response += espnowReady ? F("true") : F("false");
   response += F(",\"drive\":\"");
   if (emergencyActive) {
-    response += emergencyStopReached ? F("EMERGENCY - stopped at END card")
-                                     : F("EMERGENCY - running to END card");
+    // Which card it was is in the "card" field; this only says whether the
+    // evacuation run has ended yet.
+    response += emergencyStopReached ? F("EMERGENCY - stopped at a stop card")
+                                     : F("EMERGENCY - running to a stop card");
   } else {
     response += stopLatched ? F("latched stopped") : (narrating ? F("stopped for audio") : F("running / armed"));
   }
@@ -401,12 +421,18 @@ struct RfidTrack {
 const int NO_AUDIO_TRACK = 0;  // mapped action only, used by the STOP card
 const int UNKNOWN_TRACK  = -1;
 
+// A second card that ends an evacuation run, so the drive has a stop point
+// before the far END card. It is a NORMAL station card on a normal tour --
+// D836D4B9 plays 0012.mp3 and takes its photo exactly as before -- and only
+// doubles as a stop while the Hub alarm is up.
+const int EMERGENCY_STOP_TRACK = 12;   // D836D4B9
+
 const RfidTrack TRACKS[] = {
   { {0x18, 0xC4, 0x0F, 0xBA}, 4, 9 },   // 18C40FBA -> START + 0009.mp3
   { {0xA3, 0xC0, 0x38, 0x15}, 4, 0 },   // A3C03815 -> STOP, no audio
   { {0x64, 0x14, 0xF6, 0xB3}, 4, 10 },  // 6414F6B3 -> 0010.mp3
   { {0x4A, 0x6B, 0xDF, 0x34}, 4, 11 },  // 4A6BDF34 -> 0011.mp3
-  { {0xD8, 0x36, 0xD4, 0xB9}, 4, 12 },  // D836D4B9 -> 0012.mp3
+  { {0xD8, 0x36, 0xD4, 0xB9}, 4, 12 },  // D836D4B9 -> 0012.mp3 (+ STOP during emergency)
   { {0x94, 0x60, 0x6B, 0xB2}, 4, 13 },  // 94606BB2 -> 0013.mp3
   { {0x18, 0x48, 0xF4, 0xBA}, 4, 14 },  // 1848F4BA -> 0014.mp3
   { {0x94, 0x58, 0x1A, 0xB3}, 4, 15 },  // 94581AB3 -> 0015.mp3
@@ -540,15 +566,19 @@ void startDriveFromCard() {
   appendRobotLog("RFID START card: stop latch cleared");
 }
 
-void stopDriveFromCard() {
-  cancelPendingPhoto("END card scanned");
+// label names the card that caused the stop ("END card" / "emergency stop
+// card") so the serial log, the event tape and the field console all agree on
+// which one it was.
+void stopDriveFromCard(const char *label) {
+  cancelPendingPhoto(label);
   stopLatched = true;
   narrating = false;
   resumeAfterAudio = false;
   if (audioReady) player.stop();
-  Serial.println(F("STOP card -> drive latched stopped; no audio."));
+  Serial.print(label);
+  Serial.println(F(" -> drive latched stopped; no audio."));
   sendNano("STOP");
-  appendRobotLog("RFID END card: drive latched stopped");
+  appendRobotLog(String("RFID ") + label + ": drive latched stopped");
 }
 
 void beginAudio(int track, bool resumeAfterFinish) {
@@ -649,15 +679,15 @@ void applyEmergencyState() {
   if (emergencyActive) {
     // Top priority: nothing the tour is doing may hold the robot at a station.
     // Cut audio, drop the pending photo, clear the stop latch, and drive -- the
-    // card handler ignores everything but the END card from here on.
+    // card handler ignores everything but a stop card from here on.
     cancelPendingPhoto("emergency raised");
     narrating            = false;
     resumeAfterAudio     = false;
     emergencyStopReached = false;
     stopLatched      = false;
     if (audioReady) player.stop();
-    Serial.println(F("!! EMERGENCY from Hub -> every card except END is ignored; running to the END card."));
-    appendRobotLog("EMERGENCY raised by Hub: cards ignored until the END card");
+    Serial.println(F("!! EMERGENCY from Hub -> every card except a stop card is ignored; running to the next stop card."));
+    appendRobotLog("EMERGENCY raised by Hub: cards ignored until a stop card");
     sendNano("START");
   } else {
     // Cleared. Do not silently carry on: after an emergency the robot is
@@ -688,6 +718,9 @@ void applyMuteState() {
 
   audioMuted = wanted;
   applyVolumeToPlayer();
+  // Coming back from 0 is the case where a module can under-apply the gain, so
+  // the level is sent once more shortly after. See scheduleVolumeReassert().
+  scheduleVolumeReassert(250);
 
   if (audioMuted) {
     Serial.println(F("Hub mute ON -> DFPlayer volume 0; the tour continues silently."));
@@ -785,6 +818,7 @@ void setup() {
     Serial.println(F("DFPlayer connected."));
     audioReady = true;
     applyVolumeToPlayer();
+    scheduleVolumeReassert(1500);   // belt and braces while the module settles
     appendRobotLog("AUDIO DFPlayer connected; volume " + String(currentVolume));
   }
 
@@ -830,8 +864,9 @@ void setup() {
   appendRobotLog("WEB server started");
 
   Serial.println(F("Serial: 1..9 = play track, +/- = volume, s = stop audio,"));
+  Serial.println(F("        v = read the DFPlayer's ACTUAL volume,"));
   Serial.println(F("        e = toggle emergency, m = toggle mute"));
-  Serial.println(F("        (both are bench tests; the Hub overrides them)."));
+  Serial.println(F("        (e/m are bench tests; the Hub overrides them)."));
   Serial.println();
 }
 
@@ -881,22 +916,34 @@ void loop() {
         lastUidSize  = size;
         lastPlayMs   = millis();
 
-        // The Hub emergency outranks the whole card map. Only the END card is
-        // acted on, so the robot drives past every station to the end of the
-        // drive and stops there. The START card is ignored too: while the alarm
+        // The Hub emergency outranks the whole card map. Only a stop card is
+        // acted on, so the robot drives past every station to the first one it
+        // meets and stops there. The START card is ignored too: while the alarm
         // is up there is nothing to restart into.
-        if (emergencyActive && track != NO_AUDIO_TRACK) {
-          lastCardText += " (ignored: emergency)";
-          Serial.println(F("EMERGENCY: card ignored; only the END card acts now."));
-          appendRobotLog("EMERGENCY: card ignored (END card required)");
-        } else if (track == NO_AUDIO_TRACK) {
-          lastCardText += " (END)";
-          stopDriveFromCard();
+        //
+        // Two cards can end the run: the END card always, and the
+        // EMERGENCY_STOP_TRACK station card only while the alarm is up -- on a
+        // normal tour it falls through to the station branch below and behaves
+        // like any other station.
+        const bool endCard = (track == NO_AUDIO_TRACK);
+        const bool stopsHere = endCard ||
+                               (emergencyActive && track == EMERGENCY_STOP_TRACK);
+
+        if (stopsHere) {
+          const char *label = endCard ? "END card" : "emergency stop card";
+          lastCardText += endCard ? " (END)" : " (emergency stop)";
+          stopDriveFromCard(label);
           if (emergencyActive) {
             emergencyStopReached = true;
-            Serial.println(F("EMERGENCY: END card reached -> drive stopped."));
-            appendRobotLog("EMERGENCY: END card reached, drive stopped");
+            Serial.print(F("EMERGENCY: "));
+            Serial.print(label);
+            Serial.println(F(" reached -> drive stopped."));
+            appendRobotLog(String("EMERGENCY: ") + label + " reached, drive stopped");
           }
+        } else if (emergencyActive) {
+          lastCardText += " (ignored: emergency)";
+          Serial.println(F("EMERGENCY: card ignored; only a stop card acts now."));
+          appendRobotLog("EMERGENCY: card ignored (stop card required)");
         } else if (track == 9) {
           lastCardText += " (START)";
           // Track 9 is the only card that clears the explicit STOP latch.
@@ -914,6 +961,16 @@ void loop() {
         }
       }
     }
+  }
+
+  // ---------------- deferred volume re-assert ----------------
+  // See scheduleVolumeReassert(). Signed compare is wrap-safe across rollover.
+  if (audioReady && volumeReassertAtMs &&
+      (int32_t)(millis() - volumeReassertAtMs) >= 0) {
+    volumeReassertAtMs = 0;
+    applyVolumeToPlayer();
+    Serial.print(F("[audio] volume re-asserted: "));
+    Serial.println(audioMuted ? 0 : currentVolume);
   }
 
   // ---------------- DFPlayer status ----------------
@@ -963,6 +1020,29 @@ void loop() {
       hubEmergencyWanted = !hubEmergencyWanted;
       Serial.print(F("Local emergency test -> "));
       Serial.println(hubEmergencyWanted ? F("ON") : F("OFF"));
+    } else if (c == 'v' || c == 'V') {
+      // Ask the MODULE what volume it is really at, instead of trusting the
+      // number we last sent. This is what proves whether a volume command
+      // actually landed (see scheduleVolumeReassert()).
+      //
+      // The query consumes one DFPlayer response, so it is REFUSED while a
+      // narration is running: swallowing the "play finished" event would leave
+      // the drive parked at the station until the 90 s fail-safe.
+      if (!audioReady) {
+        Serial.println(F("DFPlayer offline; no volume to read."));
+      } else if (narrating) {
+        Serial.println(F("Refused: narration playing (the query would eat the finish event)."));
+      } else {
+        const int actual = player.readVolume();
+        const int expected = audioMuted ? 0 : currentVolume;
+        Serial.print(F("DFPlayer reports volume "));
+        if (actual < 0) Serial.print(F("(no answer)")); else Serial.print(actual);
+        Serial.print(F("; we believe "));
+        Serial.print(expected);
+        Serial.println(actual == expected ? F("  [match]") : F("  [MISMATCH]"));
+        appendRobotLog("USB volume readback: module=" + String(actual) +
+                       " expected=" + String(expected));
+      }
     } else if (c == 'm' || c == 'M') {
       // Bench test without the Hub, same as 'e'. The Hub re-broadcasts its own
       // mute state every ~2 s, so a real Hub overrides this on its next packet.
