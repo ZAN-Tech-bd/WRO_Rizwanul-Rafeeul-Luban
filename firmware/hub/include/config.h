@@ -15,7 +15,13 @@ static const uint8_t  HUB_IP[]    = {192, 168, 4, 1};
 // ---- Track hardware ----
 static const uint8_t  NEOPIXEL_PIN   = 15;        // WS2812 DIN
 static const uint8_t  STATION_COUNT  = 7;         // one LED per artifact station
-static const uint8_t  BUZZER_PIN     = 4;         // active buzzer (HIGH = on)
+static const uint8_t  BUZZER_PIN     = 4;         // siren (PASSIVE buzzer -- see main.cpp)
+
+// ---- Emergency button (from the proven Emergency_Switch sketch) ----
+// Press once -> emergency LATCHES on (LEDs blink, siren wails, robot evacuates).
+// Hold 3 s   -> emergency clears. The admin dashboard can also clear it.
+// The button module outputs HIGH when pressed and has its own pull-down.
+static const uint8_t  EMERGENCY_BUTTON_PIN = 21;
 
 // ---- robot motion ----
 // How long the Hub keeps showing "moving" after the last movement report.
@@ -23,6 +29,24 @@ static const uint8_t  BUZZER_PIN     = 4;         // active buzzer (HIGH = on)
 // once the reports stop (or after the admin "Advance robot (test)" button).
 // Without it the dashboard/LED would stay stuck on "moving" forever.
 static const uint32_t ROBOT_MOVE_SETTLE_MS = 2500;
+
+// ---- emergency broadcast ----
+// This Hub is the single source of truth for the emergency state, and ESP-NOW
+// broadcasts are unacknowledged. Rather than retry-and-hope on each change, the
+// current state is re-broadcast on this interval forever. Receivers act only on
+// a transition, so a robot that reboots, misses a packet, or powers up late
+// converges on the right state within one interval.
+static const uint8_t  HUB_NODE_ID            = 10;
+static const uint32_t EMERGENCY_BROADCAST_MS = 2000;   // < the robot's needs, cheap
+
+// A change of state is the one packet that must not wait for the next timed
+// re-broadcast: while it is in flight the robot is still narrating at a station
+// with the siren already sounding. Because a single unacknowledged broadcast
+// can simply be lost, every transition goes out as a short burst and only then
+// falls back to the heartbeat above. Six frames 60 ms apart cost ~1/3 s of air
+// time and make a missed transition vanishingly unlikely.
+static const uint8_t  EMERGENCY_BURST_COUNT  = 6;
+static const uint32_t EMERGENCY_BURST_GAP_MS = 60;
 
 // Station ids MUST match webapp/js/data.js (ARTIFACTS[].id).
 // ESP-NOW nodes send a numeric stationId 1..N; the Hub maps it to these names.

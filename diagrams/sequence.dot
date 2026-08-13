@@ -1,0 +1,28 @@
+digraph sequence {
+    rankdir=TB;
+    node [shape=ellipse, style="filled", fontname="Arial"];
+    edge [fontname="Arial"];
+    
+    Visitor [label="Visitor", fillcolor="#C8E6C9"];
+    RFID [label="RFID Reader", fillcolor="#BBDEFB"];
+    ESP32 [label="ESP32 Brain", fillcolor="#FFE0B2"];
+    Nano [label="Nano LFR", fillcolor="#FFCDD2"];
+    DFPlayer [label="DFPlayer", fillcolor="#F8BBD0"];
+    Camera [label="Camera", fillcolor="#B2EBF2"];
+    Hub [label="Hub Dashboard", fillcolor="#FFF9C4"];
+    
+    Visitor -> RFID [label="Tap Card"];
+    RFID -> ESP32 [label="Send UID"];
+    ESP32 -> ESP32 [label="Check Station"];
+    ESP32 -> Nano [label="STOP command"];
+    Nano -> ESP32 [label="STATE:STOPPED"];
+    ESP32 -> Camera [label="SHOOT command"];
+    Camera -> Camera [label="Capture Photo"];
+    Camera -> Hub [label="Upload (HTTP)"];
+    ESP32 -> DFPlayer [label="Play Track"];
+    DFPlayer -> Visitor [label="Audio Output"];
+    ESP32 -> Hub [label="Location (ESP-NOW)"];
+    Hub -> Hub [label="Update Dashboard"];
+    ESP32 -> Nano [label="START command"];
+    Nano -> Nano [label="Line Following"];
+}

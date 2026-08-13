@@ -6,7 +6,52 @@ the other:
 | Core | Runs |
 |------|------|
 | **Core 0** (`webTask`) | WiFi SoftAP **MuseumHub** (ch 1) + ESP-NOW receive + WebServer + captive-portal DNS — serves the web app and the `/api` endpoints |
-| **Core 1** (`loop`) | NeoPixel LED show (lights the station the robot is at; blinks red on emergency) + buzzer |
+| **Core 1** (`loop`) | ESP-NOW drain + **emergency button/siren** + ESP-NOW emergency broadcast + NeoPixel LED show (lights the station the robot is at; blinks red on emergency) |
+
+## Emergency (button → Hub → robot)
+
+The proven `Emergency_Switch.ino` logic is merged in verbatim and now drives the
+whole system:
+
+1. **Press** the GPIO21 button → emergency **latches on**. Track LEDs blink red,
+   the GPIO4 siren wails a two-tone ambulance pattern.
+2. The Hub is the **single source of truth** and broadcasts the emergency state
+   over ESP-NOW. A **change of state outranks everything**: it goes out on the
+   next Core 1 pass (~5 ms) and is then repeated `EMERGENCY_BURST_COUNT` times
+   `EMERGENCY_BURST_GAP_MS` apart, because a single unacknowledged broadcast can
+   be lost and the robot would otherwise keep touring for up to 2 s with the
+   siren already sounding. After the burst the state falls back to a plain 2 s
+   heartbeat, so a node that reboots or misses everything still re-syncs within
+   one interval. The Hub never tracks who is listening.
+3. The **robot evacuates**: it cuts narration, drops any pending photo, drives,
+   and **ignores every card except the END card**, where it stops and latches.
+   `ESP32_RFID_MP3_RAIL` (rail robot) and `ESP32_RFID_MP3_LFR` (line-follower
+   robot) both listen; the LFR build stops at its station-7 exit card instead.
+4. **Clear it** by holding the button 3 s, or from the admin dashboard
+   (`POST /api/emergency?on=0`). Either way the robot stops so it can be
+   repositioned — it does not silently resume the tour. Restarting it takes the
+   **START card**, the same card that begins every normal tour.
+
+> The siren uses `tone()`, which needs a **passive** buzzer. For a plain
+> **active** buzzer, swap the `tone()` call in `updateSiren()` for
+> `digitalWrite(BUZZER_PIN, HIGH)` / `(…, LOW)`: same wail rhythm, no pitch
+> sweep. A passive buzzer driven by `digitalWrite` is nearly silent, so this has
+> to match the part actually fitted.
+
+Because this lives on the Hub, the standalone `Emergency_Switch/` sketch is a
+bench reference only — its board is not needed for the demo.
+
+## Robot status (ESP-NOW in)
+
+The guide ESP32 broadcasts `MSG_LOCATION` on every card scan / start / stop plus
+a 1 s heartbeat. `stationId` is `track - 1` (tracks 2–8 → stations 1–7), which
+the Hub maps to `STATION_IDS`. `robotMoving` lapses back to "narrating" after
+`ROBOT_MOVE_SETTLE_MS` (2.5 s) without a report, so the heartbeat must stay
+faster than that.
+
+**Both boards must stay on WiFi channel 1.** The robot's own `ESP32-MP3` AP and
+this Hub's `MuseumHub` AP are both pinned there; ESP-NOW only works when the
+channels match, and a mismatch fails silently.
 
 Shared state (`gState`) is guarded by a mutex. The LEDs use the ESP32 **RMT**
 peripheral (via Adafruit_NeoPixel), so WiFi traffic does **not** glitch them.
@@ -16,7 +61,8 @@ peripheral (via Adafruit_NeoPixel), so WiFi traffic does **not** glitch them.
 | Part | ESP32 pin | Notes |
 |------|-----------|-------|
 | WS2812 strip DIN | **GPIO15** | one LED per station (7). VCC→5V, GND→GND |
-| Active buzzer **+** | **GPIO4** | **−** → GND. If it draws >20 mA, drive via a 2N2222 transistor instead of direct GPIO |
+| **Passive** buzzer **+** | **GPIO4** | **−** → GND. Siren uses `tone()`, so it must be a **passive** buzzer. If it draws >20 mA, drive via a 2N2222 transistor instead of direct GPIO |
+| Emergency button OUT | **GPIO21** | 3-pin module (VCC/GND/OUT), **HIGH when pressed**, own pull-down |
 | microSD **MISO** | **GPIO19** | camera photo storage (VSPI) — **optional** |
 | microSD **MOSI** | **GPIO23** | |
 | microSD **SCK** | **GPIO18** | |

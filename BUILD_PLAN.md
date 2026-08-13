@@ -10,6 +10,70 @@ holds the *why/decisions*; `plans/smart-museum-plan.md` is superseded.
 
 ---
 
+## Status check — robot build vs. this plan (updated 2026-08-08)
+
+The line-follower + RFID robot (`NANO_LFR/`, `ESP32_RFID_MP3_LFR/`) and the Hub/Cam targets
+(`firmware/hub/`, `firmware/cam/`) have moved ahead of, and in a few places diverged from, the
+architecture in §3. Read this before touching robot code — several §3–§6 assumptions no longer hold.
+
+1. **RC522 moved off the Nano, onto the ESP32.** The original Nano/ESP32 split plan
+   (`plans/robot-nano-esp-wiring.md`, now marked superseded) put RC522 on the Nano behind a framed
+   `$TAG…*HH` / `ACK` / `RESUME` protocol. The built system instead keeps the Nano to *motors + line
+   sensor only*; RC522 + DFPlayer + the web UI all live on the ESP32. This is simpler (RC522 runs at
+   its native 3.3 V on the ESP32's own VSPI pins — no level shifter needed) and is the version that's
+   actually flashed and working. **Treat this as the new locked split, not the framed-protocol one.**
+2. **The Nano↔ESP32 link is a 2-state toggle, not an RFID event bus.** Actual protocol: newline
+   `GO`/`START`/`STOP`/`TOGGLE`/`1`/`0` one way, `STATE:RUNNING`/`STATE:STOPPED`/`READY:STOPPED` the
+   other — no checksum, no sequence numbers, no ACK/RESUME handshake. That's fine (moving RC522 off
+   the Nano made the framed protocol pointless), but it means `firmware/common/RobotUartProtocol.h`
+   is **unused by the shipped code** (only the abandoned `firmware/robot-nano`/`firmware/robot-esp`
+   PlatformIO targets still reference it) — remove it or repurpose it so it doesn't look live.
+3. **The link runs on the Nano's hardware UART (D0/D1), not `SoftwareSerial` D2/D3.** The plan
+   explicitly reserved D0/D1 for USB diagnostics *because* this trade-off — disconnect the ESP32
+   wires to reflash/monitor the Nano — was considered worse. It was chosen anyway, which is a fine
+   call on the bench, but it's an ongoing tax at the competition table: **every Nano re-flash needs
+   the two ESP32 wires pulled first.** Worth a simple disconnect header/jumper before demo day.
+4. **~~No ESP-NOW on the robot at all.~~ CLOSED 2026-08-08 — the robot↔Hub link is live.**
+   - Robot → Hub: `MSG_LOCATION` on every card scan / start / stop, plus a 1 s heartbeat (the Hub
+     drops "moving" after `ROBOT_MOVE_SETTLE_MS` = 2.5 s of silence). Station id = `track - 1`, so
+     tracks 2–8 map to stations 1–7 and the Hub resolves those to the `STATION_IDS` names. The
+     dashboard's robot station/status is now the real robot.
+   - Hub → Robot: the Hub is the **single source of truth for emergency** and re-broadcasts the
+     current state every 2 s (`EMERGENCY_BROADCAST_MS`), immediately on change. Receivers act only
+     on a transition, so a robot that reboots, powers up late, or misses a packet re-syncs within
+     one interval — no acks or retry bookkeeping needed for an unacknowledged broadcast.
+   - Emergency on the robot = **evacuation**: narration is cut, the line follower starts, every
+     station card is ignored (no stop, no audio, no photo — it just reports passing), and only the
+     **station-7 exit card** stops it. Clearing the emergency stops the robot for repositioning.
+   - Both boards must stay on **WiFi channel 1** — the robot's `ESP32-MP3` AP and the Hub's
+     `MuseumHub` AP are both pinned there. Change one without the other and the link goes silent
+     with no error. This is §3's documented gotcha; it is now load-bearing.
+   - The **physical emergency button + siren** (`Emergency_Switch.ino`) is merged into the Hub on
+     GPIO21/GPIO4, so BUILD item #6 is a real chain: button → Hub → ESP-NOW → robot evacuates.
+5. **The robot still hosts its own WiFi AP + web UI** (`ESP32-MP3` / `12345678`, with play/volume/LFR
+   controls) **separate from the Hub's `MuseumHub` AP.** This bends the locked bridge rule in §3.2
+   (only the Hub hosts web pages). Point 4 fixed the *visibility* half — the Hub dashboard now shows
+   real robot state — but robot **control** still lives on a second SSID that judges/visitors would
+   have to switch to. Remaining options: extend the ESP-NOW link with a `MSG_COMMAND` for
+   start/stop/volume (matches §3.2 fully), or re-scope this AP as a **bench debug tool**, powered
+   off before the demo. Don't let it become the demo path by default.
+6. **Track lighting is on the Hub, not a separate Track ESP32** (unchanged from the earlier decision
+   log, but the §3 diagram still draws 4 boards). It's really Robot + Hub (track+gate+web) + Cam, plus
+   Health, which is still an unimplemented skeleton. Worth redrawing §3's diagram once #4 closes.
+7. **`firmware/cam/` is ahead of its own README, not behind:** it already joins `MuseumHub` as a WiFi
+   client, POSTs JPEGs to `/api/image/upload`, and pings `MSG_IMAGE_READY` over ESP-NOW — the cam→Hub
+   path in §3 is done. The README's "no Wi-Fi/Hub upload yet" claim has been corrected.
+8. **No OLED, WS2812 arrow, obstacle IR, or emergency button on the robot yet.** BUILD items #4–#6 in
+   §2 have no code on either the Nano or ESP32 side. Not a deviation — just not started — noting it so
+   it isn't assumed done because RFID+audio landed.
+
+**Bottom line:** the robot's core motion + station-audio loop (§2 items 1–3) works and is simpler than
+planned — keep that. What's missing is entirely the *integration* layer (§2 items 4–8): no ESP-NOW, so
+the robot is invisible to the Hub/dashboard/track, and its web UI is an island. Closing that gap is now
+the real Phase 4 work, since Phase 1–3 hardware is already proven on the bench.
+
+---
+
 ## 0. Pre-flight (verified against official 2026 rules)
 
 1. **Season = 2026, "Robots Meet Culture".** The 2025 PDFs in this folder are outdated for theme,
@@ -275,15 +339,26 @@ Anchor to the WROBd regional date. Nothing in a later phase starts until the pre
   offline (`jsQR`) via a camera-capture input so it works over the ESP32's HTTP. *Exit: full check-in →
   approve → visitor dashboard flow runs in a browser; both languages; admin sees count + health.*
 - **Phase 1 — Robot moves.** Chassis, 2 motors, L298N, power rails, line-follow on a taped oval.
-  *Exit: 5 laps unattended.*
+  *Exit: 5 laps unattended.* **Built** — line following runs on the Nano (`NANO_LFR/`), started/stopped
+  by the ESP32 over UART. See the status section above for the pin/protocol changes vs. the old plan.
 - **Phase 2 — Robot knows where it is.** RC522 + cards at 3 stations, stop, OLED shows station name,
-  continue. *Exit: correct station every lap, 3 laps.*
+  continue. *Exit: correct station every lap, 3 laps.* **Built, but diverged:** RC522 lives on the
+  ESP32 (not the Nano), reads 8 mapped cards (1 tour-start + 7 tracks), and stops the Nano over the
+  UART link instead of a station-count/OLED display — **no OLED yet.**
 - **Phase 3 — Robot talks.** DFPlayer, kids record Bangla + English, language button, queue line,
-  arrow LEDs. *Exit: both languages, 3 laps.*
+  arrow LEDs. *Exit: both languages, 3 laps.* **Partially built:** DFPlayer narration on card tap with
+  auto-resume is working (`ESP32_RFID_MP3_LFR.ino`). **No language button, no queue-line logic, no
+  arrow LEDs yet;** audio is currently English-only single tracks per card, not per-language pairs.
 - **Phase 4 — Track responds (+ ESP-NOW foundation).** Track ESP32 + WS2812 per station; ESP-NOW
-  from robot. Pin channel 1 on all boards. *Exit: right LED, right moment, 3 laps.*
+  from robot. Pin channel 1 on all boards. *Exit: right LED, right moment, 3 laps.* **Built, needs
+  the track test:** the robot broadcasts `MSG_LOCATION` and the Hub lights that station's pixel
+  (green = narrating, blue = moving). Both boards compile and are pinned to channel 1; the 3-lap
+  right-LED-right-moment run is still an untested hardware gate.
 - **Phase 5 — Emergency.** Physical button → skip stations, drive to exit, all LEDs blink, buzzers.
-  *Exit: triggered from any point on the track.*
+  *Exit: triggered from any point on the track.* **Built, needs the track test:** button on Hub
+  GPIO21 (press to latch, hold 3 s to clear, dashboard can also clear) → Hub siren + blinking track
+  LEDs → ESP-NOW → robot skips every station and stops only at the station-7 exit card. Triggering
+  it "from any point on the track" is the untested gate.
 - **Phase 6 — Artifact health + gate + dashboard.** Health ESP32 (DHT11 + MQ-135 per artifact),
   per-station thresholds → alert; IR visitor counter; Hub SoftAP + HTML page + QR + captive portal.
   *Exit: phone sees live per-station data, twice; one crossed threshold turns a station red.*

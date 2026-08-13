@@ -1,0 +1,249 @@
+<mxfile host="Claude Code" type="device">
+  <diagram id="wro_rrl_08-hub-two-jobs" name="08-hub-two-jobs">
+    <mxGraphModel dx="1200" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="1760" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" role="background" status="" placeholders="1" id="page_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="20" y="20" width="1720" height="1040" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="08 — The Two Jobs The Hub Runs At Once" role="title" status="" placeholders="1" id="title">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#0F172A;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="60" y="44" width="1340" height="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="The hub chip has two halves. One serves phones, the other runs the alarm. They share one notice board, and that sharing has rules." role="subtitle" status="" placeholders="1" id="subtitle">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="62" y="84" width="1320" height="24" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="INSIDE THE HUB · WHY IT NEVER STALLS" role="badge" status="" placeholders="1" id="badge">
+          <mxCell parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;spacing=6;connectable=0;" vertex="1">
+            <mxGeometry x="1420" y="53" width="300" height="32" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="HALF ONE  ·  SERVING PHONES  ·  can afford to be slow" role="runtime-boundary" status="active" placeholders="1" id="bnd_web">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="52" y="124" width="520" height="680" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="SHARED BETWEEN THEM" role="runtime-boundary" status="active" placeholders="1" id="bnd_shared">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#B45309;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="596" y="124" width="520" height="680" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="HALF TWO  ·  RUNNING THE ALARM  ·  must never be slow" role="runtime-boundary" status="active" placeholders="1" id="bnd_loop">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="1140" y="124" width="568" height="680" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Answers every web address&lt;/b&gt;&lt;br&gt;whatever a phone types, it lands on the hub's own page" role="component" status="" placeholders="1" id="a1">
+          <mxCell parent="bnd_web" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="56" width="470" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Serves the pages&lt;/b&gt;&lt;br&gt;the visitor page, the staff page, the styles and scripts" role="component" status="" placeholders="1" id="a2">
+          <mxCell parent="bnd_web" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="142" width="470" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Answers the buttons on those pages&lt;/b&gt;&lt;br&gt;let a visitor in, turn them away, flip the emergency switch, clear the gallery" role="component" status="" placeholders="1" id="a3">
+          <mxCell parent="bnd_web" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="228" width="470" height="78" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Takes in photos from the camera&lt;/b&gt;&lt;br&gt;writes the scratch file, checks it, files it in the gallery" role="component" status="" placeholders="1" id="a4">
+          <mxCell parent="bnd_web" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="322" width="470" height="78" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Owns the gallery outright&lt;/b&gt;&lt;br&gt;no other half ever touches it, so it needs no lock at all" role="component" status="" placeholders="1" id="a5">
+          <mxCell parent="bnd_web" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#92400E;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="416" width="470" height="78" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Any of these can take a while.&lt;/b&gt; A phone loading the gallery, or a photo arriving in pieces, can hold this half up for a moment. That is fine — it is exactly why the alarm lives in the other half." role="note" status="" placeholders="1" id="a_note">
+          <mxCell parent="bnd_web" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#1E3A8A;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="28" y="516" width="470" height="110" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;A radio message arrives&lt;/b&gt;&lt;br&gt;handled on this half, and only just" role="peripheral" status="" placeholders="1" id="m_in">
+          <mxCell parent="bnd_shared" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="24" y="52" width="470" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;The inbox — 16 slots&lt;/b&gt;&lt;br&gt;&lt;br&gt;The radio handler does one thing: drop the message in here and get out. It runs inside the Wi-Fi machinery, so it must not linger." role="peripheral" status="" placeholders="1" id="m_inbox">
+          <mxCell parent="bnd_shared" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="24" y="138" width="470" height="106" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THE NOTICE BOARD&lt;/b&gt;&lt;br&gt;&lt;i&gt;both halves read and write this&lt;/i&gt;&lt;br&gt;&lt;br&gt;• where the robot is, and whether it is moving&lt;br&gt;• is the emergency on or off&lt;br&gt;• air readings from each station&lt;br&gt;• the queue of visitors waiting to be let in&lt;br&gt;• which photo is the newest&lt;br&gt;&lt;br&gt;&lt;b&gt;The rule: take the lock, touch it, put the lock back.&lt;/b&gt;&lt;br&gt;Without that, one half could read a half-written value." role="peripheral" status="" placeholders="1" id="m_board">
+          <mxCell parent="bnd_shared" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="24" y="276" width="470" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;One flag: “the emergency just changed”&lt;/b&gt;&lt;br&gt;&lt;br&gt;The staff page and the button only raise this. Neither sends anything." role="peripheral" status="" placeholders="1" id="m_flag">
+          <mxCell parent="bnd_shared" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="24" y="566" width="470" height="90" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;1 · Empty the inbox&lt;/b&gt;&lt;br&gt;and write what arrived onto the notice board" role="component" status="" placeholders="1" id="b1">
+          <mxCell parent="bnd_loop" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="40" y="56" width="490" height="66" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;2 · Let “moving” go stale&lt;/b&gt;&lt;br&gt;after 2.5 s with no word, the robot counts as stopped again" role="component" status="" placeholders="1" id="b2">
+          <mxCell parent="bnd_loop" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="40" y="138" width="490" height="66" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;3 · Read the button&lt;/b&gt;&lt;br&gt;50 ms to be sure, then press = on, 3-second hold = off" role="component" status="" placeholders="1" id="b3">
+          <mxCell parent="bnd_loop" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="40" y="220" width="490" height="66" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;4 · Run the siren&lt;/b&gt;&lt;br&gt;two tones swapping every 0.4 s" role="component" status="" placeholders="1" id="b4">
+          <mxCell parent="bnd_loop" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="40" y="302" width="490" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;5 · Send the alarm out by radio&lt;/b&gt;&lt;br&gt;6 quick copies when it changes, then one every 2 s — &lt;b&gt;this is the only place anything is transmitted&lt;/b&gt;" role="component" status="" placeholders="1" id="b5">
+          <mxCell parent="bnd_loop" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="40" y="378" width="490" height="84" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;6 · Update the 7 track lights&lt;/b&gt;&lt;br&gt;red blink when the alarm is up" role="component" status="" placeholders="1" id="b6">
+          <mxCell parent="bnd_loop" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="40" y="478" width="490" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;…then wait 5 ms and start again at 1.&lt;/b&gt;&lt;br&gt;Nothing in this list is allowed to block. Every timer here is checked by looking at the clock, never by sitting and waiting." role="note" status="" placeholders="1" id="b_note">
+          <mxCell parent="bnd_loop" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#1E3A8A;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="40" y="554" width="490" height="90" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="emptied&lt;br&gt;here" role="wire-label" status="" placeholders="1" id="x_inbox_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1104" y="292" width="68" height="46" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="lock&lt;br&gt;first" role="wire-label" status="" placeholders="1" id="x_board_l_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="556" y="462" width="58" height="46" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="lock&lt;br&gt;first" role="wire-label" status="" placeholders="1" id="x_board_r_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1102" y="452" width="58" height="46" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="raise the&lt;br&gt;flag only" role="wire-label" status="" placeholders="1" id="x_flag_in_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="552" y="700" width="66" height="46" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="so exactly one&lt;br&gt;half transmits" role="wire-label" status="" placeholders="1" id="x_flag_out_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1098" y="636" width="80" height="46" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHAT THE ARROWS MEAN&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#0F766E&quot;&gt;━━━▶ &lt;b&gt;The next step&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  in that half's own list of jobs&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#475569&quot;&gt;◀━━▶ &lt;b&gt;Reads and writes&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  the shared notice board — lock required&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#4F46E5&quot;&gt;━━━▶ &lt;b&gt;Raises a flag&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  asks for something, does not do it&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;━━━▶ &lt;b&gt;Actually transmits&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  only ever from the alarm half&lt;/font&gt;" role="legend" status="" placeholders="1" id="legend">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="52" y="828" width="390" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHY SPLIT IT IN TWO AT ALL?&lt;/b&gt;&lt;br&gt;&lt;br&gt;Serving a phone is unpredictable. A page load, a photo arriving in pieces, a slow SD card — any of these can take a noticeable moment.&lt;br&gt;&lt;br&gt;The alarm cannot wait for any of that. A siren that stutters while somebody loads the photo gallery is not an alarm.&lt;br&gt;&lt;br&gt;So the two are kept apart. Whatever the phone side is busy with, the alarm side still comes round every 5 ms: button read, siren tone, lights, and the alarm going out over the radio." role="legend" status="" placeholders="1" id="why">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="466" y="828" width="390" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THE LOCK RULE, IN PLAIN TERMS&lt;/b&gt;&lt;br&gt;&lt;br&gt;Both halves write to the same notice board. If one wrote while the other was reading, the reader could catch a value half-changed.&lt;br&gt;&lt;br&gt;So there is one lock. Take it, do your business quickly, put it back.&lt;br&gt;&lt;br&gt;Two things deliberately sit &lt;b&gt;outside&lt;/b&gt; the lock:&lt;br&gt;&lt;br&gt;• &lt;b&gt;the gallery&lt;/b&gt;, because only the phone half ever touches it&lt;br&gt;• &lt;b&gt;the inbox&lt;/b&gt;, which is built to be safely handed between halves already" role="legend" status="" placeholders="1" id="lock">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="880" y="828" width="390" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;SMALL DECISIONS WITH BIG REASONS&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;The radio handler does almost nothing.&lt;/b&gt; It drops the message in the inbox and leaves, because it runs inside the Wi-Fi machinery where lingering causes trouble. All the real work happens in the alarm half.&lt;br&gt;&lt;br&gt;&lt;b&gt;“Moving” expires.&lt;/b&gt; Nothing ever says “the robot stopped”, so after 2.5 s of silence the hub lets it lapse. Otherwise the dashboard would show the robot moving for the rest of the day.&lt;br&gt;&lt;br&gt;&lt;b&gt;The phone half was given extra working room&lt;/b&gt; because reading an SD card needs it." role="legend" status="" placeholders="1" id="small">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="1294" y="828" width="414" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="e_in">
+          <mxCell parent="bnd_shared" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;dashed=1;dashPattern=1 3;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="m_in" target="m_inbox">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="q_b1">
+          <mxCell parent="bnd_loop" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="b1" target="b2">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="q_b2">
+          <mxCell parent="bnd_loop" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="b2" target="b3">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="q_b3">
+          <mxCell parent="bnd_loop" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="b3" target="b4">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="q_b4">
+          <mxCell parent="bnd_loop" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="b4" target="b5">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="q_b5">
+          <mxCell parent="bnd_loop" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="b5" target="b6">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="x_inbox">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.5;entryX=0;entryY=0.5;curved=0;" edge="1" source="m_inbox" target="b1">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="x_board_l">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#475569;strokeWidth=1.6;endArrow=block;endFill=1;endSize=9;startArrow=block;startFill=1;startSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.2;curved=0;" edge="1" source="a4" target="m_board">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="566" y="485" />
+                <mxPoint x="566" y="450" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="x_board_r">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#475569;strokeWidth=1.6;endArrow=block;endFill=1;endSize=9;startArrow=block;startFill=1;startSize=8;exitX=1;exitY=0.3;entryX=0;entryY=0.5;curved=0;" edge="1" source="m_board" target="b3">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="x_flag_in">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#4F46E5;strokeWidth=2.0;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.85;entryX=0;entryY=0.3;curved=0;" edge="1" source="a3" target="m_flag">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="602" y="418" />
+                <mxPoint x="602" y="717" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="x_flag_out">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#C62828;strokeWidth=3.4;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.7;entryX=0;entryY=0.85;curved=0;" edge="1" source="m_flag" target="b5">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

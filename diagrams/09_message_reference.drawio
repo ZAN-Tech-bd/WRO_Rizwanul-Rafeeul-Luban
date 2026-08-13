@@ -1,0 +1,175 @@
+<mxfile host="Claude Code" type="device">
+  <diagram id="wro_rrl_09-messages" name="09-messages">
+    <mxGraphModel dx="1200" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="1760" pageHeight="1310" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" role="background" status="" placeholders="1" id="page_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="20" y="20" width="1720" height="1270" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="09 — Every Message The Boards Send Each Other" role="title" status="" placeholders="1" id="title">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#0F172A;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="60" y="44" width="1340" height="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="The reference sheet. If you are adding a board or chasing a link that does not work, everything you need to match is here." role="subtitle" status="" placeholders="1" id="subtitle">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="62" y="84" width="1320" height="24" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="REFERENCE · COPY THESE EXACTLY" role="badge" status="" placeholders="1" id="badge">
+          <mxCell parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;spacing=6;connectable=0;" vertex="1">
+            <mxGeometry x="1420" y="53" width="300" height="32" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="THE RADIO MESSAGE  ·  24 bytes  ·  identical on every board" role="runtime-boundary" status="active" placeholders="1" id="bnd_msg">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="52" y="124" width="1656" height="320" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;“MS”&lt;/b&gt;&lt;br&gt;2" role="peripheral" status="" placeholders="1" id="fld0">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="84" y="62" width="118" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;version&lt;/b&gt;&lt;br&gt;1" role="peripheral" status="" placeholders="1" id="fld1">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="208" y="62" width="56" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;what kind&lt;/b&gt;&lt;br&gt;1" role="peripheral" status="" placeholders="1" id="fld2">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="270" y="62" width="56" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;which board&lt;/b&gt;&lt;br&gt;1" role="peripheral" status="" placeholders="1" id="fld3">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="332" y="62" width="56" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;station&lt;/b&gt;&lt;br&gt;1" role="peripheral" status="" placeholders="1" id="fld4">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="394" y="62" width="56" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;flags&lt;/b&gt;&lt;br&gt;1" role="peripheral" status="" placeholders="1" id="fld5">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="456" y="62" width="56" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;spare&lt;/b&gt;&lt;br&gt;1" role="peripheral" status="" placeholders="1" id="fld6">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="518" y="62" width="56" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;temp ×10&lt;/b&gt;&lt;br&gt;2" role="peripheral" status="" placeholders="1" id="fld7">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="580" y="62" width="118" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;damp ×10&lt;/b&gt;&lt;br&gt;2" role="peripheral" status="" placeholders="1" id="fld8">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="704" y="62" width="118" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;gas&lt;/b&gt;&lt;br&gt;2" role="peripheral" status="" placeholders="1" id="fld9">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="828" y="62" width="118" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;visitors&lt;/b&gt;&lt;br&gt;2" role="peripheral" status="" placeholders="1" id="fld10">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="952" y="62" width="118" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;count&lt;/b&gt;&lt;br&gt;2" role="peripheral" status="" placeholders="1" id="fld11">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="1076" y="62" width="118" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;uptime&lt;/b&gt;&lt;br&gt;4" role="peripheral" status="" placeholders="1" id="fld12">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="1200" y="62" width="242" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;checksum&lt;/b&gt;&lt;br&gt;2" role="peripheral" status="" placeholders="1" id="fld13">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="1448" y="62" width="118" height="74" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Green = actually used by these five projects.&lt;/b&gt;&amp;nbsp; Grey = the space is reserved and sent, but nothing here fills it in or reads it. Everything is a whole number — 26.4 °C travels as 264 — so every board reads the layout the same way." role="wire-label" status="" placeholders="1" id="bytes_note">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="84" y="152" width="1488" height="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THE SEVEN KINDS OF MESSAGE&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;2 · emergency&lt;/b&gt; &amp;nbsp;— hub sends it, robot listens. &lt;b&gt;The only one that does anything today.&lt;/b&gt;&lt;br&gt;&lt;b&gt;5 · photo ready&lt;/b&gt; — camera sends it, hub throws it away&lt;br&gt;&lt;b&gt;1 · where the robot is&lt;/b&gt; — hub would use it, but nothing sends it&lt;br&gt;&lt;b&gt;3 · air readings&lt;/b&gt; — hub would use it, but nothing sends it&lt;br&gt;&lt;b&gt;4 · visitor count&lt;/b&gt; &amp;nbsp;&lt;b&gt;6 · command&lt;/b&gt; &amp;nbsp;&lt;b&gt;7 · still alive&lt;/b&gt; — not sent and not read" role="legend" status="" placeholders="1" id="kinds">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="38" y="202" width="780" height="100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THE FLAGS BYTE&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;bit 0 · emergency is on&lt;/b&gt; — the one the robot acts on&lt;br&gt;&lt;b&gt;bit 3 · this board is alive&lt;/b&gt; — the hub sets it on every send&lt;br&gt;bit 1 · something in the way &amp;nbsp;&amp;nbsp; bit 2 · alert &amp;nbsp;&amp;nbsp; bit 4 · robot is moving&lt;br&gt;&lt;br&gt;The last three are defined and sent, but no board in these five projects sets or checks them." role="legend" status="" placeholders="1" id="flags">
+          <mxCell parent="bnd_msg" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="838" y="202" width="780" height="100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="WORDS SENT DOWN WIRES  ·  plain text, one line at a time, ending with a newline" role="runtime-boundary" status="active" placeholders="1" id="bnd_wires">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="52" y="468" width="1080" height="620" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ROBOT → NANO&lt;/b&gt; &amp;nbsp;&lt;i&gt;9600, upper or lower case both fine&lt;/i&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;START&lt;/b&gt; — drive forward &amp;nbsp;&lt;i&gt;(MAN, 1, F, G, W all do the same)&lt;/i&gt;&lt;br&gt;&lt;b&gt;STOP&lt;/b&gt; — brake hard &amp;nbsp;&lt;i&gt;(0, S, X all do the same)&lt;/i&gt;&lt;br&gt;&lt;b&gt;SET ML 150&lt;/b&gt; — left speed, 0 to 255&lt;br&gt;&lt;b&gt;SET MR 210&lt;/b&gt; — right speed, 0 to 255&lt;br&gt;&lt;b&gt;GET&lt;/b&gt; — tell me the current speeds&lt;br&gt;&lt;b&gt;SAVE&lt;/b&gt; — remember them through a power cut&lt;br&gt;&lt;b&gt;LOAD&lt;/b&gt; — put back the remembered ones&lt;br&gt;&lt;br&gt;A speed change while driving takes effect at once." role="legend" status="" placeholders="1" id="to_nano">
+          <mxCell parent="bnd_wires" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="28" y="52" width="500" height="244" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;NANO → ROBOT&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;READY:STOPPED&lt;/b&gt; — sent once at power-on: “I am awake and parked”&lt;br&gt;&lt;b&gt;STATE:RUNNING&lt;/b&gt; / &lt;b&gt;STATE:STOPPED&lt;/b&gt; — after every START / STOP&lt;br&gt;&lt;b&gt;TUNE ML=150 MR=210&lt;/b&gt; — the speeds it is really using&lt;br&gt;&lt;b&gt;OK ML=150&lt;/b&gt; — one setting accepted&lt;br&gt;&lt;b&gt;SAVED&lt;/b&gt; / &lt;b&gt;LOADED&lt;/b&gt; / &lt;b&gt;LOAD:NONE&lt;/b&gt;&lt;br&gt;&lt;b&gt;ERR:UNKNOWN …&lt;/b&gt; / &lt;b&gt;ERR:SYNTAX&lt;/b&gt; / &lt;b&gt;ERR:KEY&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;The safety rule:&lt;/b&gt; anything the Nano does not recognise is reported and changes nothing. Random noise on the wire can never start the motors." role="legend" status="" placeholders="1" id="from_nano">
+          <mxCell parent="bnd_wires" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="558" y="52" width="490" height="244" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ROBOT → CAMERA&lt;/b&gt; &amp;nbsp;&lt;i&gt;9600, one direction only&lt;/i&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;SHOOT 3&lt;/b&gt; — take a photo and tag it station 3.&lt;br&gt;That is the entire wire protocol. The camera never replies, and the robot never checks.&lt;br&gt;&lt;br&gt;&lt;b&gt;The same words work over USB&lt;/b&gt;, plus:&lt;br&gt;CAPTURE · SEND · WIFI · AUTO 5000 · STATUS · LIST · INIT · FLASH ON|OFF · HELP" role="legend" status="" placeholders="1" id="to_cam">
+          <mxCell parent="bnd_wires" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="28" y="324" width="500" height="220" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ROBOT → SCREEN&lt;/b&gt; &amp;nbsp;&lt;i&gt;9600 — written and working, but not wired&lt;/i&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;FACE&lt;/b&gt; or &lt;b&gt;FACE HAPPY|NEUTRAL|ALERT|SLEEPY&lt;/b&gt;&lt;br&gt;&lt;b&gt;LANG 0&lt;/b&gt; (English) / &lt;b&gt;LANG 1&lt;/b&gt; (Bangla audio)&lt;br&gt;&lt;b&gt;STATION 3 0&lt;/b&gt; — station 3, standing still&lt;br&gt;&lt;b&gt;MENU&lt;/b&gt; · &lt;b&gt;EMERGENCY&lt;/b&gt; · &lt;b&gt;BOOT&lt;/b&gt; or &lt;b&gt;RESET&lt;/b&gt;&lt;br&gt;&lt;br&gt;The screen accepts these over USB too, so it can be tested on a bench with no robot at all — which is exactly how it is used today." role="legend" status="" placeholders="1" id="to_screen">
+          <mxCell parent="bnd_wires" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="558" y="324" width="490" height="220" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="WEB ADDRESSES" role="runtime-boundary" status="active" placeholders="1" id="bnd_web">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="1156" y="468" width="552" height="620" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ON THE HUB&lt;/b&gt; &amp;nbsp;&lt;i&gt;http://192.168.4.1&lt;/i&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;/api/state&lt;/b&gt; — everything the pages show. Asked every 1.5 s&lt;br&gt;&lt;b&gt;/api/checkin&lt;/b&gt; — a visitor asks to come in&lt;br&gt;&lt;b&gt;/api/enter&lt;/b&gt; — what the printed QR points at&lt;br&gt;&lt;b&gt;/api/request?id=…&lt;/b&gt; — am I let in yet?&lt;br&gt;&lt;b&gt;/api/approve?id=…&lt;/b&gt; &amp;nbsp; &lt;b&gt;/api/deny?id=…&lt;/b&gt;&lt;br&gt;&lt;b&gt;/api/emergency?on=1&lt;/b&gt; or &lt;b&gt;on=0&lt;/b&gt;&lt;br&gt;&lt;b&gt;/api/robot/advance&lt;/b&gt; — the demo button&lt;br&gt;&lt;b&gt;/api/image/upload?station=3&lt;/b&gt; — where photos land&lt;br&gt;&lt;b&gt;/api/image&lt;/b&gt; — newest photo &amp;nbsp; &lt;b&gt;?seq=12&lt;/b&gt; — that exact one&lt;br&gt;&lt;b&gt;/api/gallery&lt;/b&gt; — the list &amp;nbsp; &lt;b&gt;/api/gallery/clear&lt;/b&gt; — wipe it&lt;br&gt;&lt;br&gt;&lt;b&gt;Answers you may see on a failed upload:&lt;/b&gt;&lt;br&gt;413 too big · 415 not sent the right way · 422 not a real photo file · 500 could not write it · 507 nowhere to put it" role="legend" status="" placeholders="1" id="hub_api">
+          <mxCell parent="bnd_web" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="24" y="52" width="500" height="348" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ON THE ROBOT&lt;/b&gt; &amp;nbsp;&lt;i&gt;http://192.168.4.1 on its own network&lt;/i&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;/&lt;/b&gt; — the tuning page itself&lt;br&gt;&lt;b&gt;/api/state&lt;/b&gt; — speeds, volume, rail state, and the event log&lt;br&gt;&lt;b&gt;/api/volume?v=20&lt;/b&gt; — 0 to 30&lt;br&gt;&lt;b&gt;/api/motors?ml=150&amp;amp;mr=210&lt;/b&gt; — try these speeds now&lt;br&gt;&lt;b&gt;/api/motors/save&lt;/b&gt; — and remember them&lt;br&gt;&lt;b&gt;/api/log/clear&lt;/b&gt; — empty the event log" role="legend" status="" placeholders="1" id="robot_api">
+          <mxCell parent="bnd_web" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="24" y="420" width="500" height="176" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THINGS THAT MUST MATCH, OR NOTHING WORKS&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Channel 1&lt;/b&gt; — on the hub's network, the robot's network, and the radio. Change one and the alarm link dies silently.&lt;br&gt;&lt;br&gt;&lt;b&gt;9600&lt;/b&gt; — on all four wire links: robot↔Nano, robot→camera, robot→screen.&lt;br&gt;&lt;br&gt;&lt;b&gt;MuseumHub / museum2026&lt;/b&gt; — written in the hub's settings and again in the camera's settings. Two separate files that have to agree.&lt;br&gt;&lt;br&gt;&lt;b&gt;Seven station names&lt;/b&gt; — listed in the hub, in the screen's settings, and in the web page's data file. Three places, same order." role="legend" status="" placeholders="1" id="match">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="52" y="1108" width="540" height="178" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHAT TO CHECK WHEN A LINK IS DEAD&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Radio silent?&lt;/b&gt; Channels differ, or a board is on a different network than you think. There is no error message — this is the usual cause.&lt;br&gt;&lt;br&gt;&lt;b&gt;Nano ignoring you?&lt;/b&gt; Every line must end with a newline. No newline, no command.&lt;br&gt;&lt;br&gt;&lt;b&gt;Camera not shooting?&lt;/b&gt; The wire is one-way, so nothing reports back. Watch the camera's USB output — it echoes every line it receives.&lt;br&gt;&lt;br&gt;&lt;b&gt;Photo rejected?&lt;/b&gt; Read the number in the reply — each one means something different (see the list above)." role="legend" status="" placeholders="1" id="gotchas">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="616" y="1108" width="540" height="178" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ABOUT THIS SHEET&lt;/b&gt;&lt;br&gt;&lt;br&gt;Everything here was read out of the running code, not from notes or READMEs. Where the two disagreed, the code won.&lt;br&gt;&lt;br&gt;The &lt;b&gt;screen&lt;/b&gt; section is the one place that describes something not currently connected: the commands are real and tested over USB, but no wire runs to it and the robot never sends them. See sheet 02 for why.&lt;br&gt;&lt;br&gt;&lt;b&gt;Sheets in this set:&lt;/b&gt; 01 overview · 02 wiring · 03 radio · 04 a station stop · 05 the emergency · 06 robot states · 07 photos · 08 inside the hub · 09 this one." role="legend" status="" placeholders="1" id="source">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="1180" y="1108" width="528" height="178" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
