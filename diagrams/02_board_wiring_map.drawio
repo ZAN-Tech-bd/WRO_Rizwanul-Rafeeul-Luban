@@ -1,0 +1,325 @@
+<mxfile host="Claude Code" type="device">
+  <diagram id="wro_rrl_02-wiring" name="02-wiring">
+    <mxGraphModel dx="1200" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="1840" pageHeight="1120" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" role="background" status="" placeholders="1" id="page_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="20" y="20" width="1800" height="1080" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="02 — How Every Board Is Wired" role="title" status="" placeholders="1" id="title">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#0F172A;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="60" y="44" width="1420" height="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Which pin goes to which pin, and what travels down each wire. Taken straight from the working code." role="subtitle" status="" placeholders="1" id="subtitle">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="62" y="84" width="1400" height="24" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="WIRING · READ BEFORE YOU PLUG ANYTHING IN" role="badge" status="" placeholders="1" id="badge">
+          <mxCell parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;spacing=6;connectable=0;" vertex="1">
+            <mxGeometry x="1500" y="53" width="300" height="32" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ON THE ROBOT  ·  these boards ride together and share one ground wire" role="runtime-boundary" status="active" placeholders="1" id="bnd_robot">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="52" y="124" width="1180" height="700" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="BESIDE THE TRACK  ·  the hub box that stays in one place" role="runtime-boundary" status="active" placeholders="1" id="bnd_hub">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="1256" y="124" width="552" height="376" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ON THE BENCH ONLY  ·  the screen is not joined to the robot right now" role="runtime-boundary" status="inactive" placeholders="1" id="bnd_disp">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=1.8;dashed=1;dashPattern=8 5;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#475569;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="1256" y="530" width="552" height="294" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Robot ESP32 — the main brain&lt;/b&gt;&lt;br&gt;&lt;br&gt;Reads the cards.&lt;br&gt;Plays the sound.&lt;br&gt;Tells the motor helper when&lt;br&gt;to go and when to stop." role="component" status="" placeholders="1" id="robot">
+          <mxCell parent="bnd_robot" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=12;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="418" y="46" width="300" height="150" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Arduino Nano — motor helper&lt;/b&gt;&lt;br&gt;Only understands GO and STOP.&lt;br&gt;D0 = its ear · D1 = its mouth" role="peripheral" status="" placeholders="1" id="nano">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#3730A3;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="28" y="52" width="250" height="120" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;L298N motor driver board&lt;/b&gt;&lt;br&gt;ENA D10 · IN1 D8 · IN2 D7  → left motor&lt;br&gt;ENB D5 · IN3 D11 · IN4 D12 → right motor&lt;br&gt;Pull the two ENA / ENB jumpers off" role="peripheral" status="" placeholders="1" id="l298n">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="28" y="228" width="250" height="126" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;The two rail motors&lt;/b&gt;" role="peripheral" status="" placeholders="1" id="motors">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="28" y="400" width="250" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;STOP does not mean coast.&lt;/b&gt;&lt;br&gt;Both direction pins go HIGH and power goes to full, which shorts each motor and locks it. Setting speed to 0 instead would let the robot roll on." role="note" status="" placeholders="1" id="note_brake">
+          <mxCell parent="bnd_robot" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#1E3A8A;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="28" y="508" width="250" height="128" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Card reader (MFRC522)&lt;/b&gt;&lt;br&gt;SDA → GPIO5 · SCK → GPIO18&lt;br&gt;MOSI → GPIO23 · MISO → GPIO19&lt;br&gt;3.3 V only. RST is not used." role="peripheral" status="" placeholders="1" id="mfrc">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="848" y="40" width="290" height="112" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;DFPlayer Mini + speaker&lt;/b&gt;&lt;br&gt;its TX → GPIO16 &amp;nbsp;·&amp;nbsp; its RX ← GPIO17&lt;br&gt;Put a 1 kΩ resistor on the GPIO17 wire&lt;br&gt;5 V power · its own SD card holds 0001–0008.mp3" role="peripheral" status="" placeholders="1" id="dfplayer">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="848" y="192" width="290" height="126" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ESP32-CAM — the camera board&lt;/b&gt;&lt;br&gt;&lt;br&gt;Sits quietly until it hears the&lt;br&gt;word SHOOT, then takes one photo." role="component" status="" placeholders="1" id="cam">
+          <mxCell parent="bnd_robot" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=2;fontFamily=Arial;fontSize=12;fontColor=#92400E;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="418" y="328" width="300" height="140" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;GC2145 camera chip&lt;/b&gt;&lt;br&gt;already on the camera board&lt;br&gt;hands over raw colour pixels, not a JPEG" role="peripheral" status="" placeholders="1" id="gc2145">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="848" y="346" width="290" height="90" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Camera's own SD card&lt;/b&gt; (optional)&lt;br&gt;uses only GPIO2, GPIO14, GPIO15" role="storage" status="" placeholders="1" id="camsd">
+          <mxCell parent="bnd_robot" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FFFBEB;strokeColor=#CA8A04;strokeWidth=1.5;dashed=1;dashPattern=1 4;fontFamily=Arial;fontSize=10;fontColor=#713F12;align=center;verticalAlign=middle;spacingTop=5;spacingBottom=4;" vertex="1">
+            <mxGeometry x="848" y="472" width="290" height="78" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Why GPIO13 for the SHOOT wire?&lt;/b&gt;&lt;br&gt;The camera's SD card in 1-wire mode only takes GPIO2, 14 and 15, so GPIO13 is genuinely free." role="note" status="" placeholders="1" id="note_gpio13">
+          <mxCell parent="bnd_robot" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#D97706;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#7C2D12;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="848" y="576" width="290" height="96" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;One shared ground.&lt;/b&gt;&lt;br&gt;Every board above must have its GND joined together. Miss this and the wires look connected but nothing gets through." role="note" status="" placeholders="1" id="note_gnd">
+          <mxCell parent="bnd_robot" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#1E3A8A;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="418" y="526" width="300" height="110" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="GPIO26 → D0&lt;br&gt;the words GO and STOP&lt;br&gt;9600 speed" role="wire-label" status="" placeholders="1" id="p_go">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="284" y="62" width="128" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="D1 → 10k + 20k resistors → GPIO25&lt;br&gt;the Nano's answers" role="wire-label" status="" placeholders="1" id="p_back">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="284" y="130" width="128" height="62" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="6 wires: 2 for speed, 4 for direction" role="wire-label" status="" placeholders="1" id="p_l298">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="32" y="180" width="242" height="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="the actual motor power" role="wire-label" status="" placeholders="1" id="p_mot">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="32" y="360" width="242" height="32" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="4-wire SPI bus&lt;br&gt;card numbers come back" role="wire-label" status="" placeholders="1" id="p_spi">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="724" y="58" width="118" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="GPIO17 → play,&lt;br&gt;stop, volume" role="wire-label" status="" placeholders="1" id="p_snd">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="724" y="176" width="118" height="48" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="GPIO16 ← “track&lt;br&gt;finished” / errors" role="wire-label" status="" placeholders="1" id="p_fin">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="724" y="248" width="118" height="48" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="GPIO14 → GPIO13 &amp;nbsp;·&amp;nbsp; 9600&lt;br&gt;sends one short line: &lt;b&gt;SHOOT 3&lt;/b&gt;&lt;br&gt;one direction only — the camera never answers" role="wire-label" status="" placeholders="1" id="p_shoot">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="422" y="224" width="292" height="66" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="built-in ribbon&lt;br&gt;on the board" role="wire-label" status="" placeholders="1" id="p_dvp">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="724" y="362" width="118" height="48" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="only after you&lt;br&gt;type INIT" role="wire-label" status="" placeholders="1" id="p_camsd">
+          <mxCell parent="bnd_robot" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="724" y="476" width="118" height="48" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Hub ESP32 — in charge of the emergency&lt;/b&gt;&lt;br&gt;Also serves the pages that phones open." role="component" status="" placeholders="1" id="hub">
+          <mxCell parent="bnd_hub" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=12;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="24" y="52" width="210" height="140" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Emergency button&lt;/b&gt;&lt;br&gt;one wire to GPIO21" role="peripheral" status="" placeholders="1" id="btn">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="344" y="44" width="190" height="84" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;7 track lights&lt;/b&gt; (WS2812)&lt;br&gt;data wire to GPIO15" role="peripheral" status="" placeholders="1" id="leds">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="344" y="148" width="190" height="84" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Buzzer&lt;/b&gt;&lt;br&gt;to GPIO4 — must be the&lt;br&gt;passive kind, not active" role="peripheral" status="" placeholders="1" id="buzz">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="344" y="252" width="190" height="84" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="gives HIGH&lt;br&gt;when pressed" role="wire-label" status="" placeholders="1" id="p_btn">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="244" y="58" width="94" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="one data wire&lt;br&gt;feeds all 7" role="wire-label" status="" placeholders="1" id="p_led">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="244" y="162" width="94" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="the code sends&lt;br&gt;two tones" role="wire-label" status="" placeholders="1" id="p_buz">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="244" y="266" width="94" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="SCK 18 · MISO 19 · MOSI 23 · CS 5" role="wire-label" status="" placeholders="1" id="p_hubsd">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="24" y="202" width="210" height="44" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;SD card for the photos&lt;/b&gt;&lt;br&gt;if it is missing, photos go to&lt;br&gt;the ESP32's own memory instead" role="storage" status="" placeholders="1" id="hubsd">
+          <mxCell parent="bnd_hub" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FEF9E7;strokeColor=#A16207;strokeWidth=1.5;fontFamily=Arial;fontSize=10;fontColor=#713F12;align=center;verticalAlign=middle;spacingTop=5;spacingBottom=4;" vertex="1">
+            <mxGeometry x="24" y="256" width="210" height="86" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Arduino Mega + 3.2&quot; screen&lt;/b&gt;&lt;br&gt;The screen shield already uses pins 22–53 and A0–A5.&lt;br&gt;The link would come in on RX1 (pin 19)." role="peripheral" status="" placeholders="1" id="mega">
+          <mxCell parent="bnd_disp" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F5F3FF;strokeColor=#7C3AED;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#5B21B6;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="24" y="70" width="230" height="140" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Robot GPIO17 is already taken&lt;/b&gt;&lt;br&gt;That pin is the DFPlayer wire, so the screen has nowhere to plug in." role="peripheral" status="" placeholders="1" id="clash">
+          <mxCell parent="bnd_disp" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="324" y="70" width="210" height="140" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="The books say: robot GPIO17 → 1 kΩ resistor → Mega pin 19. Nobody has wired it, and the robot code never sends anything to a screen." role="wire-label" status="" placeholders="1" id="p_clash">
+          <mxCell parent="bnd_disp" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFBEB;fillOpacity=95;strokeColor=#A16207;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#713F12;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="24" y="226" width="510" height="48" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHAT THE LINE COLOURS MEAN&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#2563EB&quot;&gt;━━━▶ &lt;b&gt;SPI&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  fast 4-wire bus — card reader, hub SD card&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#7C3AED&quot;&gt;━━━▶ &lt;b&gt;Text over a wire&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  short typed lines like GO, STOP, SHOOT 3&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#4F46E5&quot;&gt;━━━▶ &lt;b&gt;Plain on/off pin&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  button, lights, buzzer, motor direction&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#0891B2&quot;&gt;━━━▶ &lt;b&gt;Camera ribbon&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  already built into the camera board&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#B45309&quot;&gt;━━━▶ &lt;b&gt;Motor power&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  the heavy wires that actually turn the wheels&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#CA8A04&quot;&gt;····▶ &lt;b&gt;Optional&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  works without it — camera SD card&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;– – × &lt;b&gt;Cannot be wired&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  the pin is already doing another job&lt;/font&gt;" role="legend" status="" placeholders="1" id="legend">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="52" y="848" width="420" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;VOLTAGE — WHERE YOU MUST BE CAREFUL&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Nano → ESP32.&lt;/b&gt; The Nano speaks at 5 V and the ESP32 only wants 3.3 V. The 10k + 20k resistor pair drops it. Skipping this can kill the ESP32 pin.&lt;br&gt;&lt;br&gt;&lt;b&gt;ESP32 → DFPlayer.&lt;/b&gt; A 1 kΩ resistor sits in the GPIO17 wire to keep it calm.&lt;br&gt;&lt;br&gt;&lt;b&gt;ESP32 → camera.&lt;/b&gt; Both sides are 3.3 V, so this one wire needs nothing extra.&lt;br&gt;&lt;br&gt;&lt;b&gt;Robot ↔ hub.&lt;/b&gt; No wire at all — they only talk by radio. See sheet 03." role="legend" status="" placeholders="1" id="volts">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="496" y="848" width="420" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;UNPLUG THESE BEFORE YOU FLASH&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Nano.&lt;/b&gt; D0 and D1 are also the USB upload wires. Take both ESP32 wires off, upload, then put them back.&lt;br&gt;&lt;br&gt;&lt;b&gt;ESP32-CAM.&lt;/b&gt; Take the GPIO13 wire off while you upload, or the two senders fight each other.&lt;br&gt;&lt;br&gt;&lt;b&gt;Everything else&lt;/b&gt; can stay plugged in.&lt;br&gt;&lt;br&gt;&lt;b&gt;Talking from a laptop:&lt;/b&gt; robot and hub at 115200, camera at 115200, Nano at 9600, screen at 9600." role="legend" status="" placeholders="1" id="flash">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="940" y="848" width="420" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHERE THESE NUMBERS COME FROM&lt;/b&gt;&lt;br&gt;&lt;br&gt;Every pin on this sheet was read out of the code, not from notes:&lt;br&gt;&lt;br&gt;• ESP32_RFID_MP3_RAIL/ESP32_RFID_MP3.ino&lt;br&gt;• NANO_LFR_RAIL/NANO_LFR_RAIL.ino&lt;br&gt;• firmware/cam/include/config.h&lt;br&gt;• firmware/hub/include/config.h&lt;br&gt;• firmware/display/include/display_config.h&lt;br&gt;&lt;br&gt;Where a README and the code disagree, the code wins — that is the red box on the screen row." role="legend" status="" placeholders="1" id="source">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="1384" y="848" width="424" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_go">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0;exitY=0.25;entryX=1;entryY=0.28;curved=0;" edge="1" source="robot" target="nano">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_back">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.8;entryX=0;entryY=0.82;curved=0;" edge="1" source="nano" target="robot">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_l298">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#4F46E5;strokeWidth=2.0;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="nano" target="l298n">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_mot">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#B45309;strokeWidth=3.0;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="l298n" target="motors">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_spi">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#2563EB;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.2;entryX=0;entryY=0.5;curved=0;" edge="1" source="robot" target="mfrc">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_snd">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.62;entryX=0;entryY=0.28;curved=0;" edge="1" source="robot" target="dfplayer">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_fin">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0;exitY=0.8;entryX=1;entryY=0.88;curved=0;" edge="1" source="dfplayer" target="robot">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_shoot">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="robot" target="cam">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_dvp">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0891B2;strokeWidth=2.0;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.3;entryX=0;entryY=0.5;curved=0;" edge="1" source="cam" target="gc2145">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_camsd">
+          <mxCell parent="bnd_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#CA8A04;strokeWidth=1.6;dashed=1;dashPattern=1 4;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.85;entryX=0;entryY=0.4;curved=0;" edge="1" source="cam" target="camsd">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_btn">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#4F46E5;strokeWidth=2.0;endArrow=block;endFill=1;endSize=9;exitX=0;exitY=0.5;entryX=1;entryY=0.18;curved=0;" edge="1" source="btn" target="hub">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_led">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#4F46E5;strokeWidth=2.0;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.55;entryX=0;entryY=0.5;curved=0;" edge="1" source="hub" target="leds">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_buz">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#4F46E5;strokeWidth=2.0;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.88;entryX=0;entryY=0.5;curved=0;" edge="1" source="hub" target="buzz">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_hubsd">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#2563EB;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="hub" target="hubsd">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="w_clash">
+          <mxCell parent="bnd_disp" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#C62828;strokeWidth=2.0;dashed=1;dashPattern=8 5;endArrow=cross;endFill=0;endSize=12;exitX=1;exitY=0.5;entryX=0;entryY=0.5;curved=0;" edge="1" source="mega" target="clash">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

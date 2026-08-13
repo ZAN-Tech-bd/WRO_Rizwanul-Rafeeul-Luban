@@ -39,6 +39,15 @@ static const uint32_t ROBOT_MOVE_SETTLE_MS = 2500;
 static const uint8_t  HUB_NODE_ID            = 10;
 static const uint32_t EMERGENCY_BROADCAST_MS = 2000;   // < the robot's needs, cheap
 
+// A change of state is the one packet that must not wait for the next timed
+// re-broadcast: while it is in flight the robot is still narrating at a station
+// with the siren already sounding. Because a single unacknowledged broadcast
+// can simply be lost, every transition goes out as a short burst and only then
+// falls back to the heartbeat above. Six frames 60 ms apart cost ~1/3 s of air
+// time and make a missed transition vanishingly unlikely.
+static const uint8_t  EMERGENCY_BURST_COUNT  = 6;
+static const uint32_t EMERGENCY_BURST_GAP_MS = 60;
+
 // Station ids MUST match webapp/js/data.js (ARTIFACTS[].id).
 // ESP-NOW nodes send a numeric stationId 1..N; the Hub maps it to these names.
 static const char* STATION_IDS[STATION_COUNT] = {

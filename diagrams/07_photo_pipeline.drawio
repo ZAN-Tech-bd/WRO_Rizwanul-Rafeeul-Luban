@@ -1,0 +1,237 @@
+<mxfile host="Claude Code" type="device">
+  <diagram id="wro_rrl_07-photo-pipeline" name="07-photo-pipeline">
+    <mxGraphModel dx="1200" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="1840" pageHeight="1040" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" role="background" status="" placeholders="1" id="page_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="20" y="20" width="1800" height="1000" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="07 — The Life Of One Photo" role="title" status="" placeholders="1" id="title">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#0F172A;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="60" y="44" width="1420" height="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="From the word SHOOT to a picture on the staff screen — and every point where a photo can be thrown away on purpose." role="subtitle" status="" placeholders="1" id="subtitle">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="62" y="84" width="1400" height="24" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="PHOTOS · CAMERA AND HUB" role="badge" status="" placeholders="1" id="badge">
+          <mxCell parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;spacing=6;connectable=0;" vertex="1">
+            <mxGeometry x="1500" y="53" width="300" height="32" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ON THE CAMERA BOARD" role="runtime-boundary" status="active" placeholders="1" id="bnd_cam">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="52" y="124" width="880" height="620" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ON THE HUB" role="runtime-boundary" status="active" placeholders="1" id="bnd_hub">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="956" y="124" width="752" height="620" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;1 · The robot says SHOOT 3&lt;/b&gt;&lt;br&gt;one short line, down one wire" role="component" status="" placeholders="1" id="c1">
+          <mxCell parent="bnd_cam" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="52" width="380" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;2 · Throw away 2 old frames&lt;/b&gt;&lt;br&gt;40 ms apart, then start fresh" role="component" status="" placeholders="1" id="c2">
+          <mxCell parent="bnd_cam" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#92400E;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="138" width="380" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;3 · Take a fresh picture&lt;/b&gt;&lt;br&gt;320 × 240, raw colour, not yet a photo file" role="component" status="" placeholders="1" id="c3">
+          <mxCell parent="bnd_cam" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#92400E;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="234" width="380" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;4 · Squeeze it into a JPEG&lt;/b&gt;&lt;br&gt;done in software, quality setting 15" role="component" status="" placeholders="1" id="c4">
+          <mxCell parent="bnd_cam" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#92400E;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="330" width="380" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;5 · Keep a copy in the camera's memory&lt;/b&gt;&lt;br&gt;so it can be re-sent later if the hub was busy" role="component" status="" placeholders="1" id="c5">
+          <mxCell parent="bnd_cam" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#92400E;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="426" width="380" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Why throw away two frames?&lt;/b&gt;&lt;br&gt;The camera keeps only one picture slot, and it starts filling it the moment the last one is handed over. Grab without clearing it first and you get the picture taken &lt;b&gt;just after the previous photo&lt;/b&gt; — which could be minutes old. This is the fix for “the photo is always one behind”." role="note" status="" placeholders="1" id="n_stale">
+          <mxCell parent="bnd_cam" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#D97706;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#7C2D12;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="448" y="126" width="400" height="130" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Why squeeze it here?&lt;/b&gt;&lt;br&gt;This camera chip cannot produce photo files by itself — it only hands over raw colour. The board has to do the squeezing, which is why the pictures are small and a capture takes a moment." role="note" status="" placeholders="1" id="n_nojpeg">
+          <mxCell parent="bnd_cam" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#1E3A8A;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="448" y="278" width="400" height="120" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Optional backup on the camera's own card&lt;/b&gt;&lt;br&gt;saved as IMG_0007.JPG — only if you have run INIT" role="storage" status="" placeholders="1" id="c_sd">
+          <mxCell parent="bnd_cam" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FFFBEB;strokeColor=#CA8A04;strokeWidth=1.5;dashed=1;dashPattern=1 4;fontFamily=Arial;fontSize=10;fontColor=#713F12;align=center;verticalAlign=middle;spacingTop=5;spacingBottom=4;" vertex="1">
+            <mxGeometry x="448" y="424" width="400" height="84" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;If the Wi-Fi is down&lt;/b&gt;, nothing is lost — the JPEG waits in memory. Type WIFI, then SEND, and it goes." role="note" status="" placeholders="1" id="n_offline">
+          <mxCell parent="bnd_cam" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#1E3A8A;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="448" y="520" width="400" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;6 · The photo arrives over Wi-Fi&lt;/b&gt;&lt;br&gt;sent to /api/image/upload?station=3" role="component" status="" placeholders="1" id="h1">
+          <mxCell parent="bnd_hub" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="34" y="52" width="380" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;7 · Written to a scratch file&lt;/b&gt;&lt;br&gt;always in the hub's own flash, never straight onto the SD card" role="component" status="" placeholders="1" id="h2">
+          <mxCell parent="bnd_hub" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="34" y="138" width="380" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;8 · CHECK&lt;/b&gt;&lt;br&gt;Is it all there, and does it start and end like a real photo file should?" role="peripheral" status="" placeholders="1" id="h3">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="34" y="234" width="380" height="76" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;9 · Filed in the gallery&lt;/b&gt;&lt;br&gt;named I00012S3.JPG — the number and the station are in the name itself" role="component" status="" placeholders="1" id="h4">
+          <mxCell parent="bnd_hub" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="34" y="336" width="380" height="76" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;10 · More than 12 photos? Oldest one is deleted&lt;/b&gt;" role="component" status="" placeholders="1" id="h5">
+          <mxCell parent="bnd_hub" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="34" y="438" width="380" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="yes" role="wire-label" status="" placeholders="1" id="p_yes">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="194" y="310" width="60" height="24" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;No → thrown away&lt;/b&gt;&lt;br&gt;&lt;br&gt;The photo already on show is kept, and the camera is told what went wrong." role="peripheral" status="" placeholders="1" id="h_reject">
+          <mxCell parent="bnd_hub" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="454" y="234" width="270" height="100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Why a scratch file first?&lt;/b&gt;&lt;br&gt;Writing to the SD card while the photo is still arriving made uploads cut off half way. Flash is quick, so the card is touched once, at the end." role="note" status="" placeholders="1" id="n_scratch">
+          <mxCell parent="bnd_hub" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#D97706;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#7C2D12;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="454" y="116" width="270" height="100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;The gallery&lt;/b&gt;&lt;br&gt;SD card if one is fitted,&lt;br&gt;otherwise the hub's own flash&lt;br&gt;12 newest photos" role="storage" status="" placeholders="1" id="h_gal">
+          <mxCell parent="bnd_hub" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FEF9E7;strokeColor=#A16207;strokeWidth=1.5;fontFamily=Arial;fontSize=10;fontColor=#713F12;align=center;verticalAlign=middle;spacingTop=5;spacingBottom=4;" vertex="1">
+            <mxGeometry x="454" y="362" width="270" height="100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;11 · The staff page picks it up&lt;/b&gt;&lt;br&gt;asks for the newest number every 1.5 s · fetches the list only when that number changes · then loads the picture itself" role="component" status="" placeholders="1" id="h6">
+          <mxCell parent="bnd_hub" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#7C2D12;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="34" y="524" width="690" height="76" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHAT THE ARROWS MEAN&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#0F766E&quot;&gt;━━━▶ &lt;b&gt;Normal step&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  always happens&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#1F4E78&quot;&gt;━━━▶ &lt;b&gt;Over Wi-Fi&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  camera to hub, hub to phone&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#CA8A04&quot;&gt;····▶ &lt;b&gt;Optional&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  only if a card is fitted and started&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;– – ▶ &lt;b&gt;Rejected&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  the photo is dropped on purpose&lt;/font&gt;" role="legend" status="" placeholders="1" id="legend">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="52" y="768" width="390" height="234" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THE FOUR PLACES A PHOTO CAN BE LOST&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;1 · Before it is taken.&lt;/b&gt; If the talk has already stopped when the 2 seconds are up, the robot cancels the shot.&lt;br&gt;&lt;br&gt;&lt;b&gt;2 · If the alarm goes up.&lt;/b&gt; Any queued shot is dropped immediately.&lt;br&gt;&lt;br&gt;&lt;b&gt;3 · If the Wi-Fi is down.&lt;/b&gt; Not really lost — it waits in the camera's memory until you send it. It &lt;i&gt;is&lt;/i&gt; lost if the camera is reset.&lt;br&gt;&lt;br&gt;&lt;b&gt;4 · At the hub's check.&lt;/b&gt; A half-arrived or damaged photo is thrown away and the previous one stays on screen." role="legend" status="" placeholders="1" id="thrown">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="466" y="768" width="390" height="234" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHY THE FILE NAMES LOOK LIKE THAT&lt;/b&gt;&lt;br&gt;&lt;br&gt;A gallery photo is called &lt;b&gt;I00012S3.JPG&lt;/b&gt;:&lt;br&gt;&lt;br&gt;• &lt;b&gt;00012&lt;/b&gt; — its number, counting up forever&lt;br&gt;• &lt;b&gt;S3&lt;/b&gt; — station 3&lt;br&gt;&lt;br&gt;Both facts live in the name, so after a power cut the hub can rebuild the whole gallery just by reading the folder. There is no separate index file to go stale.&lt;br&gt;&lt;br&gt;A separate note remembers the highest number ever used, so numbers are never reused even after old photos are deleted." role="legend" status="" placeholders="1" id="names">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="880" y="768" width="390" height="234" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHY THE STAFF PAGE STAYS FAST&lt;/b&gt;&lt;br&gt;&lt;br&gt;The page asks a tiny question every 1.5 seconds: “what is the newest photo number?” That answer is a few bytes.&lt;br&gt;&lt;br&gt;Only when that number changes does it fetch the list, and only then does it load new pictures.&lt;br&gt;&lt;br&gt;A numbered photo is written once and never changed, so the phone is told it may keep it forever. That is what stops the thumbnail strip re-downloading every photo on every check." role="legend" status="" placeholders="1" id="cache">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="1294" y="768" width="414" height="234" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="f_c1">
+          <mxCell parent="bnd_cam" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="c1" target="c2">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="f_c2">
+          <mxCell parent="bnd_cam" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="c2" target="c3">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="f_c3">
+          <mxCell parent="bnd_cam" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="c3" target="c4">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="f_c4">
+          <mxCell parent="bnd_cam" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="c4" target="c5">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="f_sd">
+          <mxCell parent="bnd_cam" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#CA8A04;strokeWidth=1.6;dashed=1;dashPattern=1 4;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.5;entryX=0;entryY=0.5;curved=0;" edge="1" source="c5" target="c_sd">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="g_h1">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="h1" target="h2">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="g_h2">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="h2" target="h3">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="g_h3">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="h3" target="h4">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="g_h4">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="h4" target="h5">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="g_no">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#C62828;strokeWidth=2.0;dashed=1;dashPattern=8 5;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.5;entryX=0;entryY=0.5;curved=0;" edge="1" source="h3" target="h_reject">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="g_store">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.5;entryX=0;entryY=0.8;curved=0;" edge="1" source="h5" target="h_gal">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="g_page">
+          <mxCell parent="bnd_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#1F4E78;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.25;exitY=1;entryX=0.25;entryY=0;curved=0;" edge="1" source="h5" target="h6">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="hop">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#1F4E78;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0;entryY=0.5;curved=0;" edge="1" source="c5" target="h1">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="270" y="716" />
+                <mxPoint x="944" y="716" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

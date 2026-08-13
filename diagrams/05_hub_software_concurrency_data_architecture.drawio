@@ -1,0 +1,296 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron">
+  <diagram id="EFE4jHzBdEskxg9Ux6jI" name="pageWithNumber">
+    <mxGraphModel dx="-33" dy="-11" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="05 — Hub Software, Concurrency &amp; Data Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=26;fontStyle=6;fontColor=#0F172A;" x="40" y="28" width="1140" height="40" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="3">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=26;fontStyle=6;fontColor=#0F172A;" vertex="1">
+            <mxGeometry x="40" as="geometry" y="28" width="1140" height="40" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Source authority: current firmware/hub · concurrency, HTTP, shared state &amp; persistence of the Hub ESP32" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontColor=#475569;" x="40" y="68" width="1140" height="20" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="4">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontColor=#475569;" vertex="1">
+            <mxGeometry x="40" as="geometry" y="68" width="1140" height="20" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="CURRENT SOURCE · HUB ESP32" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#305C82;strokeColor=#1F4E78;fontColor=#FFFFFF;fontSize=10;fontStyle=1;align=center;verticalAlign=middle;" x="1280" y="40" width="280" height="56" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="5">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#305C82;strokeColor=#1F4E78;fontColor=#FFFFFF;fontSize=10;fontStyle=1;align=center;verticalAlign=middle;" vertex="1">
+            <mxGeometry x="1280" as="geometry" y="40" width="280" height="56" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="External actors · ingress / egress" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#F3F6F8;strokeColor=#1F4E78;strokeWidth=1.5;fontColor=#1F4E78;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" x="40" y="110" width="270" height="560" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="6">
+          <mxCell parent="1" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#F3F6F8;strokeColor=#1F4E78;strokeWidth=1.5;fontColor=#1F4E78;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" vertex="1">
+            <mxGeometry x="40" as="geometry" y="110" width="270" height="560" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Core 0 · webTask (16 KB, pinned)" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#F3F8F7;strokeColor=#0F766E;strokeWidth=1.5;fontColor=#0F766E;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" x="330" y="110" width="320" height="560" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="7">
+          <mxCell parent="1" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#F3F8F7;strokeColor=#0F766E;strokeWidth=1.5;fontColor=#0F766E;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" vertex="1">
+            <mxGeometry x="330" as="geometry" y="110" width="320" height="560" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Callback boundary + synchronized state" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#FAF7F2;strokeColor=#A16207;strokeWidth=1.5;fontColor=#A16207;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" x="670" y="110" width="320" height="560" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="8">
+          <mxCell parent="1" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#FAF7F2;strokeColor=#A16207;strokeWidth=1.5;fontColor=#A16207;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" vertex="1">
+            <mxGeometry x="670" as="geometry" y="110" width="320" height="560" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Core 1 · Arduino loop (~5 ms)" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#F6F5FD;strokeColor=#4F46E5;strokeWidth=1.5;fontColor=#4F46E5;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" x="1010" y="110" width="290" height="560" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="9">
+          <mxCell parent="1" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#F6F5FD;strokeColor=#4F46E5;strokeWidth=1.5;fontColor=#4F46E5;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" vertex="1">
+            <mxGeometry x="1010" as="geometry" y="110" width="290" height="560" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Storage + physical outputs" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#F7F8F9;strokeColor=#64748B;strokeWidth=1.5;fontColor=#64748B;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" x="1320" y="110" width="240" height="560" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="10">
+          <mxCell parent="1" style="swimlane;html=1;startSize=26;collapsible=0;swimlaneFillColor=none;fillColor=#F7F8F9;strokeColor=#64748B;strokeWidth=1.5;fontColor=#64748B;fontSize=13;fontStyle=1;arcSize=8;rounded=1;shadow=0;" vertex="1">
+            <mxGeometry x="1320" as="geometry" y="110" width="240" height="560" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Visitor browser&lt;/b&gt;&lt;br/&gt;HTTP @ 192.168.4.1 · polls /api/state 1.5 s&lt;br/&gt;check-in → /api/request 0.8 s · visitor.html" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#1F4E78;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" x="16" y="44" width="238" height="96" parent="zone_A" from="" to="" elabel="" estyle="" placeholders="1" id="11">
+          <mxCell parent="6" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#1F4E78;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="16" as="geometry" y="44" width="238" height="96" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Admin browser&lt;/b&gt;&lt;br/&gt;admin.html · fire-and-forget POSTs&lt;br/&gt;emergency/approve/deny/advance · gallery fetch" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#1F4E78;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" x="16" y="152" width="238" height="96" parent="zone_A" from="" to="" elabel="" estyle="" placeholders="1" id="12">
+          <mxCell parent="6" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#1F4E78;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="16" as="geometry" y="152" width="238" height="96" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ESP32-CAM (Wi-Fi STA)&lt;/b&gt;&lt;br/&gt;uploads &lt;b&gt;multipart&lt;/b&gt; JPEG&lt;br/&gt;field 'image', image/jpeg&lt;br/&gt;POST /api/image/upload?station=N" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#D97706;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" x="16" y="260" width="238" height="110" parent="zone_A" from="" to="" elabel="" estyle="" placeholders="1" id="13">
+          <mxCell parent="6" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#D97706;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="16" as="geometry" y="260" width="238" height="110" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Emergency button&lt;/b&gt;&lt;br/&gt;GPIO21 · HIGH when pressed · 50 ms debounce" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#C62828;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" x="16" y="382" width="238" height="64" parent="zone_A" from="" to="" elabel="" estyle="" placeholders="1" id="14">
+          <mxCell parent="6" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#C62828;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="16" as="geometry" y="382" width="238" height="64" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Rail Robot (ESP-NOW)&lt;/b&gt;&lt;br/&gt;consumes Hub EMERGENCY broadcast&lt;br/&gt;channel 1 · FF:FF:FF:FF:FF:FF" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#C62828;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" x="16" y="456" width="238" height="84" parent="zone_A" from="" to="" elabel="" estyle="" placeholders="1" id="15">
+          <mxCell parent="6" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#C62828;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="16" as="geometry" y="456" width="238" height="84" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;DNSServer (captive)&lt;/b&gt; — every host → 192.168.4.1; OS probes → /  others 404" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E7F1F0;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="14" y="44" width="292" height="44" parent="zone_B" from="" to="" elabel="" estyle="" placeholders="1" id="16">
+          <mxCell parent="7" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E7F1F0;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="44" width="292" height="44" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WebServer :80&lt;/b&gt; — synchronous handleClient() on Core 0" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E7F1F0;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="14" y="96" width="292" height="44" parent="zone_B" from="" to="" elabel="" estyle="" placeholders="1" id="17">
+          <mxCell parent="7" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E7F1F0;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="96" width="292" height="44" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;HTTP routes (grouped)&lt;/b&gt;&lt;br/&gt;&lt;b&gt;· state/visitor:&lt;/b&gt; GET /api/state, POST /api/checkin, GET /api/enter, GET /api/request, POST /api/approve, POST /api/deny&lt;br/&gt;&lt;b&gt;· emergency:&lt;/b&gt; POST /api/emergency?on=N&lt;br/&gt;&lt;b&gt;· test only:&lt;/b&gt; POST /api/robot/advance (local sim)&lt;br/&gt;&lt;b&gt;· images:&lt;/b&gt; POST /api/image/upload · GET /api/image[?seq=N] · GET /api/gallery · POST /api/gallery/clear&lt;br/&gt;&lt;b&gt;· static/captive:&lt;/b&gt; LittleFS files + probe redirect" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E7F1F0;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="14" y="150" width="292" height="180" parent="zone_B" from="" to="" elabel="" estyle="" placeholders="1" id="18">
+          <mxCell parent="7" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E7F1F0;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="150" width="292" height="180" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;MultipartImageHandler&lt;/b&gt; (canUpload, canRaw=false)&lt;br/&gt;streams chunks → /upload.tmp (LittleFS)&lt;br/&gt;field 'image' + image/jpeg · ≤ 65,535 B · raw → 415&lt;br/&gt;&lt;b&gt;handleImageUploadComplete&lt;/b&gt;: size + SOI/EOI → commit" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#D3E6E4;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="14" y="340" width="292" height="118" parent="zone_B" from="" to="" elabel="" estyle="" placeholders="1" id="19">
+          <mxCell parent="7" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#D3E6E4;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="340" width="292" height="118" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;State read model&lt;/b&gt; — /api/state JSON · no-store&lt;br/&gt;/api/gallery newest-first · /api/image?seq immutable 1y" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E7F1F0;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="14" y="468" width="292" height="60" parent="zone_B" from="" to="" elabel="" estyle="" placeholders="1" id="20">
+          <mxCell parent="7" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E7F1F0;strokeColor=#0F766E;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="468" width="292" height="60" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Wi-Fi/ESP-NOW recv cb (Core-0 net stack)&lt;/b&gt;&lt;br/&gt;enqueueMessage(): exact 24-B packet → validate (magic/ver/sum)&lt;br/&gt;&lt;b&gt;xQueueSend(...,0)&lt;/b&gt; non-blocking · no FS/LED/radio work here" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F9E9E9;strokeColor=#C62828;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;strokeWidth=2;" x="14" y="44" width="292" height="100" parent="zone_C" from="" to="" elabel="" estyle="" placeholders="1" id="21">
+          <mxCell parent="8" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F9E9E9;strokeColor=#C62828;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;strokeWidth=2;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="44" width="292" height="100" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;espnowQ&lt;/b&gt; — FreeRTOS queue, 16 slots&lt;br/&gt;copy boundary · drop-oldest on overflow (silent)" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EEE2D2;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="14" y="154" width="292" height="64" parent="zone_C" from="" to="" elabel="" estyle="" placeholders="1" id="22">
+          <mxCell parent="8" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EEE2D2;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="154" width="292" height="64" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;processMessage()&lt;/b&gt; (Core 1, under lock)&lt;br/&gt;MSG_LOCATION · MSG_EMERGENCY · MSG_HEALTH only" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F3ECE1;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="14" y="228" width="292" height="64" parent="zone_C" from="" to="" elabel="" estyle="" placeholders="1" id="23">
+          <mxCell parent="8" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F3ECE1;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="228" width="292" height="64" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;MuseumState gState&lt;/b&gt; · one FreeRTOS mutex (stateLock/Unlock)&lt;br/&gt;&lt;b&gt;Volatile RAM:&lt;/b&gt; robotStation/moving/robotMs · emergency&lt;br/&gt;health[8] · requests[24] (ring) · approvedCount (cumulative)&lt;br/&gt;latest image meta: bytes/station/ms/seq&lt;br/&gt;&lt;i&gt;NOT persisted: visitor/health/robot reset on reboot&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EADCC8;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;strokeWidth=2;" x="14" y="302" width="292" height="184" parent="zone_C" from="" to="" elabel="" estyle="" placeholders="1" id="24">
+          <mxCell parent="8" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EADCC8;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;strokeWidth=2;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="302" width="292" height="184" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;gEmergencyDirty&lt;/b&gt; (volatile) — set by button/admin/radio; drained by Core 1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F8E5E5;strokeColor=#C62828;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="14" y="496" width="292" height="44" parent="zone_C" from="" to="" elabel="" estyle="" placeholders="1" id="25">
+          <mxCell parent="8" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F8E5E5;strokeColor=#C62828;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="496" width="292" height="44" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;loop() (Core 1)&lt;/b&gt; — single ESP-NOW sender + outputs" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E6E5FB;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;fontStyle=1;" x="12" y="44" width="266" height="44" parent="zone_D" from="" to="" elabel="" estyle="" placeholders="1" id="26">
+          <mxCell parent="9" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E6E5FB;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=10;align=center;verticalAlign=middle;spacing=4;fontStyle=1;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="44" width="266" height="44" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Drain espnowQ → processMessage (locked)" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EDECFC;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="96" width="266" height="44" parent="zone_D" from="" to="" elabel="" estyle="" placeholders="1" id="27">
+          <mxCell parent="9" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EDECFC;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="96" width="266" height="44" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="settleRobotMotion(): moving=false after 2.5 s idle" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EDECFC;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="146" width="266" height="44" parent="zone_D" from="" to="" elabel="" estyle="" placeholders="1" id="28">
+          <mxCell parent="9" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EDECFC;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="146" width="266" height="44" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Emergency button FSM&lt;/b&gt;&lt;br/&gt;press → latch ON · hold 3 s → clear&lt;br/&gt;syncAlarmFromState() mirrors dashboard/radio" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E6E5FB;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="196" width="266" height="70" parent="zone_D" from="" to="" elabel="" estyle="" placeholders="1" id="29">
+          <mxCell parent="9" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E6E5FB;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="196" width="266" height="70" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Annunciation&lt;/b&gt;&lt;br/&gt;7× NeoPixel red blink ~250 ms&lt;br/&gt;passive buzzer 600↔1200 Hz @400 ms (noTone on clear)" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E6E5FB;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="272" width="266" height="70" parent="zone_D" from="" to="" elabel="" estyle="" placeholders="1" id="30">
+          <mxCell parent="9" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#E6E5FB;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="272" width="266" height="70" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;pumpEmergencyBroadcast()&lt;/b&gt;&lt;br/&gt;6-frame burst × 60 ms on change&lt;br/&gt;then current state every 2 s&lt;br/&gt;MSG_EMERGENCY · node 10 · ch 1 · NO ACK/AUTH" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#DBDAF9;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;strokeWidth=2;" x="12" y="348" width="266" height="92" parent="zone_D" from="" to="" elabel="" estyle="" placeholders="1" id="31">
+          <mxCell parent="9" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#DBDAF9;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;strokeWidth=2;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="348" width="266" height="92" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="updateLeds(): normal = 1 station pixel (blue=move, green=stop)" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EDECFC;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="446" width="266" height="50" parent="zone_D" from="" to="" elabel="" estyle="" placeholders="1" id="32">
+          <mxCell parent="9" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EDECFC;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="446" width="266" height="50" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="vTaskDelay(5) — ~5 ms cadence" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F4F3FD;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="502" width="266" height="38" parent="zone_D" from="" to="" elabel="" estyle="" placeholders="1" id="33">
+          <mxCell parent="9" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F4F3FD;strokeColor=#4F46E5;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="502" width="266" height="38" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;LittleFS&lt;/b&gt; (always mounted)&lt;br/&gt;deployed web bundle · static files&lt;br/&gt;/upload.tmp multipart scratch" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EFE5D7;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="44" width="216" height="92" parent="zone_E" from="" to="" elabel="" estyle="" placeholders="1" id="34">
+          <mxCell parent="10" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#EFE5D7;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="44" width="216" height="92" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;PhotoStore&lt;/b&gt; (Core-0 only, no mutex)&lt;br/&gt;SD preferred → LittleFS fallback&lt;br/&gt;/photos/I00012S3.JPG (8.3)&lt;br/&gt;newest-first RAM index ≤ 32&lt;br/&gt;bounded retention = 12" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#ECDFCD;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="144" width="216" height="116" parent="zone_E" from="" to="" elabel="" estyle="" placeholders="1" id="35">
+          <mxCell parent="10" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#ECDFCD;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="144" width="216" height="116" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;/photos/SEQ.TXT&lt;/b&gt; — issued-seq floor&lt;br/&gt;preserved by clear() · immutable ?seq URLs" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F1E9DC;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="268" width="216" height="60" parent="zone_E" from="" to="" elabel="" estyle="" placeholders="1" id="36">
+          <mxCell parent="10" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F1E9DC;strokeColor=#A16207;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="268" width="216" height="60" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;GPIO outputs&lt;/b&gt;&lt;br/&gt;GPIO15 · 7× WS2812 (74HCT125 buffered)&lt;br/&gt;GPIO4 · passive buzzer · GPIO21 button" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#ECEEF1;strokeColor=#64748B;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="336" width="216" height="74" parent="zone_E" from="" to="" elabel="" estyle="" placeholders="1" id="37">
+          <mxCell parent="10" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#ECEEF1;strokeColor=#64748B;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="336" width="216" height="74" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ESP-NOW TX&lt;/b&gt;&lt;br/&gt;broadcast FF..FF · ch 1 · AP iface&lt;br/&gt;unencrypted · no registered peers/ACK" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F7E0E0;strokeColor=#C62828;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" x="12" y="418" width="216" height="70" parent="zone_E" from="" to="" elabel="" estyle="" placeholders="1" id="38">
+          <mxCell parent="10" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#F7E0E0;strokeColor=#C62828;fontColor=#0F172A;fontSize=9;align=center;verticalAlign=middle;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="418" width="216" height="70" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Failure &amp; design notes (source-proven)" style="swimlane;html=1;startSize=24;collapsible=0;swimlaneFillColor=none;fillColor=#FCF6F0;strokeColor=#D97706;strokeWidth=1.5;fontColor=#D97706;fontSize=12;fontStyle=1;arcSize=8;rounded=1;" x="40" y="686" width="1130" height="184" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="39">
+          <mxCell parent="1" style="swimlane;html=1;startSize=24;collapsible=0;swimlaneFillColor=none;fillColor=#FCF6F0;strokeColor=#D97706;strokeWidth=1.5;fontColor=#D97706;fontSize=12;fontStyle=1;arcSize=8;rounded=1;" vertex="1">
+            <mxGeometry x="40" as="geometry" y="686" width="1130" height="184" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Optional SD fallback.&lt;/b&gt; mountSd() tries 3×, then LittleFS. Scratch is &lt;b&gt;always&lt;/b&gt; LittleFS even when gallery is SD (avoids SPI in HTTP parse)." style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" x="14" y="36" width="350" height="64" parent="panel_notes" from="" to="" elabel="" estyle="" placeholders="1" id="40">
+          <mxCell parent="39" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="36" width="350" height="64" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Bounded gallery.&lt;/b&gt; evictOldest before commit · /api/gallery max=12 · orphan pruning at boot · clear() keeps SEQ floor." style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" x="372" y="36" width="350" height="64" parent="panel_notes" from="" to="" elabel="" estyle="" placeholders="1" id="41">
+          <mxCell parent="39" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" vertex="1">
+            <mxGeometry x="372" as="geometry" y="36" width="350" height="64" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Concurrency.&lt;/b&gt; gState under one mutex · gPhotos + upload ctx Core-0-only · callback only copies+queues (zero-wait). Queue overflow silent." style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" x="730" y="36" width="380" height="64" parent="panel_notes" from="" to="" elabel="" estyle="" placeholders="1" id="42">
+          <mxCell parent="39" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" vertex="1">
+            <mxGeometry x="730" as="geometry" y="36" width="380" height="64" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Working-combo gap.&lt;/b&gt; Robot has &lt;b&gt;no MSG_LOCATION sender&lt;/b&gt; — Hub receiver exists but dashboard LEDs/robot only change via admin /api/robot/advance (test)." style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" x="14" y="110" width="350" height="44" parent="panel_notes" from="" to="" elabel="" estyle="" placeholders="1" id="43">
+          <mxCell parent="39" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" vertex="1">
+            <mxGeometry x="14" as="geometry" y="110" width="350" height="44" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;No-effect ping.&lt;/b&gt; Camera sends MSG_IMAGE_READY after HTTP 200; Hub has &lt;b&gt;no handling case&lt;/b&gt; — dashboard still relies on polling." style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" x="372" y="110" width="350" height="44" parent="panel_notes" from="" to="" elabel="" estyle="" placeholders="1" id="44">
+          <mxCell parent="39" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" vertex="1">
+            <mxGeometry x="372" as="geometry" y="110" width="350" height="44" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Volatile admission/emergency.&lt;/b&gt; visitor/health/robot state reset on reboot. Emergency boots FALSE. No registered ESP-NOW peers, ACK, auth, or replay filter." style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" x="730" y="110" width="380" height="44" parent="panel_notes" from="" to="" elabel="" estyle="" placeholders="1" id="45">
+          <mxCell parent="39" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FBF4EB;strokeColor=#D97706;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" vertex="1">
+            <mxGeometry x="730" as="geometry" y="110" width="380" height="44" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#475569;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" x="1180" y="686" width="380" height="184" parent="page" from="" to="" elabel="" estyle="" placeholders="1" id="46">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#FFFFFF;strokeColor=#475569;fontColor=#0F172A;fontSize=9;align=left;verticalAlign=top;spacing=6;" vertex="1">
+            <mxGeometry x="1180" as="geometry" y="686" width="380" height="184" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b style='font-size:11px;'&gt;Legend · line &amp; status semantics&lt;/b&gt;&lt;br/&gt;&lt;hr style='border:0;border-top:1px solid #E2E8F0;'/&gt;&lt;b&gt;Active read/write&lt;/b&gt; — solid colored arrow&lt;br/&gt;&lt;b&gt;Synchronized shared state&lt;/b&gt; — thick gold border + lock mark&lt;br/&gt;&lt;b&gt;Callback copy/queue&lt;/b&gt; — dashed crimson into gold queue&lt;br/&gt;&lt;b&gt;Persistent storage&lt;/b&gt; — gold cylinder-style card&lt;br/&gt;&lt;b&gt;Optional / fallback&lt;/b&gt; — amber note + dashed gold&lt;br/&gt;&lt;b&gt;Inactive / senderless&lt;/b&gt; — gray dashed × (see notes panel)&lt;br/&gt;&lt;span style='color:#94A3B8;'&gt;Hub remains the single source of truth; browser &amp; callback are not authorities.&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=9;fontColor=#0F172A;spacing=4;" x="12" y="10" width="358" height="164" parent="legend_box" from="" to="" elabel="" estyle="" placeholders="1" id="47">
+          <mxCell parent="46" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=9;fontColor=#0F172A;spacing=4;" vertex="1">
+            <mxGeometry x="12" as="geometry" y="10" width="358" height="164" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="77" edge="1" parent="1" source="50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2563EB;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;dashed=1;" target="74" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78" edge="1" parent="1" source="52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="74" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="79" edge="1" parent="1" source="54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=3;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="68" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="80" edge="1" parent="1" source="55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="52" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="81" edge="1" parent="1" source="56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="51" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="82" edge="1" parent="1" source="59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="58" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="83" edge="1" parent="1" source="60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="76" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="84" edge="1" parent="1" source="62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" target="61" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="85" edge="1" parent="1" source="63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" target="62" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="86" edge="1" parent="1" source="64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" target="63" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="87" edge="1" parent="1" source="65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" target="64" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="88" edge="1" parent="1" source="66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" target="71" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="89" edge="1" parent="1" source="67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;labelBackgroundColor=#FFFFFF;" target="64" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="90" edge="1" parent="1" source="68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=3;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="71" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="91" edge="1" parent="1" source="69" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;" target="66" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="92" edge="1" parent="1" source="70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="52" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="93" edge="1" parent="1" source="71" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" target="70" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="94" edge="1" parent="1" source="72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="51" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="95" edge="1" parent="1" source="73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" target="72" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="96" edge="1" parent="1" source="75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.5;endArrow=classic;endFill=1;dashed=1;fontSize=9;fontColor=#64748B;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=0;" target="54" value="%elabel%">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      <mxCell id="5000" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2563EB;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="11" target="18" value="GET /api/state 1.5 s"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5001" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2563EB;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="11" target="18" value="POST /api/checkin · GET /api/request"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5002" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2563EB;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;dashed=1;" edge="1" parent="1" source="12" target="18" value="fire-and-forget POSTs"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5003" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#D97706;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="13" target="19" value="multipart JPEG"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5004" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="12" target="18" value="POST /api/emergency?on=N"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5005" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="14" target="29" value="GPIO21 (Core 1)"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5006" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=3;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="38" target="15" value="MSG_EMERGENCY (broadcast)"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5007" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="18" target="24" value="stateLock / Unlock"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5008" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="19" target="24" value="on commit"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5009" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;dashed=1;" edge="1" parent="1" source="20" target="24" value="snapshot JSON"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5010" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="21" target="22" value="copy"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5011" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="22" target="27" value="xQueueReceive"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5012" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="23" target="24" value="apply under lock"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5013" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="26" target="27"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5014" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="27" target="28"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5015" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="28" target="29"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5016" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="29" target="30"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5017" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="30" target="31" value="if dirty / 2 s"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5018" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="31" target="32"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5019" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="30" target="37" value="tone() + pixels"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5020" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=3;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="31" target="38" value="broadcast"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5021" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;" edge="1" parent="1" source="32" target="37"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5022" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#C62828;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="18" target="25" value="set on emergency"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5023" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=classic;endFill=1;fontSize=9;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="25" target="31" value="drains next pass"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5024" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="19" target="35" value="commitUploadTemp()"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5025" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A16207;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="35" target="36" value="writeSeqFloor()"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5026" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2563EB;strokeWidth=2;endArrow=classic;endFill=1;fontSize=9;fontColor=#0F172A;labelBackgroundColor=#FFFFFF;dashed=1;" edge="1" parent="1" source="20" target="12" value="GET /api/gallery · /api/image"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5027" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.5;endArrow=classic;endFill=1;dashed=1;fontSize=9;fontColor=#64748B;labelBackgroundColor=#FFFFFF;endArrow=blockThin;endFill=0;" edge="1" parent="1" source="15" target="23" value="MSG_LOCATION · NO SENDER"><mxGeometry relative="1" as="geometry" /></mxCell><mxCell id="5028" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.5;endArrow=classic;endFill=1;dashed=1;fontSize=9;fontColor=#64748B;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="13" target="23" value="MSG_IMAGE_READY · HUB IGNORES"><mxGeometry relative="1" as="geometry" /></mxCell></root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

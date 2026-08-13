@@ -1,0 +1,170 @@
+<mxfile host="Claude Code" type="device">
+  <diagram id="wro_rrl_03-radio" name="03-radio">
+    <mxGraphModel dx="1200" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="1680" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" role="background" status="" placeholders="1" id="page_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="20" y="20" width="1640" height="960" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="03 — Who Talks To Whom Without Wires" role="title" status="" placeholders="1" id="title">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#0F172A;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="60" y="44" width="1260" height="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Two separate Wi-Fi networks, plus a direct board-to-board radio. All three sit on channel 1, and that is not a coincidence." role="subtitle" status="" placeholders="1" id="subtitle">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="62" y="84" width="1240" height="24" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="RADIO · NO INTERNET NEEDED" role="badge" status="" placeholders="1" id="badge">
+          <mxCell parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;spacing=6;connectable=0;" vertex="1">
+            <mxGeometry x="1340" y="53" width="300" height="32" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="EVERYTHING BELOW SHARES RADIO CHANNEL 1" role="runtime-boundary" status="active" placeholders="1" id="bnd_ch1">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="52" y="124" width="1576" height="580" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Wi-Fi network A  ·  name: MuseumHub  ·  password: museum2026  ·  the hub hands out addresses" role="runtime-boundary" status="active" placeholders="1" id="net_a">
+          <mxCell parent="bnd_ch1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="24" y="46" width="730" height="390" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Wi-Fi network B  ·  name: ESP32-MP3-RAIL  ·  password: museum2026  ·  up to 4 devices" role="runtime-boundary" status="active" placeholders="1" id="net_b">
+          <mxCell parent="bnd_ch1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="794" y="46" width="750" height="390" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Hub ESP32&lt;/b&gt;&lt;br&gt;&lt;br&gt;Runs the network itself.&lt;br&gt;Address 192.168.4.1&lt;br&gt;Answers web pages on port 80&lt;br&gt;Any web address typed goes here" role="component" status="" placeholders="1" id="hub">
+          <mxCell parent="net_a" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="34" y="56" width="260" height="150" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Visitor's phone&lt;/b&gt;&lt;br&gt;scans the QR, waits to be let in" role="peripheral" status="" placeholders="1" id="ph_visitor">
+          <mxCell parent="net_a" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="454" y="42" width="240" height="82" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Staff phone or laptop&lt;/b&gt;&lt;br&gt;approves visitors, watches photos" role="peripheral" status="" placeholders="1" id="ph_admin">
+          <mxCell parent="net_a" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="454" y="146" width="240" height="82" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ESP32-CAM&lt;/b&gt;&lt;br&gt;joins as an ordinary device&lt;br&gt;and sends its photos in" role="component" status="" placeholders="1" id="cam">
+          <mxCell parent="net_a" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#92400E;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="454" y="258" width="240" height="100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="opens the&lt;br&gt;visitor page" role="wire-label" status="" placeholders="1" id="p_visitor">
+          <mxCell parent="net_a" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="316" y="52" width="124" height="52" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="opens the&lt;br&gt;staff page" role="wire-label" status="" placeholders="1" id="p_admin">
+          <mxCell parent="net_a" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="316" y="156" width="124" height="52" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="sends each photo to&lt;br&gt;192.168.4.1&lt;br&gt;/api/image/upload" role="wire-label" status="" placeholders="1" id="p_camup">
+          <mxCell parent="net_a" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="316" y="226" width="124" height="68" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="also shouts “photo ready”&lt;br&gt;by radio — the hub&lt;br&gt;throws it away" role="wire-label" status="" placeholders="1" id="p_camping">
+          <mxCell parent="net_a" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F8FAFC;fillOpacity=95;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#475569;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="316" y="308" width="124" height="66" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Robot ESP32&lt;/b&gt;&lt;br&gt;&lt;br&gt;Runs its own little network.&lt;br&gt;Also 192.168.4.1&lt;br&gt;Serves the tuning page" role="component" status="" placeholders="1" id="robot">
+          <mxCell parent="net_b" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry x="444" y="56" width="260" height="150" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Your phone or laptop&lt;/b&gt;&lt;br&gt;when you want to change the&lt;br&gt;speed or read the robot's log" role="peripheral" status="" placeholders="1" id="engineer">
+          <mxCell parent="net_b" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="44" y="70" width="240" height="100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="opens the&lt;br&gt;tuning page" role="wire-label" status="" placeholders="1" id="p_eng">
+          <mxCell parent="net_b" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="314" y="94" width="110" height="52" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Nobody needs to join this one.&lt;/b&gt;&lt;br&gt;The tour runs perfectly with this network empty. It exists only so you can change motor speed and read the robot's event log while it is on the rail." role="note" status="" placeholders="1" id="note_b">
+          <mxCell parent="net_b" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#1E3A8A;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="44" y="226" width="380" height="110" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;DIRECT RADIO — board to board, not through either network&lt;/b&gt;&lt;br&gt;The hub shouts the emergency state to everyone. The robot only listens; it never answers." role="wire-label" status="" placeholders="1" id="p_espnow">
+          <mxCell parent="bnd_ch1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FEF2F2;fillOpacity=95;strokeColor=#C62828;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="508" y="486" width="600" height="58" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHAT THE ARROWS MEAN&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#1F4E78&quot;&gt;━━━▶ &lt;b&gt;Normal Wi-Fi&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  a phone or the camera opening a page or sending a file&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;━━━▶ &lt;b&gt;Direct radio&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  one board shouting to every board in range&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#64748B&quot;&gt;—·—▶ &lt;b&gt;Sent but ignored&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  the message really does arrive, and the code drops it&lt;/font&gt;" role="legend" status="" placeholders="1" id="legend">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="52" y="728" width="380" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THE ONE RULE YOU MUST NOT BREAK&lt;/b&gt;&lt;br&gt;&lt;br&gt;Both Wi-Fi networks and the direct radio all sit on &lt;b&gt;channel 1&lt;/b&gt;.&lt;br&gt;&lt;br&gt;The direct radio does not choose its own channel. It simply uses whatever channel the Wi-Fi on that board is already using.&lt;br&gt;&lt;br&gt;So if you change one board's channel, the emergency link goes silent. &lt;b&gt;Nothing warns you&lt;/b&gt; — no error, no message, it just stops working.&lt;br&gt;&lt;br&gt;The robot's code refuses to even build if its own network channel stops matching the radio channel." role="legend" status="" placeholders="1" id="rule">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="456" y="728" width="380" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;TWO NETWORKS, SAME HOUSE NUMBER&lt;/b&gt;&lt;br&gt;&lt;br&gt;The hub answers on &lt;b&gt;192.168.4.1&lt;/b&gt;.&lt;br&gt;The robot also answers on &lt;b&gt;192.168.4.1&lt;/b&gt;.&lt;br&gt;&lt;br&gt;They are different networks that happen to use the same address. A phone can only be joined to one at a time.&lt;br&gt;&lt;br&gt;So you cannot watch the dashboard and tune the robot from the same phone without switching Wi-Fi networks first.&lt;br&gt;&lt;br&gt;The camera is the only board that joins a network as a guest. Everything else either runs a network or uses radio only." role="legend" status="" placeholders="1" id="addr">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="860" y="728" width="380" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHAT THE DIRECT RADIO REALLY IS&lt;/b&gt;&lt;br&gt;&lt;br&gt;A &lt;b&gt;24-byte message&lt;/b&gt; addressed to “everyone”.&lt;br&gt;&lt;br&gt;No password. No encryption. No receipt — the sender never learns whether anyone heard it.&lt;br&gt;&lt;br&gt;There is a small checksum, so a damaged message gets dropped. But nothing stops a message from simply going missing.&lt;br&gt;&lt;br&gt;That is exactly why the hub repeats the emergency state &lt;b&gt;every 2 seconds&lt;/b&gt;, and fires &lt;b&gt;6 quick copies&lt;/b&gt; the moment it changes. Sheet 05 follows that." role="legend" status="" placeholders="1" id="espnow">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="1264" y="728" width="364" height="250" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="l_visitor">
+          <mxCell parent="net_a" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#1F4E78;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0;exitY=0.5;entryX=1;entryY=0.25;curved=0;" edge="1" source="ph_visitor" target="hub">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="l_admin">
+          <mxCell parent="net_a" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#1F4E78;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0;exitY=0.5;entryX=1;entryY=0.55;curved=0;" edge="1" source="ph_admin" target="hub">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="l_camup">
+          <mxCell parent="net_a" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#1F4E78;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0;exitY=0.25;entryX=1;entryY=0.85;curved=0;" edge="1" source="cam" target="hub">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="l_camping">
+          <mxCell parent="net_a" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#64748B;strokeWidth=1.7;dashed=1;dashPattern=8 4 1 4;endArrow=open;endFill=0;endSize=9;exitX=0;exitY=0.75;entryX=1;entryY=0.95;curved=0;" edge="1" source="cam" target="hub">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="l_eng">
+          <mxCell parent="net_b" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#1F4E78;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.5;entryX=0;entryY=0.35;curved=0;" edge="1" source="engineer" target="robot">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="l_espnow">
+          <mxCell parent="bnd_ch1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#C62828;strokeWidth=3.4;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=1;curved=0;" edge="1" source="hub" target="robot">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="188" y="516" />
+                <mxPoint x="1368" y="516" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

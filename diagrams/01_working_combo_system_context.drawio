@@ -1,0 +1,390 @@
+<mxfile host="Electron">
+  <diagram id="OEfmg6SatXvFtA5Rl8QF" name="pageWithNumber">
+    <mxGraphModel dx="-844" dy="-257" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" role="background" status="" placeholders="1" id="page_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry height="900" width="1600" x="20" y="20" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="01 — Working-Combo System Context &amp; Active Interfaces" role="title" status="" placeholders="1" id="title">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#0F172A;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry height="38" width="1190" x="60" y="44" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Code-authoritative view of ESP32_RFID_MP3_RAIL + NANO_LFR_RAIL + cam + hub + display" role="subtitle" status="" placeholders="1" id="subtitle">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry height="24" width="1100" x="62" y="84" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="CURRENT SOURCE · 5 PROTECTED TARGETS" role="badge" status="" placeholders="1" id="source_badge">
+          <mxCell parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;spacing=6;connectable=0;" vertex="1">
+            <mxGeometry height="32" width="300" x="1280" y="53" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ACTIVE WORKING COMBO · current source authority" role="runtime-boundary" status="active" placeholders="1" id="boundary_active">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=16;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry height="628" width="1536" x="52" y="124" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Shared ESP-NOW packet&lt;/b&gt;&lt;br&gt;24 bytes · ch 1 · checksum only&lt;br&gt;no auth / ACK / replay filter" role="source-note" status="" placeholders="1" id="note_contract">
+          <mxCell parent="boundary_active" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#D97706;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7C2D12;align=left;verticalAlign=middle;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry height="82" width="320" x="24" y="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Visitor + Admin clients&lt;/b&gt;&lt;br&gt;Hub pages / APIs" role="human-ui" status="active" placeholders="1" id="browser_hub">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.7;fontFamily=Arial;fontSize=12;fontColor=#7C2D12;align=left;verticalAlign=middle;spacingLeft=14;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry height="86" width="250" x="380" y="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Field service client&lt;/b&gt;&lt;br&gt;Robot tuning + event log" role="human-ui" status="active" placeholders="1" id="browser_robot">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.7;fontFamily=Arial;fontSize=12;fontColor=#7C2D12;align=left;verticalAlign=middle;spacingLeft=14;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry height="86" width="250" x="995" y="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;RFID cards + MFRC522&lt;/b&gt;&lt;br&gt;START · stations 1–7 · END" role="local-peripheral" status="active" placeholders="1" id="rfid">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry height="76" width="195" x="1310" y="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Emergency button&lt;/b&gt;&lt;br&gt;GPIO21 · press ON / hold 3 s OFF" role="local-peripheral" status="active" placeholders="1" id="hub_button">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.5;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry height="80" width="185" x="20" y="175" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Hub ESP32&lt;/b&gt;&lt;br&gt;Emergency + HTTP + gallery + track outputs" role="project-controller" status="active" placeholders="1" id="hub">
+          <mxCell parent="boundary_active" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=2.2;fontFamily=Arial;fontSize=13;fontStyle=1;fontColor=#16324F;align=left;verticalAlign=middle;spacingLeft=14;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry height="120" width="320" x="335" y="170" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Robot ESP32&lt;/b&gt;&lt;br&gt;RFID tour + narration orchestrator" role="project-controller" status="active" placeholders="1" id="robot">
+          <mxCell parent="boundary_active" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2.2;fontFamily=Arial;fontSize=13;fontStyle=1;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=14;spacingRight=10;shadow=1;" vertex="1">
+            <mxGeometry height="120" width="320" x="930" y="170" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;DFPlayer + speaker&lt;/b&gt;&lt;br&gt;MP3 tracks 0001–0008" role="local-peripheral" status="active" placeholders="1" id="dfplayer">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry height="86" width="200" x="1305" y="180" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;7× WS2812 + passive buzzer&lt;/b&gt;&lt;br&gt;GPIO15 / GPIO4" role="local-peripheral" status="active" placeholders="1" id="hub_outputs">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.5;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry height="78" width="220" x="20" y="318" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ESP32S-CAM&lt;/b&gt;&lt;br&gt;GC2145 RGB565 → software JPEG" role="project-controller" status="active" placeholders="1" id="camera">
+          <mxCell parent="boundary_active" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=2;fontFamily=Arial;fontSize=12;fontStyle=1;fontColor=#92400E;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=8;shadow=1;" vertex="1">
+            <mxGeometry height="92" width="310" x="420" y="405" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Nano rail actuator&lt;/b&gt;&lt;br&gt;Forward PWM / active hard brake" role="project-controller" status="active" placeholders="1" id="nano">
+          <mxCell parent="boundary_active" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=2;fontFamily=Arial;fontSize=12;fontStyle=1;fontColor=#3730A3;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=8;shadow=1;" vertex="1">
+            <mxGeometry height="92" width="300" x="1020" y="405" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;L298N + two rail motors&lt;/b&gt;" role="local-peripheral" status="active" placeholders="1" id="motors">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry height="74" width="155" x="1350" y="415" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;GC2145 sensor&lt;/b&gt;&lt;br&gt;QVGA 320×240" role="local-peripheral" status="active" placeholders="1" id="sensor">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry height="72" width="170" x="20" y="425" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Hub LittleFS&lt;/b&gt;&lt;br&gt;Deployed web bundle + /upload.tmp" role="persistent-storage" status="active" placeholders="1" id="hub_ui_fs">
+          <mxCell parent="boundary_active" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FEF9E7;strokeColor=#A16207;strokeWidth=1.5;fontFamily=Arial;fontSize=11;fontColor=#713F12;align=center;verticalAlign=middle;spacingTop=5;spacingBottom=4;" vertex="1">
+            <mxGeometry height="76" width="190" x="20" y="540" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Hub gallery&lt;/b&gt;&lt;br&gt;SD preferred → LittleFS fallback&lt;br&gt;12 newest · I00012S3.JPG + SEQ.TXT" role="persistent-storage" status="active-degraded" placeholders="1" id="hub_gallery">
+          <mxCell parent="boundary_active" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FEF9E7;strokeColor=#A16207;strokeWidth=1.5;fontFamily=Arial;fontSize=11;fontColor=#713F12;align=center;verticalAlign=middle;spacingTop=5;spacingBottom=4;" vertex="1">
+            <mxGeometry height="84" width="240" x="225" y="536" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Latest JPEG in PSRAM/heap&lt;/b&gt;&lt;br&gt;retry via SEND; lost on reset" role="volatile-storage" status="active" placeholders="1" id="cam_ram">
+          <mxCell parent="boundary_active" style="shape=mxgraph.electrical.logic_gates.logic_gate;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=5;" vertex="1">
+            <mxGeometry height="76" width="180" x="650" y="540" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Camera SD backup&lt;/b&gt;&lt;br&gt;IMG_####.JPG · after INIT" role="persistent-storage" status="optional" placeholders="1" id="cam_sd">
+          <mxCell parent="boundary_active" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FFFBEB;strokeColor=#CA8A04;strokeWidth=1.5;dashed=1;dashPattern=1 4;fontFamily=Arial;fontSize=11;fontColor=#713F12;align=center;verticalAlign=middle;spacingTop=5;spacingBottom=4;" vertex="1">
+            <mxGeometry height="76" width="185" x="850" y="540" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Solid = active from source.&lt;/b&gt;&lt;br&gt;Dashed = inactive, ignored, optional, or conflicting as labeled." role="source-note" status="" placeholders="1" id="note_truth">
+          <mxCell parent="boundary_active" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#1E3A8A;align=left;verticalAlign=middle;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry height="82" width="405" x="1100" y="536" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="VSPI · SS5 SCK18 MOSI23 MISO19 · UID events" role="" status="" placeholders="1" id="edge_label_e01">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="38" width="245" x="1260" y="118" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="UART2 TX17 · 9600 · play/stop/volume" role="" status="" placeholders="1" id="edge_label_e02">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="30" width="255" x="1250" y="150" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="UART2 RX16 · 9600 · finished/error" role="" status="" placeholders="1" id="edge_label_e03">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="30" width="255" x="1250" y="270" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="GPIO26 → D0 · 9600 8N1 · START/STOP/GET/SET/SAVE" role="" status="" placeholders="1" id="edge_label_e04">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="305" x="985" y="320" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="D1 → divider → GPIO25 · READY/STATE/TUNE/ERR" role="" status="" placeholders="1" id="edge_label_e05">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="305" x="990" y="365" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="D5/D7/D8/D10/D11/D12 · ML/MR PWM or hard brake" role="" status="" placeholders="1" id="edge_label_e06">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="210" x="1295" y="370" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="GPIO14 → GPIO13 · 9600 · SHOOT station&lt;br&gt;NO ACK" role="" status="" placeholders="1" id="edge_label_e07">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="300" x="690" y="365" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="RGB565 · QVGA · XCLK 10 MHz" role="" status="" placeholders="1" id="edge_label_e08">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="32" width="230" x="190" y="438" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="frame2jpg quality 15 · retain latest good JPEG" role="" status="" placeholders="1" id="edge_label_e09">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="32" width="285" x="535" y="502" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="1-bit SD_MMC · only after INIT" role="" status="" placeholders="1" id="edge_label_e10">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFBEB;fillOpacity=94;strokeColor=#A16207;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#713F12;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="32" width="260" x="790" y="502" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="MuseumHub STA · ch 1 · multipart image/jpeg&lt;br&gt;POST 192.168.4.1/api/image/upload?station=N" role="" status="" placeholders="1" id="edge_label_e11">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="42" width="445" x="290" y="315" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="EMERGENCY state · ch 1 broadcast&lt;br&gt;6-frame transition burst / 2 s periodic · NO ACK/AUTH" role="" status="" placeholders="1" id="edge_label_e12">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FEF2F2;fillOpacity=94;strokeColor=#C62828;strokeWidth=1;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="48" width="275" x="655" y="130" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="MuseumHub · DNS/HTTP :80&lt;br&gt;state/check-in/admin/gallery" role="" status="" placeholders="1" id="edge_label_e13">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="250" x="380" y="130" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ESP32-MP3-RAIL · HTTP :80&lt;br&gt;volume + ML/MR + status/log" role="" status="" placeholders="1" id="edge_label_e14">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="250" x="995" y="130" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="GPIO21 HIGH · 50 ms debounce" role="" status="" placeholders="1" id="edge_label_e15">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="30" width="225" x="190" y="145" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="normal station color / emergency red blink + 600↔1200 Hz siren" role="" status="" placeholders="1" id="edge_label_e16">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="34" width="300" x="20" y="280" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="static assets + multipart scratch" role="" status="" placeholders="1" id="edge_label_e17">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="32" width="210" x="10" y="500" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="validate + commit + recover/prune" role="" status="" placeholders="1" id="edge_label_e18">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="32" width="270" x="220" y="500" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="MSG_IMAGE_READY sent after HTTP 200 · HUB IGNORES" role="" status="" placeholders="1" id="edge_label_e19">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F8FAFC;fillOpacity=94;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#475569;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="34" width="380" x="300" y="365" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="MSG_LOCATION · NO SENDER IN CURRENT ROBOT" role="" status="" placeholders="1" id="edge_label_e20">
+          <mxCell parent="boundary_active" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F8FAFC;fillOpacity=94;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#475569;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="30" width="300" x="650" y="295" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e01" status="active-local" contract="VSPI · SS5 SCK18 MOSI23 MISO19 · UID events" id="2">
+          <mxCell edge="1" parent="boundary_active" source="rfid" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#475569;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=0;exitY=0.55;entryX=1;entryY=0.18;curved=0;" target="robot">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e02" status="active-uart" contract="UART2 TX17 · 9600 · play/stop/volume" id="3">
+          <mxCell edge="1" parent="boundary_active" source="robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.30;entryX=0;entryY=0.30;curved=0;" target="dfplayer">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e03" status="active-uart" contract="UART2 RX16 · 9600 · finished/error" id="4">
+          <mxCell edge="1" parent="boundary_active" source="dfplayer" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2;endArrow=block;endFill=1;endSize=9;exitX=0;exitY=0.72;entryX=1;entryY=0.72;curved=0;" target="robot">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e04" status="active-uart" contract="GPIO26 → D0 · 9600 8N1 · START/STOP/GET/SET/SAVE" id="5">
+          <mxCell edge="1" parent="boundary_active" source="robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2;endArrow=block;endFill=1;endSize=9;exitX=0.58;exitY=1;entryX=0.35;entryY=0;curved=0;" target="nano">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e05" status="active-uart" contract="D1 → divider → GPIO25 · READY/STATE/TUNE/ERR" id="6">
+          <mxCell edge="1" parent="boundary_active" source="nano" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2;endArrow=block;endFill=1;endSize=9;exitX=0.78;exitY=0;entryX=0.78;entryY=1;curved=0;" target="robot">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e06" status="active-local" contract="D5/D7/D8/D10/D11/D12 · ML/MR PWM or hard brake" id="7">
+          <mxCell edge="1" parent="boundary_active" source="nano" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#475569;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.50;entryX=0;entryY=0.50;curved=0;" target="motors">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1335" y="451" />
+                <mxPoint x="1335" y="452" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e07" status="active-uart-no-ack" contract="GPIO14 → GPIO13 · 9600 · SHOOT station&#xa;NO ACK" id="8">
+          <mxCell edge="1" parent="boundary_active" source="robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2;endArrow=block;endFill=1;endSize=9;exitX=0.05;exitY=1;entryX=1;entryY=0.48;curved=0;" target="camera">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e08" status="active-local" contract="RGB565 · QVGA · XCLK 10 MHz" id="9">
+          <mxCell edge="1" parent="boundary_active" source="sensor" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#475569;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.50;entryX=0;entryY=0.50;curved=0;" target="camera">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e09" status="active-ram" contract="frame2jpg quality 15 · retain latest good JPEG" id="10">
+          <mxCell edge="1" parent="boundary_active" source="camera" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#64748B;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=0.48;exitY=1;entryX=0.50;entryY=0;curved=0;" target="cam_ram">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e10" status="optional" contract="1-bit SD_MMC · only after INIT" id="11">
+          <mxCell edge="1" parent="boundary_active" source="camera" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#CA8A04;strokeWidth=1.5;dashed=1;dashPattern=1 4;endArrow=block;endFill=1;endSize=8;exitX=0.78;exitY=1;entryX=0.50;entryY=0;curved=0;" target="cam_sd">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e11" status="active-http" contract="MuseumHub STA · ch 1 · multipart image/jpeg&#xa;POST 192.168.4.1/api/image/upload?station=N" id="12">
+          <mxCell edge="1" parent="boundary_active" source="camera" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#2563EB;strokeWidth=2.5;endArrow=block;endFill=1;endSize=10;exitX=0.62;exitY=0;entryX=0.75;entryY=1;curved=0;" target="hub">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e12" status="active-emergency" contract="EMERGENCY state · ch 1 broadcast&#xa;6-frame transition burst / 2 s periodic · NO ACK/AUTH" id="13">
+          <mxCell edge="1" parent="boundary_active" source="hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=11;fontColor=#1F2937;strokeColor=#C62828;strokeWidth=3.5;endArrow=block;endFill=1;endSize=12;exitX=1;exitY=0.12;entryX=0;entryY=0.12;curved=0;" target="robot">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e13" status="active-http-bidirectional" contract="MuseumHub · DNS/HTTP :80&#xa;state/check-in/admin/gallery" id="14">
+          <mxCell edge="1" parent="boundary_active" source="browser_hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#2563EB;strokeWidth=2;startArrow=block;startFill=1;endArrow=block;endFill=1;startSize=8;endSize=8;exitX=0.50;exitY=1;entryX=0.50;entryY=0;curved=0;" target="hub">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e14" status="active-http-bidirectional" contract="ESP32-MP3-RAIL · HTTP :80&#xa;volume + ML/MR + status/log" id="15">
+          <mxCell edge="1" parent="boundary_active" source="browser_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#2563EB;strokeWidth=2;startArrow=block;startFill=1;endArrow=block;endFill=1;startSize=8;endSize=8;exitX=0.50;exitY=1;entryX=0.55;entryY=0;curved=0;" target="robot">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e15" status="active-local" contract="GPIO21 HIGH · 50 ms debounce" id="16">
+          <mxCell edge="1" parent="boundary_active" source="hub_button" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#475569;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.50;entryX=0;entryY=0.25;curved=0;" target="hub">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e16" status="active-local" contract="normal station color / emergency red blink + 600↔1200 Hz siren" id="17">
+          <mxCell edge="1" parent="boundary_active" source="hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#475569;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=0;exitY=0.72;entryX=1;entryY=0.50;curved=0;" target="hub_outputs">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e17" status="active-persistence" contract="static assets + multipart scratch" id="18">
+          <mxCell edge="1" parent="boundary_active" source="hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#CA8A04;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=0.06;exitY=1;entryX=0.55;entryY=0;curved=0;" target="hub_ui_fs">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e18" status="active-persistence" contract="validate + commit + recover/prune" id="19">
+          <mxCell edge="1" parent="boundary_active" source="hub" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#CA8A04;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=0.18;exitY=1;entryX=0.55;entryY=0;curved=0;" target="hub_gallery">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e19" status="ignored-no-effect" contract="MSG_IMAGE_READY sent after HTTP 200 · HUB IGNORES" id="20">
+          <mxCell edge="1" parent="boundary_active" source="camera" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#64748B;strokeWidth=1.7;dashed=1;dashPattern=8 4 1 4;endArrow=open;endFill=0;endSize=9;exitX=0.22;exitY=0;entryX=0.35;entryY=1;curved=0;" target="hub">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e20" status="inactive-no-sender" contract="MSG_LOCATION · NO SENDER IN CURRENT ROBOT" id="21">
+          <mxCell edge="1" parent="boundary_active" source="robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#64748B;strokeWidth=1.7;dashed=1;dashPattern=8 5;endArrow=cross;endFill=0;endSize=11;exitX=0;exitY=0.94;entryX=1;entryY=0.94;curved=0;" target="hub">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="STANDALONE / NOT RUNTIME-INTEGRATED" role="standalone-boundary" status="standalone" placeholders="1" id="display_boundary">
+          <mxCell parent="1" style="swimlane;startSize=28;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.8;dashed=1;dashPattern=8 5;fontFamily=Arial;fontSize=14;fontStyle=1;fontColor=#475569;align=left;spacingLeft=12;shadow=0;" vertex="1">
+            <mxGeometry height="156" width="722" x="580" y="764" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;USB test console&lt;/b&gt;&lt;br&gt;9600 text commands" role="standalone-input" status="active-standalone" placeholders="1" id="usb_console">
+          <mxCell parent="display_boundary" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry height="62" width="175" x="20" y="48" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Mega 2560 display&lt;/b&gt;&lt;br&gt;480×320 renderer · USB-testable" role="project-controller" status="standalone" placeholders="1" id="mega">
+          <mxCell parent="display_boundary" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.8;fontFamily=Arial;fontSize=12;fontStyle=1;fontColor=#334155;align=left;verticalAlign=middle;spacingLeft=10;spacingRight=8;" vertex="1">
+            <mxGeometry height="82" width="250" x="225" y="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;MCUFRIEND TFT shield&lt;/b&gt;&lt;br&gt;BOOT / MENU / FACE /&lt;br&gt;STATION / EMERGENCY" role="local-peripheral" status="active-standalone" placeholders="1" id="tft">
+          <mxCell parent="display_boundary" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#E2E8F0;gradientColor=#F8FAFC;gradientDirection=south;strokeColor=#475569;strokeWidth=1.5;fontFamily=Arial;fontSize=11;fontColor=#1E293B;align=center;verticalAlign=middle;spacing=5;" vertex="1">
+            <mxGeometry height="82" width="190" x="510" y="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="16-bit parallel shield · pins 22–53 + A0–A5" role="" status="" placeholders="1" id="edge_label_e22">
+          <mxCell parent="display_boundary" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=9;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=2;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="24" width="350" x="350" y="121" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="9600 text commands · standalone validation only" role="" status="" placeholders="1" id="edge_label_e23">
+          <mxCell parent="display_boundary" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=9;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=2;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="24" width="300" x="20" y="121" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e22" status="active-standalone-local" contract="16-bit parallel shield · pins 22–53 + A0–A5" id="23">
+          <mxCell edge="1" parent="display_boundary" source="mega" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#475569;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.50;entryX=0;entryY=0.50;curved=0;" target="tft">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e23" status="active-standalone-test" contract="9600 text commands · standalone validation only" id="24">
+          <mxCell edge="1" parent="display_boundary" source="usb_console" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#64748B;strokeWidth=1.5;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.50;entryX=0;entryY=0.50;curved=0;" target="mega">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;INTERFACE STATUS&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#0F766E&quot;&gt;&lt;b&gt;━━━━▶ ACTIVE&lt;/b&gt;&lt;/font&gt; &amp;nbsp; source-proven&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;&lt;b&gt;━━━━▶ EMERGENCY&lt;/b&gt;&lt;/font&gt; &amp;nbsp; behaviorally dominant&lt;br&gt;&lt;font color=&quot;#64748B&quot;&gt;&lt;b&gt;— · —▶ IGNORED&lt;/b&gt;&lt;/font&gt; &amp;nbsp; implemented / no effect&lt;br&gt;&lt;font color=&quot;#CA8A04&quot;&gt;&lt;b&gt;····▶ OPTIONAL&lt;/b&gt;&lt;/font&gt; &amp;nbsp; degraded path&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;&lt;b&gt;– – × CONFLICT&lt;/b&gt;&lt;/font&gt; &amp;nbsp; absent / pin collision" role="legend" status="" placeholders="1" id="legend">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry height="92" width="266" x="1322" y="764" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;AUTHORITY&lt;/b&gt; · Current five-project source.&lt;br&gt;&lt;font color=&quot;#64748B&quot;&gt;Dashed links are not active runtime integrations.&lt;/font&gt;" role="authority-note" status="" placeholders="1" id="authority">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=6;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry height="44" width="266" x="1322" y="864" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="DOCUMENTED UART NOT IMPLEMENTED&lt;br&gt;GPIO16/17 already DFPlayer" role="" status="" placeholders="1" id="edge_label_e21">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FEF2F2;fillOpacity=94;strokeColor=#C62828;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="390" x="720" y="728" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e21" status="conflict" contract="DOCUMENTED UART NOT IMPLEMENTED&#xa;GPIO16/17 already DFPlayer" id="22">
+          <mxCell edge="1" parent="1" source="robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#C62828;strokeWidth=2;dashed=1;dashPattern=8 5;endArrow=cross;endFill=0;endSize=12;exitX=0.12;exitY=1;entryX=0.52;entryY=0;curved=0;" target="mega">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

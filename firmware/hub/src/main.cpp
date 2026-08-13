@@ -219,18 +219,31 @@ void broadcastEmergency(bool on) {
 
 // Re-announce on every change and then on a slow timer, so late/rebooted nodes
 // pick the state up without the Hub tracking who is listening.
+//
+// A transition outranks the heartbeat: it is sent at once and then repeated
+// EMERGENCY_BURST_COUNT times, because one lost broadcast would otherwise leave
+// the robot touring for up to EMERGENCY_BROADCAST_MS after the button is hit.
 void pumpEmergencyBroadcast() {
-  static uint32_t lastSend = 0;
+  static uint32_t lastSend  = 0;
+  static uint8_t  burstLeft = 0;
   const uint32_t now = millis();
 
-  if (!gEmergencyDirty && (now - lastSend) < EMERGENCY_BROADCAST_MS) return;
+  if (gEmergencyDirty) {
+    gEmergencyDirty = false;          // a change: send now, then burst
+    burstLeft       = EMERGENCY_BURST_COUNT;
+  } else if (burstLeft > 0) {
+    if ((now - lastSend) < EMERGENCY_BURST_GAP_MS) return;
+  } else if ((now - lastSend) < EMERGENCY_BROADCAST_MS) {
+    return;
+  }
+
+  if (burstLeft > 0) burstLeft--;
 
   stateLock();
   const bool on = gState.emergency;
   stateUnlock();
 
-  gEmergencyDirty = false;
-  lastSend        = now;
+  lastSend = now;
   broadcastEmergency(on);
 }
 

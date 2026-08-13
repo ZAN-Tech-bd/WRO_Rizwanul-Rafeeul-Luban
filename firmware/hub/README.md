@@ -16,14 +16,21 @@ whole system:
 1. **Press** the GPIO21 button → emergency **latches on**. Track LEDs blink red,
    the GPIO4 siren wails a two-tone ambulance pattern.
 2. The Hub is the **single source of truth** and broadcasts the emergency state
-   over ESP-NOW every 2 s (immediately on change). It never tracks who is
-   listening, so a node that reboots or misses a packet re-syncs within one
-   interval.
-3. The **robot evacuates**: it cuts narration, drives, and ignores every station
-   card except the **station-7 exit card**, where it stops.
+   over ESP-NOW. A **change of state outranks everything**: it goes out on the
+   next Core 1 pass (~5 ms) and is then repeated `EMERGENCY_BURST_COUNT` times
+   `EMERGENCY_BURST_GAP_MS` apart, because a single unacknowledged broadcast can
+   be lost and the robot would otherwise keep touring for up to 2 s with the
+   siren already sounding. After the burst the state falls back to a plain 2 s
+   heartbeat, so a node that reboots or misses everything still re-syncs within
+   one interval. The Hub never tracks who is listening.
+3. The **robot evacuates**: it cuts narration, drops any pending photo, drives,
+   and **ignores every card except the END card**, where it stops and latches.
+   `ESP32_RFID_MP3_RAIL` (rail robot) and `ESP32_RFID_MP3_LFR` (line-follower
+   robot) both listen; the LFR build stops at its station-7 exit card instead.
 4. **Clear it** by holding the button 3 s, or from the admin dashboard
    (`POST /api/emergency?on=0`). Either way the robot stops so it can be
-   repositioned — it does not silently resume the tour.
+   repositioned — it does not silently resume the tour. Restarting it takes the
+   **START card**, the same card that begins every normal tour.
 
 > The siren uses `tone()`, which needs a **passive** buzzer. For a plain
 > **active** buzzer, swap the `tone()` call in `updateSiren()` for
