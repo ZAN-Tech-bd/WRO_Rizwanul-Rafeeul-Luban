@@ -1,12 +1,12 @@
 /*
-  ESP32 RFID -> DFPlayer Mini + Nano rail controller
+  ESP32 RFID -> DFPlayer Mini + Nano drive controller
   =================================================
-  Scans MIFARE cards with an MFRC522 reader (SPI), controls the Nano rail over
+  Scans MIFARE cards with an MFRC522 reader (SPI), controls the Nano drive over
   UART1, plays the MP3 track mapped to that card's UID on DFPlayer UART2, and
   asks the ESP32-CAM to photograph each exhibit two seconds after stopping.
 
   RFID reader setup copied from your working MFRC522v2 sketch.
-  DFPlayer setup copied from your working ESP32_MP3_LFR sketch.
+  DFPlayer setup copied from your working ESP32_Robot_Main sketch.
 
   ----------------------------------------------------------------------
   Wiring (ESP32)
@@ -24,7 +24,7 @@
       VCC -> 5V, GND, speaker to SPK_1/SPK_2
 
   ----------------------------------------------------------------------
-  Nano rail UART
+  Nano drive UART
     Nano D1 (TX) --10k--+-- ESP32 GPIO25 (RX)
                          +-- 20k -- GND       (5 V -> 3.3 V divider)
     Nano D0 (RX) <------ ESP32 GPIO26 (TX)
@@ -36,19 +36,19 @@
     Disconnect this wire while flashing the ESP32-CAM.
 
   Service hotspot
-    Join ESP32-MP3-RAIL / museum2026, then open http://192.168.4.1/
+    Join ESP32-Robot-Main / museum2026, then open http://192.168.4.1/
     The page tunes DFPlayer volume and shows a bounded robot event log.
 
   Hub emergency link (ESP-NOW, channel 1)
     The Hub owns the emergency state: its push switch (or the admin dashboard)
     raises it and re-broadcasts it, so this robot needs no wiring to the button.
     An emergency OUTRANKS the whole card map:
-      * narration is cut, any pending photo is dropped, and the rail is started
+      * narration is cut, any pending photo is dropped, and the drive is started
         so the robot drives on,
       * every card is IGNORED except the END card (A3 C0 38 15) -- the tour
         does not stop for stations while the alarm is up,
-      * the END card stops the rail and latches it, exactly as it always does.
-    When the Hub clears the emergency the rail stays latched stopped; only the
+      * the END card stops the drive and latches it, exactly as it always does.
+    When the Hub clears the emergency the drive stays latched stopped; only the
     START card resumes the tour. Because the Hub re-sends the state on a timer,
     a robot that reboots or misses a packet re-syncs within ~2 s.
 
@@ -58,20 +58,20 @@
 
   Hub mute switch (ESP-NOW, MSG_AUDIO)
     The admin dashboard's blue mute button forces the DFPlayer to volume 0. The
-    tour is otherwise UNCHANGED: cards still stop the rail, narration still
-    plays and still reports finished, and the rail still restarts on time -- the
+    tour is otherwise UNCHANGED: cards still stop the drive, narration still
+    plays and still reports finished, and the drive still restarts on time -- the
     robot simply runs the whole tour silently. That is why mute sets the volume
     instead of calling player.stop(): a stopped track never reports finished, so
-    the rail would sit at the station until the 90 s fail-safe fired.
+    the drive would sit at the station until the 90 s fail-safe fired.
     The Hub latches the state and re-broadcasts it like the emergency, so a
     robot that reboots mid-tour comes back muted if that is still the setting.
 
-  UID -> Track / rail action table
+  UID -> Track / drive action table
     Bytes are in the SAME order the reader prints them, i.e.
     "Card UID: 64 14 F6 B3"  ->  {0x64, 0x14, 0xF6, 0xB3}.
-    Any mapped audio card -> STOP rail, play audio, START rail after finish
-     18 C4 0F BA -> play 0009.mp3, then START rail
-    A3 C0 38 15 -> STOP rail latch, no audio, no automatic restart
+    Any mapped audio card -> STOP drive, play audio, START drive after finish
+     18 C4 0F BA -> play 0009.mp3, then START drive
+    A3 C0 38 15 -> STOP drive latch, no audio, no automatic restart
     The remaining cards map to tracks 10..16. All entries are full 4-byte UIDs.
   ----------------------------------------------------------------------
 */
@@ -90,7 +90,7 @@
 #include "EspNowCompat.h"     // one recv-callback signature for core 2.x and 3.x
 
 // ============================================================
-// DFPlayer (UART2)  -- proven setup from ESP32_MP3_LFR
+// DFPlayer (UART2)  -- proven setup from ESP32_Robot_Main
 // ============================================================
 #define DF_RX 16   // ESP32 RX2 <- DFPlayer TX
 #define DF_TX 17   // ESP32 TX2 -> DFPlayer RX
@@ -111,23 +111,23 @@ void applyVolumeToPlayer() {
   if (audioReady) player.volume(audioMuted ? 0 : currentVolume);
 }
 
-// Station audio pauses the rail and resumes it only after DFPlayer reports
-// playback finished. The explicit end card latches the rail stopped; only the
+// Station audio pauses the drive and resumes it only after DFPlayer reports
+// playback finished. The explicit end card latches the drive stopped; only the
 // start card clears that latch.
 bool narrating = false;
 bool resumeAfterAudio = false;
-bool railStopLatched = true;  // boot is stopped until the START card is read
+bool stopLatched = true;  // boot is stopped until the START card is read
 unsigned long audioStartMs = 0;
 const unsigned long AUDIO_MIN_MS = 1500;   // ignore stale finished events
 const unsigned long AUDIO_MAX_MS = 90000;  // fail-safe if DFPlayer never reports finish
 
 // ============================================================
-// Nano rail controller (UART1)
+// Nano drive controller (UART1)
 // ============================================================
 #define NANO_RX 25   // ESP32 RX1 <- Nano D1 TX through a divider
 #define NANO_TX 26   // ESP32 TX1 -> Nano D0 RX
 HardwareSerial nanoSerial(1);
-const unsigned long NANO_BAUD = 9600;  // MUST match NANO_LFR_RAIL
+const unsigned long NANO_BAUD = 9600;  // MUST match Nano_Robot_Driver
 char nanoBuf[64];
 uint8_t nanoLen = 0;
 
@@ -137,7 +137,7 @@ uint8_t motorLeft = 150;
 uint8_t motorRight = 210;
 bool nanoTuneConfirmed = false;
 bool motorCommandPending = false;
-bool railRunning = false;
+bool driveRunning = false;
 uint8_t requestedMotorLeft = 150;
 uint8_t requestedMotorRight = 210;
 
@@ -158,7 +158,7 @@ unsigned long cameraTriggerDueMs = 0;
 // ============================================================
 // Service SoftAP + bounded robot event log
 // ============================================================
-const char *AP_SSID = "ESP32-MP3-RAIL";
+const char *AP_SSID = "ESP32-Robot-Main";
 const char *AP_PASSWORD = "museum2026";
 const uint8_t AP_CHANNEL = 1;
 WebServer server(80);
@@ -269,18 +269,18 @@ void handleApiState() {
   response += nanoTuneConfirmed ? F("true") : F("false");
   response += F(",\"motorPending\":");
   response += motorCommandPending ? F("true") : F("false");
-  response += F(",\"railRunning\":");
-  response += railRunning ? F("true") : F("false");
+  response += F(",\"driveRunning\":");
+  response += driveRunning ? F("true") : F("false");
   response += F(",\"emergency\":");
   response += emergencyActive ? F("true") : F("false");
   response += F(",\"hubLink\":");
   response += espnowReady ? F("true") : F("false");
-  response += F(",\"rail\":\"");
+  response += F(",\"drive\":\"");
   if (emergencyActive) {
     response += emergencyStopReached ? F("EMERGENCY - stopped at END card")
                                      : F("EMERGENCY - running to END card");
   } else {
-    response += railStopLatched ? F("latched stopped") : (narrating ? F("stopped for audio") : F("running / armed"));
+    response += stopLatched ? F("latched stopped") : (narrating ? F("stopped for audio") : F("running / armed"));
   }
   response += F("\",\"playback\":\"");
   response += narrating ? F("station narration") : F("idle");
@@ -494,7 +494,7 @@ void sendCameraShoot(uint8_t station) {
 
   Serial.print(F("-> Cam: SHOOT "));
   Serial.print(station);
-  Serial.println(F(" (rail stopped; audio playing)"));
+  Serial.println(F(" (drive stopped; audio playing)"));
   lastCameraText = "SHOOT " + String(station) + " sent";
   appendRobotLog(lastCameraText);
 }
@@ -530,36 +530,36 @@ void playTrack(int track) {
                  (audioMuted ? " (MUTED by Hub)" : " (volume " + String(currentVolume) + ")"));
 }
 
-void startRailFromCard() {
+void startDriveFromCard() {
   cancelPendingPhoto("START card scanned");
-  railStopLatched = false;
+  stopLatched = false;
   narrating = false;
   resumeAfterAudio = false;
   if (audioReady) player.stop();
-  Serial.println(F("START card -> clearing stop latch; rail starts after audio."));
+  Serial.println(F("START card -> clearing stop latch; drive starts after audio."));
   appendRobotLog("RFID START card: stop latch cleared");
 }
 
-void stopRailFromCard() {
+void stopDriveFromCard() {
   cancelPendingPhoto("END card scanned");
-  railStopLatched = true;
+  stopLatched = true;
   narrating = false;
   resumeAfterAudio = false;
   if (audioReady) player.stop();
-  Serial.println(F("STOP card -> rail latched stopped; no audio."));
+  Serial.println(F("STOP card -> drive latched stopped; no audio."));
   sendNano("STOP");
-  appendRobotLog("RFID END card: rail latched stopped");
+  appendRobotLog("RFID END card: drive latched stopped");
 }
 
 void beginAudio(int track, bool resumeAfterFinish) {
-  // Every mapped audio card stops the rail before audio. It may resume only
+  // Every mapped audio card stops the drive before audio. It may resume only
   // after completion if the stop latch is still clear.
   sendNano("STOP");
   if (!audioReady) {
     narrating = false;
     resumeAfterAudio = false;
-    Serial.println(F("Audio unavailable -> rail remains stopped."));
-    appendRobotLog("AUDIO unavailable: rail remains stopped");
+    Serial.println(F("Audio unavailable -> drive remains stopped."));
+    appendRobotLog("AUDIO unavailable: drive remains stopped");
     return;
   }
 
@@ -567,7 +567,7 @@ void beginAudio(int track, bool resumeAfterFinish) {
   player.stop();
   playTrack(track);
   narrating = true;
-  resumeAfterAudio = resumeAfterFinish && !railStopLatched;
+  resumeAfterAudio = resumeAfterFinish && !stopLatched;
   audioStartMs = millis();
 }
 
@@ -576,22 +576,22 @@ void finishAudio(bool allowResume) {
 
   narrating = false;
   cancelPendingPhoto("station audio finished");
-  bool shouldResume = allowResume && resumeAfterAudio && !railStopLatched;
+  bool shouldResume = allowResume && resumeAfterAudio && !stopLatched;
   resumeAfterAudio = false;
   if (shouldResume) {
-    Serial.println(F("Audio finished -> restarting rail."));
+    Serial.println(F("Audio finished -> restarting drive."));
     sendNano("START");
     appendRobotLog("AUDIO finished: Nano START sent");
   } else {
-    Serial.println(F("Audio finished -> rail remains stopped."));
-    appendRobotLog("AUDIO finished: rail remains stopped");
+    Serial.println(F("Audio finished -> drive remains stopped."));
+    appendRobotLog("AUDIO finished: drive remains stopped");
   }
 }
 
 // ============================================================
 // Hub emergency link (ESP-NOW)
 // ============================================================
-// Runs in the WiFi task: keep it to a copy + a flag. No serial, no rail, no
+// Runs in the WiFi task: keep it to a copy + a flag. No serial, no drive, no
 // DFPlayer -- loop() does all of that from applyEmergencyState().
 void handleEspNowMessage(const uint8_t *data, int len) {
   if (len != (int)sizeof(museum::MuseumMessage)) return;
@@ -654,7 +654,7 @@ void applyEmergencyState() {
     narrating            = false;
     resumeAfterAudio     = false;
     emergencyStopReached = false;
-    railStopLatched      = false;
+    stopLatched      = false;
     if (audioReady) player.stop();
     Serial.println(F("!! EMERGENCY from Hub -> every card except END is ignored; running to the END card."));
     appendRobotLog("EMERGENCY raised by Hub: cards ignored until the END card");
@@ -667,10 +667,10 @@ void applyEmergencyState() {
     narrating            = false;
     resumeAfterAudio     = false;
     emergencyStopReached = false;
-    railStopLatched      = true;
+    stopLatched      = true;
     if (audioReady) player.stop();
-    Serial.println(F("Emergency cleared -> rail latched stopped. Tap the START card to resume the tour."));
-    appendRobotLog("EMERGENCY cleared: rail latched stopped, START card required");
+    Serial.println(F("Emergency cleared -> drive latched stopped. Tap the START card to resume the tour."));
+    appendRobotLog("EMERGENCY cleared: drive latched stopped, START card required");
     sendNano("STOP");
   }
 }
@@ -679,7 +679,7 @@ void applyEmergencyState() {
 // called with the same value over and over: act only on a real transition.
 //
 // Mute is deliberately ORTHOGONAL to everything else. It changes the DFPlayer
-// volume and nothing more: no rail command, no cancelled photo, no interrupted
+// volume and nothing more: no drive command, no cancelled photo, no interrupted
 // narration. A muted tour runs on exactly the same timing as a loud one, which
 // is what makes it safe to press at any moment during a demo.
 void applyMuteState() {
@@ -701,7 +701,7 @@ void applyMuteState() {
 
 void sendNano(const char *cmd) {
   nanoSerial.print(cmd);
-  nanoSerial.print('\n');  // NANO_LFR_RAIL parses newline-terminated commands
+  nanoSerial.print('\n');  // Nano_Robot_Driver parses newline-terminated commands
   Serial.print(F("-> Nano: "));
   Serial.println(cmd);
   appendRobotLog(String("NANO <- ") + cmd);
@@ -711,11 +711,11 @@ void handleNanoLine(const char *line) {
   appendRobotLog(String("NANO -> ") + line);
 
   if (strcmp(line, "STATE:RUNNING") == 0) {
-    railRunning = true;
+    driveRunning = true;
     return;
   }
   if (strcmp(line, "STATE:STOPPED") == 0 || strcmp(line, "READY:STOPPED") == 0) {
-    railRunning = false;
+    driveRunning = false;
     return;
   }
 
@@ -766,7 +766,7 @@ void setup() {
   Serial.println(F("ESP32 RFID -> DFPlayer"));
   Serial.println(F("================================"));
   robotLog[0] = '\0';
-  appendRobotLog("BOOT ESP32 RFID/MP3 rail controller");
+  appendRobotLog("BOOT ESP32 RFID/MP3 drive controller");
 
   // --- MFRC522 ---
   mfrc522.PCD_Init();
@@ -788,9 +788,9 @@ void setup() {
     appendRobotLog("AUDIO DFPlayer connected; volume " + String(currentVolume));
   }
 
-  // --- Nano rail controller (UART1) ---
+  // --- Nano drive controller (UART1) ---
   nanoSerial.begin(NANO_BAUD, SERIAL_8N1, NANO_RX, NANO_TX);
-  Serial.println(F("Nano rail UART ready (9600, RX=25, TX=26)."));
+  Serial.println(F("Nano drive UART ready (9600, RX=25, TX=26)."));
   sendNano("STOP");  // safe state if the ESP32 rebooted while Nano was moving
   sendNano("GET");   // populate ML/MR from Nano RAM/EEPROM for the web console
 
@@ -842,7 +842,7 @@ void loop() {
   server.handleClient();
 
   // ---------------- Hub emergency ----------------
-  // First in the pass: an alarm raised since the last loop must reach the rail
+  // First in the pass: an alarm raised since the last loop must reach the drive
   // before this pass can act on a card or resume audio.
   applyEmergencyState();
 
@@ -883,7 +883,7 @@ void loop() {
 
         // The Hub emergency outranks the whole card map. Only the END card is
         // acted on, so the robot drives past every station to the end of the
-        // rail and stops there. The START card is ignored too: while the alarm
+        // drive and stops there. The START card is ignored too: while the alarm
         // is up there is nothing to restart into.
         if (emergencyActive && track != NO_AUDIO_TRACK) {
           lastCardText += " (ignored: emergency)";
@@ -891,17 +891,17 @@ void loop() {
           appendRobotLog("EMERGENCY: card ignored (END card required)");
         } else if (track == NO_AUDIO_TRACK) {
           lastCardText += " (END)";
-          stopRailFromCard();
+          stopDriveFromCard();
           if (emergencyActive) {
             emergencyStopReached = true;
-            Serial.println(F("EMERGENCY: END card reached -> rail stopped."));
-            appendRobotLog("EMERGENCY: END card reached, rail stopped");
+            Serial.println(F("EMERGENCY: END card reached -> drive stopped."));
+            appendRobotLog("EMERGENCY: END card reached, drive stopped");
           }
         } else if (track == 9) {
           lastCardText += " (START)";
           // Track 9 is the only card that clears the explicit STOP latch.
-          startRailFromCard();
-          beginAudio(track, true);   // start rail after intro audio finishes
+          startDriveFromCard();
+          beginAudio(track, true);   // start drive after intro audio finishes
         } else {
           lastCardText += " (station " + String(track - 9) + ")";
           Serial.print(F("Mapped to track "));
@@ -929,7 +929,7 @@ void loop() {
       Serial.println(value);
       appendRobotLog("AUDIO error " + String(value));
       if (narrating) {
-        Serial.println(F("Audio error -> rail remains stopped."));
+        Serial.println(F("Audio error -> drive remains stopped."));
         finishAudio(false);
       }
     }
@@ -941,14 +941,14 @@ void loop() {
     finishAudio(false);
   }
 
-  // ---------------- Nano rail status ----------------
+  // ---------------- Nano drive status ----------------
   pollNano();
 
   // ---------------- Manual serial control (testing) ----------------
   if (Serial.available()) {
     char c = Serial.read();
     if (c >= '1' && c <= '9') {
-      // beginAudio() stops the rail, which would strand the robot mid-track
+      // beginAudio() stops the drive, which would strand the robot mid-track
       // while the alarm is up.
       if (emergencyActive) {
         Serial.println(F("EMERGENCY active -> manual playback refused."));
@@ -982,8 +982,8 @@ void loop() {
     } else if (c == 's' || c == 'S') {
       finishAudio(false);
       if (audioReady) player.stop();
-      Serial.println(F("Audio stopped; rail state unchanged."));
-      appendRobotLog("USB audio stop; rail state unchanged");
+      Serial.println(F("Audio stopped; drive state unchanged."));
+      appendRobotLog("USB audio stop; drive state unchanged");
     }
   }
 

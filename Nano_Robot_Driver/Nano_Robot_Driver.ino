@@ -1,7 +1,7 @@
 /*
-  Arduino Nano - ESP32 RFID start/stop rail drive  (SENSOR-FREE)
+  Arduino Nano - ESP32 RFID start/stop motor drive  (SENSOR-FREE)
   ==============================================================
-  No IR sensors. No line following. No telemetry. The ESP32 (ESP32_RFID_MP3_LFR,
+  No IR sensors. No line following. No telemetry. The ESP32 (ESP32_Robot_Main,
   UNCHANGED) reads an RFID card and sends START or STOP over UART; this Nano
   drives the two L298N channels forward at the calibrated pair, or hard-brakes.
 
@@ -13,7 +13,7 @@
   Anything else is NOT motion: unknown input prints ERR:UNKNOWN and changes
   nothing. This build never toggles on random text.
 
-  ---------------- Optional tuning (ESP32 /rail page, still unchanged) ----
+  ---------------- Optional tuning (ESP32 /drive page, still unchanged) ----
      "GET"                       -> "TUNE ML=<v> MR=<v>"
      "SET ML <v>" / "SET MR <v>" -> set a channel PWM (0..255), applied live
      "MAN"                       -> drive (= START)

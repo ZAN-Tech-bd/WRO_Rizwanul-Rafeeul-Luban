@@ -13,7 +13,7 @@ static const char controlPage[] PROGMEM = R"HTML(
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#d7e5e1">
-<title>Rail Robot Field Console</title>
+<title>Robot Field Console</title>
 <style>
 :root{color-scheme:light;--paper:#f5f7f4;--panel:#fff;--ink:#172421;--muted:#64736e;
   --line:#cbd8d3;--teal:#0c7568;--teal2:#07584f;--amber:#d48b18;--red:#a33a32;
@@ -76,8 +76,8 @@ button.danger{color:var(--red)}button:focus-visible,input:focus-visible{outline:
 <body>
 <main>
   <header>
-    <div><p class="eyebrow">On-board service panel</p><h1>Rail Robot<br>Field Console</h1></div>
-    <div class="address">ESP32-MP3-RAIL<br>192.168.4.1<br><span id="hubLink">Hub link …</span></div>
+    <div><p class="eyebrow">On-board service panel</p><h1>Robot<br>Field Console</h1></div>
+    <div class="address">ESP32-Robot-Main<br>192.168.4.1<br><span id="hubLink">Hub link …</span></div>
   </header>
   <div class="alarm" id="alarm">Hub emergency active — every card except the END card is ignored.
     <span id="alarmDetail">Running to the END card.</span></div>
@@ -97,7 +97,7 @@ button.danger{color:var(--red)}button:focus-visible,input:focus-visible{outline:
             <button class="primary" id="apply" type="button" onclick="applyVolume()">Set volume</button>
           </div>
           <div class="status">
-            <div class="datum"><span class="label">Rail</span><span class="value" id="rail">—</span></div>
+            <div class="datum"><span class="label">Drive</span><span class="value" id="drive">—</span></div>
             <div class="datum"><span class="label">Playback</span><span class="value" id="playback">—</span></div>
             <div class="datum"><span class="label">Last RFID</span><span class="value" id="card">—</span></div>
             <div class="datum"><span class="label">Camera</span><span class="value" id="camera">—</span></div>
@@ -120,7 +120,7 @@ button.danger{color:var(--red)}button:focus-visible,input:focus-visible{outline:
             <button class="primary" id="motorApply" type="button" onclick="applyMotors()">Apply live</button>
             <button id="motorSave" type="button" onclick="saveMotors()">Save to Nano</button>
           </div>
-          <div class="motorMeta" id="motorMeta">Apply updates both channels. If the rail is moving, the Nano changes PWM immediately.</div>
+          <div class="motorMeta" id="motorMeta">Apply updates both channels. If the drive is moving, the Nano changes PWM immediately.</div>
         </div>
       </section>
     </div>
@@ -159,18 +159,18 @@ function togglePause(){paused=!paused;document.getElementById('pause').textConte
 function clearLog(){fetch('/api/log/clear',{method:'POST'}).then(function(){lastSequence=-1;document.getElementById('log').textContent='Log cleared.';});}
 function render(d){if(!editing){slider.value=d.volume;readout.textContent=d.volume;}
   document.getElementById('alarm').className='alarm'+(d.emergency?' on':'');
-  document.getElementById('alarmDetail').textContent=d.rail;
+  document.getElementById('alarmDetail').textContent=d.drive;
   document.getElementById('hubLink').textContent=d.hubLink?'Hub link listening':'Hub link off';
   document.getElementById('muteNote').hidden=!d.muted;
   var tag=document.getElementById('audioTag');
   tag.textContent=d.muted?'muted by Hub':(d.audio?'DFPlayer online':'DFPlayer offline');
   tag.className='tag'+(d.audio&&!d.muted?' ok':'');
-  document.getElementById('rail').textContent=d.rail;document.getElementById('playback').textContent=d.playback;
+  document.getElementById('drive').textContent=d.drive;document.getElementById('playback').textContent=d.playback;
   document.getElementById('card').textContent=d.card;document.getElementById('camera').textContent=d.camera;
   if(!motorEditing){ml.value=d.motorL;mr.value=d.motorR;document.getElementById('mlValue').textContent=d.motorL;document.getElementById('mrValue').textContent=d.motorR;}
   var nt=document.getElementById('nanoTag');nt.textContent=d.nanoTuned?'Nano confirmed':'awaiting confirmation';nt.className='tag'+(d.nanoTuned?' ok':'');
   document.getElementById('motorMeta').textContent=d.motorPending?'Motor command sent; waiting for Nano TUNE reply…':
-    'Nano reports ML='+d.motorL+' / MR='+d.motorR+(d.railRunning?' · live output active':' · rail stopped');
+    'Nano reports ML='+d.motorL+' / MR='+d.motorR+(d.driveRunning?' · live output active':' · drive stopped');
   if(!paused&&d.logSequence!==lastSequence){var box=document.getElementById('log');box.textContent=d.log||'No events recorded.';
     box.className='terminal'+(d.log?'':' empty');box.scrollTop=box.scrollHeight;lastSequence=d.logSequence;}}
 function poll(){fetch('/api/state',{cache:'no-store'}).then(function(r){return r.json();}).then(render).catch(function(){});}
