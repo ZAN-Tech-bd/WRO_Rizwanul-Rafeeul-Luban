@@ -68,9 +68,6 @@ Full pin lists are in the comment block at the top of each `.ino` / `config.h`.
 ## Stations (seven)
 Jamdani Saree · Nakshi Kantha · Liberation War · Terracotta · Ektara · Palki · Royal Bengal Tiger — defined in [`MEGA_DISPLAY/display_config.h`](MEGA_DISPLAY/display_config.h) (`STATION_NAMES`). Audio is one bilingual track per station as `/MP3/0002.mp3`…`0008.mp3` on the DFPlayer SD card (`0001.mp3` = welcome, START card).
 
-## Repository
-- Arduino-IDE sketches — this `arduino` branch: <https://github.com/ZAN-Tech-bd/WRO_Rizwanul-Rafeeul-Luban/tree/arduino>
-- Original PlatformIO source — `main` branch, `firmware/`
 
 ## Credits & sources
 Built by the South Breeze School team for WRO 2026 Future Innovators. ChatGPT was used as a support tool for brainstorming, explanations and debugging; the team carried out the hardware, wiring, mechanical work, testing and all final decisions. Artifact names represent the Bangladeshi heritage displays in the model museum.
