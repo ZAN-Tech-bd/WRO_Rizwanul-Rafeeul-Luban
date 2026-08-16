@@ -60,6 +60,8 @@ button.danger{color:var(--red)}button:focus-visible,input:focus-visible{outline:
 .logTools{display:flex;gap:7px}.logTools button{padding:7px 10px;background:transparent;font-size:11px}
 .logTools button:first-child{color:var(--teal2)}.empty{color:#829b92}
 .foot{color:var(--muted);font:11px/1.5 "Courier New",monospace;margin:12px 2px 0}
+.muteNote{background:#eaf1fb;border:1px solid #c3d6f0;border-radius:9px;color:#1a4fa0;
+  font:11px/1.45 "Trebuchet MS",sans-serif;margin:12px 0 0;padding:9px 11px}
 .alarm{display:none;background:var(--red);color:#fff;border-radius:12px;padding:12px 16px;margin-bottom:14px;
   font:700 14px/1.4 "Trebuchet MS",sans-serif;box-shadow:var(--shadow)}
 .alarm.on{display:block}.alarm span{display:block;font-weight:400;font-size:12px;margin-top:4px;opacity:.9}
@@ -77,16 +79,18 @@ button.danger{color:var(--red)}button:focus-visible,input:focus-visible{outline:
     <div><p class="eyebrow">On-board service panel</p><h1>Rail Robot<br>Field Console</h1></div>
     <div class="address">ESP32-MP3-RAIL<br>192.168.4.1<br><span id="hubLink">Hub link …</span></div>
   </header>
-  <div class="alarm" id="alarm">Hub emergency active — every card except the END card is ignored.
-    <span id="alarmDetail">Running to the END card.</span></div>
+  <div class="alarm" id="alarm">Hub emergency active — every card except a stop card (END or D836D4B9) is ignored.
+    <span id="alarmDetail">Running to a stop card.</span></div>
   <div class="grid">
     <div class="stack">
       <section class="panel">
         <div class="panelHead"><h2>Speaker level</h2><span class="tag" id="audioTag">checking</span></div>
         <div class="body">
           <div class="readout"><span class="number" id="volumeValue">--</span><span class="scale">/ 30</span></div>
-          <input id="volume" type="range" min="0" max="30" step="1" value="20" aria-label="DFPlayer volume">
+          <input id="volume" type="range" min="0" max="30" step="1" value="25" aria-label="DFPlayer volume">
           <div class="ticks"><span>silent</span><span>field max</span></div>
+          <p class="muteNote" id="muteNote" hidden>Hub mute is ON — the speaker is at 0 and this
+            slider only sets the level to return to when the admin unmutes.</p>
           <div class="buttons">
             <button type="button" onclick="nudge(-1)">− one</button>
             <button type="button" onclick="nudge(1)">+ one</button>
@@ -157,7 +161,10 @@ function render(d){if(!editing){slider.value=d.volume;readout.textContent=d.volu
   document.getElementById('alarm').className='alarm'+(d.emergency?' on':'');
   document.getElementById('alarmDetail').textContent=d.rail;
   document.getElementById('hubLink').textContent=d.hubLink?'Hub link listening':'Hub link off';
-  var tag=document.getElementById('audioTag');tag.textContent=d.audio?'DFPlayer online':'DFPlayer offline';tag.className='tag'+(d.audio?' ok':'');
+  document.getElementById('muteNote').hidden=!d.muted;
+  var tag=document.getElementById('audioTag');
+  tag.textContent=d.muted?'muted by Hub':(d.audio?'DFPlayer online':'DFPlayer offline');
+  tag.className='tag'+(d.audio&&!d.muted?' ok':'');
   document.getElementById('rail').textContent=d.rail;document.getElementById('playback').textContent=d.playback;
   document.getElementById('card').textContent=d.card;document.getElementById('camera').textContent=d.camera;
   if(!motorEditing){ml.value=d.motorL;mr.value=d.motorR;document.getElementById('mlValue').textContent=d.motorL;document.getElementById('mrValue').textContent=d.motorR;}

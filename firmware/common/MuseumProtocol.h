@@ -20,6 +20,11 @@ constexpr uint8_t kBroadcastAddress[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 enum MessageType : uint8_t {
   MSG_LOCATION = 1, MSG_EMERGENCY = 2, MSG_HEALTH = 3,
   MSG_VISITOR_COUNT = 4, MSG_IMAGE_READY = 5, MSG_COMMAND = 6, MSG_HEARTBEAT = 7,
+  // Hub -> robot: the admin dashboard's mute switch. Deliberately its OWN type
+  // rather than a flag riding on MSG_EMERGENCY: the physical emergency-button
+  // node also broadcasts MSG_EMERGENCY and knows nothing about the mute, so its
+  // packets would clear it on every press.
+  MSG_AUDIO = 8,
 };
 
 enum MessageFlag : uint8_t {
@@ -29,6 +34,7 @@ enum MessageFlag : uint8_t {
   FLAG_ALERT_ACTIVE = 1 << 2,
   FLAG_DEVICE_ONLINE = 1 << 3,
   FLAG_ROBOT_MOVING = 1 << 4,
+  FLAG_AUDIO_MUTED = 1 << 5,      // MSG_AUDIO: narration volume forced to 0
 };
 
 // Fixed-width integers (no float) so every ESP32 agrees on the layout.

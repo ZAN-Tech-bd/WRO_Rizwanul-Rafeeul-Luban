@@ -15,7 +15,8 @@ const Hub = (() => {
 
   // ---- local-dev mock storage (only used when not on the Hub) ----
   const K_REQUESTS = "museum:requests", K_HEALTH = "museum:health",
-        K_ROBOT = "museum:robot", K_EMERG = "museum:emergency", K_SEED = "museum:seeded";
+        K_ROBOT = "museum:robot", K_EMERG = "museum:emergency", K_SEED = "museum:seeded",
+        K_MUTED = "museum:muted";
   function rd(k, f) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch (e) { return f; } }
   function wr(k, v) { localStorage.setItem(k, JSON.stringify(v)); window.dispatchEvent(new Event("museum:change")); }
   function uid() { return "V" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
@@ -53,6 +54,7 @@ const Hub = (() => {
     return {
       robot,
       emergency: rd(K_EMERG, false),
+      muted: rd(K_MUTED, false),
       approved: reqs.filter((r) => r.status === "approved").length,
       pending: reqs.filter((r) => r.status === "pending").length,
       health: rd(K_HEALTH, []),
@@ -71,7 +73,7 @@ const Hub = (() => {
   // has landed, so it needs every key a consumer might read off state.image —
   // admin.html's robot-status line does, and an absent key there would throw
   // on the very first render.
-  let cache = { robot: { station: null, status: "idle" }, emergency: false, approved: 0, pending: 0, health: [], sensors: [], requests: [], image: { bytes: 0, station: "", seq: 0 } };
+  let cache = { robot: { station: null, status: "idle" }, emergency: false, muted: false, approved: 0, pending: 0, health: [], sensors: [], requests: [], image: { bytes: 0, station: "", seq: 0 } };
   const subs = new Set();
   function publish(s) { cache = s; subs.forEach((cb) => { try { cb(s); } catch (e) {} }); }
 
@@ -135,6 +137,13 @@ const Hub = (() => {
     if (REAL) { fire("/api/emergency?on=" + (on ? 1 : 0)); return; }
     wr(K_EMERG, !!on);
   }
+  // Mute the robot's narration. The Hub latches this and re-broadcasts it over
+  // ESP-NOW, so it survives a robot reboot -- see handleAudioMute() in the Hub
+  // firmware. Fire-and-forget: the next /api/state poll confirms it.
+  function setMute(on) {
+    if (REAL) { fire("/api/audio/mute?on=" + (on ? 1 : 0)); return; }
+    wr(K_MUTED, !!on);
+  }
   // ---- ESP-CAM gallery -------------------------------------------------
   // The Hub keeps the newest N photos; /api/gallery lists them newest-first.
   // Off the Hub there is no camera, so the mock returns an empty gallery and
@@ -159,6 +168,6 @@ const Hub = (() => {
   }
 
   return { subscribe, getState, listPending, countApproved, countPending,
-           requestCheckIn, getRequest, approve, deny, setEmergency, advanceRobot,
-           getGallery, photoUrl, clearGallery };
+           requestCheckIn, getRequest, approve, deny, setEmergency, setMute,
+           advanceRobot, getGallery, photoUrl, clearGallery };
 })();

@@ -1,5 +1,50 @@
 # Smart Museum Implementation Plan
 
+## Active Synchronization — Bring the non-OTA Hub up to date (2026-08-13)
+
+### Goal
+
+Update [`firmware/hub/`](firmware/hub/) so it has every current, working, non-OTA feature and deployed web asset from [`firmware/hub-ota/`](firmware/hub-ota/), while deliberately excluding Bluetooth/OTA firmware, dependencies, credentials, uploader tooling, pause hooks, and OTA-specific flash partitioning.
+
+### Phases
+
+| Phase | Status | Outcome |
+|---|---|---|
+| HUB-SYNC1. Restore context and protect the working tree | complete | Re-read all three persistent planning records and confirmed both staged and unstaged Git diffs are empty before synchronization. |
+| HUB-SYNC2. Inventory and classify every directory difference | complete | Exhaustive path/hash and function-level comparison complete: 11 files already identical; reusable scope is state/config-before-BLE, sensor modules, all non-BLE entry-point changes, and sensor/API docs; BLE service, uploader, partitioning, NimBLE, pause hooks, and OTA prose are excluded. |
+| HUB-SYNC3. Port all non-OTA behavior into the primary Hub | complete | Current state/configuration, sensor modules, entry-point logic, health/API/LED behavior, and sensor-aware documentation are present. Existing data assets and PhotoStore were already current; normal USB PlatformIO configuration is retained. |
+| HUB-SYNC4. Verify exclusion and behavioral parity | complete | Scoped audit of all 18 project-owned files passes with zero BLE/OTA candidates and all four forbidden paths absent. Reusable path sets match 18/18; 14 ordinary reusable files are byte-identical; config equals the exact pre-BLE prefix; stripped-entry-point parity leaves only the intentional health fix and three non-OTA comment rewrites. |
+| HUB-SYNC5. Build and review | complete | Clean firmware build passed: Flash 71.8% (941,741 / 1,310,720 B), RAM 14.8% (48,528 / 327,680 B) on the default non-OTA partition; no NimBLE in the dependency graph. LittleFS image built (1,441,792 B) from the 318,566-B data tree. Working-tree scope is exactly 7 modified + 2 new files; the OTA reference tree is untouched. |
+
+### Constraints
+
+- [`firmware/hub-ota/`](firmware/hub-ota/) is the feature reference; [`firmware/hub/`](firmware/hub/) remains the deployable USB-flashed, non-OTA target.
+- Do not copy [`ble_ota.h`](firmware/hub-ota/include/ble_ota.h), [`ble_ota.cpp`](firmware/hub-ota/src/ble_ota.cpp), [`ble_ota_upload.py`](firmware/hub-ota/tools/ble_ota_upload.py), [`partitions.csv`](firmware/hub-ota/partitions.csv), the NimBLE dependency, OTA credentials, or OTA lifecycle/pause calls.
+- Do not copy generated `.pio` artifacts or delete/modify the reference copy.
+- Preserve every working non-OTA feature, including any sensor/API/UI/storage changes that exist only in the newer copy.
+
+### Errors Encountered
+
+| Error | Attempt | Resolution |
+|---|---:|---|
+| A line-count diagnostic used shell brace expansion, but the command runner treated both brace expressions as literal paths and `wc` failed. | 1 | Use explicit paths or Python for subsequent inventories. No repository file was changed and the surrounding classification checks remained valid. |
+| An initial broad BLE/OTA text search traversed generated `.pio` framework and library content, producing 120 irrelevant matches. | 1 | Replaced it with a project-owned-file audit that explicitly prunes `.pio` and `__pycache__`, checks forbidden paths separately, and uses token-aware source/configuration assertions. |
+| The first mechanical entry-point parity script assumed an uncommented quoted include and multiline pause block, but the reference has an inline-commented include and a one-line pause guard. | 1 | Located the exact reference literals before retrying; path accounting, 14 exact-file hashes, and reusable-config-prefix parity had already passed. No file was changed by the failed read-only audit. |
+
+### Integration corrections
+
+- The newer shared state distinguishes measured/derived and present/absent health channels, but its existing ESP-NOW `MSG_HEALTH` assignment did not set those flags/timestamps. The synchronized primary Hub corrects this so remote health-node readings remain visible and authoritative under the new model.
+
+### Verification evidence (2026-08-13)
+
+- Firmware clean build (`pio run -e hub`, PlatformIO Espressif32 6.12.0, Arduino 3.x): `[SUCCESS] Took 15.54 seconds`. RAM 14.8% (48,528 / 327,680 B); Flash 71.8% (941,741 / 1,310,720 B) — fits the default single-app partition with ~369 KB headroom and no custom OTA partition table.
+- Dependency graph contains only `Adafruit NeoPixel @ 1.15.5`, `LittleFS`, `SD`, `SPI`, `DNSServer`, `WebServer`, `WiFi`, `FS`. No `NimBLE-Arduino` and no BLE OTA library.
+- Filesystem build (`pio run -e hub -t buildfs`): `[SUCCESS] Took 0.95 seconds`. `littlefs.bin` = 1,441,792 B; packed data tree = 318,566 B across `/index.html`, `/visitor.html`, `/admin.html`, `/css/style.css`, `/js/{qr,data,hub}.js`, `/js/vendor/jsQR.js`, `/README.txt`.
+- Project-owned exclusion audit (18 files, `.pio` and `__pycache__` pruned): 4/4 forbidden OTA paths absent; 0 BLE/OTA symbols, constants, dependencies, prose tokens, tools, or partition selectors; `platformio.ini` remains one normal `[env:hub]`.
+- Mechanical parity: reusable path sets match 18/18; 14 ordinary reusable files are byte-identical; primary `config.h` equals the exact pre-BLE prefix; entry-point parity leaves only the intentional `MSG_HEALTH` fix and three non-OTA comment rewrites.
+- Working-tree scope (`git status --short`): modified `firmware/hub/{README.md, include/MuseumState.h, include/config.h, src/main.cpp}` plus the three planning records; new `firmware/hub/{include/HubSensors.h, src/HubSensors.cpp}`. The [`firmware/hub-ota/`](firmware/hub-ota/) reference tree is unchanged.
+
+
 ## Active Diagram Production — Diagram 6 protocol and interface contract map (2026-08-11)
 
 ### Goal

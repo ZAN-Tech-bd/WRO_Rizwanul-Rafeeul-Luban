@@ -1,0 +1,11 @@
+MFRC522.zip
+
+# ignore IDE files
+.idea
+build
+cmake
+cmake-build-debug
+CMakeLists.txt
+
+# ignore platformio files
+.pio

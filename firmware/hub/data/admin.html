@@ -32,16 +32,21 @@
     </section>
 
     <section class="card robot-card">
-      <h2><span class="dot" id="robotDot"></span><span data-i18n="robotStatus">Robot status</span></h2>
+      <h2><span class="dot" id="robotDot"></span><span data-i18n="robotStatus">Robot status</span>
+        <span id="muteBadge" class="pill info" hidden></span></h2>
       <div class="station" id="robotStation">—</div>
-      <div style="margin-top:10px;">
-        <button class="secondary" onclick="Hub.advanceRobot(); refresh()">▶ Advance robot (test)</button>
+      <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+        <!-- Bench-test control, hidden for the demo: it fakes a robot position
+             the real robot never reported. Delete the `hidden` attribute to get
+             it back; POST /api/robot/advance still works from curl either way. -->
+        <button class="secondary" hidden onclick="Hub.advanceRobot(); refresh()">▶ Advance robot (test)</button>
+        <button id="muteBtn" class="blue" onclick="toggleMute()"></button>
       </div>
     </section>
 
     <section class="card">
       <h2>📷 <span data-i18n="cameraTitle">Camera</span>
-        <span id="imgBadge" class="muted" style="font-size:.8rem; font-weight:normal;"></span></h2>
+        <span id="imgBadge" class="muted" style="font-size:.8rem; font-weight:normal;" hidden></span></h2>
 
       <p id="imgHint" class="muted" data-i18n="cameraWaiting">Waiting for the ESP-CAM to send a photo…</p>
 
@@ -82,7 +87,7 @@
       <p class="muted" style="margin-top:8px;" data-i18n="healthNote"></p>
     </section>
 
-    <section class="card">
+    <section class="card" hidden>
       <h2 data-i18n="sensorTitle">Hub sensors — pin scan</h2>
       <p class="muted" data-i18n="sensorHint"></p>
       <table>
@@ -106,6 +111,10 @@
     </section>
 
     <p class="footer">Open <a href="index.html">index.html</a> in another tab to play a visitor.</p>
+    <p class="footer credit">
+      Built by <strong>Syed Rizwanul Alam</strong> · <strong>Syed Rafeeul Alam</strong> · <strong>Tareef Toufique</strong><br>
+      <span class="muted">WRO 2026 Future Innovators (Elementary) · South Breeze School, Bangladesh · “Guiding Visitors. Protecting Heritage.”</span>
+    </p>
   </main>
 
   <!-- Full-size photo viewer. Hidden until a photo is tapped. -->
@@ -245,6 +254,21 @@
       btn.className = (on ? "red" : "danger") + " block";
     }
 
+    // The mute is a LATCH the Hub owns, not a one-shot command: the Hub keeps
+    // re-broadcasting it, so the button always reflects what the robot is
+    // actually doing, even after either board reboots.
+    function renderMuteButton(muted) {
+      document.getElementById("muteBtn").textContent = muted ? t("muteOn") : t("muteOff");
+      const badge = document.getElementById("muteBadge");
+      badge.textContent = t("mutedBadge");
+      badge.hidden = !muted;
+    }
+
+    function toggleMute() {
+      Hub.setMute(!Hub.getState().muted);
+      refresh();
+    }
+
     // ---- ESP-CAM gallery ------------------------------------------------
     // /api/state carries only the newest seq (it is polled every 1.5 s and must
     // stay small). The full photo list is fetched from /api/gallery only when
@@ -252,6 +276,8 @@
     let shots = [];         // newest first, straight from /api/gallery
     let shotSeq = -1;       // newest seq the strip was built for
     let galleryBusy = false;
+    let shownSeq = -1;      // seq currently loaded into the big <img>
+    let stripKey = "";      // seqs the thumbnail strip was last built from
 
     function shotLabel(p) {
       const a = p.station ? ARTIFACTS.find((x) => x.id === p.station) : null;
@@ -280,19 +306,45 @@
 
       const top = shots[0];
       const img = document.getElementById("latestImg");
-      const url = Hub.photoUrl(top.seq);
-      if (img.getAttribute("src") !== url) img.src = url;   // only reload on change
+      if (top.seq !== shownSeq) loadLatest(top.seq);   // only reload on change
       img.onclick = () => openShot(0);
       document.getElementById("latestWhen").textContent = shotLabel(top);
       document.getElementById("latestMeta").textContent = "#" + top.seq + " · " + top.bytes + " B";
 
+      // Rebuilding this markup re-creates every <img>, which makes the browser
+      // re-request the thumbnails and cancels any still in flight. Only touch it
+      // when the list of older shots actually changed.
       const older = shots.slice(1);
       stripW.hidden = older.length === 0;
-      document.getElementById("shotStrip").innerHTML = older.map((p, i) => `
-        <button class="shot-thumb" onclick="openShot(${i + 1})" title="#${p.seq}">
-          <img src="${Hub.photoUrl(p.seq)}" alt="Photo ${p.seq}" loading="lazy" />
-          <span class="shot-thumb-cap">#${p.seq}</span>
-        </button>`).join("");
+      const key = older.map((p) => p.seq).join(",");
+      if (key !== stripKey) {
+        stripKey = key;
+        document.getElementById("shotStrip").innerHTML = older.map((p, i) => `
+          <button class="shot-thumb" onclick="openShot(${i + 1})" title="#${p.seq}">
+            <img src="${Hub.photoUrl(p.seq)}" alt="Photo ${p.seq}" loading="lazy" />
+            <span class="shot-thumb-cap">#${p.seq}</span>
+          </button>`).join("");
+      }
+    }
+
+    // The Hub serves one client at a time, so an image GET can die mid-stream.
+    // A failed load leaves the <img> broken, and because the element's src then
+    // already matches the newest seq nothing would ever re-request it -- the
+    // newest photo stayed missing until the next capture. Retry a few times, with
+    // a changing query so the browser refetches instead of replaying the failure.
+    function loadLatest(seq) {
+      const img = document.getElementById("latestImg");
+      shownSeq = seq;
+      let tries = 0;
+      img.onload  = () => { img.onerror = null; };
+      img.onerror = () => {
+        if (shownSeq !== seq || tries >= 3) return;   // superseded, or gave up
+        tries++;
+        setTimeout(() => {
+          if (shownSeq === seq) img.src = Hub.photoUrl(seq) + "&retry=" + tries;
+        }, 400 * tries);
+      };
+      img.src = Hub.photoUrl(seq);
     }
 
     async function refreshGallery(force) {
@@ -323,7 +375,7 @@
     function clearShots() {
       if (!confirm(t("cameraClearAsk"))) return;
       Hub.clearGallery();
-      shots = []; shotSeq = 0;
+      shots = []; shotSeq = 0; shownSeq = -1; stripKey = "";
       renderGallery();
       setTimeout(refreshGallery, 400);   // let the Hub finish deleting
     }
@@ -387,6 +439,7 @@
       renderHealth(state.health);
       renderSensors(state.sensors);
       renderEmergencyButton(state.emergency);
+      renderMuteButton(state.muted);
       renderImage(state.image);
     }
 

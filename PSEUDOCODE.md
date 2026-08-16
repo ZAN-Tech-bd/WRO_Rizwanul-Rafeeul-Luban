@@ -59,6 +59,7 @@ START UP:
     turn on our service hotspot "ESP32-MP3-RAIL" on channel 1
     start ESP-NOW on channel 1
         listen for the Hub's emergency message
+        listen for the Hub's mute message
         register the broadcast address so we can send too      # TO BUILD (A)
     start the little web page (volume + motor balance + event log)
     set  railIsLatchedStopped = TRUE       # nothing moves until the START card
@@ -73,12 +74,24 @@ REPEAT FOREVER:
                stop the audio, cancel any waiting photo
                clear the stop latch
                send "START" to the Nano          # drive to the exit
-               remember: only the END card matters now
+               remember: only a stop card matters now
+                         (the END card, or station card D8 36 D4 B9)
            IF emergency just turned OFF:
                stop the audio
                send "STOP" to the Nano
                set railIsLatchedStopped = TRUE   # a human repositions the robot
                                                  # the START card resumes the tour
+
+    2b. IF the Hub's mute state is different from ours:
+           adopt it, and tell the MP3 player:
+               MUTED   -> volume 0
+               UNMUTED -> back to the volume the field console last set
+           change NOTHING else: the rail, the cards, the photos and the
+           narration all keep their normal timing, so a muted tour runs
+           exactly like a loud one, only silent.
+           (this is why mute is a VOLUME change, not "stop the track":
+            a stopped track never says "finished", so the rail would sit
+            at the station until the 90 s fail-safe in step 5)
 
     3. IF a card is touching the reader:
            read its UID and halt the card (so one touch = one action)
@@ -88,14 +101,17 @@ REPEAT FOREVER:
 
                NOT IN THE TABLE      ->  say "unknown card", do nothing
 
-               EMERGENCY IS ON and this is not the END card:
+               EMERGENCY IS ON and this is not a stop card:
                                      ->  ignore it, but still report the station
                                          to the Hub (we are passing, not stopping)
 
-               END CARD (A3 C0 38 15):
+               END CARD (A3 C0 38 15), or D8 36 D4 B9 WHILE EMERGENCY IS ON:
                                      ->  send "STOP" to the Nano
                                          stop the audio
                                          railIsLatchedStopped = TRUE
+                                         (D8 36 D4 B9 is a nearer stop point for
+                                          an evacuation; with no emergency it is
+                                          just station 3, see below)
 
                START CARD (18 C4 0F BA):
                                      ->  railIsLatchedStopped = FALSE
@@ -137,11 +153,16 @@ REPEAT FOREVER:
            (the Hub forgets us after 2.5 s of silence, so this must keep coming)
 
     9. handle test keys typed on the USB console (1..9 play a track, +/- volume,
-       s stops audio, e fakes an emergency for bench testing)
+       s stops audio, e fakes an emergency, m fakes a mute for bench testing)
 ```
 
 **Message to the Hub (`MSG_LOCATION`)** — one small packet:
 `{ station number 1..7, moving? yes/no }`. It is a broadcast: we do not care who hears it.
+
+**Message from the Hub (`MSG_AUDIO`)** — one flag: `muted? yes/no`. It is its own
+kind of message, not a flag on the emergency message, because the emergency
+button board also sends emergency messages and knows nothing about the mute — its
+packets would switch the sound back on every time it was pressed.
 
 ---
 
@@ -223,6 +244,7 @@ WEB JOB  (core 0, repeat forever):
         POST /api/approve?id=     -> staff lets them in
         POST /api/deny?id=        -> staff turns them away
         POST /api/emergency?on=   -> staff raises or clears the emergency
+        POST /api/audio/mute?on=  -> staff mutes or unmutes the robot's narration
         POST /api/image/upload    -> the camera sends a photo (multipart)
         GET  /api/image?seq=      -> one stored photo
         GET  /api/gallery         -> the list of stored photos, newest first
@@ -249,6 +271,11 @@ SHOW JOB  (core 1, repeat forever, ~5 ms per pass):
                                      (one lost packet must not strand the robot)
            otherwise              -> send it every 2 seconds anyway
                                      (so a robot that just rebooted catches up)
+
+    5b. tell everyone the mute state, by exactly the same rule.
+        The Hub HOLDS this state, it does not just pass a button press along:
+        that is what makes the blue button on the admin page always show what
+        the robot is really doing, even after either board reboots.
 
     6. paint the station LEDs:
 
@@ -396,7 +423,7 @@ measure that, and judges respect the honest version.
 | Board | What it does |
 |---|---|
 | Hub | latches the alarm, wails the siren, blinks every station LED red, tells everyone over ESP-NOW every 2 s (and 7 times fast on the change) |
-| Robot | cuts the narration, cancels the waiting photo, drives — **ignores every card except the END card**, where it stops and stays stopped |
+| Robot | cuts the narration, cancels the waiting photo, drives — **ignores every card except a stop card** (the END card, or station card D8 36 D4 B9), where it stops and stays stopped |
 | Nano | just does what it is told: START, then STOP at the end |
 | Camera | keeps working; the robot simply stops asking for photos |
 | Display | red screen: "Follow the robot to the nearest EXIT" (when the wire is fitted) |

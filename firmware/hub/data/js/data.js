@@ -102,7 +102,8 @@ const I18N = {
   nextStation:  { en: "Next stop",               bn: "পরবর্তী স্টেশন" },
   queueWait:    { en: "Please wait your turn and follow the queue.", bn: "অনুগ্রহ করে আপনার পালার জন্য অপেক্ষা করুন এবং লাইন অনুসরণ করুন।" },
   emergencyMsg: { en: "EMERGENCY — follow the robot to the nearest exit.", bn: "জরুরি অবস্থা — নিকটতম এক্সিটে যেতে রোবটের সাথে চলুন।" },
-  artifactsTitle:{ en: "Our Artifacts",          bn: "আমাদের নিদর্শন" },
+  artifactsTitle:{ en: "Tour Sequence",          bn: "ভ্রমণ ক্রম" },
+  tourHint:      { en: "Lost the robot? Find it heading to the next stop in this order.", bn: "রোবট হারিয়ে গেছে? এই ক্রমানুসারে পরবর্তী স্টেশনে এগিয়ে যাওয়া রোবটটি খুঁজে নিন।" },
   pendingTitle: { en: "Pending approvals",       bn: "অপেক্ষমাণ অনুমোদন" },
   approve:      { en: "Approve",                 bn: "অনুমোদন" },
   deny:         { en: "Deny",                    bn: "প্রত্যাখ্যান" },
@@ -119,6 +120,11 @@ const I18N = {
   emergencyOn:  { en: "End emergency",           bn: "জরুরি অবস্থা শেষ" },
   emergencyOff: { en: "Start emergency (test)",  bn: "জরুরি অবস্থা শুরু (পরীক্ষা)" },
   robotStatus:  { en: "Robot status",            bn: "রোবটের অবস্থা" },
+  // Same convention as emergencyOn/Off: the key names the state the robot is
+  // ALREADY in, and the label says what pressing the button will do next.
+  muteOn:       { en: "🔊 Unmute robot",          bn: "🔊 রোবটের শব্দ চালু" },
+  muteOff:      { en: "🔇 Mute robot",            bn: "🔇 রোবটের শব্দ বন্ধ" },
+  mutedBadge:   { en: "Audio muted",             bn: "শব্দ বন্ধ" },
   good:         { en: "Good",                    bn: "ভালো" },
   watch:        { en: "Watch",                   bn: "সতর্ক" },
   alert:        { en: "Alert",                   bn: "সংকেত" },
