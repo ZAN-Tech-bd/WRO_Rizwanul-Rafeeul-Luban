@@ -1,0 +1,17 @@
+{
+  "fillPieces": 2360,
+  "layerCounts": {
+    "1": 701,
+    "2": 1659
+  },
+  "foreignOverlaps": [],
+  "clearanceViolations": [],
+  "minimumClearanceMil": {
+    "normal": 11.899776770409337,
+    "left": 39.89890969631584,
+    "source": 49.899563371690974
+  },
+  "edgeClearanceMil": 16.0,
+  "antennaClearanceMil": 7.9130892426110355,
+  "disconnectedGnd": []
+}

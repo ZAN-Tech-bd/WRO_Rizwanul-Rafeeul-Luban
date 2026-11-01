@@ -1,0 +1,17 @@
+{
+  "copperSegmentsPreserved": 50,
+  "archives": [
+    {
+      "file": "D:\\projects\\WRO_Rizwanul-Rafeeul-Luban\\PCB design\\hub\\WRO_HUB_before_station_place_guard_20261027-0148.epro2",
+      "bytes": 516774,
+      "sha256": "c7a41386c05a397d9a38294e9dc5a12a10ef7e2d79b0e71b1e049293c13cde4d"
+    },
+    {
+      "file": "PCB design\\hub\\WRO_HUB_after_station_place_20261027-0148.epro2",
+      "bytes": 501765,
+      "sha256": "ea93f515ef8b27f091bc69aaa80c99a02af42a03454576490fb3606705d9b487"
+    }
+  ],
+  "placementModelTests": 8,
+  "existingModelTests": 14
+}

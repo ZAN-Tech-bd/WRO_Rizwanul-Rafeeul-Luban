@@ -1,0 +1,67 @@
+{
+ "sourceArchive": "PCB design\\hub\\WRO_HUB_REPAIRED_user_edited_20261027-2358.epro2",
+ "releaseArchive": "PCB design\\hub\\WRO_HUB_REPAIRED_repoured_20261028-0009.epro2",
+ "preservation": {
+  "removedTrackIds": [
+   "243d57fd88424d4e",
+   "6e8c2810cb791a31"
+  ],
+  "addedTrackIds": [
+   "013a051a060e4f1e",
+   "174ef617b0ca6b24"
+  ],
+  "addedFillCount": 2331,
+  "preservedNonFillBodies": true,
+  "allProjectDocumentsCompared": 86
+ },
+ "ground": {
+  "fillPieces": 2331,
+  "layerCounts": {
+   "1": 682,
+   "2": 1649
+  },
+  "foreignOverlaps": [],
+  "clearanceViolations": [],
+  "minimumClearanceMil": {
+   "normal": 11.899776770409337,
+   "left": 39.89890969631584,
+   "source": 49.899563371690974
+  },
+  "edgeClearanceMil": 16.0,
+  "antennaClearanceMil": 7.9130892426110355,
+  "disconnectedGnd": [],
+  "floatingFillPieces": 0
+ },
+ "components": 77,
+ "pads": 274,
+ "tracks": 633,
+ "vias": 280,
+ "namedNets": 74,
+ "currentSchematicPinNetsMatched": 256,
+ "erc": {
+  "erc": true,
+  "detailed": []
+ },
+ "physicalDrcFindings": 0,
+ "synchronizationFindings": 1,
+ "copperMinSpacingMm": 0.152001,
+ "copperShorts": [],
+ "belowJlc1ozSpacing": [],
+ "drillSpacingViolations": [],
+ "holeToForeignCopperViolations": [],
+ "minimumPthRing": [
+  0.182494,
+  "Q1.1"
+ ],
+ "copperEdgeClearanceMm": 0.9130004599999999,
+ "silkVisibleCount": 187,
+ "silkMeasuredBoundsPass": true,
+ "signalNetworksDisconnected": {},
+ "antennaCopperClear": true,
+ "r5OutsideModule": true,
+ "hardwareGates": [
+  "real switch fit/support/contact action",
+  "full-load voltage-drop and thermal qualification"
+ ],
+ "releaseStatus": "Fabrication review package; synchronization finding and hardware release gates disclosed"
+}

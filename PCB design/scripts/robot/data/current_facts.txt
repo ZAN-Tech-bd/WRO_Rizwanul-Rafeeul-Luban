@@ -1,0 +1,73 @@
+ANTENNA zone (layout_plan): (416, 3640, 1524, 3840) strict: False
+BODY_PART: None BODY_NETS: ()
+components: 66
+J5 pos (2850, 2870) rot 180 Name: None MPN: None FP: 79f406592247a6d9
+J1 pos (3217, 3245) rot 180 Name: None MPN: None FP: eac10ca20e6778ba
+J2 pos (3278.5, 2604) rot 90 Name: None MPN: None FP: 9e78c3c3ca74ad42
+J3 pos (3278.5, 2002) rot 90 Name: None MPN: None FP: 9e78c3c3ca74ad42
+J4 pos (3414, 1404) rot 90 Name: None MPN: None FP: 9197bb2e6c38da76
+footprint 9197bb2e6c38da76 pads:
+   pad 1 {'padType': 'ELLIPSE', 'width': 98.425, 'height': 98.425} {'holeType': 'ROUND', 'width': 70.866, 'height': 70.866}
+   pad 2 {'padType': 'ELLIPSE', 'width': 98.425, 'height': 98.425} {'holeType': 'ROUND', 'width': 70.866, 'height': 70.866}
+footprint eac10ca20e6778ba pads:
+   pad 1 {'padType': 'ELLIPSE', 'width': 216.535, 'height': 216.535} {'holeType': 'ROUND', 'width': 181.102, 'height': 181.102}
+   pad 2 {'padType': 'ELLIPSE', 'width': 216.535, 'height': 216.535} {'holeType': 'ROUND', 'width': 181.102, 'height': 181.102}
+footprint 9e78c3c3ca74ad42 pads:
+   pad 1 {'padType': 'ELLIPSE', 'width': 125.984, 'height': 125.984} {'holeType': 'ROUND', 'width': 86.614, 'height': 86.614}
+   pad 2 {'padType': 'ELLIPSE', 'width': 125.984, 'height': 125.984} {'holeType': 'ROUND', 'width': 86.614, 'height': 86.614}
+named nets: 51
+  +3V3: 19.685mil(0.5mm)x7, 31.4961mil(0.8mm)x18, 31.5mil(0.8mm)x12, 39.3701mil(1.0mm)x13
+  +5V: 39.3701mil(1.0mm)x5, 59.0551mil(1.5mm)x5, 78.74mil(2.0mm)x18, 78.7402mil(2.0mm)x12, 118.1102mil(3.0mm)x1
+  AMP_D: 47.2441mil(1.2mm)x2
+  BAT+: 118.11mil(3.0mm)x2
+  BAT_SW: 13.7795mil(0.35mm)x2, 13.78mil(0.35mm)x4, 47.2441mil(1.2mm)x4, 118.11mil(3.0mm)x8
+  BTN1: 13.7795mil(0.35mm)x6
+  BTN1_IO: 15.748mil(0.4mm)x2, 17.7165mil(0.45mm)x7
+  BTN2: 13.7795mil(0.35mm)x8, 13.78mil(0.35mm)x4
+  BTN2_IO: 17.7165mil(0.45mm)x7
+  CAM_TX: 17.7165mil(0.45mm)x9
+  CAM_TX_IO: 13.78mil(0.35mm)x3
+  DAC_L: 17.7165mil(0.45mm)x6
+  DAC_R: 17.7165mil(0.45mm)x1
+  DF_BUSY: 17.7165mil(0.45mm)x5
+  DF_BUSY_IO: 17.7165mil(0.45mm)x6
+  DF_TO_S3: 15.748mil(0.4mm)x5
+  DF_TO_S3_IO: 17.7165mil(0.45mm)x3
+  ENA: 13.78mil(0.35mm)x3
+  ENB: 13.78mil(0.35mm)x3
+  EXP_IO3: 13.78mil(0.35mm)x2
+  EXP_IO38: 13.78mil(0.35mm)x4
+  GND: 15.75mil(0.4mm)x1
+  I2C_SCL: 17.7165mil(0.45mm)x8
+  I2C_SCL_IO: 13.78mil(0.35mm)x2
+  I2C_SDA: 13.78mil(0.35mm)x1, 17.7165mil(0.45mm)x6
+  I2C_SDA_IO: 13.78mil(0.35mm)x1
+  IN1: 13.78mil(0.35mm)x2
+  IN2: 13.78mil(0.35mm)x2
+  IN3: 13.78mil(0.35mm)x2
+  IN4: 13.78mil(0.35mm)x2
+  LED1_A: 13.7795mil(0.35mm)x2
+  LED2_A: 13.7795mil(0.35mm)x1
+  MEGA_RX: 17.7165mil(0.45mm)x5
+  MEGA_RX_IO: 17.7165mil(0.45mm)x8
+  MEGA_TX: 17.7165mil(0.45mm)x5
+  MEGA_TX_IO: 17.7165mil(0.45mm)x6
+  OBST: 17.7165mil(0.45mm)x9
+  OBST_IO: 13.78mil(0.35mm)x2
+  RFID_MISO: 10mil(0.254mm)x6, 13.78mil(0.35mm)x4
+  RFID_MOSI: 13.78mil(0.35mm)x4
+  RFID_MOSI_IO: 13.78mil(0.35mm)x2
+  RFID_RST: 13.78mil(0.35mm)x9
+  RFID_SCK: 13.78mil(0.35mm)x2
+  RFID_SCK_IO: 13.78mil(0.35mm)x2
+  RFID_SS: 13.78mil(0.35mm)x4
+  RFID_SS_IO: 13.78mil(0.35mm)x5
+  S3_TO_DF: 13.78mil(0.35mm)x5
+  S3_TO_DF_IO: 13.78mil(0.35mm)x1
+  VAMP: 47.24mil(1.2mm)x4, 47.2441mil(1.2mm)x9
+  VAMP_BAT: 47.24mil(1.2mm)x2
+  VBAT_SENSE: 13.78mil(0.35mm)x6
+via sizes: {'13.78/27.56': 5, '15.75/31.5': 145, '12.0078/24.0158': 5, '15.748/31.496': 2}
+outline records: 1
+   bounds 0 25 3635 3900
+free pads: [('', 162, 187, {'holeType': 'ROUND', 'width': 126, 'height': 126}), ('', 3473, 187, {'holeType': 'ROUND', 'width': 126, 'height': 126}), ('', 162, 3738, {'holeType': 'ROUND', 'width': 126, 'height': 126}), ('', 3468, 3738, {'holeType': 'ROUND', 'width': 126, 'height': 126})]

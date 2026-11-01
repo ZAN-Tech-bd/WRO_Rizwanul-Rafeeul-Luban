@@ -1,0 +1,19 @@
+// WRITE isolated recovery PCB: translate only measured conflicting silk. No components or copper.
+const T={"project": "ea32443fed8f1fd5989b3f8520da07a81d65c35e38ca7f144b04f7dc31730e1f", "name": "WRO_HUB_REPAIR_ISOLATED_20261027", "pcb": "8efe5b895e7646ea", "page": "a013c67bfde245d3", "footprint": "de6d9dbe09d94d61"},PLAN=[{"kind": "STRING", "id": "919e1ca47ed2bd1d", "text": "USB v", "before": [2035, 1685], "x": 2035, "y": 1695}, {"kind": "STRING", "id": "57b6de7711a7cbcc", "text": "-", "before": [8.3, 1150], "x": 8.3, "y": 1140}, {"kind": "STRING", "id": "0f280e4c99fc74a5", "text": "-", "before": [-16.7, 3293.5582], "x": -6.699999999999999, "y": 3293.5582}, {"kind": "STRING", "id": "895f45fcdcf37d0d", "text": "+", "before": [-305, 2520], "x": -295, "y": 2520}, {"kind": "STRING", "id": "abdbc7846c7b0db8", "text": "-", "before": [-310, 2255], "x": -300, "y": 2255}, {"kind": "ATTR", "id": "a69be5a24c5e9107e24", "text": "J18", "before": [1180, 3530], "x": 1180, "y": 3480}, {"kind": "ATTR", "id": "9314a4312ed49cf5e33", "text": "J20", "before": [2610, 92], "x": 2610, "y": 42}, {"kind": "ATTR", "id": "d4cd6bc94362a1a4e17", "text": "LED2", "before": [359.4999, 3217.4018], "x": 359.4999, "y": 3227.4018}, {"kind": "ATTR", "id": "64955f4eac2a7f3ce53", "text": "U1B", "before": [2370, 1625], "x": 2380, "y": 1625}, {"kind": "ATTR", "id": "69eb49e084950d26e21", "text": "J25", "before": [-210, 80], "x": -230, "y": 80}, {"kind": "ATTR", "id": "02e8cfaa0155734ae21", "text": "J26", "before": [44.329, 383.858], "x": 14.329, "y": 383.858}];
+const p=await eda.dmt_Project.getCurrentProjectInfo(),d=await eda.dmt_SelectControl.getCurrentDocumentInfo();
+if(p?.uuid!==T.project||d?.uuid!==T.pcb||d?.documentType!==3)throw new Error('Wrong repair PCB');
+if(document.visibilityState!=='visible')throw new Error('Keep repair PCB visible');
+const strings=await eda.pcb_PrimitiveString.getAll(),attrs=await eda.pcb_PrimitiveAttribute.getAll();
+for(const a of PLAN){
+  const q=(a.kind==='STRING'?strings:attrs).find(q=>q.getState_PrimitiveId()===a.id);
+  if(!q||(a.kind==='STRING'?q.getState_Text():q.getState_Value())!==a.text)throw new Error('Text identity changed');
+  const old=Math.hypot(q.getState_X()-a.before[0],q.getState_Y()-a.before[1])<.01;
+  const done=Math.hypot(q.getState_X()-a.x,q.getState_Y()-a.y)<.01;
+  if(!old&&!done)throw new Error('Text moved concurrently');
+}
+for(const a of PLAN){
+  const api=a.kind==='STRING'?eda.pcb_PrimitiveString:eda.pcb_PrimitiveAttribute;
+  if(!await api.modify(a.id,{x:a.x,y:a.y}))throw new Error('Text translation failed');
+}
+if(!await eda.pcb_Document.save())throw new Error('Save failed');
+return JSON.stringify({silkTranslated:PLAN.length,componentMoves:0,copperEdits:0});

@@ -1,0 +1,42 @@
+{
+  "archive": "D:\\projects\\WRO_Rizwanul-Rafeeul-Luban\\PCB design\\hub\\WRO_HUB_REPAIRED_catalogue_cleared_20261027-2040.epro2",
+  "moduleKeepOutMil": [
+    500,
+    30,
+    2460,
+    1040
+  ],
+  "legalCandidates": 22,
+  "move": {
+    "x": 1890,
+    "y": 1335,
+    "rotation": 0,
+    "pads": [
+      [
+        1687.2,
+        1335
+      ],
+      [
+        2092.8,
+        1335
+      ]
+    ],
+    "deleteStub": "39b1d74c0d7108f7",
+    "newSegments": [
+      [
+        1687.2,
+        1335
+      ],
+      [
+        1682.5,
+        1342.5
+      ]
+    ],
+    "widthMil": 13.7795,
+    "designator": [
+      1890,
+      1335
+    ],
+    "dist": 402
+  }
+}

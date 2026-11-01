@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "d:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\hub\verify_station_cleanup.py", line 87, in <module>
+    if __name__=='__main__':verify(Path(sys.argv[1]),*(Path(x) for x in sys.argv[2:]))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\hub\verify_station_cleanup.py", line 26, in verify
+    assert (new['x'],new['y'])==(x,y) and new['angle']%360==rot%360,d+' target not reached'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: R4 target not reached

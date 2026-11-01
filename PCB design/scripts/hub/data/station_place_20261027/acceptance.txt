@@ -1,0 +1,67 @@
+{
+ "moved": [
+  "C3",
+  "C4",
+  "C5",
+  "C6",
+  "C7",
+  "C8",
+  "C9",
+  "J10",
+  "J11",
+  "J12",
+  "J13",
+  "J14",
+  "J15",
+  "J16",
+  "J17",
+  "R31",
+  "R32",
+  "R33",
+  "R34",
+  "R35",
+  "R36",
+  "R37",
+  "R41",
+  "R42",
+  "R43",
+  "R44",
+  "R51",
+  "R52",
+  "R53",
+  "R54",
+  "R61",
+  "R62",
+  "R63",
+  "R64",
+  "R65",
+  "R66",
+  "R67"
+ ],
+ "movedCount": 37,
+ "fixedCount": 40,
+ "ownedAttributesTransformed": 91,
+ "copperAndOtherPcbRecordsUnchanged": true,
+ "allOtherDocumentsUnchanged": true,
+ "newDrcFindings": 0,
+ "drcBefore": [
+  [
+   "Physical Error",
+   25
+  ],
+  [
+   "Connection Error",
+   234
+  ]
+ ],
+ "drcAfter": [
+  [
+   "Physical Error",
+   25
+  ],
+  [
+   "Connection Error",
+   234
+  ]
+ ]
+}

@@ -1,0 +1,33 @@
+test_01_exact_seven_removed_no_additions (__main__.SubtractionAcceptance.test_01_exact_seven_removed_no_additions) ... ok
+test_02_all_77_survivors_and_their_pad_nets_byte_identical (__main__.SubtractionAcceptance.test_02_all_77_survivors_and_their_pad_nets_byte_identical) ... ok
+test_03_all_net_definitions_byte_identical (__main__.SubtractionAcceptance.test_03_all_net_definitions_byte_identical) ... ok
+test_04_no_unapproved_pcb_record_changes (__main__.SubtractionAcceptance.test_04_no_unapproved_pcb_record_changes) ... FAIL
+test_05_all_other_documents_unchanged (__main__.SubtractionAcceptance.test_05_all_other_documents_unchanged) ... ok
+test_06_copper_pours_holes_and_outline_byte_identical (__main__.SubtractionAcceptance.test_06_copper_pours_holes_and_outline_byte_identical) ... ok
+test_07_no_sb_silk_or_bypass_note (__main__.SubtractionAcceptance.test_07_no_sb_silk_or_bypass_note) ... ok
+test_08_hop_resistors_and_port_led_pins (__main__.SubtractionAcceptance.test_08_hop_resistors_and_port_led_pins) ... ok
+test_09_baseline_targets_are_c492401_two_pin_100_mil_headers (__main__.SubtractionAcceptance.test_09_baseline_targets_are_c492401_two_pin_100_mil_headers) ... ok
+test_10_live_geometry_nets_and_silk_match (__main__.SubtractionAcceptance.test_10_live_geometry_nets_and_silk_match) ... ok
+test_11_no_new_drc_findings_and_only_sb_pad_findings_removed (__main__.SubtractionAcceptance.test_11_no_new_drc_findings_and_only_sb_pad_findings_removed) ... FAIL
+
+======================================================================
+FAIL: test_04_no_unapproved_pcb_record_changes (__main__.SubtractionAcceptance.test_04_no_unapproved_pcb_record_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "d:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\hub\test_sb_removal.py", line 104, in test_04_no_unapproved_pcb_record_changes
+    self.assertEqual({k: v['raw'] for k, v in A.items()}, expected)
+AssertionError: {('ME[167721 chars]', ('ELE_PLACEHOLDER', 'placeholder9'): '{"dat[65488 chars]L"}'} != {('ME[167721 chars]', ('COMPONENT', 'fe51682f64702f3e'): '{"parti[65344 chars]L"}'}
+Diff is 261268 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_11_no_new_drc_findings_and_only_sb_pad_findings_removed (__main__.SubtractionAcceptance.test_11_no_new_drc_findings_and_only_sb_pad_findings_removed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "d:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\hub\test_sb_removal.py", line 206, in test_11_no_new_drc_findings_and_only_sb_pad_findings_removed
+    self.assertEqual(len(after_errors), 256)
+AssertionError: 257 != 256
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.240s
+
+FAILED (failures=2)

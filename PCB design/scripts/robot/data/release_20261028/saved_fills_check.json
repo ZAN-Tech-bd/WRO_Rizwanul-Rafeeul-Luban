@@ -1,0 +1,16 @@
+{
+  "savedFillPieces": 4612,
+  "layerCounts": {
+    "1": 2178,
+    "2": 2434
+  },
+  "foreignOverlaps": [],
+  "clearanceViolations": [],
+  "minForeignGapMil": 10.898,
+  "edgeClearanceMil": 16.0,
+  "antennaStripMarginMil": 7.9,
+  "antennaOverhangMarginMil": 7.913,
+  "floatingFillPieces": 0,
+  "disconnectedGnd": [],
+  "allSavedFillsEqualPlan": true
+}

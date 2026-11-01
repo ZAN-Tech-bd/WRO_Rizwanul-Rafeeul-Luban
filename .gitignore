@@ -33,3 +33,7 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Local AI/tool state (not part of the codebase)
+.playwright-mcp/
+.roo/
+

@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "d:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\hub\verify_station_placement.py", line 86, in <module>
+    verify(Path(sys.argv[1]),Path(sys.argv[2]),Path(sys.argv[3]))
+  File "d:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\hub\verify_station_placement.py", line 31, in verify
+    assert (a['x'], a['y']) == (x,y), f'{d}: target not reached'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: C3: target not reached

@@ -1,0 +1,372 @@
+{
+  "before": "PCB design\\Robot\\WRO_Robot_silk_fixed_20261028-1618.epro2",
+  "after": "PCB design\\Robot\\WRO_Robot_silk_round2_20261028-1619.epro2",
+  "documentsBefore": 110,
+  "documentsAfter": 110,
+  "recordChanges": [
+    {
+      "document": "643ce99542452c8f",
+      "type": "ATTR",
+      "id": "2e78bde06cf0b009e26",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/x",
+          "before": 1211,
+          "after": 1199.7
+        },
+        {
+          "path": "/y",
+          "before": 220,
+          "after": 269.2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "LINE",
+      "id": "0d3da9f0f2c82b4c",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/layerId",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "path": "/width",
+          "before": 15.75,
+          "after": 78.7402
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "STRING",
+      "id": "36a0559576ad2229",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/x",
+          "before": 1735,
+          "after": 1752.3
+        },
+        {
+          "path": "/y",
+          "before": 3792,
+          "after": 3802
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "STRING",
+      "id": "53151346fa2ab82c",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/x",
+          "before": 2918.2,
+          "after": 2900.9
+        },
+        {
+          "path": "/y",
+          "before": 504.9,
+          "after": 514.9
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "STRING",
+      "id": "a1d0d28a4473ce38",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/x",
+          "before": 3075.3,
+          "after": 3096.5
+        },
+        {
+          "path": "/y",
+          "before": 3020,
+          "after": 3041.2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "STRING",
+      "id": "a99a8297f2122632",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/x",
+          "before": 2355.3,
+          "after": 2374.6
+        },
+        {
+          "path": "/y",
+          "before": 3616.3,
+          "after": 3621.5
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "STRING",
+      "id": "ad62e8b4b8ee3a3a",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/y",
+          "before": 3717,
+          "after": 3667
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "STRING",
+      "id": "be18f3119ed8a336",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/x",
+          "before": 3128,
+          "after": 3145.3
+        },
+        {
+          "path": "/y",
+          "before": 1938.1,
+          "after": 1948.1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "STRING",
+      "id": "d7e43204949d02e2",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/x",
+          "before": 2894.1,
+          "after": 2907
+        },
+        {
+          "path": "/y",
+          "before": 1075.9,
+          "after": 1124.2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "STRING",
+      "id": "dd5061e70edf6d25",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/x",
+          "before": 1281.5,
+          "after": 1300.8
+        },
+        {
+          "path": "/y",
+          "before": 1254.9,
+          "after": 1260.1
+        }
+      ]
+    }
+  ],
+  "documentHeaderChanges": [
+    {
+      "document": "643ce99542452c8f",
+      "changes": [
+        {
+          "path": "/updateTime",
+          "before": 1793182696648,
+          "after": 1793182760460
+        },
+        {
+          "path": "/version",
+          "before": "1793182696648",
+          "after": "1793182760460"
+        }
+      ]
+    }
+  ],
+  "serializationOnlyChanges": [],
+  "unchangedBodiesByType": {
+    "ATTR": 3129,
+    "CANVAS": 67,
+    "CIRCLE": 7,
+    "ELE_PLACEHOLDER": 523,
+    "META": 109,
+    "PART": 37,
+    "PIN": 125,
+    "RECT": 38,
+    "ACTIVE_LAYER": 30,
+    "FILL": 4822,
+    "LAYER": 686,
+    "PAD": 115,
+    "POLY": 334,
+    "ELLIPSE": 7,
+    "ARC": 6,
+    "COMPONENT": 133,
+    "LINE": 533,
+    "TEXT": 7,
+    "WIRE": 189,
+    "LAYER_PHYS": 17,
+    "NET": 56,
+    "PAD_NET": 213,
+    "PANELIZE": 1,
+    "PREFERENCE": 2,
+    "PRIMITIVE": 37,
+    "RULE": 18,
+    "RULE_SELECTOR": 51,
+    "RULE_TEMPLATE": 1,
+    "SILK_OPTS": 2,
+    "STRING": 117,
+    "VIA": 156,
+    "OBJ": 1,
+    "TABLE": 1,
+    "BLOB": 1,
+    "UNIVERSAL": 1
+  },
+  "archiveMemberChanges": [
+    {
+      "name": "IMAGE/643ce99542452c8f.webp",
+      "beforeSha256": "49392a8dd9dfc4bb90c1459fdf1ae67baf8d0f9eb65c6ca3d164d85437f8ef57",
+      "afterSha256": "3f3e1996100e47f283776ca380b1e7d666d72ca6019439f8db305e9d7fd2421d"
+    },
+    {
+      "name": "WRO_Robot.epru",
+      "beforeSha256": "920a8449ab8d370b4aa49e26d210decc4b67d57cda3c051d541aaa1d920489de",
+      "afterSha256": "5acf98620e457851d7ef1edbd22c02da48c039e48f83ebbc227da9c1fd1047e9"
+    }
+  ],
+  "pcbRecordCounts": {
+    "META": 1,
+    "PRIMITIVE": 37,
+    "CANVAS": 1,
+    "LAYER": 60,
+    "LAYER_PHYS": 9,
+    "ACTIVE_LAYER": 1,
+    "RULE_TEMPLATE": 1,
+    "RULE": 16,
+    "SILK_OPTS": 2,
+    "PREFERENCE": 1,
+    "PANELIZE": 1,
+    "NET": 52,
+    "ELE_PLACEHOLDER": 148,
+    "COMPONENT": 66,
+    "PAD_NET": 213,
+    "ATTR": 198,
+    "LINE": 345,
+    "PAD": 4,
+    "STRING": 121,
+    "POLY": 16,
+    "VIA": 156,
+    "RULE_SELECTOR": 51,
+    "FILL": 4612
+  },
+  "xtFootprintPads": {
+    "eac10ca20e6778ba": [
+      {
+        "id": "e10",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 157.48,
+          "height": 157.48
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 216.5,
+          "height": 216.5
+        }
+      },
+      {
+        "id": "e11",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 157.48,
+          "height": 157.48
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 216.5,
+          "height": 216.5
+        }
+      }
+    ],
+    "9e78c3c3ca74ad42": [
+      {
+        "id": "e24",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      },
+      {
+        "id": "e25",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      }
+    ],
+    "9197bb2e6c38da76": [
+      {
+        "id": "e18",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      },
+      {
+        "id": "e19",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      }
+    ]
+  },
+  "allNativeBodiesAndDocumentHeadersEqual": false,
+  "sha256": {
+    "PCB design\\Robot\\WRO_Robot_silk_fixed_20261028-1618.epro2": "cecd935e50e61427dc835d1af1309eedb58b9c6cff4d05095cb0d7d7fac3d4f8",
+    "PCB design\\Robot\\WRO_Robot_silk_round2_20261028-1619.epro2": "1884271b538b923b1c3c7a51f91818b1b5c0902446c1fe1e5a130a61ec732b84"
+  }
+}

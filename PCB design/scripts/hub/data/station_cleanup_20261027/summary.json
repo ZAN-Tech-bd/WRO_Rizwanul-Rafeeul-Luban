@@ -1,0 +1,16 @@
+{
+  "preservedCopperSegments": 62,
+  "modelTestsPassed": 28,
+  "archives": [
+    {
+      "file": "D:\\projects\\WRO_Rizwanul-Rafeeul-Luban\\PCB design\\hub\\WRO_HUB_before_station_cleanup_guard_20261027-0209.epro2",
+      "bytes": 496099,
+      "sha256": "dede8ce8f70804df3de832a25d7738dbc66b2bc85aa2d954d88bce14e595e503"
+    },
+    {
+      "file": "PCB design\\hub\\WRO_HUB_after_station_cleanup_20261027-0209.epro2",
+      "bytes": 495870,
+      "sha256": "ff0eeba7437dd138e617dd051cdc706b75bca8427ee1b1cc34e59045b0bcf105"
+    }
+  ]
+}

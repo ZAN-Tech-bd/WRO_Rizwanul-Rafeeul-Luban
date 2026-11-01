@@ -1,0 +1,708 @@
+{
+  "c4a5f9d9ac977d40": {
+    "designators": [
+      "Q1"
+    ],
+    "pads": [
+      {
+        "id": "e12",
+        "before": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "1",
+          "centerX": -50,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 29.528,
+            "height": 29.528
+          },
+          "defaultPad": {
+            "padType": "RECT",
+            "width": 41.339,
+            "height": 62.992,
+            "radius": 0
+          },
+          "specialPad": [],
+          "padOffsetX": 0,
+          "padOffsetY": -0.002,
+          "relativeAngle": 90,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 12,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        },
+        "after": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "1",
+          "centerX": -50,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 29.528,
+            "height": 29.528
+          },
+          "defaultPad": {
+            "padType": "RECT",
+            "width": 43.89763779527559,
+            "height": 62.99212598425198,
+            "radius": 0
+          },
+          "specialPad": [],
+          "padOffsetX": 0,
+          "padOffsetY": -0.002,
+          "relativeAngle": 90,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 12,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        }
+      },
+      {
+        "id": "e13",
+        "before": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "2",
+          "centerX": 0,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 29.528,
+            "height": 29.528
+          },
+          "defaultPad": {
+            "padType": "OVAL",
+            "width": 41.339,
+            "height": 62.992
+          },
+          "specialPad": [],
+          "padOffsetX": 0,
+          "padOffsetY": -0.002,
+          "relativeAngle": 90,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 13,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        },
+        "after": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "2",
+          "centerX": 0,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 29.528,
+            "height": 29.528
+          },
+          "defaultPad": {
+            "padType": "OVAL",
+            "width": 43.89763779527559,
+            "height": 62.99212598425198
+          },
+          "specialPad": [],
+          "padOffsetX": 0,
+          "padOffsetY": -0.002,
+          "relativeAngle": 90,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 13,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        }
+      },
+      {
+        "id": "e14",
+        "before": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "3",
+          "centerX": 50,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 29.528,
+            "height": 29.528
+          },
+          "defaultPad": {
+            "padType": "OVAL",
+            "width": 41.339,
+            "height": 62.992
+          },
+          "specialPad": [],
+          "padOffsetX": 0,
+          "padOffsetY": -0.002,
+          "relativeAngle": 90,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 14,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        },
+        "after": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "3",
+          "centerX": 50,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 29.528,
+            "height": 29.528
+          },
+          "defaultPad": {
+            "padType": "OVAL",
+            "width": 43.89763779527559,
+            "height": 62.99212598425198
+          },
+          "specialPad": [],
+          "padOffsetX": 0,
+          "padOffsetY": -0.002,
+          "relativeAngle": 90,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 14,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        }
+      }
+    ]
+  },
+  "90dc5a3cf82dd629": {
+    "designators": [
+      "J1",
+      "J2"
+    ],
+    "pads": [
+      {
+        "id": "e10",
+        "before": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "1",
+          "centerX": -141.735,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 181.102,
+            "height": 181.102
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 216.535,
+            "height": 216.535
+          },
+          "specialPad": [],
+          "padOffsetX": 0,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": 1.9689999999999999,
+          "bottomSolderExpansion": 1.9689999999999999,
+          "topPasteExpansion": 0,
+          "bottomPasteExpansion": 0,
+          "locked": false,
+          "zIndex": 10,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        },
+        "after": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "1",
+          "centerX": -141.735,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 157.48031496062993,
+            "height": 157.48031496062993
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 216.53543307086616,
+            "height": 216.53543307086616
+          },
+          "specialPad": [],
+          "padOffsetX": 0,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": 1.9689999999999999,
+          "bottomSolderExpansion": 1.9689999999999999,
+          "topPasteExpansion": 0,
+          "bottomPasteExpansion": 0,
+          "locked": false,
+          "zIndex": 10,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        }
+      },
+      {
+        "id": "e11",
+        "before": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "2",
+          "centerX": 141.735,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 181.102,
+            "height": 181.102
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 216.535,
+            "height": 216.535
+          },
+          "specialPad": [],
+          "padOffsetX": -0.005,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": 1.9689999999999999,
+          "bottomSolderExpansion": 1.9689999999999999,
+          "topPasteExpansion": 0,
+          "bottomPasteExpansion": 0,
+          "locked": false,
+          "zIndex": 11,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        },
+        "after": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "2",
+          "centerX": 141.735,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 157.48031496062993,
+            "height": 157.48031496062993
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 216.53543307086616,
+            "height": 216.53543307086616
+          },
+          "specialPad": [],
+          "padOffsetX": -0.005,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": 1.9689999999999999,
+          "bottomSolderExpansion": 1.9689999999999999,
+          "topPasteExpansion": 0,
+          "bottomPasteExpansion": 0,
+          "locked": false,
+          "zIndex": 11,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        }
+      }
+    ]
+  },
+  "972c2466f770c0ad": {
+    "designators": [
+      "J4"
+    ],
+    "pads": [
+      {
+        "id": "e25",
+        "before": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "2",
+          "centerX": -141.73,
+          "centerY": 0,
+          "padAngle": 270,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 185.04,
+            "height": 185.04
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 236.22,
+            "height": 236.22
+          },
+          "specialPad": [],
+          "padOffsetX": -0.002,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": 1.9689999999999999,
+          "bottomSolderExpansion": 1.9689999999999999,
+          "topPasteExpansion": 0,
+          "bottomPasteExpansion": 0,
+          "locked": false,
+          "zIndex": 25,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        },
+        "after": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "2",
+          "centerX": -141.73,
+          "centerY": 0,
+          "padAngle": 270,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 157.48031496062993,
+            "height": 157.48031496062993
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 236.2204724409449,
+            "height": 236.2204724409449
+          },
+          "specialPad": [],
+          "padOffsetX": -0.002,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": 1.9689999999999999,
+          "bottomSolderExpansion": 1.9689999999999999,
+          "topPasteExpansion": 0,
+          "bottomPasteExpansion": 0,
+          "locked": false,
+          "zIndex": 25,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        }
+      },
+      {
+        "id": "e26",
+        "before": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "1",
+          "centerX": 141.73,
+          "centerY": 0,
+          "padAngle": 270,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 185.04,
+            "height": 185.04
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 236.22,
+            "height": 236.22
+          },
+          "specialPad": [],
+          "padOffsetX": 0.002,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": 1.9689999999999999,
+          "bottomSolderExpansion": 1.9689999999999999,
+          "topPasteExpansion": 0,
+          "bottomPasteExpansion": 0,
+          "locked": false,
+          "zIndex": 26,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        },
+        "after": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "1",
+          "centerX": 141.73,
+          "centerY": 0,
+          "padAngle": 270,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 157.48031496062993,
+            "height": 157.48031496062993
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 236.2204724409449,
+            "height": 236.2204724409449
+          },
+          "specialPad": [],
+          "padOffsetX": 0.002,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": 1.9689999999999999,
+          "bottomSolderExpansion": 1.9689999999999999,
+          "topPasteExpansion": 0,
+          "bottomPasteExpansion": 0,
+          "locked": false,
+          "zIndex": 26,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        }
+      }
+    ]
+  },
+  "2dd2af6f22a12f2d": {
+    "designators": [
+      "J5"
+    ],
+    "pads": [
+      {
+        "id": "e18",
+        "before": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "1",
+          "centerX": -98.425,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 70.866,
+            "height": 70.866
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 98.425,
+            "height": 98.425
+          },
+          "specialPad": [],
+          "padOffsetX": -0.005,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 18,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        },
+        "after": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "1",
+          "centerX": -98.425,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 98.4251968503937,
+            "height": 98.4251968503937
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 137.7952755905512,
+            "height": 137.7952755905512
+          },
+          "specialPad": [],
+          "padOffsetX": -0.005,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 18,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        }
+      },
+      {
+        "id": "e19",
+        "before": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "2",
+          "centerX": 98.425,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 70.866,
+            "height": 70.866
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 98.425,
+            "height": 98.425
+          },
+          "specialPad": [],
+          "padOffsetX": -0.005,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 19,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        },
+        "after": {
+          "groupId": 0,
+          "netName": "",
+          "layerId": 12,
+          "num": "2",
+          "centerX": 98.425,
+          "centerY": 0,
+          "padAngle": 0,
+          "hole": {
+            "holeType": "ROUND",
+            "width": 98.4251968503937,
+            "height": 98.4251968503937
+          },
+          "defaultPad": {
+            "padType": "ELLIPSE",
+            "width": 137.7952755905512,
+            "height": 137.7952755905512
+          },
+          "specialPad": [],
+          "padOffsetX": -0.005,
+          "padOffsetY": 0,
+          "relativeAngle": 0,
+          "plated": true,
+          "padType": "NORMAL",
+          "topSolderExpansion": null,
+          "bottomSolderExpansion": null,
+          "topPasteExpansion": null,
+          "bottomPasteExpansion": null,
+          "locked": false,
+          "zIndex": 19,
+          "connectMode": null,
+          "spokeSpace": null,
+          "spokeWidth": null,
+          "spokeAngle": null,
+          "padLen": 0
+        }
+      }
+    ]
+  }
+}
