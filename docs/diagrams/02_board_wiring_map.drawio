@@ -14,12 +14,12 @@
             <mxGeometry x="60" y="44" width="1420" height="38" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="Which pin goes to which pin, and what travels down each wire. Taken straight from the working code." role="subtitle" status="" placeholders="1" id="subtitle">
+        <UserObject label="Start with the coloured boxes: each one is a part. Follow an arrow to see where its signal goes. Pin names tell you where wires connect." role="subtitle" status="" placeholders="1" id="subtitle">
           <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;" vertex="1">
             <mxGeometry x="62" y="84" width="1400" height="24" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="WIRING · READ BEFORE YOU PLUG ANYTHING IN" role="badge" status="" placeholders="1" id="badge">
+        <UserObject label="ASK AN ADULT TO HELP WITH WIRING" role="badge" status="" placeholders="1" id="badge">
           <mxCell parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;spacing=6;connectable=0;" vertex="1">
             <mxGeometry x="1500" y="53" width="300" height="32" as="geometry" />
           </mxCell>
@@ -39,32 +39,32 @@
             <mxGeometry x="1256" y="530" width="552" height="294" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;Robot ESP32 — the main brain&lt;/b&gt;&lt;br&gt;&lt;br&gt;Reads the cards.&lt;br&gt;Plays the sound.&lt;br&gt;Tells the motor helper when&lt;br&gt;to go and when to stop." role="component" status="" placeholders="1" id="robot">
+        <UserObject label="&lt;b&gt;Robot ESP32 ? the main brain&lt;/b&gt;&lt;br&gt;&lt;br&gt;Reads a card, plays a story and tells the motor helper when to GO or STOP." role="component" status="" placeholders="1" id="robot">
           <mxCell parent="bnd_robot" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=12;fontColor=#115E59;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
             <mxGeometry x="418" y="46" width="300" height="150" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;Arduino Nano — motor helper&lt;/b&gt;&lt;br&gt;Only understands GO and STOP.&lt;br&gt;D0 = its ear · D1 = its mouth" role="peripheral" status="" placeholders="1" id="nano">
+        <UserObject label="&lt;b&gt;Arduino Nano ? the motor helper&lt;/b&gt;&lt;br&gt;Listens for GO and STOP.&lt;br&gt;D0 receives messages; D1 sends replies." role="peripheral" status="" placeholders="1" id="nano">
           <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#3730A3;align=center;verticalAlign=middle;spacing=6;" vertex="1">
             <mxGeometry x="28" y="52" width="250" height="120" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;L298N motor driver board&lt;/b&gt;&lt;br&gt;ENA D10 · IN1 D8 · IN2 D7  → left motor&lt;br&gt;ENB D5 · IN3 D11 · IN4 D12 → right motor&lt;br&gt;Pull the two ENA / ENB jumpers off" role="peripheral" status="" placeholders="1" id="l298n">
+        <UserObject label="&lt;b&gt;L298N ? the motor driver&lt;/b&gt;&lt;br&gt;It gives power to the two motors.&lt;br&gt;ENA D10 ? IN1 D8 ? IN2 D7 ? left motor&lt;br&gt;ENB D5 ? IN3 D11 ? IN4 D12 ? right motor&lt;br&gt;Remove the ENA and ENB jumpers." role="peripheral" status="" placeholders="1" id="l298n">
           <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
             <mxGeometry x="28" y="228" width="250" height="126" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;The two rail motors&lt;/b&gt;" role="peripheral" status="" placeholders="1" id="motors">
+        <UserObject label="&lt;b&gt;Two motors&lt;/b&gt;&lt;br&gt;These turn the robot?s wheels." role="peripheral" status="" placeholders="1" id="motors">
           <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
             <mxGeometry x="28" y="400" width="250" height="60" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;STOP does not mean coast.&lt;/b&gt;&lt;br&gt;Both direction pins go HIGH and power goes to full, which shorts each motor and locks it. Setting speed to 0 instead would let the robot roll on." role="note" status="" placeholders="1" id="note_brake">
+        <UserObject label="&lt;b&gt;How STOP works&lt;/b&gt;&lt;br&gt;The Nano tells the driver to brake the motors, so the robot stops instead of rolling freely." role="note" status="" placeholders="1" id="note_brake">
           <mxCell parent="bnd_robot" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#1E3A8A;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
             <mxGeometry x="28" y="508" width="250" height="128" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;Card reader (MFRC522)&lt;/b&gt;&lt;br&gt;SDA → GPIO5 · SCK → GPIO18&lt;br&gt;MOSI → GPIO23 · MISO → GPIO19&lt;br&gt;3.3 V only. RST is not used." role="peripheral" status="" placeholders="1" id="mfrc">
+        <UserObject label="&lt;b&gt;Card reader (MFRC522)&lt;/b&gt;&lt;br&gt;Reads a card at each exhibit.&lt;br&gt;SDA ? GPIO5 ? SCK ? GPIO18&lt;br&gt;MOSI ? GPIO23 ? MISO ? GPIO19&lt;br&gt;Use 3.3 V only. RST is not used." role="peripheral" status="" placeholders="1" id="mfrc">
           <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
             <mxGeometry x="848" y="40" width="290" height="112" as="geometry" />
           </mxCell>
@@ -74,12 +74,12 @@
             <mxGeometry x="848" y="192" width="290" height="126" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;ESP32-CAM — the camera board&lt;/b&gt;&lt;br&gt;&lt;br&gt;Sits quietly until it hears the&lt;br&gt;word SHOOT, then takes one photo." role="component" status="" placeholders="1" id="cam">
+        <UserObject label="&lt;b&gt;ESP32-CAM ? the camera board&lt;/b&gt;&lt;br&gt;&lt;br&gt;When the robot sends SHOOT, the camera takes a photo." role="component" status="" placeholders="1" id="cam">
           <mxCell parent="bnd_robot" style="shape=process;rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=2;fontFamily=Arial;fontSize=12;fontColor=#92400E;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=10;shadow=1;" vertex="1">
             <mxGeometry x="418" y="328" width="300" height="140" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;GC2145 camera chip&lt;/b&gt;&lt;br&gt;already on the camera board&lt;br&gt;hands over raw colour pixels, not a JPEG" role="peripheral" status="" placeholders="1" id="gc2145">
+        <UserObject label="&lt;b&gt;GC2145 camera chip&lt;/b&gt;&lt;br&gt;Already connected to the camera board.&lt;br&gt;It captures the picture." role="peripheral" status="" placeholders="1" id="gc2145">
           <mxCell parent="bnd_robot" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;" vertex="1">
             <mxGeometry x="848" y="346" width="290" height="90" as="geometry" />
           </mxCell>
@@ -214,17 +214,17 @@
             <mxGeometry x="52" y="848" width="420" height="250" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;VOLTAGE — WHERE YOU MUST BE CAREFUL&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Nano → ESP32.&lt;/b&gt; The Nano speaks at 5 V and the ESP32 only wants 3.3 V. The 10k + 20k resistor pair drops it. Skipping this can kill the ESP32 pin.&lt;br&gt;&lt;br&gt;&lt;b&gt;ESP32 → DFPlayer.&lt;/b&gt; A 1 kΩ resistor sits in the GPIO17 wire to keep it calm.&lt;br&gt;&lt;br&gt;&lt;b&gt;ESP32 → camera.&lt;/b&gt; Both sides are 3.3 V, so this one wire needs nothing extra.&lt;br&gt;&lt;br&gt;&lt;b&gt;Robot ↔ hub.&lt;/b&gt; No wire at all — they only talk by radio. See sheet 03." role="legend" status="" placeholders="1" id="volts">
+        <UserObject label="&lt;b&gt;POWER AND VOLTAGE ? ASK AN ADULT&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Turn power off before connecting wires.&lt;/b&gt; A pin is a small connection point on a board. GND means ground, the shared return path.&lt;br&gt;&lt;br&gt;&lt;b&gt;Nano ? ESP32:&lt;/b&gt; Nano D1 ? 10 k? ? ESP32 GPIO25; connect 20 k? from GPIO25 to GND. This reduces 5 V to about 3.3 V.&lt;br&gt;&lt;br&gt;&lt;b&gt;ESP32 ? DFPlayer:&lt;/b&gt; use a 1 k? resistor in the GPIO17 to RX wire.&lt;br&gt;&lt;br&gt;&lt;b&gt;Robot ? hub:&lt;/b&gt; they talk by radio, so there is no signal wire between them." role="legend" status="" placeholders="1" id="volts">
           <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
             <mxGeometry x="496" y="848" width="420" height="250" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;UNPLUG THESE BEFORE YOU FLASH&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Nano.&lt;/b&gt; D0 and D1 are also the USB upload wires. Take both ESP32 wires off, upload, then put them back.&lt;br&gt;&lt;br&gt;&lt;b&gt;ESP32-CAM.&lt;/b&gt; Take the GPIO13 wire off while you upload, or the two senders fight each other.&lt;br&gt;&lt;br&gt;&lt;b&gt;Everything else&lt;/b&gt; can stay plugged in.&lt;br&gt;&lt;br&gt;&lt;b&gt;Talking from a laptop:&lt;/b&gt; robot and hub at 115200, camera at 115200, Nano at 9600, screen at 9600." role="legend" status="" placeholders="1" id="flash">
+        <UserObject label="&lt;b&gt;UPLOADING THE PROGRAM&lt;/b&gt;&lt;br&gt;&lt;br&gt;Ask an adult or teacher for help.&lt;br&gt;&lt;br&gt;&lt;b&gt;Nano:&lt;/b&gt; disconnect the D0 and D1 wires before uploading; reconnect them afterward.&lt;br&gt;&lt;br&gt;&lt;b&gt;ESP32-CAM:&lt;/b&gt; disconnect the GPIO13 signal wire while uploading.&lt;br&gt;&lt;br&gt;Serial speeds: robot, hub and camera 115200; Nano and screen 9600." role="legend" status="" placeholders="1" id="flash">
           <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
             <mxGeometry x="940" y="848" width="420" height="250" as="geometry" />
           </mxCell>
         </UserObject>
-        <UserObject label="&lt;b&gt;WHERE THESE NUMBERS COME FROM&lt;/b&gt;&lt;br&gt;&lt;br&gt;Every pin on this sheet was read out of the code, not from notes:&lt;br&gt;&lt;br&gt;• ESP32_RFID_MP3_RAIL/ESP32_RFID_MP3.ino&lt;br&gt;• NANO_LFR_RAIL/NANO_LFR_RAIL.ino&lt;br&gt;• firmware/cam/include/config.h&lt;br&gt;• firmware/hub/include/config.h&lt;br&gt;• firmware/display/include/display_config.h&lt;br&gt;&lt;br&gt;Where a README and the code disagree, the code wins — that is the red box on the screen row." role="legend" status="" placeholders="1" id="source">
+        <UserObject label="&lt;b&gt;BEFORE BUILDING&lt;/b&gt;&lt;br&gt;&lt;br&gt;This picture shows the main signal connections; it is not a complete power schematic.&lt;br&gt;&lt;br&gt;Check the power supplies, shared grounds and component labels with an adult before connecting anything. Follow the detailed wiring notes in docs/plans/robot-nano-esp-wiring.md and hub-sensor-wiring.md.&lt;br&gt;&lt;br&gt;Pin assignments are based on the project firmware." role="legend" status="" placeholders="1" id="source">
           <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
             <mxGeometry x="1384" y="848" width="424" height="250" as="geometry" />
           </mxCell>
