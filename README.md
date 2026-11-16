@@ -19,6 +19,9 @@ and **Area 3 – Experiencing art & history with robots** (the guided tour).
 <p align="center"><img src="media/project_photos/00_final_model_overview.png" width="860"><br>
 <sub>The finished model: guide robot, black Museum Hub, orange artifact stations, track with START and END marks.</sub></p>
 
+<p align="center"><a href="https://www.youtube.com/watch?v=wlzYdRGdfmo"><img src="https://img.youtube.com/vi/wlzYdRGdfmo/maxresdefault.jpg" width="640" alt="Watch the project video on YouTube"></a><br>
+<sub>▶ <a href="https://www.youtube.com/watch?v=wlzYdRGdfmo">Watch the project video on YouTube</a></sub></p>
+
 ---
 
 ## 1. The team
