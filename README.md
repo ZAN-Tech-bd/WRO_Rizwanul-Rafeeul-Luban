@@ -15,6 +15,10 @@ Wi-Fi network.
 Theme areas targeted: **Area 1 – Protecting & sharing cultural heritage** (artifact monitoring)
 and **Area 3 – Experiencing art & history with robots** (the guided tour).
 
+
+<p align="center"><img src="media/project_photos/00_final_model_overview.png" width="860"><br>
+<sub>The finished model: guide robot, black Museum Hub, orange artifact stations, track with START and END marks.</sub></p>
+
 ---
 
 ## 1. The team
@@ -27,6 +31,8 @@ and **Area 3 – Experiencing art & history with robots** (the guided tour).
 
 Team name: **Quantrom Physics** · Category: Future Innovators, Elementary (ages 8–12).
 The full project report is in [`docs/report/`](docs/report/).
+
+<p align="center"><img src="media/project_photos/24_team_portrait.jpg" width="640"><br><sub>Team Quantrom Physics at WRO Bangladesh 2026 (National) with the robot, the Hub and the artifact stations.</sub></p>
 
 ---
 
@@ -143,13 +149,126 @@ pipeline, hub design and message reference.
 | Exhibit sensors | DHT11 (temperature / humidity), MQ-135 gas sensor, IR proximity sensor, PNP transistor, buzzer |
 | Staff security | LEGO-based AI camera module (standalone) |
 | Power | Buck converters (separate logic and motor rails), switch, fuse, common ground |
-| Structure | 3D-printed robot, hub, stands and parts, plus a bordered track |
+| Electronics | Custom team-designed PCBs: Hub, robot and station boards (section 8) |
+| Structure | 3D-printed robot, hub, stations and set pieces, plus a bordered plywood track (sections 7 and 9) |
 
 Per-board pin tables are in each firmware README. CAD/3D files are in [`hardware/`](hardware/).
 
 ---
 
-## 7. Repository layout
+## 7. Mechanical design and 3D-printed parts
+
+Every body part was designed in **Autodesk Fusion 360** and printed on a 3D printer, then fitted
+with off-the-shelf motors, wheels and boards. The meshes are in
+[`hardware/3d_parts/`](hardware/3d_parts/). Sizes below were measured from the STL files (X × Y × Z, mm).
+
+<table>
+<tr><td align="center" valign="top"><img src="media/project_photos/01_robot_cad_fusion360.jpg" width="420"><br><sub>Robot in Fusion 360: head with face window, body, arms, motor base with wheels</sub></td><td align="center" valign="top"><img src="media/project_photos/02_robot_base_cad_underside.jpg" width="420"><br><sub>Underside of the base: motor mounts, caster holder, board mounts</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/03_motor_driver_holder_cad.jpg" width="420"><br><sub>Motor-driver (L298N) holder legs on the base</sub></td><td align="center" valign="top"><img src="media/project_photos/04_printed_base_vs_cad.jpg" width="420"><br><sub>The printed base next to its CAD model</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/16_robot_chassis_wiring_and_head.jpg" width="420"><br><sub>Printed chassis with wiring, and the orange head with the TFT face</sub></td><td align="center" valign="top"><img src="media/project_photos/26_robot_closeup_wheels.jpg" width="420"><br><sub>Finished robot: white body, orange arms and head, blue wheels</sub></td></tr>
+</table>
+
+### Robot
+
+| Part (file) | Size (mm) | What it does |
+|---|---|---|
+| `Robot/Base/Base.stl` | 180 × 120 × 64 | Main chassis: holds the two motors and wheels |
+| `Robot/Base/l298 holder legs.stl` | 53 × 53 × 24 | Legs that lift the L298N motor driver above the chassis |
+| `Robot/Base/Buck and battery holder.stl` | 105 × 55 × 60 | Holds the buck converters and the LiPo battery |
+| `Robot/Base/caster wheel holder.stl` | 68 × 78 × 14 | Mount for the lower ball caster |
+| `Robot/Base/Slider clamp.stl` | 55 × 45 × 6 | Clamp for the side guide casters |
+| `Robot/Base/Back cover v2.stl` | 22 × 72 × 42 | Rear access cover |
+| `Robot/Body/Body V2.stl` | 180 × 127 × 151 | Upper body: speaker, RFID reader, camera and electronics |
+| `Robot/Hand/Hands.stl` | 210 × 96 × 96 | The two arms |
+| `Robot/Head/Head Front draft.stl`, `Head Back dreft.stl` | 160 × 83 × 116, 160 × 66 × 113 | Two-piece head with a window for the 3.2" TFT face |
+
+### Museum Hub, stations and set pieces
+
+<table>
+<tr><td align="center" valign="top"><img src="media/project_photos/06_museum_hub_printed.jpg" width="420"><br><sub>Printed hexagonal Museum Hub: antenna, emergency button, power switch</sub></td><td align="center" valign="top"><img src="media/project_photos/07_exhibit_station_box.jpg" width="420"><br><sub>Printed artifact-station box (orange)</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/08_exhibit_station_sensors_inside.jpg" width="420"><br><sub>Inside a station box: IR sensor, MQ-135 gas sensor, buzzer circuit</sub></td><td align="center" valign="top"><img src="media/project_photos/28_station_box_assembly.jpg" width="420"><br><sub>Fitting the sensor into a station box</sub></td></tr>
+</table>
+
+| Part (file) | Size (mm) | What it does |
+|---|---|---|
+| `Hub/Hub Base.stl`, `Hub Top.stl` | 165 × 187 × 80, 165 × 187 × 98 | Hexagonal Hub enclosure (PCB, antenna, emergency button, siren) |
+| `Arteffecet/Art effect v2 base.stl` | 70 × 70 × 60 | Artifact-station box: sensors and LED stick inside, the exhibit on top |
+| `Arteffecet/Art effect v2 dhakna.stl` | 70 × 70 × 6 | Lid (*dhakna*) for the station box |
+| `Exit+sign+RIGHT+A1+Mini_stls/obj_1_Exit sign.svg.stl` | 176 × 91 × 3 | Emergency exit sign |
+| `Japanese+Torii+Gate/torii.stl` | as exported | Torii gate marking the START area |
+| `QR Stand/QR_Holder v1.3mf` | | Stand that holds the gate QR code |
+
+The robot is white (body) and orange (head, arms); stations are orange or white; the Hub is black.
+
+---
+
+## 8. Custom electronics (PCBs)
+
+The team designed its own boards so the wiring is neat and repeatable, with the team logo printed on them.
+
+<table>
+<tr><td align="center" valign="top"><img src="media/project_photos/11_hub_pcb_v04_bare.jpg" width="420"><br><sub>Museum Hub PCB v0.4: ESP32-S3, 8 sensor ports, buzzer, servos, SD, E-stop</sub></td><td align="center" valign="top"><img src="media/project_photos/12_robot_pcb_populated.jpg" width="420"><br><sub>Robot PCB: ESP32-S3, DFPlayer Mini, two amplifiers, XT60 power</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/13_station_pcbs_assembled.jpg" width="420"><br><sub>Three station PCBs v0.4: IR sensor, buzzer driver, DHT11, LED stick</sub></td><td align="center" valign="top"><img src="media/project_photos/14_station_pcb_assembled_vs_bare.jpg" width="420"><br><sub>Station PCB: assembled and bare</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/09_custom_pcbs.jpg" width="420"><br><sub>A batch of robot, hub and station boards</sub></td><td align="center" valign="top"><img src="media/project_photos/17_robot_electronics_bench_test.jpg" width="420"><br><sub>Bench test: robot PCB powered from the LiPo</sub></td></tr>
+</table>
+
+- **Hub PCB v0.4:** ESP32 module, eight sensor ports (5 V, GND, 3.3 V, DHT, MQ, proximity, D-in, D-out), siren buzzer,
+  servo headers, SD card socket, emergency-stop input and a 12 V input with battery/adapter switch.
+- **Robot PCB:** ESP32 module, DFPlayer Mini, two amplifier modules, RFID reader port, mute and spare buttons, XT60 power inputs, status LEDs.
+- **Station PCB v0.4:** one per artifact. It has a cable to the Hub, a DHT11 port, an IR proximity port, an LED-stick port,
+  and a buzzer driven by a PNP transistor with a diode and two resistors.
+
+> Note: the PCBs in the photos carry an ESP32-S3 module, while the firmware READMEs describe the ESP32 DevKit pins.
+> Check the pin tables in the firmware before moving a build onto the boards.
+
+---
+
+## 9. The track
+
+The robot runs on a bordered oval track cut from plywood. The raised wooden border keeps the robot
+aligned and gives a repeatable route. The drawings are in [`hardware/track_road/`](hardware/track_road/).
+
+<table>
+<tr><td align="center" valign="top"><img src="media/project_photos/05_plywood_track_pieces.jpg" width="420"><br><sub>Early track pieces and border strips</sub></td><td align="center" valign="top"><img src="media/project_photos/18_track_oval_finished.jpg" width="420"><br><sub>The finished oval track</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/19_museum_model_setup.jpg" width="420"><br><sub>The model set up: track, Hub, stations, robot</sub></td></tr>
+</table>
+
+---
+
+## 10. How we built it (process)
+
+<table>
+<tr><td align="center" valign="top"><img src="media/project_photos/23_team_building_together.jpg" width="420"><br><sub>Building and testing together</sub></td><td align="center" valign="top"><img src="media/project_photos/20_building_station_electronics.jpg" width="420"><br><sub>Wiring a station sensor</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/21_testing_pcb_with_multimeter.jpg" width="420"><br><sub>Checking a PCB with a multimeter</sub></td><td align="center" valign="top"><img src="media/project_photos/22_assembling_station_box.jpg" width="420"><br><sub>Assembling a station box</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/29_sensor_wiring_station.jpg" width="420"><br><sub>Explaining the station sensor wiring (the notebook lists the RFID card codes)</sub></td><td align="center" valign="top"><img src="media/project_photos/27_holding_robot_face_display.jpg" width="420"><br><sub>Testing the robot face display</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/25_team_robot_demo.jpg" width="420"><br><sub>Checking the robot underside: motors, wheels and caster</sub></td><td align="center" valign="top"><img src="media/project_photos/15_robot_pcb_top_view.jpg" width="420"><br><sub>Assembled robot PCB</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/32_programming_hub_on_laptop.jpg" width="420"><br><sub>Programming the Hub on a laptop</sub></td><td align="center" valign="top"><img src="media/project_photos/34_pcb_continuity_test_closeup.jpg" width="420"><br><sub>Testing a bare PCB for shorts</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/36_team_working_robot_face_on.jpg" width="420"><br><sub>Three teammates working at once</sub></td><td align="center" valign="top"><img src="media/project_photos/40_robot_with_basket_on_head.jpg" width="420"><br><sub>The robot with a bamboo basket artifact on its head</sub></td></tr>
+<tr><td align="center" valign="top"><img src="media/project_photos/30_robot_head_face_display_on_bench.jpg" width="420"><br><sub>Head with the animated face on the bench</sub></td><td align="center" valign="top"><img src="media/project_photos/31_station_sensor_modules_held.jpg" width="420"><br><sub>Station sensors: gas, IR and DHT11 modules</sub></td></tr>
+</table>
+
+Steps we followed: plan the features → design the parts in Fusion 360 → 3D print → design and order the PCBs →
+solder and test each board on its own → assemble the robot, Hub and stations → build the track → write and test
+the firmware node by node → run the whole tour again and again. More build photos are in
+[`media/project_photos/`](media/project_photos/).
+
+---
+
+## 11. Diagrams
+
+Each diagram has an editable `.drawio` file next to the PNG in [`docs/diagrams/`](docs/diagrams/README.md).
+
+<table>
+<tr><td align="center" valign="top"><img src="docs/diagrams/01_working_combo_system_context.png" width="460"><br><sub>1. System context: every board and link</sub></td><td align="center" valign="top"><img src="docs/diagrams/02_board_wiring_map.png" width="460"><br><sub>2. Board wiring map</sub></td></tr>
+<tr><td align="center" valign="top"><img src="docs/diagrams/03_radio_and_networks.png" width="460"><br><sub>3. Radio and Wi-Fi networks</sub></td><td align="center" valign="top"><img src="docs/diagrams/04_one_station_stop.png" width="460"><br><sub>4. One station stop</sub></td></tr>
+<tr><td align="center" valign="top"><img src="docs/diagrams/05_emergency_path.png" width="460"><br><sub>5. Emergency path</sub></td><td align="center" valign="top"><img src="docs/diagrams/06_robot_states.png" width="460"><br><sub>6. Robot states</sub></td></tr>
+<tr><td align="center" valign="top"><img src="docs/diagrams/07_photo_pipeline.png" width="460"><br><sub>7. Photo pipeline</sub></td><td align="center" valign="top"><img src="docs/diagrams/08_hub_two_jobs.png" width="460"><br><sub>8. Hub: two jobs</sub></td></tr>
+<tr><td align="center" valign="top"><img src="docs/diagrams/09_message_reference.png" width="460"><br><sub>9. Message reference</sub></td></tr>
+</table>
+
+---
+
+## 12. Repository layout
 
 ```
 .
@@ -168,7 +287,7 @@ Per-board pin tables are in each firmware README. CAD/3D files are in [`hardware
 │   ├── narration_voice/         ← recorded narration MP3s (7 stations + welcome, emergency, obstacle)
 │   └── dfplayer_audio/          ← numbered SD-card track set, track map and generator script
 ├── hardware/
-│   ├── 3d_parts/                ← STL/3MF: robot, hub, QR stand, artifact stand, exit sign, torii gate
+│   ├── 3d_parts/                ← STL/3MF: robot, hub, station box, QR stand, exit sign, torii gate
 │   └── track_road/              ← the museum track/road drawings (AI, DWG, PDF, PNG)
 ├── tools/                       ← generate_qr.py (gate QR codes)
 ├── media/project_photos/        ← photos taken during the build
@@ -186,7 +305,7 @@ Per-board pin tables are in each firmware README. CAD/3D files are in [`hardware
 
 ---
 
-## 8. Build and run
+## 13. Build and run
 
 **Try the web app on a PC (no hardware needed)**
 ```bash
@@ -229,7 +348,7 @@ Notes:
 
 ---
 
-## 9. Current status and limitations
+## 14. Current status and limitations
 
 | Area | Status |
 |---|---|
@@ -247,7 +366,7 @@ comparison, calibrated sensors, more languages, a visitor map and smarter naviga
 
 ---
 
-## 10. Credits and licences
+## 15. Credits and licences
 
 - Built by the team above. Mechanical design, wiring, coding and testing were done by the team.
 - ChatGPT was used as an assistant for brainstorming, explanations, debugging discussion and report
