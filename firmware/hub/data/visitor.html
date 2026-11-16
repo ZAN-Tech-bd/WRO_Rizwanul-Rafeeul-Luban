@@ -28,11 +28,8 @@
       <div class="narration"><span data-i18n="nextStation">Next stop</span>: <span id="robotNext">…</span></div>
     </section>
 
-    <section class="card">
-      <p style="margin:0;" data-i18n="queueWait">Please wait your turn and follow the queue.</p>
-    </section>
-
-    <h2 data-i18n="artifactsTitle" style="margin:18px 2px 4px;">Our Artifacts</h2>
+    <h2 data-i18n="artifactsTitle" style="margin:18px 2px 4px;">Tour Sequence</h2>
+    <p class="muted" style="margin:0 2px 8px;" data-i18n="tourHint">Lost the robot? It is heading to the next stop in this order.</p>
     <div class="artifact-grid" id="artifacts"></div>
 
     <p class="footer" id="visitorIdNote"></p>
@@ -46,7 +43,7 @@
     function renderArtifacts() {
       const lang = getLang();
       document.getElementById("artifacts").innerHTML = ARTIFACTS.map((a) => `
-        <div class="artifact">
+        <div class="artifact" data-id="${a.id}">
           <div class="emoji">${a.emoji}</div>
           <h3>${a.name[lang]}</h3>
           <div class="display">${t("display")}: ${a.display[lang]}</div>
@@ -70,6 +67,11 @@
       document.getElementById("robotNext").textContent = next.emoji + " " + next.name[lang];
       const dot = document.getElementById("robotDot");
       dot.className = "dot" + (state.robot.status === "moving" ? " moving" : "");
+      // Highlight the artifact card the robot is currently at, so a lost
+      // visitor can spot it in the sequence below.
+      document.querySelectorAll(".artifact").forEach((el) => {
+        el.classList.toggle("here", el.dataset.id === cur.id);
+      });
     }
 
     document.addEventListener("DOMContentLoaded", () => {

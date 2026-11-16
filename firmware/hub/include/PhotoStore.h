@@ -77,8 +77,13 @@ class PhotoStore {
 
   bool mountSd();
   bool copyTempTo(const char* dest, size_t bytes);   // LittleFS scratch -> card
-  uint16_t readSeqFloor() const;        // highest seq ever issued, from SEQ.TXT
+  // Highest seq ever issued. Kept on BOTH the card and LittleFS and read back as
+  // the higher of the two, because the backend is not stable across boots and a
+  // seq must never be reused -- see the block comment in PhotoStore.cpp.
+  uint16_t readSeqFloor() const;
   void     writeSeqFloor(uint16_t seq);
+  uint16_t readSeqFloorFrom(fs::FS& fs, const char* mount) const;
+  void     writeSeqFloorTo(fs::FS& fs, uint16_t seq);
   void buildPath(uint16_t seq, uint8_t station, char* out, size_t outLen) const;
   bool parseName(const char* name, uint16_t* seq, uint8_t* station) const;
   void loadIndex();                     // scan GALLERY_DIR into items_

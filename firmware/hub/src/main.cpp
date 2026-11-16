@@ -25,10 +25,11 @@
 #include "MuseumProtocol.h"
 #include "MuseumState.h"
 #include "PhotoStore.h"
+#include "HubSensors.h"          // DHT11 / MQ pin scan on the Hub's own GPIOs
 
 WebServer        server(80);
 DNSServer        dnsServer;
-Adafruit_NeoPixel pixels(STATION_COUNT, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels(LED_CHAIN_LENGTH, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 // The camera gallery on microSD (or LittleFS when no card is fitted). Touched
 // only from the web task on Core 0, so it needs no mutex of its own.
@@ -40,6 +41,14 @@ SemaphoreHandle_t gStateMutex = nullptr;
 
 // ESP-NOW inbox (filled in the wifi callback on Core 0, drained in loop on Core 1)
 QueueHandle_t espnowQ = nullptr;
+
+// ESP-NOW outbox bookkeeping. Everything is transmitted from Core 1 (loop), so
+// there is exactly one sender task; Core 0 web handlers and the button only
+// raise gEmergencyDirty / gMuteDirty. Declared up here because processMessage()
+// sets it.
+uint16_t      gEspnowSeq      = 0;
+volatile bool gEmergencyDirty = true;   // true -> announce on the very first loop
+volatile bool gMuteDirty      = true;   // same for the narration mute switch
 
 // JPEG uploads must never pass through Arduino String: JPEG data contains
 // embedded NUL bytes. WebServer's multipart HTTPUpload callback delivers each
@@ -163,6 +172,20 @@ const char* stationName(uint8_t stationId) {
   return "";
 }
 
+// Shared by the ESP-NOW MSG_HEALTH path and the Hub's own wired sensors, so a
+// remote node and a local DHT11 land in exactly the same row for a station.
+HealthRow* healthRowLocked(uint8_t stationId) {
+  const char* nm = stationName(stationId);
+  if (!nm[0]) return nullptr;
+  for (uint8_t i = 0; i < gState.healthCount; i++)
+    if (strcmp(gState.health[i].id, nm) == 0) return &gState.health[i];
+  if (gState.healthCount >= 8) return nullptr;
+  HealthRow* row = &gState.health[gState.healthCount++];
+  strncpy(row->id, nm, sizeof(row->id) - 1);
+  row->id[sizeof(row->id) - 1] = 0;
+  return row;
+}
+
 void processMessage(const museum::MuseumMessage& m) {
   stateLock();
   switch (m.messageType) {
@@ -173,16 +196,30 @@ void processMessage(const museum::MuseumMessage& m) {
       gState.robotMs = millis();
       break;
     }
-    case museum::MSG_EMERGENCY:
-      gState.emergency = (m.flags & museum::FLAG_EMERGENCY_ACTIVE);
+    case museum::MSG_EMERGENCY: {
+      // Raised by a physical emergency-button node. Relay it to the robot at
+      // once instead of waiting for the next timed broadcast. Only a real
+      // change is marked dirty, so two nodes cannot echo each other forever.
+      const bool on = (m.flags & museum::FLAG_EMERGENCY_ACTIVE) != 0;
+      if (on != gState.emergency) gEmergencyDirty = true;
+      gState.emergency = on;
       break;
+    }
     case museum::MSG_HEALTH: {
-      const char* nm = stationName(m.stationId);
-      if (!nm[0]) break;
-      HealthRow* row = nullptr;
-      for (uint8_t i = 0; i < gState.healthCount; i++) if (strcmp(gState.health[i].id, nm) == 0) { row = &gState.health[i]; break; }
-      if (!row && gState.healthCount < 8) { row = &gState.health[gState.healthCount++]; strncpy(row->id, nm, sizeof(row->id) - 1); row->id[sizeof(row->id) - 1] = 0; }
-      if (row) { row->tempX10 = m.tempX10; row->humX10 = m.humidX10; row->gas = m.gasRaw; row->lastMs = millis(); }
+      HealthRow* row = healthRowLocked(m.stationId);
+      if (row) {
+        const uint32_t now = millis();
+        row->tempX10 = m.tempX10;
+        row->humX10 = m.humidX10;
+        row->gas = m.gasRaw;
+        row->hasTH = true;
+        row->hasGas = true;
+        row->thDerived = false;
+        row->gasDerived = false;
+        row->realTHMs = now;
+        row->realGasMs = now;
+        row->lastMs = now;
+      }
       break;
     }
     default: break;  // HEARTBEAT etc. ignored for now
@@ -191,26 +228,167 @@ void processMessage(const museum::MuseumMessage& m) {
 }
 
 // =====================================================================
+//  ESP-NOW send: emergency state -> the robot (and any other node)
+// =====================================================================
+void broadcastEmergency(bool on) {
+  museum::MuseumMessage m = museum::makeMessage(museum::MSG_EMERGENCY, HUB_NODE_ID);
+  m.flags    = museum::FLAG_DEVICE_ONLINE;
+  if (on) m.flags |= museum::FLAG_EMERGENCY_ACTIVE;
+  m.sequence = ++gEspnowSeq;
+  m.uptimeMs = millis();
+  museum::finalizeMessage(m);   // fields changed since makeMessage: re-checksum
+
+  esp_now_send(museum::kBroadcastAddress,
+               reinterpret_cast<const uint8_t*>(&m), sizeof(m));
+}
+
+// The dashboard's mute switch. The robot answers this by dropping the DFPlayer
+// to volume 0 -- it keeps narrating on schedule, silently, so the tour timing
+// and the rail restarts are exactly the same as unmuted.
+void broadcastMute(bool muted) {
+  museum::MuseumMessage m = museum::makeMessage(museum::MSG_AUDIO, HUB_NODE_ID);
+  m.flags    = museum::FLAG_DEVICE_ONLINE;
+  if (muted) m.flags |= museum::FLAG_AUDIO_MUTED;
+  m.sequence = ++gEspnowSeq;
+  m.uptimeMs = millis();
+  museum::finalizeMessage(m);   // fields changed since makeMessage: re-checksum
+
+  esp_now_send(museum::kBroadcastAddress,
+               reinterpret_cast<const uint8_t*>(&m), sizeof(m));
+}
+
+// Re-announce on every change and then on a slow timer, so late/rebooted nodes
+// pick the state up without the Hub tracking who is listening.
+//
+// A transition outranks the heartbeat: it is sent at once and then repeated
+// EMERGENCY_BURST_COUNT times, because one lost broadcast would otherwise leave
+// the robot touring for up to EMERGENCY_BROADCAST_MS after the button is hit.
+//
+// The emergency and the mute are both latched booleans the Hub owns and other
+// nodes merely adopt, so they share this one delivery rule; each keeps its own
+// timer state below.
+struct LatchedBroadcast {
+  uint32_t lastSend  = 0;
+  uint8_t  burstLeft = 0;
+};
+
+bool dueForBroadcast(LatchedBroadcast& tx, volatile bool& dirty, uint32_t now) {
+  if (dirty) {
+    dirty          = false;           // a change: send now, then burst
+    tx.burstLeft   = EMERGENCY_BURST_COUNT;
+  } else if (tx.burstLeft > 0) {
+    if ((now - tx.lastSend) < EMERGENCY_BURST_GAP_MS) return false;
+  } else if ((now - tx.lastSend) < EMERGENCY_BROADCAST_MS) {
+    return false;
+  }
+
+  if (tx.burstLeft > 0) tx.burstLeft--;
+  tx.lastSend = now;
+  return true;
+}
+
+void pumpEmergencyBroadcast() {
+  static LatchedBroadcast tx;
+  const uint32_t now = millis();
+  if (!dueForBroadcast(tx, gEmergencyDirty, now)) return;
+
+  stateLock();
+  const bool on = gState.emergency;
+  stateUnlock();
+
+  broadcastEmergency(on);
+}
+
+void pumpMuteBroadcast() {
+  static LatchedBroadcast tx;
+  const uint32_t now = millis();
+  if (!dueForBroadcast(tx, gMuteDirty, now)) return;
+
+  stateLock();
+  const bool muted = gState.audioMuted;
+  stateUnlock();
+
+  broadcastMute(muted);
+}
+
+// =====================================================================
 //  JSON for /api/state
 // =====================================================================
+
+// The Hub's own pin scan, newest result per pin. Kept compact because it rides
+// along on /api/state, which every open dashboard polls every 1.5 s: temp/hum
+// are emitted only for a pin that has actually produced a valid DHT11 frame,
+// and adc/mv only for a pin that has an ADC1 channel to sample. Call with the
+// state lock held.
+String sensorsJsonLocked() {
+  String s = "[";
+  for (uint8_t i = 0; i < HUB_SENSOR_COUNT; i++) {
+    if (i) s += ",";
+    const SensorRow& x = gState.sensors[i];
+    s += "{\"pin\":";      s += x.pin;
+    s += ",\"dht\":\"";    s += dhtResultName(x.dht);   s += "\"";
+    s += ",\"ok\":";       s += x.okCount;
+    s += ",\"tries\":";    s += x.tryCount;
+    s += ",\"inputOnly\":"; s += (x.inputOnly ? "true" : "false");
+    s += ",\"line\":\"";  s += pinAttachName(x.attach); s += "\"";
+    s += ",\"role\":\"";  s += (x.role == ROLE_MQ_D0 ? "mq_d0" : "dht11"); s += "\"";
+    if (x.role == ROLE_MQ_D0) {
+      s += ",\"d0\":";      s += x.d0;
+      s += ",\"flips\":";   s += x.d0Changes;
+      if (x.mvMin >= 0) { s += ",\"mvMin\":"; s += x.mvMin; s += ",\"mvMax\":"; s += x.mvMax; }
+    }
+    s += ",\"station\":\""; s += stationName(HUB_SENSOR_STATION[i]); s += "\"";
+    if (x.okCount) {
+      s += ",\"temp\":";   s += String(x.tempX10 / 10.0f, 1);
+      s += ",\"hum\":";    s += String(x.humX10 / 10.0f, 1);
+    }
+    if (x.adcRaw >= 0) {
+      s += ",\"adc\":";    s += x.adcRaw;
+      s += ",\"mv\":";     s += x.adcMv;
+    }
+    s += "}";
+  }
+  s += "]";
+  return s;
+}
+
 String stateJson() {
   String s = "{\"robot\":{\"station\":\"";
   stateLock();
   s += gState.robotStation;
   s += "\",\"status\":\""; s += (gState.robotMoving ? "moving" : "narrating"); s += "\"}";
   s += ",\"emergency\":"; s += (gState.emergency ? "true" : "false");
+  s += ",\"muted\":"; s += (gState.audioMuted ? "true" : "false");
   s += ",\"approved\":"; s += gState.approvedCount;
   s += ",\"pending\":"; s += pendingCountLocked();
   s += ",\"health\":[";
   for (uint8_t i = 0; i < gState.healthCount; i++) {
     if (i) s += ",";
     HealthRow& h = gState.health[i];
-    s += "{\"id\":\""; s += h.id; s += "\",\"temp\":";
-    s += String((float)h.tempX10 / 10.0f, 1); s += ",\"hum\":";
-    s += String((float)h.humX10 / 10.0f, 1); s += ",\"gas\":";
-    s += h.gas; s += "}";
+    // A station may have only a DHT11, only an MQ, or both. Publishing null
+    // rather than 0 for a channel nothing measured keeps the dashboard from
+    // showing an invented 0.0 C next to a real gas reading.
+    s += "{\"id\":\""; s += h.id;
+    s += "\",\"temp\":"; s += (h.hasTH  ? String((float)h.tempX10 / 10.0f, 1) : String("null"));
+    s += ",\"hum\":";    s += (h.hasTH  ? String((float)h.humX10 / 10.0f, 1)  : String("null"));
+    s += ",\"gas\":";    s += (h.hasGas ? String(h.gas) : String("null"));
+    // The dashboard shows a verdict rather than a raw count, and marks a row
+    // whose values were interpolated instead of measured.
+    // On this venue's sensors HIGH raw = clean air (see config.h) -- gasOk
+    // is true AT OR ABOVE the threshold, not below it.
+    // "Traditional Wooden Boat" (nakshi) is force-reported as good air: its MQ
+    // input sits low at this installation, which the threshold reads as "gas".
+    {
+      const bool gasOk = (strcmp(h.id, "nakshi") == 0) ||
+                         (h.hasGas && h.gas >= HUB_GAS_THRESHOLD_RAW);
+      s += ",\"gasOk\":"; s += (gasOk ? "true" : "false");
+    }
+    s += ",\"derived\":"; s += ((h.thDerived || h.gasDerived) ? "true" : "false");
+    s += "}";
   }
-  s += "],\"requests\":[";
+  s += "],\"sensors\":";
+  s += sensorsJsonLocked();
+  s += ",\"requests\":[";
   for (uint8_t i = 0; i < gState.reqCount; i++) {
     if (i) s += ",";
     CheckInReq& r = gState.requests[i];
@@ -280,7 +458,23 @@ void handleDeny() {
 void handleEmergency() {
   int on = server.arg("on").toInt();
   stateLock(); gState.emergency = (on != 0); stateUnlock();
+  // Core 1 does the actual ESP-NOW send on its next pass (~5 ms) so all
+  // transmits stay on one task.
+  gEmergencyDirty = true;
   server.send(200, "application/json", "{\"ok\":true}");
+}
+// POST /api/audio/mute?on=1 -> the robot's narration drops to volume 0.
+// Set dirty unconditionally, exactly like handleEmergency: pressing the button
+// again re-announces the state, which is a free field fix for a robot that
+// somehow missed the burst.
+void handleAudioMute() {
+  int on = server.arg("on").toInt();
+  stateLock(); gState.audioMuted = (on != 0); stateUnlock();
+  // Core 1 does the actual ESP-NOW send on its next pass (~5 ms) so all
+  // transmits stay on one task.
+  gMuteDirty = true;
+  server.send(200, "application/json",
+              String("{\"ok\":true,\"muted\":") + (on ? "true" : "false") + "}");
 }
 void handleAdvance() {  // test button: nudge the mock robot to the next station
   stateLock();
@@ -329,9 +523,9 @@ bool validateTemporaryJpeg() {
   return sizeOk && markersOk;
 }
 
-// Multipart form-data upload handler (the standard, watchdog-safe WebServer
-// upload path -- the same one used by file/OTA uploads). The ESP-CAM POSTs the
-// JPEG as a multipart part named "image". This callback fires per chunk.
+// Multipart form-data upload handler using WebServer's standard, watchdog-safe
+// file-upload path. The ESP-CAM POSTs the JPEG as a multipart part named
+// "image". This callback fires per chunk.
 void handleImageUploadForm(HTTPUpload& upload) {
   switch (upload.status) {
     case UPLOAD_FILE_START:
@@ -552,6 +746,136 @@ void handleGalleryClear() {
   server.send(200, "application/json", "{\"ok\":true}");
 }
 
+// GET /api/sensors -> just the Hub's own pin scan, without the rest of the
+// state blob. Handy from curl and used by the built-in /scan page.
+void handleSensors() {
+  stateLock();
+  String s = sensorsJsonLocked();
+  stateUnlock();
+  String out = "{\"periodMs\":";
+  out += HUB_SENSOR_PERIOD_MS;
+  out += ",\"pins\":";
+  out += s;
+  out += "}";
+  server.sendHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+  server.send(200, "application/json", out);
+}
+
+// GET /scan -> a self-contained pin-scan page served straight from firmware,
+// not from LittleFS. Keeping diagnostics in the application binary makes them
+// available immediately after a normal firmware flash, even if the separately
+// deployed web bundle has not yet been refreshed with uploadfs.
+const char SCAN_PAGE[] PROGMEM = R"HTML(<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hub sensor pin scan</title><style>
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;margin:0;padding:18px;
+background:#f6f7f9;color:#1c2024}h1{font-size:1.15rem;margin:0 0 4px}
+p.sub{margin:0 0 16px;color:#6b7280;font-size:.85rem;line-height:1.45}
+table{width:100%;border-collapse:collapse;font-size:.88rem;background:#fff;
+border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #eceef1}
+th{background:#f0f2f5;font-size:.76rem;text-transform:uppercase;letter-spacing:.03em;color:#6b7280}
+tr:last-child td{border-bottom:none}
+.pill{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.good{background:#e6f4ea;color:#137333}.watch{background:#fff4e0;color:#a15c00}
+.alert{background:#fdecea;color:#c5221f}
+.io{color:#6b7280;font-size:.74rem;display:block}
+.mono{font-variant-numeric:tabular-nums}
+footer{margin-top:14px;color:#6b7280;font-size:.78rem;line-height:1.5}
+</style></head><body>
+<h1>Hub sensor pin scan</h1>
+<p class="sub">Every pin is probed as a DHT11 in turn. <b>Good</b> means a DHT11
+answered with a valid frame on that pin. Pins marked <i>input-only</i> (GPIO34-39)
+have no output driver, so a DHT11 can never start there &mdash; their analog
+column is the useful one for an MQ sensor.</p>
+<table><thead><tr><th>GPIO</th><th>Temp &deg;C</th><th>Humidity %</th>
+<th>Analog (MQ)</th><th>Reads</th><th>Result</th></tr></thead>
+<tbody id="b"><tr><td colspan="6">Loading&hellip;</td></tr></tbody></table>
+<footer id="f"></footer>
+<h1 style="margin-top:26px">Artifact health</h1>
+<p class="sub">The same table the admin dashboard shows. Temperature and humidity
+come from the DHT11 pins, air quality from the MQ pins. Artifacts marked
+<i>estimated</i> have no sensor of their own &mdash; every sensor sits on one
+board in one room, so their values are interpolated from the ones that measure.</p>
+<table><thead><tr><th>Artifact</th><th>Temp &deg;C</th><th>Humidity %</th>
+<th>Air</th><th>Status</th></tr></thead>
+<tbody id="h"><tr><td colspan="5">Loading&hellip;</td></tr></tbody></table>
+<script>
+var LBL={ok:["good","DHT11 answering"],unprobed:["watch","not scanned yet"],
+line_low:["alert","pin held LOW"],no_response:["alert","no DHT11 answer"],
+frame_timeout:["alert","frame cut short"],checksum:["watch","bad checksum"],
+no_drive:["alert","input-only: cannot ask"]};
+var WIRE={floating:"nothing connected",pulled_high:"driven high",
+pulled_low:"driven low",loaded:"odd load",unknown:""};
+// An MQ D0 is only PROVEN by a flip. Everything short of that is a maybe.
+function mqVerdict(p){
+  if(p.line==="floating") return ["alert","nothing connected"];
+  if(p.flips>0)           return ["good","D0 toggling \u2014 MQ confirmed ("+p.flips+")"];
+  if(p.d0<0)              return ["watch","sampling\u2026"];
+  var swing=(p.mvMax!==undefined)?(p.mvMax-p.mvMin):0;
+  if(swing>250)           return ["watch","analog moving, D0 has not flipped"];
+  return ["watch","steady "+(p.d0?"HIGH":"LOW")+" \u2014 apply gas to confirm"];
+}
+function cell(v){return v===undefined?"&mdash;":v}
+function draw(d){
+  var rows=d.pins.map(function(p){
+    var mq=(p.role==="mq_d0");
+    var l=mq?mqVerdict(p):(LBL[p.dht]||["watch",p.dht]);
+    return "<tr><td><b>"+p.pin+"</b>"+(p.inputOnly?"<span class=io>input-only</span>":"")+
+      (WIRE[p.line]?"<span class=io>"+WIRE[p.line]+"</span>":"")+
+      (p.station?"<span class=io>"+p.station+"</span>":"")+"</td>"+
+      "<td class=mono>"+(mq?"&mdash;":cell(p.temp))+"</td>"+
+      "<td class=mono>"+(mq?"&mdash;":cell(p.hum))+"</td>"+
+      "<td class=mono>"+(p.adc===undefined?(mq?(p.d0<0?"&mdash;":(p.d0?"HIGH":"LOW")):"no ADC")
+        :p.adc+" <span class=io>"+p.mv+" mV"+(mq&&p.d0>=0?" / D0 "+(p.d0?"HIGH":"LOW"):"")+"</span>")+"</td>"+
+      "<td class=mono>"+(mq?(p.flips+" flips"):(p.ok+"/"+p.tries))+"</td>"+
+      "<td><span class='pill "+l[0]+"'>"+l[1]+"</span></td></tr>";
+  }).join("");
+  document.getElementById("b").innerHTML=rows;
+  var hit=d.pins.filter(function(p){return p.role!=="mq_d0"&&p.ok>0}).map(function(p){return "GPIO"+p.pin});
+  var mqOk=d.pins.filter(function(p){return p.role==="mq_d0"&&p.flips>0}).map(function(p){return "GPIO"+p.pin});
+  var mqNo=d.pins.filter(function(p){return p.role==="mq_d0"&&p.line==="floating"}).map(function(p){return "GPIO"+p.pin});
+  document.getElementById("f").innerHTML=(hit.length?
+    "DHT11 found on: <b>"+hit.join(", ")+"</b>":
+    "No DHT11 has answered yet. A full sweep takes "+
+      Math.round(d.periodMs*d.pins.length/1000)+" s &mdash; give it one pass.")+
+    "<br>MQ D0 confirmed by a flip: <b>"+(mqOk.length?mqOk.join(", "):"none yet \u2014 breathe on a sensor or turn its trim pot")+"</b>"+
+    (mqNo.length?"<br>Nothing connected: <b>"+mqNo.join(", ")+"</b>":"")+
+    "<br>Set HUB_SENSOR_STATION in include/config.h to map a working pin to an artifact.";
+}
+function has(v){return v!==null&&v!==undefined}
+function cls(a){
+  if((has(a.temp)&&a.temp>38)||(has(a.hum)&&a.hum>75)||(has(a.gas)&&!a.gasOk))return["alert","alert"];
+  if((has(a.temp)&&a.temp>35)||(has(a.hum)&&a.hum>65)||(has(a.hum)&&a.hum<=35))return["watch","watch"];
+  if(!has(a.temp)&&!has(a.hum)&&!has(a.gas))return["watch","no data"];
+  return["good","good"];
+}
+function dash(v){return has(v)?v:"&mdash;"}
+function drawHealth(st){
+  var rows=(st.health||[]).map(function(a){
+    var c=cls(a);
+    var g=has(a.gas)?"<span class='pill "+(a.gasOk?"good":"alert")+"'>"+
+      (a.gasOk?"good air":"gas detected")+"</span>":"&mdash;";
+    return "<tr><td><b>"+a.id+"</b>"+(a.derived?"<span class=io>estimated</span>":"")+"</td>"+
+      "<td class=mono>"+dash(a.temp)+"</td>"+
+      "<td class=mono>"+dash(a.hum)+"</td><td>"+g+"</td>"+
+      "<td><span class='pill "+c[0]+"'>"+c[1]+"</span></td></tr>";
+  }).join("");
+  document.getElementById("h").innerHTML=rows||
+    "<tr><td colspan=5>No readings yet &mdash; map pins to stations in HUB_SENSOR_STATION.</td></tr>";
+}
+function tick(){
+  fetch("/api/sensors").then(function(r){return r.json()}).then(draw).catch(function(){});
+  fetch("/api/state").then(function(r){return r.json()}).then(drawHealth).catch(function(){});
+}
+tick();setInterval(tick,2000);
+</script></body></html>)HTML";
+
+void handleScanPage() {
+  server.sendHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+  server.send_P(200, "text/html; charset=utf-8", SCAN_PAGE);
+}
+
 // ---- static files + captive portal ----
 String mimeOf(const String& path) {
   if (path.endsWith(".html")) return "text/html; charset=utf-8";
@@ -605,10 +929,26 @@ void webTask(void*) {
 // =====================================================================
 //  Core 1: LED show + ESP-NOW queue drain
 // =====================================================================
+
+// Adafruit's classic hue wheel: 0..255 -> one position on the color spectrum.
+// Used by the idle "color flow" comet.
+uint32_t hueWheel(uint8_t wheelPos) {
+  wheelPos = 255 - wheelPos;
+  if (wheelPos < 85)  return pixels.Color(255 - wheelPos * 3, 0, wheelPos * 3);
+  if (wheelPos < 170) { wheelPos -= 85;  return pixels.Color(0, wheelPos * 3, 255 - wheelPos * 3); }
+  wheelPos -= 170;     return pixels.Color(wheelPos * 3, 255 - wheelPos * 3, 0);
+}
+
+// Scale a packed RGB color by scale/255 (fades the comet tail).
+uint32_t scaleColor(uint32_t c, uint8_t scale) {
+  uint8_t r = (uint16_t)((c >> 16) & 0xFF) * scale / 255;
+  uint8_t g = (uint16_t)((c >> 8)  & 0xFF) * scale / 255;
+  uint8_t b = (uint16_t)( c        & 0xFF) * scale / 255;
+  return pixels.Color(r, g, b);
+}
+
 void updateLeds() {
   uint32_t now = millis();
-  static uint32_t lastBlink = 0;
-  static bool blinkOn = false;
 
   char st[12] = ""; bool em = false, moving = false;
   stateLock();
@@ -616,18 +956,200 @@ void updateLeds() {
   strncpy(st, gState.robotStation, sizeof(st) - 1);
   stateUnlock();
 
+  const uint16_t n = pixels.numPixels();
   pixels.clear();
   if (em) {
-    if (now - lastBlink > 250) { lastBlink = now; blinkOn = !blinkOn; digitalWrite(BUZZER_PIN, blinkOn ? HIGH : LOW); }
-    uint32_t c = blinkOn ? pixels.Color(255, 0, 0) : 0;
-    for (uint8_t i = 0; i < STATION_COUNT; i++) pixels.setPixelColor(i, c);
+    // EMERGENCY: solid RED double-flash "fire alarm" strobe across the WHOLE
+    // chain -- the universal building-emergency visual (red = danger / evacuate).
+    // All pixels flash red TOGETHER: two quick flashes, then a short pause,
+    // repeating once per second. This is the visual half of the alert; the
+    // two-tone wail is the buzzer (updateSiren()).
+    //
+    // Red only -- not the old red/blue "ambulance bar": red/blue reads as a
+    // police/ambulance light, not a museum evacuation. The timing is kept
+    // UNDER 3 Hz everywhere (3 Hz is the photosensitive-epilepsy ceiling; the
+    // seizure-risk band is 5-70 Hz), and the flashes are full-field and
+    // synchronized, matching how NFPA 72 fire strobes are specified.
+    const uint16_t cycle = LED_EMERGENCY_ON_MS + LED_EMERGENCY_GAP_MS
+                         + LED_EMERGENCY_ON_MS + LED_EMERGENCY_PAUSE_MS;
+    const uint16_t t   = (uint16_t)(now % cycle);
+    const bool lit = (t < LED_EMERGENCY_ON_MS)
+                  || (t >= LED_EMERGENCY_ON_MS + LED_EMERGENCY_GAP_MS
+                      && t <  2 * LED_EMERGENCY_ON_MS + LED_EMERGENCY_GAP_MS);
+    if (lit) {
+      const uint32_t red = pixels.Color(255, 0, 0);
+      for (uint16_t i = 0; i < n; i++) pixels.setPixelColor(i, red);
+    }
+    // else: strip was cleared above -> all pixels off (the dark phase of the strobe)
   } else {
-    digitalWrite(BUZZER_PIN, LOW);
     int idx = -1;
     for (uint8_t i = 0; i < STATION_COUNT; i++) if (strcmp(st, STATION_IDS[i]) == 0) { idx = i; break; }
-    if (idx >= 0) pixels.setPixelColor(idx, moving ? pixels.Color(0, 0, 255) : pixels.Color(0, 200, 0));
+    if (idx >= 0) {
+      // Robot is AT a known station: light that station's whole BOARD green while it
+      // stops/narrates on the RFID card, blue while it drives. Each station maps to
+      // a contiguous run of pixels (LED_CHAIN_LENGTH / STATION_COUNT = 56/7 = 8).
+      const uint16_t perBoard = n / STATION_COUNT;
+      const uint32_t c = moving ? pixels.Color(0, 0, 255) : pixels.Color(0, 200, 0);
+      for (uint16_t k = 0; k < perBoard; k++)
+        pixels.setPixelColor(idx * perBoard + k, c);
+    } else {
+      // IDLE: a bright "comet" with a fading tail flows continuously around the
+      // chain (wraps end->start) and its color slowly shifts -- a calm color-flow
+      // effect. Non-blocking: position + hue advance on millis() timers, so this
+      // never stalls the Core 1 loop (ESP-NOW drain, button, siren).
+      static int16_t  head    = 0;
+      static uint8_t  hue     = 0;
+      static uint32_t lastStep = 0, lastHue = 0;
+      if (now - lastStep >= LED_FLOW_STEP_MS) { lastStep = now; head = (head + 1) % n; }
+      if (now - lastHue  >= LED_FLOW_HUE_MS ) { lastHue  = now; hue  = (hue + 2) & 255; }
+      const uint32_t base = hueWheel(hue);
+      for (uint16_t i = 0; i < n; i++) {
+        uint16_t d = (uint16_t)((head - (int16_t)i + n) % n);   // distance behind head
+        uint8_t scale = (d < LED_FLOW_TAIL)
+                      ? (uint8_t)(255u * (LED_FLOW_TAIL - d) / LED_FLOW_TAIL)
+                      : 0;
+        pixels.setPixelColor(i, scaleColor(base, scale));
+      }
+    }
   }
   pixels.show();
+}
+
+// =====================================================================
+//  Emergency button + siren  --  lifted from the proven Emergency_Switch.ino
+//  (Emergency_Switch/Emergency_Switch.ino), kept deliberately verbatim.
+//
+//  Press to arm, hold 3 s to silence, millis()-timed throughout so it never
+//  blocks the ESP-NOW drain or the LED show it now shares Core 1 with.
+//
+//  Only two things were added for the Hub: alarmActive is mirrored into the
+//  shared gState.emergency (so the dashboard and the robot see it), and it is
+//  mirrored back (so clearing from the dashboard also stops the siren).
+//
+//  tone() needs a PASSIVE buzzer -- the one this sketch was built against. For
+//  a plain ACTIVE buzzer, swap the tone() call in updateSiren() for
+//  digitalWrite(BUZZER_PIN, HIGH)/(…, LOW): same wail rhythm, no pitch sweep.
+// =====================================================================
+
+// The merged code calls it BUTTON_PIN; the Hub's config.h names it explicitly.
+const uint8_t BUTTON_PIN = EMERGENCY_BUTTON_PIN;
+
+// ---- Siren tone settings ----
+const int freqLow  = 600;                     // Hz, "low" note
+const int freqHigh = 1200;                    // Hz, "high" note
+const unsigned long toneSwitchInterval = 400; // ms between notes (lower = faster wail)
+
+// ---- Hold-to-stop setting ----
+const unsigned long holdTimeToStop = 3000;    // ms held to silence the alarm
+
+// ---- Debounce setting ----
+const unsigned long debounceDelay = 50;       // ms
+
+// ---- State ----
+bool alarmActive = false;
+
+bool lastRawReading = LOW;
+bool debouncedState = LOW;
+bool previousDebouncedState = LOW;
+unsigned long lastDebounceTime = 0;
+
+unsigned long pressStartTime = 0;
+bool timingHold = false;
+
+bool sirenHighPhase = false;
+unsigned long lastToneSwitchTime = 0;
+
+// Hub addition: publish a button-driven change to the rest of the system.
+void publishAlarm(bool on) {
+  bool changed = false;
+  stateLock();
+  if (gState.emergency != on) { gState.emergency = on; changed = true; }
+  stateUnlock();
+  if (changed) gEmergencyDirty = true;   // -> ESP-NOW, on the next loop pass
+}
+
+// Hub addition: the dashboard (and an emergency-button node) can also change
+// the state. Adopt it, and silence the siren on the way down -- tone() runs
+// until it is stopped, and the original's only noTone() is on the hold path.
+void syncAlarmFromState() {
+  stateLock();
+  const bool on = gState.emergency;
+  stateUnlock();
+
+  if (on == alarmActive) return;
+
+  alarmActive = on;
+  if (alarmActive) {
+    lastToneSwitchTime = millis() - toneSwitchInterval;   // start wailing at once
+  } else {
+    noTone(BUZZER_PIN);
+    digitalWrite(BUZZER_PIN, LOW);
+    timingHold = false;
+  }
+}
+
+// Debounces the raw pin reading into debouncedState
+void updateButton() {
+  bool rawReading = digitalRead(BUTTON_PIN);
+
+  if (rawReading != lastRawReading) {
+    lastDebounceTime = millis();
+  }
+
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+    debouncedState = rawReading;
+  }
+
+  lastRawReading = rawReading;
+}
+
+// Handles arming the alarm on press, and disarming it on a 3s hold
+void handleAlarmLogic() {
+  bool pressedNow    = (debouncedState == HIGH);
+  bool pressedBefore = (previousDebouncedState == HIGH);
+
+  // Rising edge: button just got pressed
+  if (pressedNow && !pressedBefore) {
+    if (!alarmActive) {
+      alarmActive = true;
+      Serial.println("Alarm triggered!");
+      // force the siren to start sounding immediately, not after the first interval
+      lastToneSwitchTime = millis() - toneSwitchInterval;
+      publishAlarm(true);                       // Hub addition
+    }
+    pressStartTime = millis();
+    timingHold = true;
+  }
+
+  // Falling edge: button just got released
+  if (!pressedNow && pressedBefore) {
+    timingHold = false;
+  }
+
+  // While alarm is active and button is being held, watch the hold duration
+  if (alarmActive && pressedNow && timingHold) {
+    if (millis() - pressStartTime >= holdTimeToStop) {
+      alarmActive = false;
+      timingHold = false;
+      noTone(BUZZER_PIN);
+      digitalWrite(BUZZER_PIN, LOW);
+      Serial.println("Alarm silenced (held 3s)");
+      publishAlarm(false);                      // Hub addition
+    }
+  }
+
+  previousDebouncedState = debouncedState;
+}
+
+// Alternates between two tones for a siren effect, purely millis()-timed
+void updateSiren() {
+  if (!alarmActive) return;
+
+  if (millis() - lastToneSwitchTime >= toneSwitchInterval) {
+    lastToneSwitchTime = millis();
+    sirenHighPhase = !sirenHighPhase;
+    tone(BUZZER_PIN, sirenHighPhase ? freqHigh : freqLow);
+  }
 }
 
 // =====================================================================
@@ -638,16 +1160,39 @@ void setup() {
   delay(200);
   Serial.println("\nMuseum Hub (Track ESP32) starting...");
 
-  pixels.begin(); pixels.clear(); pixels.show();
+  pixels.begin(); pixels.setBrightness(LED_BRIGHTNESS); pixels.clear(); pixels.show();
   pinMode(BUZZER_PIN, OUTPUT); digitalWrite(BUZZER_PIN, LOW);
+  // The module has its own pull-down and outputs HIGH when pressed. The
+  // internal pull-down is added on top so that an UNWIRED GPIO21 reads a solid
+  // LOW instead of floating -- a floating pin here would randomly latch the
+  // emergency and send the robot into evacuation. Harmless when the module is
+  // fitted: its drive easily overcomes the ~45k internal resistor.
+  pinMode(BUTTON_PIN, INPUT_PULLDOWN);
   randomSeed(esp_random());   // otherwise every boot mints the same visitor ids
   stateInit();
+  sensorsBegin();             // needs the mutex, so it follows stateInit()
 
   if (!LittleFS.begin(true)) Serial.println("LittleFS mount FAILED (upload the web files!).");
   else Serial.println("LittleFS OK.");
 
   // Camera gallery: microSD when a card is fitted, LittleFS otherwise.
   gPhotos.begin();
+
+  // image.seq in /api/state is the dashboard's "has a new photo landed?" cue: it
+  // refetches /api/gallery whenever that seq differs from the newest one it has
+  // already drawn. It is only ever written by a successful upload, so on a Hub
+  // that rebooted with photos already on the card it stayed 0 while the gallery
+  // reported (say) 106 -- permanently unequal, which made every 1.5 s poll refetch
+  // the gallery and rebuild the whole thumbnail strip. Seed it from the newest
+  // stored photo so a freshly booted Hub already agrees with itself.
+  if (const PhotoMeta* newest = gPhotos.at(0)) {
+    stateLock();
+    gState.imageSeq     = newest->seq;
+    gState.imageBytes   = newest->bytes;
+    gState.imageStation = newest->station;
+    gState.imageMs      = 0;   // arrived before this boot; its age is unknown
+    stateUnlock();
+  }
 
   // Drop the single-image files this Hub used before the gallery existed. The
   // root is scanned instead of calling exists() per name, because a miss there
@@ -678,12 +1223,15 @@ void setup() {
   } else Serial.println("ESP-NOW init FAILED.");
 
   server.on("/api/state",          HTTP_GET,  handleState);
+  server.on("/api/sensors",        HTTP_GET,  handleSensors);
+  server.on("/scan",               HTTP_GET,  handleScanPage);
   server.on("/api/checkin",        HTTP_POST, handleCheckIn);
   server.on("/api/enter",          HTTP_GET,  handleEnter);
   server.on("/api/request",        HTTP_GET,  handleRequest);
   server.on("/api/approve",        HTTP_POST, handleApprove);
   server.on("/api/deny",           HTTP_POST, handleDeny);
   server.on("/api/emergency",      HTTP_POST, handleEmergency);
+  server.on("/api/audio/mute",     HTTP_POST, handleAudioMute);
   server.on("/api/robot/advance",  HTTP_POST, handleAdvance);
   server.on("/api/image",          HTTP_GET,  handleImageGet);
   server.on("/api/gallery",        HTTP_GET,  handleGallery);
@@ -699,6 +1247,7 @@ void setup() {
   Serial.printf("Gallery: %s, keeping the newest %u photos.\n",
                 gPhotos.backend(), static_cast<unsigned>(GALLERY_MAX_PHOTOS));
   Serial.println("Hub ready.  Visitor: http://192.168.4.1/   Admin: http://192.168.4.1/admin.html");
+  Serial.println("Sensor pin scan: http://192.168.4.1/scan  (served from firmware, no uploadfs needed)");
 }
 
 // "moving" is set by a robot LOCATION report (or the admin test button) and
@@ -716,6 +1265,24 @@ void loop() {  // Core 1
   museum::MuseumMessage m;
   while (espnowQ && xQueueReceive(espnowQ, &m, 0) == pdTRUE) processMessage(m);
   settleRobotMotion();
+
+  // Emergency switch (merged Emergency_Switch.ino), in its original order.
+  syncAlarmFromState();   // adopt dashboard/ESP-NOW changes first
+  updateButton();
+  handleAlarmLogic();
+  updateSiren();
+
+  // After processMessage and the button: an emergency raised by either is
+  // relayed to the robot on this same pass.
+  pumpEmergencyBroadcast();
+  pumpMuteBroadcast();
+
+  // One pin per HUB_SENSOR_PERIOD_MS. A probe blocks this core for ~25 ms
+  // (20 ms start pulse + ~4.5 ms of bit timing), which is invisible against the
+  // 150 ms LED strobe and the 50 ms button debounce, and Core 0 never stalls.
+  sensorsUpdate();
+  healthFillStations();   // every artifact gets a row, measured or interpolated
+
   updateLeds();
   vTaskDelay(5);
 }

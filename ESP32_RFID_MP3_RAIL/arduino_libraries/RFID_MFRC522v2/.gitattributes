@@ -1,0 +1,9 @@
+.github/ export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+.editorconfig export-ignore
+
+doc/*.doc export-ignore
+
+*.h text diff=cpp linguist-language=C++
+*.ino text diff=cpp linguist-language=C++

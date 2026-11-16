@@ -1,0 +1,640 @@
+<mxfile host="Electron">
+  <diagram id="JWw6mATQHweUHtqM2wP4" name="pageWithNumber">
+    <mxGraphModel dx="-848" dy="-257" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" placeholders="1" id="page_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#F8FAFC;strokeColor=none;" vertex="1">
+            <mxGeometry height="900" width="1600" x="20" y="20" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="main_boundary">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#334155;strokeWidth=1.7;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="548" width="1536" x="52" y="124" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="phase_boot_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#F1F5F9;strokeColor=#E2E8F0;strokeWidth=1;fillOpacity=82;" vertex="1">
+            <mxGeometry height="512" width="180" x="192" y="160" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="phase_start_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#F0FDF4;strokeColor=#DCFCE7;strokeWidth=1;fillOpacity=82;" vertex="1">
+            <mxGeometry height="512" width="280" x="372" y="160" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="phase_station_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#F0FDFA;strokeColor=#CCFBF1;strokeWidth=1;fillOpacity=82;" vertex="1">
+            <mxGeometry height="512" width="500" x="652" y="160" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="phase_finish_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#EFF6FF;strokeColor=#DBEAFE;strokeWidth=1;fillOpacity=82;" vertex="1">
+            <mxGeometry height="512" width="200" x="1152" y="160" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="phase_end_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#FEF2F2;strokeColor=#FEE2E2;strokeWidth=1;fillOpacity=82;" vertex="1">
+            <mxGeometry height="512" width="236" x="1352" y="160" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="lane_visitor">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#FFFFFF;fillOpacity=8;strokeColor=#CBD5E1;strokeWidth=0.8;" vertex="1">
+            <mxGeometry height="56" width="1536" x="52" y="160" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="lane_mfrc">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#FFFFFF;fillOpacity=8;strokeColor=#CBD5E1;strokeWidth=0.8;" vertex="1">
+            <mxGeometry height="56" width="1536" x="52" y="216" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="lane_robot">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#FFFFFF;fillOpacity=8;strokeColor=#CBD5E1;strokeWidth=0.8;" vertex="1">
+            <mxGeometry height="78" width="1536" x="52" y="272" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="lane_nano">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#FFFFFF;fillOpacity=8;strokeColor=#CBD5E1;strokeWidth=0.8;" vertex="1">
+            <mxGeometry height="58" width="1536" x="52" y="350" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="lane_dfplayer">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#FFFFFF;fillOpacity=8;strokeColor=#CBD5E1;strokeWidth=0.8;" vertex="1">
+            <mxGeometry height="58" width="1536" x="52" y="408" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="lane_camera">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#FFFFFF;fillOpacity=8;strokeColor=#CBD5E1;strokeWidth=0.8;" vertex="1">
+            <mxGeometry height="70" width="1536" x="52" y="466" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="lane_hub">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#FFFFFF;fillOpacity=8;strokeColor=#CBD5E1;strokeWidth=0.8;" vertex="1">
+            <mxGeometry height="70" width="1536" x="52" y="536" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="lane_browser">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#FFFFFF;fillOpacity=8;strokeColor=#CBD5E1;strokeWidth=0.8;" vertex="1">
+            <mxGeometry height="66" width="1536" x="52" y="606" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="actor_divider">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;connectable=0;pointerEvents=0;fillColor=#94A3B8;strokeColor=none;" vertex="1">
+            <mxGeometry height="512" width="2" x="190" y="160" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="audio_thread">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#0F766E;strokeWidth=1.2;dashed=1;dashPattern=6 4;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="184" width="222" x="662" y="278" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="photo_thread">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#D97706;strokeWidth=1.2;dashed=1;dashPattern=6 4;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="384" width="250" x="892" y="278" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="03 — Normal Tour, Narration &amp; Photo Sequence" placeholders="1" id="title">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#0F172A;spacing=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="40" width="1130" x="60" y="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Safe rail motion gates narration · station photography is one-way and motion-independent" placeholders="1" id="subtitle">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="22" width="1110" x="62" y="78" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="CURRENT SOURCE · NORMAL TOUR" placeholders="1" id="source_badge">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1.2;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=5;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="32" width="312" x="1268" y="48" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;TIME&lt;/b&gt;" placeholders="1" id="time_label">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;fontColor=#475569;spacing=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="18" width="54" x="192" y="102" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="time_start">
+          <mxCell parent="1" style="ellipse;opacity=0;strokeOpacity=0;fillOpacity=0;" vertex="1">
+            <mxGeometry height="2" width="2" x="246" y="111" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" placeholders="1" id="time_end">
+          <mxCell parent="1" style="ellipse;opacity=0;strokeOpacity=0;fillOpacity=0;" vertex="1">
+            <mxGeometry height="2" width="2" x="1574" y="111" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="1 · BOOT SAFE" placeholders="1" id="phase_boot">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=5;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="180" x="192" y="124" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="2 · START + INTRO" placeholders="1" id="phase_start">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#14532D;align=center;verticalAlign=middle;spacing=5;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="280" x="372" y="124" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="3 · STATION NARRATION + PHOTO" placeholders="1" id="phase_station">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#CCFBF1;strokeColor=#0F766E;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#115E59;align=center;verticalAlign=middle;spacing=5;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="500" x="652" y="124" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="4 · GUARDED RESUME" placeholders="1" id="phase_finish">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#1E3A8A;align=center;verticalAlign=middle;spacing=5;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="200" x="1152" y="124" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="5 · END + LATCH" placeholders="1" id="phase_end">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#C62828;strokeWidth=1.3;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=5;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="36" width="236" x="1352" y="124" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;VISITOR / CARD&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#64748B&quot;&gt;tap action&lt;/font&gt;" placeholders="1" id="actor_visitor">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.5;fontFamily=Arial;fontSize=10.5;fontColor=#7C2D12;align=left;verticalAlign=middle;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="42" width="122" x="60" y="167" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;MFRC522&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#64748B&quot;&gt;UID reader&lt;/font&gt;" placeholders="1" id="actor_mfrc">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=1.5;fontFamily=Arial;fontSize=10.5;fontColor=#334155;align=left;verticalAlign=middle;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="42" width="122" x="60" y="223" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ROBOT ESP32&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#0F766E&quot;&gt;tour authority&lt;/font&gt;" placeholders="1" id="actor_robot">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.5;fontFamily=Arial;fontSize=10.5;fontColor=#115E59;align=left;verticalAlign=middle;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="46" width="122" x="60" y="288" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;NANO / L298N&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#4F46E5&quot;&gt;motion owner&lt;/font&gt;" placeholders="1" id="actor_nano">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=1.5;fontFamily=Arial;fontSize=10.5;fontColor=#3730A3;align=left;verticalAlign=middle;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="42" width="122" x="60" y="358" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;DFPLAYER&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#7C3AED&quot;&gt;audio events&lt;/font&gt;" placeholders="1" id="actor_df">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F5F3FF;strokeColor=#7C3AED;strokeWidth=1.5;fontFamily=Arial;fontSize=10.5;fontColor=#5B21B6;align=left;verticalAlign=middle;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="42" width="122" x="60" y="416" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;CAMERA&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#D97706&quot;&gt;RGB565 → JPEG&lt;/font&gt;" placeholders="1" id="actor_camera">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=1.5;fontFamily=Arial;fontSize=10.5;fontColor=#92400E;align=left;verticalAlign=middle;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="42" width="122" x="60" y="480" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;HUB GALLERY&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#1F4E78&quot;&gt;persist + serve&lt;/font&gt;" placeholders="1" id="actor_hub">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=1.5;fontFamily=Arial;fontSize=10.5;fontColor=#16324F;align=left;verticalAlign=middle;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="42" width="122" x="60" y="551" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;BROWSER&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#0891B2&quot;&gt;poll + fetch&lt;/font&gt;" placeholders="1" id="actor_browser">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECFEFF;strokeColor=#0891B2;strokeWidth=1.5;fontFamily=Arial;fontSize=10.5;fontColor=#155E75;align=left;verticalAlign=middle;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="42" width="122" x="60" y="618" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;LATCHED STOPPED&lt;/b&gt;&lt;br&gt;UART ready · no motion" placeholders="1" id="boot_robot">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.8;fontFamily=Arial;fontSize=9.5;fontColor=#115E59;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry height="56" width="156" x="204" y="283" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;HARD BRAKE&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot;&gt;READY:STOPPED&lt;/font&gt;" placeholders="1" id="boot_nano">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=1.8;fontFamily=Arial;fontSize=9.5;fontColor=#3730A3;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry height="43" width="156" x="204" y="357" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;font face=&quot;Courier New&quot;&gt;&lt;b&gt;STOP + GET ↓ · TUNE ML=n MR=n ↑&lt;/b&gt;&lt;/font&gt;&lt;br&gt;authoritative Nano values populate the dashboard" placeholders="1" id="boot_sync_label">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7C3AED;strokeWidth=1.0;fontFamily=Arial;fontSize=8.5;fontColor=#5B21B6;align=center;verticalAlign=middle;spacing=3;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="46" width="164" x="198" y="220" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;START CARD&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot;&gt;18 C4 0F BA&lt;/font&gt;" placeholders="1" id="start_card">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.4;fontFamily=Arial;fontSize=9.5;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="42" width="112" x="384" y="167" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;UID mapped&lt;/b&gt;&lt;br&gt;track 1" placeholders="1" id="start_map">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#475569;strokeWidth=1.4;fontFamily=Arial;fontSize=9.5;fontColor=#334155;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="42" width="136" x="404" y="223" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;CLEAR STOP LATCH&lt;/b&gt;&lt;br&gt;cancel photo · stop old audio" placeholders="1" id="start_robot">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.8;fontFamily=Arial;fontSize=9.2;fontColor=#115E59;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry height="59" width="132" x="400" y="283" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;4 · VALID&lt;/b&gt;&lt;br&gt;finish&lt;br&gt;resume armed" placeholders="1" id="start_guard">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#16A34A;strokeWidth=1.5;fontFamily=Arial;fontSize=8.5;fontColor=#14532D;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="59" width="72" x="568" y="283" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;1 · STOP&lt;/b&gt;&lt;br&gt;before audio" placeholders="1" id="start_stop">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=1.6;fontFamily=Arial;fontSize=9.2;fontColor=#3730A3;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="112" x="412" y="357" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;5 · START&lt;/b&gt;&lt;br&gt;rail" placeholders="1" id="start_resume">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#16A34A;strokeWidth=1.5;fontFamily=Arial;fontSize=8.5;fontColor=#14532D;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="68" x="572" y="357" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;2 · PLAY&lt;/b&gt;&lt;br&gt;intro · track 1" placeholders="1" id="intro_play">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F5F3FF;strokeColor=#7C3AED;strokeWidth=1.5;fontFamily=Arial;fontSize=9.0;fontColor=#5B21B6;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="94" x="412" y="415" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;3 · FINISHED&lt;/b&gt;&lt;br&gt;≥ 1.5 s" placeholders="1" id="intro_finish">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F5F3FF;strokeColor=#7C3AED;strokeWidth=1.5;fontFamily=Arial;fontSize=8.3;fontColor=#5B21B6;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="72" x="568" y="415" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;INTRO ONLY&lt;/b&gt; · no station photo is scheduled" placeholders="1" id="intro_no_photo">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFBEB;strokeColor=#CA8A04;strokeWidth=1.2;fontFamily=Arial;fontSize=9.2;fontColor=#713F12;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="42" width="236" x="394" y="479" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;A · AUDIO / MOTION LIFECYCLE&lt;/b&gt;" placeholders="1" id="audio_thread_label">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.0;fontFamily=Arial;fontSize=8.5;fontColor=#115E59;align=center;verticalAlign=middle;spacing=2;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="18" width="206" x="670" y="279" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;B · ONE-WAY PHOTO PIPELINE · NO RAIL AUTHORITY&lt;/b&gt;" placeholders="1" id="photo_thread_label">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=1.0;fontFamily=Arial;fontSize=8.1;fontColor=#92400E;align=center;verticalAlign=middle;spacing=2;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="18" width="234" x="900" y="279" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;STATION CARD&lt;/b&gt;&lt;br&gt;tracks 2..8" placeholders="1" id="station_card">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.4;fontFamily=Arial;fontSize=9.5;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="42" width="148" x="666" y="167" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;RFID mapped&lt;/b&gt;&lt;br&gt;station 1..7" placeholders="1" id="station_map">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#475569;strokeWidth=1.4;fontFamily=Arial;fontSize=9.5;fontColor=#334155;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="42" width="170" x="688" y="223" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;STOP → PLAY TRACK 2..8&lt;/b&gt;&lt;br&gt;if actually narrating: schedule T+2 s" placeholders="1" id="station_audio">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.8;fontFamily=Arial;fontSize=9.0;fontColor=#115E59;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry height="44" width="206" x="670" y="298" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;HARD BRAKE&lt;/b&gt;&lt;br&gt;rail stopped" placeholders="1" id="station_nano">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=1.6;fontFamily=Arial;fontSize=9.2;fontColor=#3730A3;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="136" x="704" y="357" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;NARRATING&lt;/b&gt;&lt;br&gt;track 2..8" placeholders="1" id="station_df">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F5F3FF;strokeColor=#7C3AED;strokeWidth=1.6;fontFamily=Arial;fontSize=9.2;fontColor=#5B21B6;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="136" x="728" y="415" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;T+2 s DUE&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot;&gt;SHOOT &lt;station&gt;&lt;/font&gt; · one-way · NO ACK" placeholders="1" id="photo_due">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=1.8;fontFamily=Arial;fontSize=9.0;fontColor=#92400E;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry height="44" width="234" x="900" y="298" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ENSURE WI-FI&lt;/b&gt;&lt;br&gt;capture RGB565" placeholders="1" id="cam_capture">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=1.5;fontFamily=Arial;fontSize=8.7;fontColor=#92400E;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="48" width="88" x="900" y="478" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;frame2jpg()&lt;/b&gt;&lt;br&gt;JPEG in RAM" placeholders="1" id="cam_encode">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=1.5;fontFamily=Arial;fontSize=8.7;fontColor=#92400E;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="48" width="98" x="994" y="478" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;OPT&lt;br&gt;SD&lt;/b&gt;" placeholders="1" id="cam_sd">
+          <mxCell parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#FFFBEB;strokeColor=#CA8A04;strokeWidth=1.3;dashed=1;dashPattern=1 4;fontFamily=Arial;fontSize=8;fontStyle=1;fontColor=#713F12;align=center;verticalAlign=middle;spacingTop=3;" vertex="1">
+            <mxGeometry height="52" width="40" x="1098" y="476" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;POST MULTIPART JPEG&lt;/b&gt;&lt;br&gt;scratch → validate → gallery · HTTP 200" placeholders="1" id="hub_commit">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=1.6;fontFamily=Arial;fontSize=8.8;fontColor=#16324F;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="54" width="148" x="990" y="544" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;POLL /api/gallery&lt;/b&gt;&lt;br&gt;fetch /api/image?seq=N" placeholders="1" id="browser_fetch">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECFEFF;strokeColor=#0891B2;strokeWidth=1.5;fontFamily=Arial;fontSize=8.8;fontColor=#155E75;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="48" width="148" x="990" y="613" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;RESUME GUARD&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot;&gt;resumeAfterAudio&lt;/font&gt;&lt;br&gt;&amp;&amp; &lt;font face=&quot;Courier New&quot;&gt;!railStopLatched&lt;/font&gt;" placeholders="1" id="finish_guard">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.8;fontFamily=Arial;fontSize=8.8;fontColor=#115E59;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry height="59" width="176" x="1160" y="283" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;SEND START&lt;/b&gt;&lt;br&gt;resume rail" placeholders="1" id="finish_nano">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#16A34A;strokeWidth=1.6;fontFamily=Arial;fontSize=9.2;fontColor=#14532D;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="142" x="1178" y="357" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;DFPLAYER FINISHED&lt;/b&gt;&lt;br&gt;only after &lt;font face=&quot;Courier New&quot;&gt;AUDIO_MIN_MS&lt;/font&gt;" placeholders="1" id="finish_df">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F5F3FF;strokeColor=#7C3AED;strokeWidth=1.5;fontFamily=Arial;fontSize=8.7;fontColor=#5B21B6;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="176" x="1160" y="415" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;FINISH BEFORE T+2 s&lt;/b&gt;&lt;br&gt;cancel pending shot" placeholders="1" id="finish_cancel">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.3;fontFamily=Arial;fontSize=8.8;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=4;shadow=0;dashed=1;dashPattern=6 4;" vertex="1">
+            <mxGeometry height="52" width="176" x="1160" y="475" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;IF ALREADY TRIGGERED&lt;/b&gt;&lt;br&gt;Camera/Hub may continue; rail does not wait" placeholders="1" id="finish_independent">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=1.2;fontFamily=Arial;fontSize=8.6;fontColor=#16324F;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="54" width="176" x="1160" y="544" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;END CARD&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Courier New&quot;&gt;A3 C0 38 15&lt;/font&gt;" placeholders="1" id="end_card">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.4;fontFamily=Arial;fontSize=9.3;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="42" width="112" x="1362" y="167" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;MAPPED ACTION&lt;/b&gt;&lt;br&gt;no audio track" placeholders="1" id="end_map">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#475569;strokeWidth=1.4;fontFamily=Arial;fontSize=9.2;fontColor=#334155;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="42" width="144" x="1382" y="223" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;CANCEL PHOTO · STOP AUDIO&lt;/b&gt;&lt;br&gt;set stop latch = true" placeholders="1" id="end_robot">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.8;fontFamily=Arial;fontSize=9.0;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry height="59" width="178" x="1398" y="283" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;SEND STOP&lt;/b&gt;&lt;br&gt;hard brake" placeholders="1" id="end_nano">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=1.6;fontFamily=Arial;fontSize=9.2;fontColor=#3730A3;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="140" x="1424" y="357" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;STOP&lt;/b&gt;&lt;br&gt;no new play" placeholders="1" id="end_df">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F5F3FF;strokeColor=#7C3AED;strokeWidth=1.5;fontFamily=Arial;fontSize=9.2;fontColor=#5B21B6;align=center;verticalAlign=middle;spacing=5;shadow=0;" vertex="1">
+            <mxGeometry height="43" width="116" x="1448" y="415" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;PENDING PHOTO&lt;/b&gt;&lt;br&gt;cancelled" placeholders="1" id="end_camera">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.3;fontFamily=Arial;fontSize=8.8;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=4;shadow=0;dashed=1;dashPattern=6 4;" vertex="1">
+            <mxGeometry height="52" width="144" x="1420" y="475" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;LATCHED STOPPED&lt;/b&gt;&lt;br&gt;No automatic restart.&lt;br&gt;START card is required." placeholders="1" id="end_state">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.8;fontFamily=Arial;fontSize=10;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry height="98" width="188" x="1388" y="550" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="SAFE ALTERNATIVES · NORMAL TOUR ONLY" placeholders="1" id="safety_panel">
+          <mxCell parent="1" style="swimlane;startSize=28;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=1.5;fontFamily=Arial;fontSize=13;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=12;shadow=0;" vertex="1">
+            <mxGeometry height="218" width="1536" x="52" y="686" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;NO ACTION&lt;/b&gt;&lt;br&gt;Unknown UID or same card within 1.5 s debounce." placeholders="1" id="fail_uid">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=1.2;fontFamily=Arial;fontSize=9.2;fontColor=#334155;align=left;verticalAlign=middle;spacing=8;shadow=0;" vertex="1">
+            <mxGeometry height="72" width="250" x="68" y="724" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;AUDIO FAIL-SAFE&lt;/b&gt;&lt;br&gt;DFPlayer offline / error / 90 s timeout → rail remains safely stopped." placeholders="1" id="fail_audio">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.3;fontFamily=Arial;fontSize=9.2;fontColor=#7F1D1D;align=left;verticalAlign=middle;spacing=8;shadow=0;" vertex="1">
+            <mxGeometry height="72" width="285" x="330" y="724" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;SHORT NARRATION&lt;/b&gt;&lt;br&gt;Audio finishes before T+2 s → pending shot is cancelled." placeholders="1" id="fail_short">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#D97706;strokeWidth=1.2;fontFamily=Arial;fontSize=9.2;fontColor=#7C2D12;align=left;verticalAlign=middle;spacing=8;shadow=0;" vertex="1">
+            <mxGeometry height="72" width="255" x="627" y="724" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;PHOTO PATH CANNOT DRIVE THE RAIL&lt;/b&gt;&lt;br&gt;No MuseumHub Wi-Fi → no capture. Hub/HTTP fail → JPEG stays in Camera RAM. Robot gets no ACK." placeholders="1" id="fail_photo">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.3;fontFamily=Arial;fontSize=8.9;fontColor=#1E3A8A;align=left;verticalAlign=middle;spacing=8;shadow=0;" vertex="1">
+            <mxGeometry height="72" width="305" x="894" y="724" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;EMERGENCY IS OUT OF SCOPE HERE&lt;/b&gt;&lt;br&gt;See Diagram 4 — Emergency State Machine &amp; Evacuation Sequence." placeholders="1" id="emergency_pointer">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.4;fontFamily=Arial;fontSize=9.2;fontColor=#7F1D1D;align=left;verticalAlign=middle;spacing=8;shadow=0;" vertex="1">
+            <mxGeometry height="72" width="361" x="1211" y="724" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;EVENT / STATE LEGEND&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#475569&quot;&gt;&lt;b&gt;━━━━▶ event / local read&lt;/b&gt;&lt;/font&gt; &amp;nbsp; &lt;font color=&quot;#7C3AED&quot;&gt;&lt;b&gt;━━━━▶ UART command/event&lt;/b&gt;&lt;/font&gt; &amp;nbsp; &lt;font color=&quot;#2563EB&quot;&gt;&lt;b&gt;━━━━▶ HTTP / Wi-Fi&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#D97706&quot;&gt;&lt;b&gt;┄┄┄▶ scheduled one-way trigger&lt;/b&gt;&lt;/font&gt; &amp;nbsp; &lt;font color=&quot;#C62828&quot;&gt;&lt;b&gt;┄┄┄▶ cancellation / safe stop&lt;/b&gt;&lt;/font&gt; &amp;nbsp; &lt;font color=&quot;#CA8A04&quot;&gt;&lt;b&gt;····▶ optional persistence&lt;/b&gt;&lt;/font&gt;" placeholders="1" id="legend">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.1;fontFamily=Arial;fontSize=9.0;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="78" width="820" x="68" y="810" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;AUTHORITY&lt;/b&gt; · current Robot / Nano / Camera / Hub source.&lt;br&gt;&lt;font color=&quot;#64748B&quot;&gt;No Robot→Hub LOCATION. No Robot→Mega control. IMAGE_READY is not required. Camera/Hub never acknowledge SHOOT to Robot.&lt;/font&gt;" placeholders="1" id="authority">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.1;fontFamily=Arial;fontSize=9.2;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry height="78" width="672" x="900" y="810" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e00" status="time-direction" contract="time flows left to right" id="2">
+          <mxCell edge="1" parent="1" source="time_start" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#64748B;strokeWidth=1.4;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;curved=0;" target="time_end">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e01" status="boot-sync" contract="Robot STOP + GET; Nano READY:STOPPED / TUNE ML=n MR=n" id="3">
+          <mxCell edge="1" parent="1" source="boot_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=2.0;startArrow=block;startFill=1;startSize=8;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="boot_nano">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e02" status="rfid-read" contract="START UID 18 C4 0F BA" id="4">
+          <mxCell edge="1" parent="1" source="start_card" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#475569;strokeWidth=1.6;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="start_map">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="440" y="216" />
+                <mxPoint x="472" y="216" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e03" status="rfid-map" contract="mapped to track 1" id="5">
+          <mxCell edge="1" parent="1" source="start_map" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#475569;strokeWidth=1.6;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="start_robot">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="472" y="274" />
+                <mxPoint x="466" y="274" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e04" status="nano-command" contract="STOP before intro audio" id="6">
+          <mxCell edge="1" parent="1" source="start_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=2.0;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.4;exitY=1;entryX=0.5;entryY=0;curved=0;" target="start_stop">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="453" y="350" />
+                <mxPoint x="468" y="350" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e05" status="dfplayer-command" contract="stop old audio; playMp3Folder(1)" id="7">
+          <mxCell edge="1" parent="1" source="start_stop" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=2.0;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="intro_play">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="468" y="408" />
+                <mxPoint x="459" y="408" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e06" status="audio-lifecycle" contract="DFPlayer playback to FINISHED" id="8">
+          <mxCell edge="1" parent="1" source="intro_play" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=1.7;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;curved=0;" target="intro_finish">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e07" status="dfplayer-event" contract="FINISHED accepted only after AUDIO_MIN_MS" id="9">
+          <mxCell edge="1" parent="1" source="intro_finish" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=1.8;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0;entryX=1;entryY=1;curved=0;" target="start_guard">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e08" status="guarded-start" contract="START only after valid completion and clear latch" id="10">
+          <mxCell edge="1" parent="1" source="start_guard" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#16A34A;strokeWidth=2.1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="start_resume">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="604" y="350" />
+                <mxPoint x="606" y="350" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e09" status="rfid-read" contract="station card tracks 2..8" id="11">
+          <mxCell edge="1" parent="1" source="station_card" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#475569;strokeWidth=1.6;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="station_map">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="740" y="216" />
+                <mxPoint x="773" y="216" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e10" status="rfid-map" contract="tracks 2..8 map station 1..7" id="12">
+          <mxCell edge="1" parent="1" source="station_map" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#475569;strokeWidth=1.6;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="station_audio">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e11" status="nano-command" contract="STOP rail before narration" id="13">
+          <mxCell edge="1" parent="1" source="station_audio" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=2.0;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.35;exitY=1;entryX=0.5;entryY=0;curved=0;" target="station_nano">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="742" y="350" />
+                <mxPoint x="772" y="350" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e12" status="dfplayer-command" contract="play station track 2..8" id="14">
+          <mxCell edge="1" parent="1" source="station_nano" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=2.0;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="station_df">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="772" y="408" />
+                <mxPoint x="796" y="408" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e13" status="scheduled-event" contract="if narrating schedule non-blocking T+2 s photo" id="15">
+          <mxCell edge="1" parent="1" source="station_audio" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#D97706;strokeWidth=1.8;dashed=1;dashPattern=6 4;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;curved=0;" target="photo_due">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e14" status="one-way-uart" contract="SHOOT &lt;station&gt; one-way; no Robot acknowledgement" id="16">
+          <mxCell edge="1" parent="1" source="photo_due" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=2.0;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="cam_capture">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1017" y="443" />
+                <mxPoint x="944" y="443" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e15" status="camera-pipeline" contract="ensure MuseumHub Wi-Fi; RGB565 capture; software JPEG" id="17">
+          <mxCell edge="1" parent="1" source="cam_capture" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#D97706;strokeWidth=1.7;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;curved=0;" target="cam_encode">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e16" status="optional-storage" contract="optional onboard SD backup" id="18">
+          <mxCell edge="1" parent="1" source="cam_encode" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#CA8A04;strokeWidth=1.5;dashed=1;dashPattern=1 4;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;entryX=0;entryY=0.5;curved=0;" target="cam_sd">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e17" status="http-upload" contract="multipart image/jpeg POST /api/image/upload?station=N" id="19">
+          <mxCell edge="1" parent="1" source="cam_encode" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#2563EB;strokeWidth=2.1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="hub_commit">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1043" y="535" />
+                <mxPoint x="1064" y="535" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e18" status="browser-poll" contract="browser polls /api/gallery and fetches /api/image?seq=N" id="20">
+          <mxCell edge="1" parent="1" source="hub_commit" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#0891B2;strokeWidth=1.8;dashed=1;dashPattern=6 4;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="browser_fetch">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e19" status="dfplayer-event" contract="DFPlayer finished after AUDIO_MIN_MS" id="21">
+          <mxCell edge="1" parent="1" source="finish_df" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=1.8;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0;exitY=0;entryX=0;entryY=1;curved=0;" target="finish_guard">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e20" status="guarded-resume" contract="START iff resumeAfterAudio &amp;&amp; !railStopLatched" id="22">
+          <mxCell edge="1" parent="1" source="finish_guard" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#16A34A;strokeWidth=2.1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="finish_nano">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1248" y="350" />
+                <mxPoint x="1249" y="350" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e21" status="cancellation" contract="cancel pending photo when narration ends before trigger" id="23">
+          <mxCell edge="1" parent="1" source="finish_guard" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#C62828;strokeWidth=1.7;dashed=1;dashPattern=6 4;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;entryX=1;entryY=0.5;curved=0;" target="finish_cancel">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e22" status="rfid-read" contract="END UID A3 C0 38 15" id="24">
+          <mxCell edge="1" parent="1" source="end_card" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#475569;strokeWidth=1.6;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="end_map">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1418" y="216" />
+                <mxPoint x="1454" y="216" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e23" status="end-action" contract="mapped no-audio END action" id="25">
+          <mxCell edge="1" parent="1" source="end_map" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#C62828;strokeWidth=1.9;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" target="end_robot">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1454" y="274" />
+                <mxPoint x="1487" y="274" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e24" status="safe-stop" contract="send STOP and latch" id="26">
+          <mxCell edge="1" parent="1" source="end_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#C62828;strokeWidth=2.2;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.4;exitY=1;entryX=0.5;entryY=0;curved=0;" target="end_nano">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1469" y="350" />
+                <mxPoint x="1494" y="350" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e25" status="audio-stop" contract="stop audio; no new track" id="27">
+          <mxCell edge="1" parent="1" source="end_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#7C3AED;strokeWidth=1.8;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.7;entryX=1;entryY=0.5;curved=0;" target="end_df">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1604" y="324" />
+                <mxPoint x="1604" y="437" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e26" status="cancellation" contract="cancel pending station photo" id="28">
+          <mxCell edge="1" parent="1" source="end_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#C62828;strokeWidth=1.7;dashed=1;dashPattern=6 4;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0;exitY=0.7;entryX=0;entryY=0.5;curved=0;" target="end_camera">
+            <mxGeometry relative="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" edge_id="e27" status="latched-state" contract="no automatic restart; START card required" id="29">
+          <mxCell edge="1" parent="1" source="end_robot" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;strokeColor=#C62828;strokeWidth=2.0;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;entryX=1;entryY=0.5;curved=0;" target="end_state">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1618" y="313" />
+                <mxPoint x="1618" y="599" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

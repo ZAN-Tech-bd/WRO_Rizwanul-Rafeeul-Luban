@@ -111,6 +111,9 @@ bool PhotoStore::begin() {
     return false;
   }
 
+  // Somewhere to keep the mirrored seq floor when the gallery itself is on SD.
+  if (usingSd_ && !quietExists(kLittleFsMount, GALLERY_DIR)) LittleFS.mkdir(GALLERY_DIR);
+
   discardUploadTemp();   // a crash mid-upload can leave the scratch file behind
   loadIndex();
   pruneOrphans();
@@ -172,14 +175,22 @@ bool PhotoStore::parseName(const char* name, uint16_t* seq, uint8_t* station) co
 //  the dashboard would show a stale photo, which is the exact bug this feature
 //  exists to avoid. So the highest seq ever issued is kept in a one-line file
 //  that clear() deliberately does not delete.
+//
+//  That file is written to BOTH the card and LittleFS, and the higher of the two
+//  wins at boot, because the backend itself is not stable. An SPI card on jumper
+//  wires can answer "Select Failed" on a boot it mounted fine on the last one
+//  (see mountSd), which drops the gallery onto LittleFS; `uploadfs` rewrites
+//  LittleFS from scratch; and cards get swapped. Any of those, with the floor
+//  held only on the backend in use, restarts numbering at 1 -- and every browser
+//  still holds a year-cached copy of the old seq 1, so the dashboard shows THAT
+//  instead of the photo just captured.
 // ---------------------------------------------------------------------
-uint16_t PhotoStore::readSeqFloor() const {
-  if (!fs_) return 0;
+uint16_t PhotoStore::readSeqFloorFrom(fs::FS& fs, const char* mount) const {
   char path[48];
   snprintf(path, sizeof(path), "%s%s", GALLERY_DIR, kSeqName);
-  if (!quietExists(usingSd_ ? kSdMount : kLittleFsMount, path)) return 0;
+  if (!quietExists(mount, path)) return 0;
 
-  File f = fs_->open(path, "r");
+  File f = fs.open(path, "r");
   if (!f) return 0;
 
   char buf[8] = {0};
@@ -191,15 +202,32 @@ uint16_t PhotoStore::readSeqFloor() const {
   return (v > 0 && v <= 65535) ? static_cast<uint16_t>(v) : 0;
 }
 
-void PhotoStore::writeSeqFloor(uint16_t seq) {
-  if (!fs_) return;
+uint16_t PhotoStore::readSeqFloor() const {
+  if (!fs_) return 0;
+  uint16_t floorSeq = readSeqFloorFrom(LittleFS, kLittleFsMount);
+  if (usingSd_) {
+    const uint16_t onCard = readSeqFloorFrom(SD, kSdMount);
+    if (onCard > floorSeq) floorSeq = onCard;
+  }
+  return floorSeq;
+}
+
+void PhotoStore::writeSeqFloorTo(fs::FS& fs, uint16_t seq) {
   char path[48];
   snprintf(path, sizeof(path), "%s%s", GALLERY_DIR, kSeqName);
-  File f = fs_->open(path, FILE_WRITE, true);
+  File f = fs.open(path, FILE_WRITE, true);
   if (!f) return;
   f.printf("%u\n", static_cast<unsigned>(seq));
   f.flush();
   f.close();
+}
+
+void PhotoStore::writeSeqFloor(uint16_t seq) {
+  if (!fs_) return;
+  writeSeqFloorTo(*fs_, seq);
+  // Mirror onto flash so the floor outlives a card that fails to mount next boot.
+  // LittleFS always holds the upload scratch, so it is already mounted here.
+  if (usingSd_) writeSeqFloorTo(LittleFS, seq);
 }
 
 // ---------------------------------------------------------------------

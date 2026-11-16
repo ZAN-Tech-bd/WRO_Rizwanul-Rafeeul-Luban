@@ -76,6 +76,17 @@
 #define CMD_BUF_LEN       96           // hard-bounded line buffer (no String)
 #define LIST_MAX_ENTRIES  50           // safety cap for the LIST command
 
+// --- Robot link (UART1, RX only) ------------------------------------------
+// The guide ESP32 sends "SHOOT <station>" down one wire when it reads a
+// station RFID card. This is a SECOND command stream, deliberately NOT on
+// U0RXD: sharing U0RXD would put the CAM-MB's CH340 driver and the robot's
+// TX driver on the same net and cost us the USB console.
+// SD_MMC in 1-bit mode uses only GPIO2/14/15, so GPIO13 is genuinely free.
+// Disconnect this wire while flashing the cam.
+#define ROBOT_LINK_RX_GPIO   13
+#define ROBOT_LINK_TX_GPIO   (-1)      // receive only; the robot reads no replies
+#define ROBOT_LINK_BAUD      9600      // MUST match CAM_BAUD on the guide ESP32
+
 // --- Hub Wi-Fi (the ESP-CAM joins the Hub SoftAP to push photos) ----------
 // MUST match firmware/hub/include/config.h (HUB_SSID / HUB_PASS / HUB_CHANNEL).
 #define HUB_SSID                  "MuseumHub"

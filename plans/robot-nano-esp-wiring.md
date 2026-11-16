@@ -1,5 +1,13 @@
 # Robot Wiring — Arduino Nano Motion/RFID + ESP32 Companion
 
+> **SUPERSEDED (2026-08-08).** The RFID-on-Nano split and framed `$TAG…*HH` / `ACK` / `RESUME`
+> protocol documented below were never built. The shipped robot (`NANO_LFR/NANO_LFR.ino` +
+> `ESP32_RFID_MP3_LFR/ESP32_RFID_MP3_LFR.ino`) instead keeps RC522 on the **ESP32** — the Nano only
+> does motors + line sensor — linked by a plain `GO`/`START`/`STOP` toggle over the Nano's **hardware**
+> UART (D0/D1), not `SoftwareSerial` D2/D3. See the "Status check" section near the top of
+> `BUILD_PLAN.md` for the full list of differences and the actual current pin map/protocol. Kept here
+> for history; do not wire or code against this document.
+
 ## Controller split
 
 - **Arduino Nano:** IR array, L298N, motors, RC522, line following, RFID stop logic.

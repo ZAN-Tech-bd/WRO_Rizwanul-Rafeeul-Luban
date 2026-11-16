@@ -79,7 +79,26 @@
         </thead>
         <tbody id="healthBody"></tbody>
       </table>
-      <p class="muted" style="margin-top:8px;">Temp/Hum/Gas are mock values now. In Phase 6 they arrive live from each artifact's DHT11 + MQ-135 over ESP-NOW.</p>
+      <p class="muted" style="margin-top:8px;" data-i18n="healthNote"></p>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="sensorTitle">Hub sensors — pin scan</h2>
+      <p class="muted" data-i18n="sensorHint"></p>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="thPin">GPIO</th>
+            <th data-i18n="thTemp">Temp °C</th>
+            <th data-i18n="thHum">Humidity %</th>
+            <th data-i18n="thAnalog">Analog (MQ)</th>
+            <th data-i18n="thReads">Reads</th>
+            <th data-i18n="thResult">Result</th>
+          </tr>
+        </thead>
+        <tbody id="sensorBody"></tbody>
+      </table>
+      <p class="muted" id="sensorSummary" style="margin-top:8px;"></p>
     </section>
 
     <section class="card">
@@ -101,12 +120,27 @@
   <script src="js/data.js"></script>
   <script src="js/hub.js"></script>
   <script>
-    // classify one artifact's reading into good / watch / alert
-    function classify(temp, hum, gas) {
-      let s = "good";
-      if (temp > 31 || hum > 70 || gas > 500) s = "alert";
-      else if (temp >= 28 || hum <= 35 || gas >= 300) s = "watch";
-      return s;
+    // The Hub decides the gas verdict (HUB_GAS_THRESHOLD_RAW in config.h) and
+    // sends it as gasOk, so the raw ADC count never reaches the screen — a bare
+    // "3538" means nothing to anyone reading the dashboard.
+    const has = (v) => v !== null && v !== undefined;
+
+    // Overall row verdict. A channel is judged only when it actually reported,
+    // so a missing sensor never reads as a healthy one.
+    // Calibrated to this venue's normal indoor range rather than a generic
+    // museum spec: ~35 C and ~65 %RH read as GOOD here, not merely tolerated.
+    function classify(h) {
+      if ((has(h.temp) && h.temp > 38) || (has(h.hum) && h.hum > 75) ||
+          (has(h.gas) && !h.gasOk)) return "alert";
+      if ((has(h.temp) && h.temp > 35) || (has(h.hum) && h.hum > 65) ||
+          (has(h.hum) && h.hum <= 35)) return "watch";
+      if (!has(h.temp) && !has(h.hum) && !has(h.gas)) return "watch";
+      return "good";
+    }
+
+    function fmt(v, suffix) {
+      return (v === null || v === undefined) ? "<span class=\"muted\">—</span>"
+                                             : v + (suffix || "");
     }
 
     function renderPending() {
@@ -131,21 +165,79 @@
 
     function renderHealth(health) {
       const lang = getLang();
-      document.getElementById("healthBody").innerHTML = health.map((h) => {
+      const body = document.getElementById("healthBody");
+      if (!health || !health.length) {
+        body.innerHTML = `<tr><td colspan="5" class="muted">${t("healthEmpty")}</td></tr>`;
+        return;
+      }
+      body.innerHTML = health.map((h) => {
         const a = artifactByIdLocal(h.id);
-        const s = classify(h.temp, h.hum, h.gas);
+        const s = classify(h);
+        const gasPill = has(h.gas)
+          ? `<span class="pill ${h.gasOk ? "good" : "alert"}">${t(h.gasOk ? "gasGood" : "gasBad")}</span>`
+          : `<span class="muted">—</span>`;
         return `
           <tr>
             <td>${a.emoji} ${a.name[lang]}</td>
-            <td>${h.temp}</td>
-            <td>${h.hum}</td>
-            <td>${h.gas}</td>
+            <td>${fmt(h.temp)}</td>
+            <td>${fmt(h.hum)}</td>
+            <td>${gasPill}</td>
             <td><span class="pill ${s}">${t(s)}</span></td>
           </tr>`;
       }).join("");
     }
 
     function artifactByIdLocal(id) { return ARTIFACTS.find((a) => a.id === id) || ARTIFACTS[0]; }
+
+    // ---- Hub pin scan ---------------------------------------------------
+    // Every pin listed in HUB_SENSOR_PINS is probed as a DHT11 in turn; the
+    // firmware reports WHY a pin failed, so a miswired pin can be told apart
+    // from an empty one. Each result maps to a pill colour + a plain label.
+    const DHT_RESULT = {
+      ok:            ["good",  "dhtOk"],
+      unprobed:      ["watch", "dhtWait"],
+      line_low:      ["alert", "dhtLow"],
+      no_response:   ["alert", "dhtNone"],
+      frame_timeout: ["alert", "dhtCut"],
+      checksum:      ["watch", "dhtSum"],
+      no_drive:      ["alert", "dhtNoDrive"]
+    };
+
+    function renderSensors(sensors) {
+      const body = document.getElementById("sensorBody");
+      const summary = document.getElementById("sensorSummary");
+      if (!sensors || !sensors.length) {
+        body.innerHTML = "";
+        summary.textContent = "";
+        return;
+      }
+
+      body.innerHTML = sensors.map((p) => {
+        const [cls, key] = DHT_RESULT[p.dht] || ["watch", "dhtWait"];
+        const notes = [];
+        if (p.inputOnly) notes.push(t("inputOnly"));
+        if (p.station)   notes.push(p.station);
+        const note = notes.length
+          ? `<span class="muted" style="display:block;">${notes.join(" · ")}</span>` : "";
+        const analog = p.adc === undefined
+          ? `<span class="muted">${t("noAdc")}</span>`
+          : `${p.adc} <span class="muted">(${p.mv} mV)</span>`;
+        return `
+          <tr>
+            <td><strong>${p.pin}</strong>${note}</td>
+            <td>${p.temp === undefined ? "—" : p.temp}</td>
+            <td>${p.hum  === undefined ? "—" : p.hum}</td>
+            <td>${analog}</td>
+            <td>${p.ok}/${p.tries}</td>
+            <td><span class="pill ${cls}">${t(key)}</span></td>
+          </tr>`;
+      }).join("");
+
+      const hits = sensors.filter((p) => p.ok > 0).map((p) => "GPIO" + p.pin);
+      summary.textContent = hits.length
+        ? `${t("sensorFound")}: ${hits.join(", ")}`
+        : t("sensorNone");
+    }
 
     function renderEmergencyButton(on) {
       const btn = document.getElementById("emergBtn");
@@ -277,13 +369,23 @@
         ? `<div class="emergency-banner">${t("emergencyMsg")}</div>` : "";
 
       const lang = getLang();
-      const cur = artifactByIdLocal(state.robot.station);
+      // state.robot.station comes from the rail robot's own ESP-NOW reports,
+      // which sit stale (or empty) whenever no robot is actually on and
+      // broadcasting -- the same field the LED show uses on the Hub itself, so
+      // it is left alone there. The Camera section's station tag instead comes
+      // from the ESP32-CAM's last upload, which only happens when a photo
+      // genuinely arrives, so it tracks the real world instead of freezing on
+      // old test-button clicks. Moving indicator still needs the real ESP-NOW
+      // status: a photo carries no "narrating vs moving" state to read.
+      const imgStation = state.image ? state.image.station : null;
+      const cur = artifactByIdLocal(imgStation);
       document.getElementById("robotStation").textContent = cur.emoji + " " + cur.name[lang];
       document.getElementById("robotDot").className =
         "dot" + (state.robot.status === "moving" ? " moving" : "");
 
       renderPending();
       renderHealth(state.health);
+      renderSensors(state.sensors);
       renderEmergencyButton(state.emergency);
       renderImage(state.image);
     }

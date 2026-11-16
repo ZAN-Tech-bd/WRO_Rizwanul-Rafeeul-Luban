@@ -1,0 +1,107 @@
+==================================================================
+  ESP32_RFID_MP3_RAIL  —  how to compile on a laptop with the
+                          Arduino IDE (no PlatformIO needed)
+==================================================================
+
+This folder contains everything the other laptop needs. Nothing has to
+be downloaded from the internet: the libraries are bundled and the
+sketch's local header files have already been turned into real files
+(the symlinks used by PlatformIO were resolved, so they travel safely).
+
+Two folders matter:
+
+  arduino_libraries/   -> the 3 libraries the sketch #includes
+  arduino_sketch/      -> the sketch itself, self-contained
+
+------------------------------------------------------------------
+STEP 1 — install the 3 libraries
+------------------------------------------------------------------
+Copy these THREE folders
+
+    arduino_libraries/DFRobotDFPlayerMini
+    arduino_libraries/EspSoftwareSerial
+    arduino_libraries/RFID_MFRC522v2
+
+into the Arduino "libraries" folder on the other laptop:
+
+    Windows:  Documents\Arduino\libraries\
+    macOS:    ~/Documents/Arduino/libraries/
+    Linux:    ~/Arduino/libraries/
+
+(If that "libraries" folder does not exist yet, just create it.)
+
+End result: the folder should contain (among others)
+
+    libraries/DFRobotDFPlayerMini/
+    libraries/EspSoftwareSerial/
+    libraries/RFID_MFRC522v2/
+
+Do NOT rename these folders — the #include names depend on them.
+
+NOTE on the other libraries the sketch uses (WiFi, WebServer, SPI,
+esp_now): these are NOT separate downloads. They ship INSIDE the
+ESP32 Arduino core itself. So all you need is the ESP32 board package
+installed in the Arduino IDE (Tools -> Board -> Boards Manager ->
+"esp32" by Espressif). Arduino-ESP32 2.x and 3.x both work, because
+EspNowCompat.h adapts the ESP-NOW callback for either core.
+
+------------------------------------------------------------------
+STEP 2 — open the sketch
+------------------------------------------------------------------
+The Arduino IDE requires the .ino file to live in a folder with the
+SAME name. That is already arranged here:
+
+    arduino_sketch/ESP32_RFID_MP3/ESP32_RFID_MP3.ino
+
+Copy the whole folder
+
+    arduino_sketch/ESP32_RFID_MP3
+
+to the laptop (e.g. into Documents/Arduino/ or anywhere you like), then
+open ESP32_RFID_MP3.ino with the Arduino IDE.
+
+It contains 4 files, all needed, all real (no symlinks):
+    ESP32_RFID_MP3.ino   <- the sketch
+    ControlPage.h        <- web console HTML (local header)
+    EspNowCompat.h       <- ESP-NOW 2.x/3.x compat (local header)
+    MuseumProtocol.h     <- shared ESP-NOW packet layout (local header)
+
+------------------------------------------------------------------
+STEP 3 — board + upload settings
+------------------------------------------------------------------
+    Tools -> Board        -> "ESP32 Dev Module"
+    Tools -> Upload Speed -> 921600 (or 460800 if it fails)
+    Tools -> Port         -> the ESP32's COM port (Windows) or
+                             /dev/ttyUSB0 / /dev/cu.SLAB_USBtoUART
+                             (mac/Linux)
+
+Then click Upload (->). Open Serial Monitor at 115200 baud to watch
+the boot log and use the 1-9 / + - / s / v / e / m test commands.
+
+------------------------------------------------------------------
+WHAT YOU GET WITH THE CURRENT FIRMWARE
+------------------------------------------------------------------
+This build includes the DFPlayer-offline fix. If the DFPlayer Mini is
+disconnected (or its TX/RX wire is off), the robot no longer freezes:
+it runs the WHOLE tour SILENTLY — the rail still stops at each station
+for ~3 s, the station photo is still taken, and the rail auto-resumes.
+When the DFPlayer is reconnected and the board is rebooted, full audio
+comes back automatically. No code change is needed either way.
+
+------------------------------------------------------------------
+TROUBLESHOOTING
+------------------------------------------------------------------
+* "No such file" for a library      -> STEP 1 folder names are wrong,
+                                        or the IDE was open while you
+                                        copied them (close & reopen it).
+* Folder/sketch name mismatch error  -> you opened the .ino from a
+                                        folder NOT named ESP32_RFID_MP3.
+                                        Keep them identical.
+* ESP-NOW "init FAILED" at boot      -> harmless if no Hub is running;
+                                        the emergency link simply stays
+                                        off until the Hub broadcasts.
+* Build still wants a 4th library    -> make sure the ESP32 board
+                                        package is installed (STEP 1
+                                        note). Only the 3 folders above
+                                        are extra.
+==================================================================

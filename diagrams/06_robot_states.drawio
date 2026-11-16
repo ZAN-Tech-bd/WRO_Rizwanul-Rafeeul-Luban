@@ -1,0 +1,219 @@
+<mxfile host="Claude Code" type="device">
+  <diagram id="wro_rrl_06-robot-states" name="06-robot-states">
+    <mxGraphModel dx="1200" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="1760" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" role="background" status="" placeholders="1" id="page_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="20" y="20" width="1720" height="1060" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="06 — Every State The Robot Can Be In" role="title" status="" placeholders="1" id="title">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#0F172A;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="60" y="44" width="1340" height="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Six states, and the exact thing that moves it from one to the next. If the robot is behaving oddly, it is sitting in one of these boxes." role="subtitle" status="" placeholders="1" id="subtitle">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="62" y="84" width="1320" height="24" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ROBOT BEHAVIOUR · ONE PICTURE" role="badge" status="" placeholders="1" id="badge">
+          <mxCell parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;spacing=6;connectable=0;" vertex="1">
+            <mxGeometry x="1420" y="53" width="300" height="32" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="THE NORMAL TOUR" role="runtime-boundary" status="active" placeholders="1" id="bnd_norm">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#334155;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="52" y="124" width="1060" height="700" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="WHILE THE ALARM IS UP  ·  everything on the left is switched off" role="runtime-boundary" status="active" placeholders="1" id="bnd_em">
+          <mxCell parent="1" style="swimlane;startSize=30;horizontal=1;rounded=1;arcSize=10;container=1;recursiveResize=0;pointerEvents=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;swimlaneFillColor=#F8FAFC;strokeColor=#C62828;strokeWidth=2;fontFamily=Arial;fontSize=15;fontStyle=1;fontColor=#0F172A;align=left;spacingLeft=14;shadow=0;" vertex="1">
+            <mxGeometry x="1140" y="124" width="568" height="700" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Power on&lt;/b&gt;" role="state" status="" placeholders="1" id="boot">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=28;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="56" width="230" height="52" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;PARKED&lt;/b&gt;&lt;br&gt;brakes on&lt;br&gt;&lt;br&gt;The robot boots straight into this.&lt;br&gt;It will not move until the&lt;br&gt;START card is tapped." role="state" status="" placeholders="1" id="s_park">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=28;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;shadow=1;" vertex="1">
+            <mxGeometry x="28" y="176" width="230" height="120" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;PARKED AND TALKING&lt;/b&gt;&lt;br&gt;&lt;br&gt;Brakes on, a track is playing,&lt;br&gt;and a photo is queued for&lt;br&gt;2 seconds into the track." role="state" status="" placeholders="1" id="s_talk">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=28;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#115E59;align=center;verticalAlign=middle;spacing=6;shadow=1;" vertex="1">
+            <mxGeometry x="418" y="166" width="250" height="150" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;MOVING&lt;/b&gt;&lt;br&gt;&lt;br&gt;Rolling forward at the&lt;br&gt;saved left and right speeds." role="state" status="" placeholders="1" id="s_move">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=28;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#3730A3;align=center;verticalAlign=middle;spacing=6;shadow=1;" vertex="1">
+            <mxGeometry x="828" y="176" width="210" height="120" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;PARKED, TALK WENT WRONG&lt;/b&gt;&lt;br&gt;&lt;br&gt;The speaker reported a fault, or 90 seconds&lt;br&gt;passed with no “finished”. The robot stays&lt;br&gt;put rather than guessing." role="state" status="" placeholders="1" id="s_bad">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=28;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=6;shadow=1;" vertex="1">
+            <mxGeometry x="418" y="456" width="250" height="130" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;The END card works from anywhere.&lt;/b&gt;&lt;br&gt;Tap A3 C0 38 15 in any state on this side and the robot stops and stays stopped. It is the only card that never plays a sound." role="note" status="" placeholders="1" id="note_end">
+          <mxCell parent="bnd_norm" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#D97706;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#7C2D12;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="748" y="46" width="290" height="110" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Same card twice?&lt;/b&gt;&lt;br&gt;If the very same card is read again within 1.5 seconds it is thrown away — so holding a card near the reader cannot restart a track." role="note" status="" placeholders="1" id="note_dupe">
+          <mxCell parent="bnd_norm" style="shape=note;size=16;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#1E3A8A;align=left;verticalAlign=top;spacing=9;shadow=0;" vertex="1">
+            <mxGeometry x="748" y="456" width="290" height="130" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="always boots into this" role="wire-label" status="" placeholders="1" id="p_boot">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="58" y="122" width="170" height="44" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;START card&lt;/b&gt;&lt;br&gt;18 C4 0F BA&lt;br&gt;brakes released,&lt;br&gt;intro track plays" role="wire-label" status="" placeholders="1" id="p_start">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="264" y="182" width="148" height="76" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="track finished but the&lt;br&gt;brakes were still&lt;br&gt;latched → stays parked" role="wire-label" status="" placeholders="1" id="p_relatch">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F8FAFC;fillOpacity=95;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#475569;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="264" y="270" width="148" height="66" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="track finished and&lt;br&gt;the brakes are off&lt;br&gt;→ sends START" role="wire-label" status="" placeholders="1" id="p_finish">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="674" y="178" width="148" height="62" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;station card&lt;/b&gt;&lt;br&gt;sends STOP, plays&lt;br&gt;that track, queues&lt;br&gt;the photo" role="wire-label" status="" placeholders="1" id="p_station">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="674" y="262" width="148" height="76" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="speaker fault, or&lt;br&gt;90 s with no&lt;br&gt;“finished”" role="wire-label" status="" placeholders="1" id="p_bad">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FEF2F2;fillOpacity=95;strokeColor=#C62828;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="424" y="348" width="110" height="62" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="tap any card&lt;br&gt;that has a&lt;br&gt;track on it" role="wire-label" status="" placeholders="1" id="p_recover">
+          <mxCell parent="bnd_norm" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="552" y="348" width="110" height="62" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ALARM ON&lt;/b&gt; — arrives by radio from the hub, from any state on the left" role="peripheral" status="" placeholders="1" id="alarm_in">
+          <mxCell parent="bnd_em" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=1.4;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="40" y="46" width="490" height="52" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ALARM UP — DRIVING TO THE END&lt;/b&gt;&lt;br&gt;&lt;br&gt;Sound cut. Queued photo dropped. Brakes released.&lt;br&gt;&lt;b&gt;Every card is ignored except the END card&lt;/b&gt;, so the robot&lt;br&gt;drives straight past every station without stopping." role="state" status="" placeholders="1" id="s_em_run">
+          <mxCell parent="bnd_em" style="rounded=1;arcSize=28;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#C62828;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=6;shadow=1;" vertex="1">
+            <mxGeometry x="40" y="138" width="490" height="138" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ALARM UP — STOPPED AT THE END&lt;/b&gt;&lt;br&gt;&lt;br&gt;The END card arrived. Brakes on. It waits here." role="state" status="" placeholders="1" id="s_em_stop">
+          <mxCell parent="bnd_em" style="rounded=1;arcSize=28;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=2;fontFamily=Arial;fontSize=11;fontColor=#334155;align=center;verticalAlign=middle;spacing=6;shadow=1;" vertex="1">
+            <mxGeometry x="40" y="396" width="490" height="110" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;END card&lt;/b&gt; — the only card that still does anything" role="wire-label" status="" placeholders="1" id="p_em56">
+          <mxCell parent="bnd_em" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="100" y="310" width="370" height="52" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ALL CLEAR&lt;/b&gt; — sound cut, STOP sent, brakes latched back on. The robot will not move again until somebody taps the START card." role="wire-label" status="" placeholders="1" id="p_clear">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FEF2F2;fillOpacity=95;strokeColor=#C62828;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#7F1D1D;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="520" y="760" width="560" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHAT THE ARROWS MEAN&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#0F766E&quot;&gt;━━━▶ &lt;b&gt;Normal step&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  the tour working as intended&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#475569&quot;&gt;━━━▶ &lt;b&gt;Quiet step&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  nothing visible happens; the robot just stays put&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#C62828&quot;&gt;– – ▶ &lt;b&gt;Something failed&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  or the alarm overruled the tour&lt;/font&gt;" role="legend" status="" placeholders="1" id="legend">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="52" y="848" width="390" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THE CARDS AND WHAT THEY DO&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;18 C4 0F BA — START.&lt;/b&gt; The only card that releases the brakes. Plays 0001.mp3 first, then the robot moves off.&lt;br&gt;&lt;br&gt;&lt;b&gt;A3 C0 38 15 — END.&lt;/b&gt; Stops the robot and latches the brakes. No sound. Works from any state.&lt;br&gt;&lt;br&gt;&lt;b&gt;Seven station cards.&lt;/b&gt; Each stops the robot, plays its own track (0002–0008.mp3) and queues a photo.&lt;br&gt;&lt;br&gt;&lt;b&gt;Any other card&lt;/b&gt; does nothing at all — the robot just logs that it saw an unknown one." role="legend" status="" placeholders="1" id="cards">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="466" y="848" width="390" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THE FOUR THINGS THAT KEEP IT SAFE&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;1. It boots parked.&lt;/b&gt; Power-on never means motion. Somebody has to tap the START card.&lt;br&gt;&lt;br&gt;&lt;b&gt;2. Brakes are real.&lt;/b&gt; Stopping shorts both motors so they lock. It does not just cut the power and let the robot roll.&lt;br&gt;&lt;br&gt;&lt;b&gt;3. A broken track parks it.&lt;/b&gt; If the sound fails, the robot stays where it is instead of driving on in silence.&lt;br&gt;&lt;br&gt;&lt;b&gt;4. One way out of the latch.&lt;/b&gt; Only the START card releases the brakes — not a timer, not the alarm clearing." role="legend" status="" placeholders="1" id="safe">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="880" y="848" width="390" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;HOW TO USE THIS SHEET&lt;/b&gt;&lt;br&gt;&lt;br&gt;When the robot “won’t move”, find which box it is sitting in:&lt;br&gt;&lt;br&gt;• &lt;b&gt;Nothing at all, ever?&lt;/b&gt; It is in PARKED — tap the START card.&lt;br&gt;&lt;br&gt;• &lt;b&gt;Talked, then stayed put?&lt;/b&gt; It is in PARKED, TALK WENT WRONG — check the speaker board and its SD card.&lt;br&gt;&lt;br&gt;• &lt;b&gt;Drove past every station?&lt;/b&gt; The alarm is still up somewhere.&lt;br&gt;&lt;br&gt;• &lt;b&gt;Stopped dead at the far end?&lt;/b&gt; ALARM UP — STOPPED AT THE END. Clear the alarm, then tap START." role="legend" status="" placeholders="1" id="source">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="1294" y="848" width="414" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_boot">
+          <mxCell parent="bnd_norm" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="boot" target="s_park">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_start">
+          <mxCell parent="bnd_norm" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.35;entryX=0;entryY=0.35;curved=0;" edge="1" source="s_park" target="s_talk">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_relatch">
+          <mxCell parent="bnd_norm" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#475569;strokeWidth=1.6;endArrow=block;endFill=1;endSize=9;exitX=0;exitY=0.85;entryX=1;entryY=0.85;curved=0;" edge="1" source="s_talk" target="s_park">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_finish">
+          <mxCell parent="bnd_norm" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=1;exitY=0.3;entryX=0;entryY=0.3;curved=0;" edge="1" source="s_talk" target="s_move">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_station">
+          <mxCell parent="bnd_norm" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0;exitY=0.8;entryX=1;entryY=0.8;curved=0;" edge="1" source="s_move" target="s_talk">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_bad">
+          <mxCell parent="bnd_norm" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#C62828;strokeWidth=2.0;dashed=1;dashPattern=8 5;endArrow=block;endFill=1;endSize=9;exitX=0.25;exitY=1;entryX=0.25;entryY=0;curved=0;" edge="1" source="s_talk" target="s_bad">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_recover">
+          <mxCell parent="bnd_norm" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.75;exitY=0;entryX=0.75;entryY=1;curved=0;" edge="1" source="s_bad" target="s_talk">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_alarm">
+          <mxCell parent="bnd_em" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#C62828;strokeWidth=3.4;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="alarm_in" target="s_em_run">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_em56">
+          <mxCell parent="bnd_em" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=0;" edge="1" source="s_em_run" target="s_em_stop">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="t_clear">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#C62828;strokeWidth=3.4;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=1;curved=0;" edge="1" source="s_em_stop" target="s_park">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1425" y="790" />
+                <mxPoint x="195" y="790" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

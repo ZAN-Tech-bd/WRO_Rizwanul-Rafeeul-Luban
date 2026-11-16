@@ -1,0 +1,29 @@
+digraph tour_workflow {
+    rankdir=LR;
+    node [shape=box, style="filled,rounded", fontname="Arial"];
+    edge [fontname="Arial"];
+    
+    Start [label="Start Tour", fillcolor="#C8E6C9"];
+    RFID [label="RFID Card Tap", fillcolor="#BBDEFB"];
+    Check [label="Valid Station?", fillcolor="#FFF9C4", shape=diamond];
+    Stop [label="Stop Robot", fillcolor="#FFCDD2"];
+    Photo [label="Take Photo", fillcolor="#B2EBF2"];
+    MP3 [label="Play Audio", fillcolor="#F8BBD0"];
+    Hub [label="Update Hub", fillcolor="#FFE0B2"];
+    Resume [label="Resume Tour?", fillcolor="#FFF9C4", shape=diamond];
+    Move [label="Continue Moving", fillcolor="#C8E6C9"];
+    End [label="End Tour", fillcolor="#FFCDD2"];
+    
+    Start -> RFID;
+    RFID -> Check;
+    Check -> Yes [label="Yes"];
+    Yes -> Stop;
+    Stop -> Photo;
+    Photo -> MP3;
+    MP3 -> Hub;
+    Hub -> Resume;
+    Resume -> Move [label="Yes"];
+    Move -> RFID;
+    Resume -> End [label="No"];
+    Check -> RFID [label="No"];
+}

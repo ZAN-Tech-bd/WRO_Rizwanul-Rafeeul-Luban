@@ -1,0 +1,405 @@
+<mxfile host="Claude Code" type="device">
+  <diagram id="wro_rrl_04-station-stop" name="04-station-stop">
+    <mxGraphModel dx="1200" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="0" pageScale="1" pageWidth="1880" pageHeight="1460" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" role="background" status="" placeholders="1" id="page_bg">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="20" y="20" width="1840" height="1420" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="04 — One Station Stop, Start To Finish" role="title" status="" placeholders="1" id="title">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#0F172A;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="60" y="44" width="1460" height="38" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="What actually happens between the robot seeing a card and the robot moving again. Read it top to bottom." role="subtitle" status="" placeholders="1" id="subtitle">
+          <mxCell parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;fontColor=#475569;spacing=0;connectable=0;" vertex="1">
+            <mxGeometry x="62" y="84" width="1440" height="24" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="THE NORMAL TOUR · NO EMERGENCY" role="badge" status="" placeholders="1" id="badge">
+          <mxCell parent="1" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;spacing=6;connectable=0;" vertex="1">
+            <mxGeometry x="1540" y="53" width="300" height="32" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="band" status="" placeholders="1" id="bd1">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#EFF2F6;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="270" y="226" width="1570" height="118" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="band" status="" placeholders="1" id="bd2">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#EEF0FB;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="270" y="352" width="1570" height="178" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="band" status="" placeholders="1" id="bd3">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#FDF6EA;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="270" y="538" width="1570" height="262" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="band" status="" placeholders="1" id="bd4">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#EAF1F8;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="270" y="808" width="1570" height="144" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="band" status="" placeholders="1" id="bd5">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#E9F4F1;strokeColor=none;pointerEvents=0;connectable=0;" vertex="1">
+            <mxGeometry x="270" y="960" width="1570" height="196" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;The RFID card&lt;/b&gt;&lt;br&gt;stuck on the rail" role="lifeline-head" status="" placeholders="1" id="card">
+          <mxCell parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.8;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry x="286" y="150" width="170" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="lifeline-body" status="" placeholders="1" id="card_ll">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#B4532A;strokeColor=none;opacity=45;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="370" y="206" width="2" height="1100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Robot ESP32&lt;/b&gt;&lt;br&gt;the main brain" role="lifeline-head" status="" placeholders="1" id="robot">
+          <mxCell parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#E7F5F3;strokeColor=#0F766E;strokeWidth=1.8;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#115E59;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry x="496" y="150" width="220" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="lifeline-body" status="" placeholders="1" id="robot_ll">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=none;opacity=45;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="605" y="206" width="2" height="1100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Nano + motors&lt;/b&gt;" role="lifeline-head" status="" placeholders="1" id="nano">
+          <mxCell parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#EEF2FF;strokeColor=#4F46E5;strokeWidth=1.8;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#3730A3;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry x="756" y="150" width="180" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="lifeline-body" status="" placeholders="1" id="nano_ll">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#4F46E5;strokeColor=none;opacity=45;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="845" y="206" width="2" height="1100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;DFPlayer + speaker&lt;/b&gt;" role="lifeline-head" status="" placeholders="1" id="df">
+          <mxCell parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;strokeWidth=1.8;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#334155;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry x="976" y="150" width="190" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="lifeline-body" status="" placeholders="1" id="df_ll">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#64748B;strokeColor=none;opacity=45;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1070" y="206" width="2" height="1100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;ESP32-CAM&lt;/b&gt;" role="lifeline-head" status="" placeholders="1" id="cam">
+          <mxCell parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFF7E6;strokeColor=#D97706;strokeWidth=1.8;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#92400E;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry x="1206" y="150" width="190" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="lifeline-body" status="" placeholders="1" id="cam_ll">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#D97706;strokeColor=none;opacity=45;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1300" y="206" width="2" height="1100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Hub ESP32&lt;/b&gt;" role="lifeline-head" status="" placeholders="1" id="hub">
+          <mxCell parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#1F4E78;strokeWidth=1.8;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#16324F;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry x="1436" y="150" width="190" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="lifeline-body" status="" placeholders="1" id="hub_ll">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#1F4E78;strokeColor=none;opacity=45;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1530" y="206" width="2" height="1100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;Staff phone&lt;/b&gt;" role="lifeline-head" status="" placeholders="1" id="staff">
+          <mxCell parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFF4ED;strokeColor=#B4532A;strokeWidth=1.8;fontFamily=Arial;fontSize=11;fontStyle=1;fontColor=#7C2D12;align=center;verticalAlign=middle;spacing=5;shadow=1;" vertex="1">
+            <mxGeometry x="1666" y="150" width="170" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="lifeline-body" status="" placeholders="1" id="staff_ll">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=#B4532A;strokeColor=none;opacity=45;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1750" y="206" width="2" height="1100" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;STEP 1&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;The card is read&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#7F1D1D'&gt;If the same card is read again within 1.5 seconds, it is ignored.&lt;/font&gt;" role="phase" status="" placeholders="1" id="ph1">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="52" y="226" width="200" height="118" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;STEP 2&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Stop, then start talking&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#7F1D1D'&gt;If the speaker board is missing, the robot stays stopped rather than driving off in silence.&lt;/font&gt;" role="phase" status="" placeholders="1" id="ph2">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="52" y="352" width="200" height="178" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;STEP 3&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Take the photo, 2 seconds in&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#7F1D1D'&gt;If the talk has already stopped when those 2 seconds are up, the photo is cancelled. A photo is only ever taken while the robot is talking.&lt;/font&gt;" role="phase" status="" placeholders="1" id="ph3">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="52" y="538" width="200" height="262" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;STEP 4&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;The photo reaches the staff screen&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#7F1D1D'&gt;A half-sent photo is thrown away and the old one kept.&lt;/font&gt;" role="phase" status="" placeholders="1" id="ph4">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="52" y="808" width="200" height="144" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;STEP 5&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;The talk ends, the robot moves on&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#7F1D1D'&gt;If the speaker never says “finished”, the robot gives up after 90 seconds and stays stopped.&lt;/font&gt;" role="phase" status="" placeholders="1" id="ph5">
+          <mxCell parent="1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.4;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=middle;spacing=6;" vertex="1">
+            <mxGeometry x="52" y="960" width="200" height="196" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m1_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="371" y="292" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m1_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="606" y="292" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;1&lt;/b&gt; · card comes into range — the robot reads its number, e.g. &lt;b&gt;64 14 F6 B3&lt;/b&gt;" role="wire-label" status="" placeholders="1" id="m1_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="385" y="246" width="207" height="34" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;2&lt;/b&gt; · robot puts the card to sleep at once, so holding it there cannot fire twice" role="wire-label" status="" placeholders="1" id="m2">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F8FAFC;fillOpacity=95;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#475569;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="456" y="306" width="300" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m3_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="606" y="400" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m3_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="846" y="400" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;3&lt;/b&gt; · the word &lt;b&gt;STOP&lt;/b&gt;" role="wire-label" status="" placeholders="1" id="m3_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="620" y="358" width="212" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m4_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="846" y="452" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m4_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="606" y="452" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;4&lt;/b&gt; · &lt;b&gt;STATE:STOPPED&lt;/b&gt; — motors shorted and locked, not coasting" role="wire-label" status="" placeholders="1" id="m4_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="620" y="406" width="212" height="34" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m5_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="606" y="506" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m5_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1071" y="506" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;5&lt;/b&gt; · play track 4 (the file 0004.mp3)" role="wire-label" status="" placeholders="1" id="m5_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="620" y="464" width="437" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="activation" status="" placeholders="1" id="act_talk">
+          <mxCell parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0F766E;strokeWidth=1.4;fontFamily=Arial;fontSize=9;connectable=0;" vertex="1">
+            <mxGeometry x="599" y="506" width="14" height="504" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;6&lt;/b&gt; · robot writes itself a reminder: “take a photo in 2 seconds”.&lt;br&gt;It does &lt;b&gt;not&lt;/b&gt; sit and wait — it keeps reading cards and messages all the while." role="wire-label" status="" placeholders="1" id="m6">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F8FAFC;fillOpacity=95;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#475569;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="406" y="566" width="400" height="44" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m7_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="606" y="654" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m7_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1301" y="654" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;7&lt;/b&gt; · one short line down one wire: &lt;b&gt;SHOOT 3&lt;/b&gt;" role="wire-label" status="" placeholders="1" id="m7_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="620" y="612" width="667" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;8&lt;/b&gt; · camera throws away 2 stale frames, grabs a fresh one, squeezes it into a JPEG, and keeps a copy in its own memory" role="wire-label" status="" placeholders="1" id="m8">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F8FAFC;fillOpacity=95;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#475569;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1111" y="682" width="380" height="44" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m9_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1301" y="770" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m9_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1531" y="770" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;9&lt;/b&gt; · sends the photo over Wi-Fi" role="wire-label" status="" placeholders="1" id="m9_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1315" y="728" width="202" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;10&lt;/b&gt; · hub writes it to a scratch file, checks the size and the JPEG start/end marks, then files it in the gallery with a new number.&lt;br&gt;Once there are more than 12 photos, the oldest one is deleted." role="wire-label" status="" placeholders="1" id="m10">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#F8FAFC;fillOpacity=95;strokeColor=#94A3B8;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#475569;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1321" y="826" width="420" height="56" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m11_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1531" y="950" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m11_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1751" y="950" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;11&lt;/b&gt; · the staff page asks “anything new?” every 1.5 s&lt;br&gt;and now sees a new photo number" role="wire-label" status="" placeholders="1" id="m11_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1545" y="894" width="192" height="44" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m12_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="1071" y="1010" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m12_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="606" y="1010" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;12&lt;/b&gt; · “track finished”" role="wire-label" status="" placeholders="1" id="m12_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="620" y="968" width="437" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m13_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="606" y="1066" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m13_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="846" y="1066" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;13&lt;/b&gt; · the word &lt;b&gt;START&lt;/b&gt;" role="wire-label" status="" placeholders="1" id="m13_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="620" y="1024" width="212" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m14_a">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="846" y="1122" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="anchor" status="" placeholders="1" id="m14_b">
+          <mxCell parent="1" style="shape=rect;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="606" y="1122" width="1" height="1" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;14&lt;/b&gt; · &lt;b&gt;STATE:RUNNING&lt;/b&gt; — rolling on to the next card" role="wire-label" status="" placeholders="1" id="m14_t">
+          <mxCell parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=none;strokeWidth=1;fontFamily=Arial;fontSize=10;fontColor=#1F2937;align=center;verticalAlign=middle;spacing=4;shadow=0;connectable=0;pointerEvents=0;" vertex="1">
+            <mxGeometry x="620" y="1080" width="212" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHAT THE ARROWS MEAN&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#7C3AED&quot;&gt;━━━▶ &lt;b&gt;Words down a wire&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  short typed lines between two boards&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#1F4E78&quot;&gt;━━━▶ &lt;b&gt;Over Wi-Fi&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  a file or a page request&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#0F766E&quot;&gt;━━━▶ &lt;b&gt;Something physical&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  a card coming into range&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#94A3B8&quot;&gt;▭ &lt;b&gt;Grey box&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  a board doing something by itself — no message sent&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#0F766E&quot;&gt;▮ &lt;b&gt;Bar on the robot line&lt;/b&gt;&lt;/font&gt;&lt;font color=&quot;#64748B&quot;&gt;  the whole time the robot counts as “talking”&lt;/font&gt;" role="legend" status="" placeholders="1" id="legend">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="52" y="1190" width="400" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;THE TIMINGS THAT MATTER&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;1.5 s&lt;/b&gt; — same card read again inside this window is ignored.&lt;br&gt;&lt;br&gt;&lt;b&gt;2 s&lt;/b&gt; — the wait between the talk starting and the photo being taken. This is why the picture shows the robot already parked and settled.&lt;br&gt;&lt;br&gt;&lt;b&gt;1.5 s minimum&lt;/b&gt; — a “finished” message arriving sooner than this is treated as left over from the previous track and ignored.&lt;br&gt;&lt;br&gt;&lt;b&gt;90 s maximum&lt;/b&gt; — if “finished” never arrives, the robot stops waiting and stays put.&lt;br&gt;&lt;br&gt;&lt;b&gt;1.5 s&lt;/b&gt; — how often the staff page asks the hub for news." role="legend" status="" placeholders="1" id="timing">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="476" y="1190" width="400" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHY IT IS BUILT THIS WAY&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Stop first, then talk.&lt;/b&gt; Every card that has a sound file parks the robot before the sound starts, so nobody is chasing a moving robot.&lt;br&gt;&lt;br&gt;&lt;b&gt;The 2-second wait costs nothing.&lt;/b&gt; The robot does not freeze during it. It keeps listening to the card reader, the speaker and the motor helper, and only fires the camera when the moment arrives.&lt;br&gt;&lt;br&gt;&lt;b&gt;Moving again is not on a timer.&lt;/b&gt; The robot waits for the speaker to say it has finished. A short or broken track means it stays stopped." role="legend" status="" placeholders="1" id="why">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="900" y="1190" width="460" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;b&gt;WHERE THIS COMES FROM&lt;/b&gt;&lt;br&gt;&lt;br&gt;Every step was read out of the running code:&lt;br&gt;&lt;br&gt;• the card handling and the 2-second reminder live in the robot's main loop&lt;br&gt;• the STOP / START words and the replies are in the Nano sketch&lt;br&gt;• the throw-away frames and the JPEG squeeze are in the camera firmware&lt;br&gt;• the scratch file, the marker check and the 12-photo limit are in the hub&lt;br&gt;&lt;br&gt;&lt;b&gt;Not shown:&lt;/b&gt; what happens when the emergency button is pressed. That overrules all of this — see sheet 05." role="legend" status="" placeholders="1" id="source">
+          <mxCell parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.2;fontFamily=Arial;fontSize=10;fontColor=#334155;align=left;verticalAlign=top;spacing=8;shadow=0;connectable=0;" vertex="1">
+            <mxGeometry x="1384" y="1190" width="424" height="226" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m1">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#0F766E;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m1_a" target="m1_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m3">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m3_a" target="m3_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m4">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m4_a" target="m4_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m5">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m5_a" target="m5_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m7">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m7_a" target="m7_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m9">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#1F4E78;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m9_a" target="m9_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m11">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#1F4E78;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m11_a" target="m11_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m12">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m12_a" target="m12_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m13">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m13_a" target="m13_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" role="link" placeholders="1" id="m14">
+          <mxCell parent="1" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;rounded=1;labelBackgroundColor=none;labelBorderColor=none;fontFamily=Arial;fontSize=10;fontColor=#1F2937;strokeColor=#7C3AED;strokeWidth=2.2;endArrow=block;endFill=1;endSize=9;exitX=0.5;exitY=0.5;entryX=0.5;entryY=0.5;curved=0;" edge="1" source="m14_a" target="m14_b">
+            <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

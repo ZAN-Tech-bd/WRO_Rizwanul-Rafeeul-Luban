@@ -10,9 +10,9 @@
 const ARTIFACTS = [
   {
     id: "jamdani",
-    emoji: "🧵",
+    emoji: "🏺",
     display: { en: "Piece of saree", bn: "শাড়ির কাপড়" },
-    name: { en: "Jamdani Saree", bn: "জামদানি শাড়ি" },
+    name: { en: "Terracotta Plaques", bn: "টেরাকোটা ফলক" },
     desc: {
       en: "A world-famous handwoven fabric from Bangladesh, known for its beautiful patterns.",
       bn: "বাংলাদেশের বিখ্যাত হাতে বোনা কাপড়, যা তার সুন্দর নকশার জন্য পরিচিত।"
@@ -20,9 +20,9 @@ const ARTIFACTS = [
   },
   {
     id: "nakshi",
-    emoji: "🪡",
+    emoji: "🛶",
     display: { en: "Piece of nakshi kantha", bn: "নকশি কাঁথার টুকরো" },
-    name: { en: "Nakshi Kantha", bn: "নকশি কাঁথা" },
+    name: { en: "Traditional Wooden Boat", bn: "ঐতিহ্যবাহী কাঠের নৌকা" },
     desc: {
       en: "Traditional embroidered quilts made by hand using colourful stitching.",
       bn: "রঙিন সেলাই দিয়ে হাতে তৈরি ঐতিহ্যবাহী কাঁথা।"
@@ -30,9 +30,9 @@ const ARTIFACTS = [
   },
   {
     id: "liberation",
-    emoji: "🇧🇩",
+    emoji: "🪡",
     display: { en: "3D print", bn: "থ্রিডি প্রিন্ট" },
-    name: { en: "Liberation War Artifacts", bn: "মুক্তিযুদ্ধের নিদর্শন" },
+    name: { en: "Nakshi Kantha", bn: "নকশি কাঁথা" },
     desc: {
       en: "Items such as uniforms, medals, maps and historical photographs from the 1971 Liberation War.",
       bn: "১৯৭১ সালের মুক্তিযুদ্ধের ইউনিফর্ম, পদক, মানচিত্র ও ঐতিতাসিক ছবির মতো নিদর্শন।"
@@ -40,9 +40,9 @@ const ARTIFACTS = [
   },
   {
     id: "terracotta",
-    emoji: "🏺",
+    emoji: "🪔",
     display: { en: "Bought at store", bn: "দোকান থেকে কেনা" },
-    name: { en: "Terracotta Plaques", bn: "টেরাকোটা ফলক" },
+    name: { en: "Traditional Bangladeshi Pottery", bn: "ঐতিহ্যবাহী বাংলাদেশি মৃৎশিল্প" },
     desc: {
       en: "Decorative baked-clay artworks found in ancient temples and archaeological sites.",
       bn: "প্রাচীন মন্দির ও প্রত্নস্থলে পাওয়া পোড়ামাটির সাজানো শিল্পকর্ম।"
@@ -50,9 +50,9 @@ const ARTIFACTS = [
   },
   {
     id: "ektara",
-    emoji: "🎵",
+    emoji: "🪑",
     display: { en: "Ektara instrument", bn: "একতারা বাদ্যযন্ত্র" },
-    name: { en: "Ektara", bn: "একতারা" },
+    name: { en: "Traditional Brass Chair", bn: "ঐতিহ্যবাহী পিতলের চেয়ার" },
     desc: {
       en: "A one-string musical instrument commonly used by Baul singers.",
       bn: "বাউল সঙ্গীতশিল্পীদের ব্যবহৃত একটানা বাদ্যযন্ত্র।"
@@ -60,9 +60,9 @@ const ARTIFACTS = [
   },
   {
     id: "palki",
-    emoji: "👑",
+    emoji: "🎋",
     display: { en: "Palki model", bn: "পালকির মডেল" },
-    name: { en: "Palki (Palanquin)", bn: "পালকি" },
+    name: { en: "Bamboo and Cane", bn: "বাঁশ ও বেত" },
     desc: {
       en: "A decorated carriage once used to carry important people before modern transport.",
       bn: "আধুনিক যানের আগে গুরুত্বপূর্ণ মানুষদের বহন করতে ব্যবহৃত সজ্জিত যান।"
@@ -70,9 +70,9 @@ const ARTIFACTS = [
   },
   {
     id: "tiger",
-    emoji: "🐅",
+    emoji: "🧵",
     display: { en: "Tiger exhibit", bn: "বাঘের প্রদর্শনী" },
-    name: { en: "Royal Bengal Tiger", bn: "রয়েল বেঙ্গল টাইগার" },
+    name: { en: "Jamdani Saree", bn: "জামদানি শাড়ি" },
     desc: {
       en: "An educational display about Bangladesh's national animal and the Sundarbans.",
       bn: "বাংলাদেশের জাতীয় পশু ও সুন্দরবন সম্পর্কে একটি তথ্যমূলক প্রদর্শনী।"
@@ -102,7 +102,8 @@ const I18N = {
   nextStation:  { en: "Next stop",               bn: "পরবর্তী স্টেশন" },
   queueWait:    { en: "Please wait your turn and follow the queue.", bn: "অনুগ্রহ করে আপনার পালার জন্য অপেক্ষা করুন এবং লাইন অনুসরণ করুন।" },
   emergencyMsg: { en: "EMERGENCY — follow the robot to the nearest exit.", bn: "জরুরি অবস্থা — নিকটতম এক্সিটে যেতে রোবটের সাথে চলুন।" },
-  artifactsTitle:{ en: "Our Artifacts",          bn: "আমাদের নিদর্শন" },
+  artifactsTitle:{ en: "Tour Sequence",          bn: "ভ্রমণ ক্রম" },
+  tourHint:      { en: "Lost the robot? Find it heading to the next stop in this order.", bn: "রোবট হারিয়ে গেছে? এই ক্রমানুসারে পরবর্তী স্টেশনে এগিয়ে যাওয়া রোবটটি খুঁজে নিন।" },
   pendingTitle: { en: "Pending approvals",       bn: "অপেক্ষমাণ অনুমোদন" },
   approve:      { en: "Approve",                 bn: "অনুমোদন" },
   deny:         { en: "Deny",                    bn: "প্রত্যাখ্যান" },
@@ -119,6 +120,11 @@ const I18N = {
   emergencyOn:  { en: "End emergency",           bn: "জরুরি অবস্থা শেষ" },
   emergencyOff: { en: "Start emergency (test)",  bn: "জরুরি অবস্থা শুরু (পরীক্ষা)" },
   robotStatus:  { en: "Robot status",            bn: "রোবটের অবস্থা" },
+  // Same convention as emergencyOn/Off: the key names the state the robot is
+  // ALREADY in, and the label says what pressing the button will do next.
+  muteOn:       { en: "🔊 Unmute robot",          bn: "🔊 রোবটের শব্দ চালু" },
+  muteOff:      { en: "🔇 Mute robot",            bn: "🔇 রোবটের শব্দ বন্ধ" },
+  mutedBadge:   { en: "Audio muted",             bn: "শব্দ বন্ধ" },
   good:         { en: "Good",                    bn: "ভালো" },
   watch:        { en: "Watch",                   bn: "সতর্ক" },
   alert:        { en: "Alert",                   bn: "সংকেত" },
@@ -129,7 +135,30 @@ const I18N = {
   cameraAgo:    { en: "ago",                     bn: "আগে" },
   cameraStored: { en: "stored",                  bn: "সংরক্ষিত" },
   cameraClear:  { en: "Clear photos",            bn: "ছবি মুছুন" },
-  cameraClearAsk:{ en: "Delete every stored photo?", bn: "সংরক্ষিত সব ছবি মুছে ফেলবেন?" }
+  cameraClearAsk:{ en: "Delete every stored photo?", bn: "সংরক্ষিত সব ছবি মুছে ফেলবেন?" },
+  sensorTitle:  { en: "Hub sensors — pin scan",  bn: "হাব সেন্সর — পিন স্ক্যান" },
+  sensorHint:   { en: "Each GPIO wired to the Hub is probed as a DHT11 in turn. \"Answering\" means a real DHT11 replied on that pin. Pins marked input-only (GPIO34–39) have no output driver, so a DHT11 can never start there — read their analog column instead, which is what an MQ sensor needs.",
+                  bn: "হাবে লাগানো প্রতিটি GPIO পালাক্রমে DHT11 হিসেবে পরীক্ষা করা হয়। \"সাড়া দিচ্ছে\" মানে ওই পিনে সত্যিই DHT11 আছে। input-only চিহ্নিত পিনে (GPIO34–39) আউটপুট ড্রাইভার নেই, তাই সেখানে DHT11 কাজ করবে না — সেগুলোর অ্যানালগ কলাম দেখুন, MQ সেন্সরের জন্য সেটাই দরকার।" },
+  sensorNone:   { en: "No DHT11 has answered yet — a full sweep takes about 20 s.",
+                  bn: "এখনো কোনো DHT11 সাড়া দেয়নি — একটি পূর্ণ স্ক্যানে প্রায় ২০ সেকেন্ড লাগে।" },
+  sensorFound:  { en: "DHT11 answering on",      bn: "DHT11 সাড়া দিচ্ছে" },
+  thPin:        { en: "GPIO",                    bn: "GPIO" },
+  thAnalog:     { en: "Analog (MQ)",             bn: "অ্যানালগ (MQ)" },
+  thReads:      { en: "Reads",                   bn: "রিড" },
+  thResult:     { en: "Result",                  bn: "ফলাফল" },
+  dhtOk:        { en: "answering",               bn: "সাড়া দিচ্ছে" },
+  dhtWait:      { en: "not scanned yet",         bn: "এখনো স্ক্যান হয়নি" },
+  dhtLow:       { en: "pin held LOW",            bn: "পিন LOW আটকে আছে" },
+  dhtNone:      { en: "no DHT11 answer",         bn: "DHT11 সাড়া দেয়নি" },
+  dhtCut:       { en: "frame cut short",         bn: "ফ্রেম অসম্পূর্ণ" },
+  dhtSum:       { en: "bad checksum",            bn: "চেকসাম ভুল" },
+  inputOnly:    { en: "input-only",              bn: "input-only" },
+  noAdc:        { en: "no ADC",                  bn: "ADC নেই" },
+  healthEmpty:  { en: "No readings yet.",        bn: "এখনো কোনো রিডিং নেই।" },
+  gasGood:      { en: "Good air",                bn: "বাতাস ভালো" },
+  gasBad:       { en: "Gas detected",            bn: "গ্যাস শনাক্ত" },
+  healthNote:   { en: "Temp/humidity come from the Hub's DHT11 pins, gas from its MQ pins. Pin-to-artifact mapping lives in HUB_SENSOR_STATION in include/config.h.",
+                  bn: "তাপ/আর্দ্রতা আসে হাবের DHT11 পিন থেকে, গ্যাস আসে MQ পিন থেকে। পিন-টু-নিদর্শন ম্যাপিং আছে include/config.h ফাইলের HUB_SENSOR_STATION-এ।" }
 };
 
 // ---- language helpers -------------------------------------------------
