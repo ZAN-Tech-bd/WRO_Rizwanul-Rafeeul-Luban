@@ -25,7 +25,7 @@ whole system:
    one interval. The Hub never tracks who is listening.
 3. The **robot evacuates**: it cuts narration, drops any pending photo, drives,
    and **ignores every card except the END card**, where it stops and latches.
-   `ESP32_RFID_MP3_RAIL` (rail robot) and `ESP32_RFID_MP3_LFR` (line-follower
+   `robot-esp32-rfid-mp3` (rail robot) and `ESP32_RFID_MP3_LFR` (line-follower
    robot) both listen; the LFR build stops at its station-7 exit card instead.
 4. **Clear it** by holding the button 3 s, or from the admin dashboard
    (`POST /api/emergency?on=0`). Either way the robot stops so it can be

@@ -23,12 +23,13 @@ Mega 2560 + TFT                          phones / laptop (clients)
 
 | Folder | Board / role | Status |
 |--------|--------------|--------|
-| [`hub/`](hub/README.md) | **ESP32 — Track ESP32 = the Hub**: SoftAP + web server + ESP-NOW aggregator + LEDs | ✅ built |
-| [`robot/`](robot/README.md) | **ESP32 — Guide robot**: drive, RFID stops, Bangla/EN audio, broadcasts LOCATION | ⬜ skeleton (Phase 1–3) |
-| [`display/`](display/README.md) | **Arduino Mega 2560 + TFT shield** — animated robot face, language menu, station/emergency screens; UART-driven by the robot ESP32 | ✅ builds |
-| [`health/`](health/README.md) | DHT11 + MQ-135 at each artifact; broadcasts HEALTH | ⬜ skeleton (Phase 6) |
-| [`emergency/`](emergency/README.md) | Big push button; broadcasts EMERGENCY | ⬜ skeleton (Phase 5) |
-| [`cam/`](cam/README.md) | ESP32-CAM; uploads a photo to the Hub | ⬜ skeleton (Phase 6) |
+| [`hub/`](hub/README.md) | **ESP32 — Museum Hub**: SoftAP + web server + ESP-NOW + LEDs + siren + emergency button + sensors | ✅ built |
+| [`robot-esp32-rfid-mp3/`](robot-esp32-rfid-mp3/README.md) | **ESP32 — Guide robot brain**: RFID, DFPlayer narration, Nano control, camera trigger, emergency listener | ✅ built |
+| [`robot-nano-rail/`](robot-nano-rail/NANO_LFR_RAIL.ino) | **Arduino Nano — motor driver**: START / STOP over UART to an L298N | ✅ built |
+| [`cam/`](cam/README.md) | **ESP32-CAM (GC2145)**: capture, save to SD, upload to the Hub | ✅ built |
+| [`display/`](display/README.md) | **Arduino Mega 2560 + TFT**: animated robot face | ✅ built |
+| [`display-standalone/`](display-standalone/README.md) | The face sketch as its own mini-repo (with licence/provenance) | ✅ reference |
+| [`common/`](common/README.md) | Shared protocol headers (ESP-NOW packet) | ✅ |
 
 The shared ESP-NOW packet is in [`common/MuseumProtocol.h`](common/MuseumProtocol.h:1).
 
