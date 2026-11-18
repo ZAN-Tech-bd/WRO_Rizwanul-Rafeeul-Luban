@@ -237,7 +237,7 @@ static bool saveJpegToSD(const uint8_t *jpg, size_t jpgLen,
 //  Capture: RGB565 frame -> software JPEG in RAM -> Hub HTTP upload.
 //  The newest JPEG stays cached so SEND can retry after a Hub/Wi-Fi outage.
 // ---------------------------------------------------------------------------
-static void doCapture(int stationId) {
+static void doCapture(int stationId, bool reconnectForUpload = false) {
   if (!g_cameraReady) {
     Serial.println("[capture] FAIL camera not initialised -- send INIT or reboot");
     return;
@@ -287,19 +287,20 @@ static void doCapture(int stationId) {
     Serial.println(F("[sd] no card; continuing with RAM -> Hub upload."));
   }
 
-#if CAM_AUTO_UPLOAD
-  if (WiFi.status() == WL_CONNECTED) {
-    if (uploadToHubJpeg(g_lastJpeg, g_lastJpegLen, g_lastStation))
-      notifyHubImageReady((uint8_t)stationId);
-  } else {
-    Serial.println(F("[capture] JPEG retained in RAM. Run WIFI, then SEND to retry."));
-  }
-#endif
-
   Serial.printf("[capture] OK RAM  %dx%d  %u bytes  station=%d%s%s\n",
                 fw, fh, (unsigned)g_lastJpegLen, stationId,
                 g_lastPhoto[0] ? "  SD=" : "",
                 g_lastPhoto[0] ? g_lastPhoto : "");
+#if CAM_AUTO_UPLOAD
+  // Get the station frame while the robot is still stopped, even if the
+  // camera has to reconnect before it can deliver the JPEG.
+  if (WiFi.status() == WL_CONNECTED || (reconnectForUpload && ensureWifi())) {
+    if (uploadToHubJpeg(g_lastJpeg, g_lastJpegLen, g_lastStation))
+      notifyHubImageReady((uint8_t)stationId);
+  } else {
+    Serial.println(F("[capture] JPEG retained in RAM. Run SEND to retry."));
+  }
+#endif
 }
 
 // ---------------------------------------------------------------------------
@@ -308,7 +309,7 @@ static void doCapture(int stationId) {
 static void printHelp() {
   Serial.println(F("Commands (case-insensitive, end with newline):"));
   Serial.println(F("  CAPTURE [station]  capture -> JPEG in RAM -> Hub (SD backup optional)"));
-  Serial.println(F("  SHOOT   [station]  ensure Wi-Fi, then capture + push to Hub"));
+  Serial.println(F("  SHOOT   [station]  capture now, then connect and push to Hub"));
   Serial.println(F("  SEND    [station]  re-upload the last RAM-cached JPEG"));
   Serial.println(F("  WIFI              join / show Hub Wi-Fi status"));
   Serial.println(F("  AUTO <ms>         auto CAPTURE+SEND every <ms> (min 1000); 'AUTO' alone = off"));
@@ -427,8 +428,7 @@ static void handleCommand(char *line) {
     else Serial.println(F("[flash] usage: FLASH ON | OFF"));
   } else if (strcmp(line, "SHOOT") == 0) {
     int station = (arg && *arg) ? atoi(arg) : (int)g_lastStation;
-    if (ensureWifi()) doCapture(station);
-    else Serial.println(F("[shoot] no Wi-Fi -- not captured. Run WIFI, or use CAPTURE for local-only."));
+    doCapture(station, true);
   } else if (strcmp(line, "SEND") == 0) {
     int station = (arg && *arg) ? atoi(arg) : (int)g_lastStation;
     sendLastPhoto((uint16_t)station);

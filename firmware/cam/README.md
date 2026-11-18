@@ -1,184 +1,85 @@
-# Cam — ESP32S-CAM (GC2145) photo node (PlatformIO project)
+# ESP32-CAM GC2145 photo node
 
-Captures a still photo on a USB-serial command, saves it as a JPEG on the
-module's **own onboard microSD** card (`/photos/IMG_####.JPG`), and — if the
-Hub's `MuseumHub` WiFi is reachable — **uploads it to the Hub** at
-`/api/image/upload` plus a `MSG_IMAGE_READY` ping over ESP-NOW.
+The [current museum firmware runbook](../README.md) covers the Hub and the
+robot. This target accepts camera commands from USB and the robot UART. It
+encodes a JPEG in RAM, uploads it to the Hub when connected, and can save a
+copy to its onboard microSD.
 
-> Status: ✅ **capture-to-SD firmware** (GC2145 + SD_MMC 1-bit) **+ Hub upload**
-> (WiFi STA join, HTTP POST, ESP-NOW ready-ping). SD capture works with no Hub
-> present; the upload step is skipped (not required) when the Hub is unreachable.
+## Hardware and wiring
 
----
+| Item | Current setup |
+|---|---|
+| Camera | ESP32S-CAM on a CAM-MB USB programmer with a GC2145 ribbon sensor |
+| Camera profile | AI-Thinker ESP32-CAM, PSRAM, 10 MHz XCLK, RGB565, QVGA 320×240, one framebuffer |
+| Encoding | Software JPEG via `frame2jpg()` at quality 15 |
+| Robot trigger | Robot ESP32-S3 **GPIO18 → J8.3 → camera GPIO13**, common ground, 3.3 V UART at 9600 baud, 8N1 |
+| microSD | Optional FAT32, 1-bit SD_MMC on GPIO2/14/15. Send `INIT` to mount it. |
+| Flash LED | GPIO4, off on boot. Use `FLASH ON` and `FLASH OFF`. |
 
-## Hardware (exact)
+The camera drops two stale frames before taking the JPEG so it uses the
+current station view. Its optional microSD backup uses the next free photo
+index and verifies the written file size.
 
-| Part | Notes |
-|------|-------|
-| Board | **ESP32S-CAM** seated on an **ESP32-CAM-MB Type-C** programmer |
-| Programmer | The CAM-MB has a built-in **CH340** USB-serial chip — appears as `/dev/ttyUSB0` (Linux), no FTDI/UNO needed |
-| Camera | **GC2145** (ribbon is labelled `GC2145`). Prior test detected sensor **PID `0x2145`**. |
-| Storage | microSD in the ESP32-CAM onboard slot (**FAT32** preferred) |
-| Power | stable 5 V via the CAM-MB USB-C; use a data-capable cable |
+The robot sends one `SHOOT N` during a station stop. The camera's GPIO13
+receives the command on UART1. The USB console stays on its own UART at
+115200 baud and echoes incoming robot commands as `[link] <- "SHOOT N"`.
 
-### ⚠️ GC2145 caveat (read this first)
-The common OV2640 examples **will not work** on this board. The GC2145 **cannot
-output native JPEG**. This firmware therefore:
+## Build and flash over USB
 
-1. grabs frames as **RGB565** (not `PIXFORMAT_JPEG`),
-2. converts each frame to JPEG **in software** via `frame2jpg()` (`img_converters.h`), then
-3. writes the JPEG to the card.
+Run from the repository root:
 
-The proven-stable settings used here (matching the working test in
-[`ESP32 CAM.pdf`](../../ESP32%20CAM.pdf)): **XCLK 10 MHz**, `PIXFORMAT_RGB565`,
-**QVGA 320×240**, **1 framebuffer in PSRAM**.
-
-### SD_MMC 1-bit mode (no pin conflicts)
-`SD_MMC` runs in **1-bit mode**, which uses only **GPIO2 (D0) / GPIO14 (CLK) /
-GPIO15 (CMD)**. That leaves every camera pin and **GPIO4 (the onboard flash LED)**
-free, so the camera and SD never fight over pins. (4-bit mode, which would also
-take GPIO4/12/13, is deliberately **not** used.)
-
-### Flash LED
-Optional and off by default. Because SD is 1-bit, **GPIO4 is safe** to drive —
-use `FLASH ON` / `FLASH OFF`. It is **not** fired automatically during capture
-(the ESP32-CAM rail is brownout-prone; reliability first).
-
----
-
-## Build / flash
-
-```bash
-cd firmware/cam
-pio run                # build
-pio run -t upload      # flash  (upload_speed = 115200, already set)
-pio device monitor     # serial @115200
+```sh
+pio run -d firmware/cam -e cam
+pio run -d firmware/cam -e cam -t upload --upload-port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+pio device monitor --port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0 --baud 115200
 ```
 
-`board = esp32cam` (AI-Thinker profile, PSRAM enabled), `huge_app.csv`
-partition (3 MB app, no SPIFFS — photos live on the SD, not flash).
+Check the actual serial path first. The CAM-MB typically shows up as a CH340
+USB adapter. The firmware uses `huge_app.csv` with a single 3 MB app partition.
+If the adapter appears but upload stays at `Connecting...`, hold **BOOT/IO0**,
+tap and release **RST**, then release BOOT and retry. Tap **RST** normally to
+run the program after upload if the carrier stays in download mode.
 
-### CAM-MB upload / run procedure
-The CAM-MB sometimes does **not** auto-enter download mode. If `pio run -t
-upload` hangs on `Connecting...`, do this once:
+## Camera commands
 
-1. **Hold the CAM-MB BOOT (IO0) button** (or jumper IO0→GND).
-2. **Press and release RST** once.
-3. **Release BOOT** (or remove the IO0→GND jumper).
-4. Run `pio run -t upload`. You should see `Chip is ESP32...` then `Writing at ...`.
-5. After the upload, **press RST once** to boot normally into the firmware.
-
-Use a **data-capable** USB-C cable (charge-only cables give "No serial data
-received"). Upload speed is fixed at **115200** for reliability on the CAM-MB.
-
----
-
-## Commands (case-insensitive, newline-terminated)
+Commands are case-insensitive and end with a newline.
 
 | Command | Action |
-|---------|--------|
-| `SHOOT [station]` | Ensure Wi-Fi, then capture → software JPEG → POST to the Hub. **This is what the robot sends.** |
-| `CAPTURE [station]` | Capture → JPEG in RAM → upload if Wi-Fi is already up (SD backup optional). |
-| `SEND [station]` | Re-upload the last RAM-cached JPEG (e.g. after a Hub reboot). |
-| `WIFI` | Join `MuseumHub`, or print the current connection. |
-| `AUTO <ms>` | Auto capture+upload every `<ms>` (min 1000). `AUTO` alone stops it. |
-| `STATUS` | Camera/SD/PSRAM/heap/Wi-Fi diagnostics. |
-| `LIST` | List SD backup photos in `/photos` (name + size). |
-| `INIT` | Re-initialise camera and SD without rebooting (bring-up retry). |
-| `FLASH ON` / `FLASH OFF` | Toggle the onboard flash LED (optional). |
-| `HELP` | Show the command list. |
+|---|---|
+| `STATUS` | Show camera PID, PSRAM, SD, Wi-Fi and last JPEG information. |
+| `SHOOT N` | Capture immediately, join MuseumHub if needed, then upload. Use station 0 for a bench photo. |
+| `CAPTURE [N]` | Capture into RAM. Upload if already on MuseumHub and back up if SD is mounted. |
+| `SEND [N]` | Join MuseumHub if needed and send the cached JPEG again. |
+| `WIFI` | Connect to MuseumHub or report its IP, RSSI and channel. |
+| `INIT` | Retry camera initialization and mount the optional SD. |
+| `LIST` | List files in the camera SD's `/photos` folder. |
+| `AUTO <ms>` / `AUTO` | Start or stop periodic capture. Minimum interval is 1000 ms. |
+| `FLASH ON` / `FLASH OFF` | Control the camera's flash LED. |
+| `HELP` | Show the commands. |
 
-Each source has its own hard-bounded line buffer (no dynamic `String`), so a
-half-typed USB line can never be spliced into a robot command. The verb is
-upper-cased; the optional numeric argument is left as-is.
+## Verify the photo path
 
-### Robot trigger link (UART1, RX only)
+On boot, look for camera PID `0x2145`, the robot receiver on GPIO13, and
+association with `MuseumHub` on channel 1. On the camera console, send
+`SHOOT 0`. Expect a 320×240 JPEG and `POST multipart JPEG -> HTTP 200`.
+The Hub will show it in the live gallery. The camera sends the JPEG as the
+multipart part `image` to `http://192.168.4.1/api/image/upload?station=N`.
+The Hub's dashboard polls for committed gallery entries.
 
-| Cam | Guide ESP32 | Notes |
-|-----|-------------|-------|
-| GPIO13 (RX) | GPIO27 (TX) | 9600 baud, 3.3 V both sides — **no divider** |
-| GND | GND | common ground is mandatory |
+If MuseumHub is unavailable, `SHOOT` captures first and then attempts to
+connect for up to 15 seconds. Use `SEND` after the Hub returns to resend the
+latest cached JPEG. The RAM cache is cleared on reboot. With a card mounted,
+backups are stored as `/photos/IMG_####.JPG` using the next available index.
 
-The guide ESP32 sends `SHOOT <station>` when it reads a station RFID card
-(every card except the tour-start card). Nothing is sent back — the cam's
-replies go to its own USB console, where robot-triggered lines are echoed as
-`[link] <- "SHOOT 3"`.
+## Bench verification log
 
-GPIO13 is free because `SD_MMC` runs in 1-bit mode (GPIO2/14/15 only). It is
-deliberately **not** U0RXD: sharing that pin would put the CAM-MB's CH340
-driver and the robot's TX driver on the same net and cost you the USB console.
-
-**Disconnect this wire while flashing the cam**, then reconnect.
-
-### Filenames / collision safety
-Photos are written to a predictable folder with a zero-padded, never-overwriting
-sequential name:
-
-```
-/photos/IMG_0001.JPG
-/photos/IMG_0002.JPG
-...
-```
-
-On every `CAPTURE`, the firmware scans `/photos` for the highest existing
-`IMG_####.JPG` index and uses `index + 1`. The counter therefore **survives
-reboots** with no extra config file. Each JPEG is fully written, `close()`-synced,
-then **reopened read-only to verify** the on-card size equals the encoded size.
-
----
-
-## Expected serial log
-
-Boot (no card):
-```
-========================================
- Smart Museum -- ESP32S-CAM (GC2145) node
- capture-to-microSD  (no Wi-Fi/Hub yet)
-========================================
-[boot] PSRAM present (X.X MB), free heap ~XXX KB
-[cam] init OK. sensor PID=0x2145 (GC2145)  PSRAM=yes (XXXX KB)
-[sd]  SD_MMC.begin() FAILED -- no card, wrong FS, or poor seating
-[boot] ready. Commands: CAPTURE [station] | STATUS | LIST | INIT | FLASH ON/OFF | HELP
-```
-
-Boot (with FAT32 card):
-```
-[sd]  mounted /sdcard (1-bit)  type=SDHC/SDXC  card=XXXX.X MB  fsTotal=XXXX.X MB  fsFree=XXXX.X MB  photos=0
-```
-
-`CAPTURE` success:
-```
-[capture] OK /photos/IMG_0001.JPG  320x240  12345 bytes (verified)  station=0
-```
-
-`CAPTURE` failure (examples):
-```
-[capture] FAIL SD card not mounted -- insert a FAT32 microSD, then send INIT
-[capture] FAIL RGB565->JPEG conversion (frame2jpg) failed
-```
-
----
-
-## microSD requirements
-
-- **FAT32** preferred (also works with FAT16/SDSC). SDHC/SDXC (4–32 GB) is ideal.
-- Insert before/while powered; if it was inserted after boot, send `INIT`.
-- A 16 GB card holds thousands of QVGA JPEGs (each a few KB at quality 15).
-- If `STATUS` reports `CARD_NONE`, reseat the card and run `INIT`.
-
----
-
-## Hub integration (implemented)
-
-[`uploadToHubJpeg()`](src/main.cpp) in `src/main.cpp` runs after every successful
-capture:
-
-1. joins the Hub's Wi-Fi **MuseumHub** as a client on channel 1 (it is a **client
-   only — it never hosts**),
-2. `POST http://192.168.4.1/api/image/upload` (multipart, field `image`) with
-   the JPEG just saved,
-3. sends a `museum::MSG_IMAGE_READY` packet over ESP-NOW (channel 1).
-
-The shared ESP-NOW packet is [`../common/MuseumProtocol.h`](../common/MuseumProtocol.h).
-If the Hub AP isn't in range, the WiFi join times out (`WIFI_CONNECT_TIMEOUT_MS`
-in `config.h`) and the photo stays SD-only — capture never blocks on the network.
+- **2026-11-18** — flashed and verified end to end on the CAM-MB (CH340,
+  enumerated as `/dev/ttyUSB0` on this bench; `cam_cmd.sh` defaults to
+  `/dev/ttyUSB1`, so set `CAM_PORT=/dev/ttyUSB0`). Boot reports
+  `sensor PID=0x2145 (GC2145)` with 4 MB PSRAM and joins `MuseumHub`
+  channel 1 at 192.168.4.5. `SHOOT 0` captured a 320×240 JPEG (2308 bytes)
+  and the Hub answered `POST multipart JPEG -> HTTP 200`. Quirks confirmed
+  on this carrier: esptool's DTR/RTS auto-reset never enters download mode
+  (`No serial data received`) — hold IO0, tap RST, release IO0 while
+  esptool is retrying. After a verified write the chip can sit silent in
+  download mode; one RST tap with BOOT released boots the app.

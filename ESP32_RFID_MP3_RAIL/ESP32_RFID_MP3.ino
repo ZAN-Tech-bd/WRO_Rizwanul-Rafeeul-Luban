@@ -198,9 +198,11 @@ WebServer server(80);
 static_assert(AP_CHANNEL == museum::kEspNowChannel,
               "SoftAP channel must match the Hub's ESP-NOW channel");
 
-// This node only listens: the Hub is the single source of truth for the
-// emergency and nothing here needs to answer it.
 bool espnowReady = false;
+bool espnowCanSend = false;
+uint8_t currentStation = 0;
+constexpr uint8_t ROBOT_NODE_ID = 20;
+constexpr uint8_t ACTIVE_STATIONS = 6;
 
 // Written from the ESP-NOW receive callback, which runs in the WiFi task. The
 // callback does nothing but store it; every reaction happens in loop().
@@ -437,6 +439,8 @@ const int UNKNOWN_TRACK  = -1;
 const int EMERGENCY_STOP_TRACK = 12;   // D836D4B9
 
 const RfidTrack TRACKS[] = {
+  { {0x83, 0x54, 0x6A, 0x28}, 4, 9 },   // Current START card
+  { {0x13, 0x8C, 0x5A, 0x28}, 4, 0 },   // Current END card
   { {0x18, 0xC4, 0x0F, 0xBA}, 4, 9 },   // 18C40FBA -> START + 0009.mp3
   { {0xA3, 0xC0, 0x38, 0x15}, 4, 0 },   // A3C03815 -> STOP, no audio
   { {0x64, 0x14, 0xF6, 0xB3}, 4, 10 },  // 6414F6B3 -> 0010.mp3
@@ -445,7 +449,6 @@ const RfidTrack TRACKS[] = {
   { {0x94, 0x60, 0x6B, 0xB2}, 4, 13 },  // 94606BB2 -> 0013.mp3
   { {0x18, 0x48, 0xF4, 0xBA}, 4, 14 },  // 1848F4BA -> 0014.mp3
   { {0x94, 0x58, 0x1A, 0xB3}, 4, 15 },  // 94581AB3 -> 0015.mp3
-  { {0x09, 0x4C, 0xB1, 0x92}, 4, 16 },  // 094CB192 -> 0016.mp3
 };
 const int TRACK_COUNT = sizeof(TRACKS) / sizeof(TRACKS[0]);
 
@@ -482,17 +485,11 @@ bool sameUid(const uint8_t *a, uint8_t aSize, const uint8_t *b, uint8_t bSize) {
   return true;
 }
 
-// Returns the mapped track (1..8), NO_AUDIO_TRACK for a mapped no-audio action,
+// Returns the mapped track, NO_AUDIO_TRACK for a mapped no-audio action,
 // or UNKNOWN_TRACK if the UID is not in the table.
 int trackForUid(const uint8_t *uid, uint8_t size) {
   for (int i = 0; i < TRACK_COUNT; i++) {
-    uint8_t n = TRACKS[i].uidSize;
-    if (size < n) continue;                 // scanned card shorter than entry
-    bool ok = true;
-    for (uint8_t j = 0; j < n; j++) {
-      if (uid[j] != TRACKS[i].uid[j]) { ok = false; break; }
-    }
-    if (ok) return TRACKS[i].track;
+    if (sameUid(uid, size, TRACKS[i].uid, TRACKS[i].uidSize)) return TRACKS[i].track;
   }
   return UNKNOWN_TRACK;
 }
@@ -507,11 +504,11 @@ void cancelPendingPhoto(const char *reason) {
   appendRobotLog(String("CAM pending photo cancelled: ") + reason);
 }
 
-// Tracks 2..8 map to exhibit stations 1..7. Scheduling is deliberately
+// Tracks 10..15 map to exhibit stations 1..6. Scheduling is deliberately
 // non-blocking: RFID, DFPlayer, and Nano status handling continue during the
 // two-second settling period.
 void scheduleStationPhoto(uint8_t station) {
-  if (station < 1 || station > 7) return;
+  if (station < 1 || station > ACTIVE_STATIONS) return;
 
   pendingCameraStation = station;
   cameraTriggerDueMs = millis() + CAM_CAPTURE_DELAY_MS;
@@ -671,19 +668,40 @@ bool initEspNow() {
 
   esp_now_register_recv_cb(onEspNowRecv);
 
-  // Receiving broadcasts needs no peer; the Hub's broadcast address is
-  // registered anyway so this node can transmit later without re-plumbing.
-  // A failure here costs nothing today, so it must not disable reception.
+  // Receiving broadcasts needs no peer. Register the broadcast address for
+  // outgoing location reports while retaining emergency reception on failure.
   esp_now_peer_info_t peer{};
   memcpy(peer.peer_addr, museum::kBroadcastAddress, 6);
   peer.channel = museum::kEspNowChannel;
   peer.ifidx   = WIFI_IF_AP;      // this node is AP-only, exactly like the Hub
   peer.encrypt = false;
-  if (esp_now_add_peer(&peer) != ESP_OK)
+  espnowCanSend = esp_now_add_peer(&peer) == ESP_OK;
+  if (!espnowCanSend)
     Serial.println(F("ESP-NOW add_peer failed (receive still works)"));
 
   Serial.println(F("ESP-NOW ready (broadcast, channel 1): listening for Hub emergency."));
   return true;
+}
+
+void reportLocation() {
+  if (!espnowCanSend) return;
+  static uint8_t reportedStation = 255;
+  static bool reportedMoving = false;
+  static uint16_t sequence = 0;
+  static uint32_t lastAttempt = 0;
+  const uint32_t now = millis();
+  const bool changed = currentStation != reportedStation || railRunning != reportedMoving;
+  if (reportedStation != 255 && now - lastAttempt < (changed ? 40 : 1000)) return;
+  lastAttempt = now;
+  reportedStation = currentStation;
+  reportedMoving = railRunning;
+  auto message = museum::makeMessage(museum::MSG_LOCATION, ROBOT_NODE_ID);
+  message.stationId = currentStation;
+  if (railRunning) message.flags = museum::FLAG_ROBOT_MOVING;
+  message.sequence = ++sequence;
+  message.uptimeMs = now;
+  museum::finalizeMessage(message);
+  esp_now_send(museum::kBroadcastAddress, reinterpret_cast<const uint8_t*>(&message), sizeof(message));
 }
 
 // The Hub owns the emergency state and re-broadcasts it, so this is called
@@ -933,6 +951,7 @@ void loop() {
         memcpy(lastUid, mfrc522.uid.uidByte, size);
         lastUidSize  = size;
         lastPlayMs   = millis();
+        currentStation = track >= 10 ? static_cast<uint8_t>(track - 9) : 0;
 
         // The Hub emergency outranks the whole card map. Only a stop card is
         // acted on, so the robot drives past every station to the first one it
@@ -972,7 +991,7 @@ void loop() {
           Serial.print(F("Mapped to track "));
           Serial.println(track);
           beginAudio(track, true);
-          // Only station tracks 10..16 take photos. Track 9 is START and track 0
+          // Only station tracks 10..15 take photos. Track 9 is START and track 0
           // is END, so neither reaches this branch. If audio failed to start,
           // narrating is false and no supposedly "while playing" shot is queued.
           if (narrating) scheduleStationPhoto((uint8_t)(track - 9));
@@ -1032,6 +1051,7 @@ void loop() {
 
   // ---------------- Nano rail status ----------------
   pollNano();
+  reportLocation();
 
   // ---------------- Manual serial control (testing) ----------------
   if (Serial.available()) {

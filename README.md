@@ -17,6 +17,12 @@ need, how it's wired, and how the boards talk to each other.
 
 ---
 
+## Current six-station hardware
+
+Use the [firmware and bench runbook](firmware/README.md) for the current
+ESP32-S3 Hub, direct-drive ESP32-S3 robot, and GC2145 camera. The architecture
+and Nano wiring below document earlier project versions.
+
 ## 1. Table of contents
 
 1. [Table of contents](#1-table-of-contents)

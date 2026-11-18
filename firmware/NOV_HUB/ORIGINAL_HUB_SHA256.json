@@ -1,0 +1,20 @@
+{
+  "platformio.ini": "a39a35e08caf55e047f23d77a534a8ff9a9a7f322a92b1bafb35291f48cba488",
+  "README.md": "9c01ec8914e03c2c9e78cfc605642092977d4656c6843229fc6253ab3c3d3093",
+  "data/index.html": "7a4e2e22f2dbca23a137a22efcb740a048fb5aa43d9cb21a325c755cfc50de57",
+  "data/visitor.html": "844648379b19c9e66ad36c445cb0025974153813eb69cfce70461413e384816a",
+  "data/admin.html": "ac79a7ed42df787dbaaf9e3dbbed7872f2d7ee101899fa8f9ce1c7a5cb1fcd5c",
+  "data/README.txt": "3d46ed010c5ebab064ba7fb98130855b79adaa99a10ad99137d991c8bdb72bf5",
+  "src/main.cpp": "664aaea09609f6dede357e5f630f2a6c5471cb01f965d148c9796bba93e7647a",
+  "src/PhotoStore.cpp": "fbadabb734e8385c4e7f5bab985e36d5e874f3022b0fcc7e030fec65a8587617",
+  "src/HubSensors.cpp": "0cd65b1e35b44db185e7174443d93160ecf0cf0a5aa06be021f1b9687b33bc6c",
+  "include/MuseumState.h": "5f46779915a057153ae42085091dfe4338bb31cd2464ea3c583bb9c9fbb85bab",
+  "include/HubSensors.h": "413b8e45869b05d082bb5b4007b52edbd5981a75506d26724f04eb519456f473",
+  "include/PhotoStore.h": "89b264b574869128b277ac6a3896ea9eb705773c37eb84826f00941dd78bd222",
+  "include/config.h": "4c01c5055517d15f2015ff48418e512f492b769174dda29256f634c6597829f9",
+  "data/js/qr.js": "8f092c65e6379707bce912d08d865173098691cf1d57949e3a571ffaef030ead",
+  "data/js/data.js": "47f5af674617e089ff2651e4148a7bea1b39fab20d9061cf9db3d8736112e57c",
+  "data/js/hub.js": "c73a727bffce6e215e3c87eb0d0f4a1523a94391f4e77c34b345b0acc9655b5d",
+  "data/css/style.css": "f4cdf9f0e43b3bb0bffafe8fcccd4948dd49ad8e8237a199e220e1465250b947",
+  "data/js/vendor/jsQR.js": "bc40c8a15196236b2314db0856f72ca0b49980cd5413b8c852a7349f5fee0859"
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "index": 1,
+    "source": "WhatsApp Image 2026-11-11 at 7.54.59 PM (1).jpeg",
+    "sourceSha256": "069e90b00723e7bd4c0b91242ad28dd75f0dcfd94f3af4c7f52a0718f52517c8",
+    "path": "/images/camera-demo/01.jpg",
+    "bytes": 59114,
+    "dimensions": [
+      800,
+      600
+    ],
+    "quality": 70,
+    "stationId": 0
+  },
+  {
+    "index": 2,
+    "source": "WhatsApp Image 2026-11-11 at 7.54.59 PM.jpeg",
+    "sourceSha256": "8fe8a9e99c2f832d08370f87cf067b6baf13c2b884ba5fd1da3fd920f98da823",
+    "path": "/images/camera-demo/02.jpg",
+    "bytes": 57310,
+    "dimensions": [
+      800,
+      600
+    ],
+    "quality": 60,
+    "stationId": 0
+  },
+  {
+    "index": 3,
+    "source": "WhatsApp Image 2026-11-11 at 7.55.00 PM.jpeg",
+    "sourceSha256": "53d05f885b7693e06aae45b31e5ec6009135a29a41623275addac24388957b1d",
+    "path": "/images/camera-demo/03.jpg",
+    "bytes": 55265,
+    "dimensions": [
+      800,
+      600
+    ],
+    "quality": 82,
+    "stationId": 0
+  },
+  {
+    "index": 4,
+    "source": "WhatsApp Image 2026-11-11 at 7.55.01 PM (1).jpeg",
+    "sourceSha256": "93e17bd9c26373f470dfb26204e8e92b7ee55daa0d0b5b284287400e29cf9fd3",
+    "path": "/images/camera-demo/04.jpg",
+    "bytes": 55461,
+    "dimensions": [
+      800,
+      600
+    ],
+    "quality": 78,
+    "stationId": 0
+  },
+  {
+    "index": 5,
+    "source": "WhatsApp Image 2026-11-11 at 7.55.01 PM.jpeg",
+    "sourceSha256": "e36b393ba0de94f2971d97c8bd492398555329f407b5efd0983a54d289ae5160",
+    "path": "/images/camera-demo/05.jpg",
+    "bytes": 56287,
+    "dimensions": [
+      800,
+      600
+    ],
+    "quality": 78,
+    "stationId": 0
+  },
+  {
+    "index": 6,
+    "source": "WhatsApp Image 2026-11-11 at 7.55.40 PM.jpeg",
+    "sourceSha256": "2cb47b3988bfa349044cd521695a6117a82c743fd319e8fbadfc9892d2ed5f25",
+    "path": "/images/camera-demo/06.jpg",
+    "bytes": 56309,
+    "dimensions": [
+      800,
+      600
+    ],
+    "quality": 74,
+    "stationId": 0
+  }
+]

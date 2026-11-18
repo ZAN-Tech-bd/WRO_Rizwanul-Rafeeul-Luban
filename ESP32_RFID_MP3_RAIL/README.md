@@ -1,4 +1,33 @@
-# ESP32 RFID -> DFPlayer + Nano rail controller
+# ESP32-S3 direct-drive robot
+
+The default PlatformIO environment is `robot_s3`. It uses the supplied
+L298N, RC522, DFPlayer and IR sketch for the YD-ESP32-S3 N16R8 carrier.
+The legacy ESP32 and Nano firmware is available with `-e esp32dev`.
+
+The S3 build keeps tracks 0001–0006 for stations S1–S6, track 0008 for
+the separate intro card, and track 0009 for the obstacle prompt. Jamdani
+is reserved. The robot reports its station and motion over ESP-NOW on
+channel 1 and accepts the Hub's emergency and mute commands. A station
+photo is triggered after two seconds of narration via GPIO18 → J8.3 →
+ESP-CAM GPIO13 at 9600 baud.
+
+Use USB for the first flash. Subsequent updates use the signed Bluetooth
+service `MuseumRobot-BLE-OTA` while the robot is parked. Keep the project's
+private `.ota-signing.key` for future updates.
+
+```sh
+pio run -d ESP32_RFID_MP3_RAIL -e robot_s3
+python3 firmware/NOV_HUB/tools/hub_ble.py --address ROBOT_BLE_ADDRESS monitor
+python3 firmware/NOV_HUB/tools/hub_ble.py --address ROBOT_BLE_ADDRESS flash \
+  ESP32_RFID_MP3_RAIL/.pio/build/robot_s3/firmware.bin \
+  --key ESP32_RFID_MP3_RAIL/.ota-signing.key
+```
+
+Build `de53b55a` was installed over USB on ESP32-S3 MAC `7C:E8:B1:AB:2D:E4`.
+A signed update over `7C:E8:B1:AB:2D:E5` then verified a boot from `app1`
+with the robot parked and ESP-NOW ready.
+
+# Legacy ESP32 RFID, DFPlayer and Nano rail controller
 
 Tap an RFID card on the MFRC522 reader and the ESP32 plays the matching MP3
 track on the DFPlayer Mini. The two control cards also start or stop the Nano
@@ -209,17 +238,22 @@ If the module is lost *mid‑tour* (it was present at boot, so `audioReady` is
 stale), a station card stops the rail and the 90 s `AUDIO_MAX_MS` fail‑safe
 then leaves it stopped — reconnect the module or reboot after re‑wiring.
 
-For station tracks 0002 through 0008, a non-blocking `millis()` timer schedules
+For station tracks 0010 through 0015, a non-blocking `millis()` timer schedules
 one camera command two seconds after audio starts (after the STOP command). The
-mapping is track 2 -> station 1 through track 8 -> station 7. If narration ends
+mapping is track 10 to station 1 through track 15 to station 6. If narration ends
 or errors before the timer expires, the pending photo is cancelled so the
 camera never shoots after the rail may have resumed. The START and END cards do
 not schedule photos.
 
-The start card clears the stop latch, plays `MP3/0001.mp3`, and sends `START\n`
+The start card clears the stop latch, plays `MP3/0009.mp3`, and sends `START\n`
 after the intro finishes. The end card sends `STOP\n`, stops any current
 DFPlayer audio, selects no new track, and latches the rail stopped. Station
 audio cannot clear that latch; only the start card can start the rail again.
+
+The robot reports its station and Nano-confirmed motion over ESP-NOW on
+channel 1 when either changes and once a second during the tour. Start and End
+report station 0. The current control UIDs are `83 54 6A 28` and `13 8C 5A 28`.
+The legacy control cards still work.
 
 > All UIDs are full 4-byte values, stored in the same byte order the reader prints.
 
