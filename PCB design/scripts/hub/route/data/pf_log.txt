@@ -1,0 +1,8 @@
+fanout: 0 SMD GND pads, 0 vias (incl. the exposed-pad vias)
+iter  0: routed 73 nets, conflicts  7795 cells in 52 nets (pres 0.60)   93s
+iter  1: routed 52 nets, conflicts  6703 cells in 51 nets (pres 1.02)  220s
+iter  2: routed 51 nets, conflicts  5401 cells in 47 nets (pres 1.73)  369s
+iter  3: routed 47 nets, conflicts  2896 cells in 37 nets (pres 2.95)  541s
+iter  4: routed 37 nets, conflicts  1139 cells in 27 nets (pres 5.01)  698s
+iter  5: routed 27 nets, conflicts   385 cells in 14 nets (pres 8.52)  819s
+iter  6: routed 14 nets, conflicts     0 cells in  0 nets (pres 14.48)  887s

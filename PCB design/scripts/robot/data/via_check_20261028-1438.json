@@ -1,0 +1,1360 @@
+{
+  "before": "PCB design\\Robot\\WRO_Robot_rf_verified_20261028-1431.epro2",
+  "after": "PCB design\\Robot\\WRO_Robot_via_deleted_20261028-1438.epro2",
+  "documentsBefore": 110,
+  "documentsAfter": 110,
+  "recordChanges": [
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder100",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 7
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder101",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder102",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 6,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder103",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 6
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder104",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder106",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder107",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 12,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder108",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 12
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder109",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 12,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder110",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 12
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder115",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 4,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder116",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder117",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 4,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder118",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder119",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder120",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 6,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder121",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/dataType",
+          "before": "VIA",
+          "after": "LINE"
+        },
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 6
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder122",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/dataType",
+          "before": "LINE",
+          "after": "VIA"
+        },
+        {
+          "path": "/max",
+          "before": 12,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder123",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 12
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder125",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 10,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder126",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 15,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder127",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 15
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder128",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 10,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder129",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder130",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder133",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 46,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder134",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 46
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder136",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder137",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 9,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder138",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 9
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder139",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 4,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder140",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 12,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder141",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 49,
+          "after": 12
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder142",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 6,
+          "after": 49
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder143",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 6
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder144",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder145",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder146",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 4,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder147",
+      "kind": "added",
+      "after": {
+        "dataType": "LINE",
+        "max": 4
+      }
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder45",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/dataType",
+          "before": "LINE",
+          "after": "VIA"
+        },
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder46",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 122,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder47",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 25,
+          "after": 122
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder48",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 25
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder49",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 8,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder50",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 8
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder51",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 13,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder52",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 13
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder53",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 4,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder54",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder55",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 6,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder56",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 31,
+          "after": 6
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder57",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 31
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder58",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder59",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder60",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 4,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder61",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder62",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 67,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder63",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 67
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder64",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder65",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 11,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder66",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 11
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder70",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 26,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder71",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 16,
+          "after": 26
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder72",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 5,
+          "after": 16
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder73",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 5
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder74",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder75",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 8,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder76",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 8
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder77",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder78",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 4,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder79",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 11,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder80",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 11
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder82",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder83",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 7,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder84",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 10,
+          "after": 7
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder85",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 10
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder86",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 13,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder87",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 13
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder88",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder92",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 1,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder93",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 1
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder94",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 3,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder95",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 11,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder96",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 2,
+          "after": 11
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder97",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 6,
+          "after": 2
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder98",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 4,
+          "after": 6
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "ELE_PLACEHOLDER",
+      "id": "placeholder99",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/max",
+          "before": 7,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "VIA",
+      "id": "44628080eda6d090",
+      "kind": "removed",
+      "before": {
+        "partitionId": "",
+        "groupId": 0,
+        "netName": "GND",
+        "ruleName": "",
+        "centerX": 1145,
+        "centerY": 3670,
+        "holeDiameter": 15.75,
+        "viaDiameter": 31.5,
+        "viaType": "NORMAL",
+        "topSolderExpansion": null,
+        "bottomSolderExpansion": null,
+        "locked": false,
+        "unusedInnerLayers": []
+      }
+    }
+  ],
+  "documentHeaderChanges": [
+    {
+      "document": "643ce99542452c8f",
+      "changes": [
+        {
+          "path": "/updateTime",
+          "before": 1793176252476,
+          "after": 1793176650314
+        },
+        {
+          "path": "/version",
+          "before": "1793176252476",
+          "after": "1793176650314"
+        }
+      ]
+    }
+  ],
+  "serializationOnlyChanges": [],
+  "unchangedBodiesByType": {
+    "ATTR": 3130,
+    "CANVAS": 67,
+    "CIRCLE": 7,
+    "ELE_PLACEHOLDER": 435,
+    "META": 109,
+    "PART": 37,
+    "PIN": 125,
+    "RECT": 38,
+    "ACTIVE_LAYER": 30,
+    "FILL": 210,
+    "LAYER": 686,
+    "PAD": 115,
+    "POLY": 334,
+    "ELLIPSE": 7,
+    "ARC": 6,
+    "COMPONENT": 133,
+    "LINE": 534,
+    "TEXT": 7,
+    "WIRE": 189,
+    "LAYER_PHYS": 17,
+    "NET": 56,
+    "PAD_NET": 213,
+    "PANELIZE": 1,
+    "PREFERENCE": 2,
+    "PRIMITIVE": 37,
+    "RULE": 18,
+    "RULE_SELECTOR": 51,
+    "RULE_TEMPLATE": 1,
+    "SILK_OPTS": 2,
+    "STRING": 125,
+    "VIA": 156,
+    "OBJ": 1,
+    "TABLE": 1,
+    "BLOB": 1,
+    "UNIVERSAL": 1
+  },
+  "archiveMemberChanges": [
+    {
+      "name": "IMAGE/643ce99542452c8f.webp",
+      "beforeSha256": "0bb40ca3702f7bd504b51bb1d1afde5f320ec7a307527c3169957bbd779ef765",
+      "afterSha256": "30efbb08bfa9e0d28d7e2dacae8f57fb7e53056760293b693374b824f40cf309"
+    },
+    {
+      "name": "WRO_Robot.epru",
+      "beforeSha256": "5504ba35671fcab66abbd61052fcc0d8bc2ff25d811cee1149ac86d1f0984f1c",
+      "afterSha256": "c5b8c255a1f026bae07df63d0901efc5ae932ecc42fce2227c3fa5011797fa24"
+    }
+  ],
+  "pcbRecordCounts": {
+    "META": 1,
+    "PRIMITIVE": 37,
+    "CANVAS": 1,
+    "LAYER": 60,
+    "LAYER_PHYS": 9,
+    "ACTIVE_LAYER": 1,
+    "RULE_TEMPLATE": 1,
+    "RULE": 16,
+    "SILK_OPTS": 2,
+    "PREFERENCE": 1,
+    "PANELIZE": 1,
+    "NET": 52,
+    "ELE_PLACEHOLDER": 147,
+    "COMPONENT": 66,
+    "PAD_NET": 213,
+    "ATTR": 198,
+    "LINE": 345,
+    "PAD": 4,
+    "STRING": 121,
+    "POLY": 16,
+    "VIA": 156,
+    "RULE_SELECTOR": 51
+  },
+  "xtFootprintPads": {
+    "eac10ca20e6778ba": [
+      {
+        "id": "e10",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 157.48,
+          "height": 157.48
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 216.5,
+          "height": 216.5
+        }
+      },
+      {
+        "id": "e11",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 157.48,
+          "height": 157.48
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 216.5,
+          "height": 216.5
+        }
+      }
+    ],
+    "9e78c3c3ca74ad42": [
+      {
+        "id": "e24",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      },
+      {
+        "id": "e25",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      }
+    ],
+    "9197bb2e6c38da76": [
+      {
+        "id": "e18",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      },
+      {
+        "id": "e19",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      }
+    ]
+  },
+  "allNativeBodiesAndDocumentHeadersEqual": false,
+  "sha256": {
+    "PCB design\\Robot\\WRO_Robot_rf_verified_20261028-1431.epro2": "bce057c09732011bb4f126dd6224df64688e37ce270fa612141dcec679708418",
+    "PCB design\\Robot\\WRO_Robot_via_deleted_20261028-1438.epro2": "d83cc570acbe1ce40f1d1b6998808cca4dc5ec450afeae600d87aecef547ee85"
+  }
+}

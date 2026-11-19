@@ -1,0 +1,24 @@
+// WRITES ONLY J3's saved records; undo the partial move after the rejected pad edit.
+const BASE = [[{"type": "COMPONENT", "ticket": 470, "id": "0cbe9290d583d889"}, {"partitionId": "", "groupId": 0, "layerId": 1, "x": -10, "y": 1446, "angle": -90, "attrs": {"Unique ID": "gge3", "Reuse Block": "", "Group ID": "", "Channel ID": "$1I4"}, "locked": false, "zIndex": -1}], [{"type": "ATTR", "ticket": 471, "id": "0cbe9290d583d889e1"}, {"partitionId": "", "groupID": 0, "parentId": "0cbe9290d583d889", "layerId": 3, "x": null, "y": null, "key": "Name", "value": "={Manufacturer Part}", "keyVisible": false, "valueVisible": false, "fontFamily": "default", "fontSize": 67.5, "strokeWidth": 6, "bold": 0, "italic": 0, "origin": "LEFT_BOTTOM", "angle": -90, "reverse": false, "expansion": 0, "mirror": false, "locked": false, "zIndex": 1, "specialColor": null}], [{"type": "ATTR", "ticket": 472, "id": "0cbe9290d583d889e2"}, {"partitionId": "", "groupID": 0, "parentId": "0cbe9290d583d889", "layerId": 3, "x": 157.717, "y": 1921.001, "key": "Designator", "value": "J3", "keyVisible": false, "valueVisible": true, "fontFamily": "default", "fontSize": 45, "strokeWidth": 6, "bold": 0, "italic": 0, "origin": "LEFT_BOTTOM", "angle": -90, "reverse": false, "expansion": 0, "mirror": false, "locked": false, "zIndex": 2, "specialColor": null}], [{"type": "ATTR", "ticket": 473, "id": "0cbe9290d583d889ee0"}, {"partitionId": "", "groupID": 0, "parentId": "0cbe9290d583d889", "layerId": 3, "x": null, "y": null, "key": "Footprint", "value": "ae8f5762b637161e", "keyVisible": false, "valueVisible": false, "fontFamily": "default", "fontSize": 45, "strokeWidth": 6, "bold": 0, "italic": 0, "origin": "LEFT_BOTTOM", "angle": -90, "reverse": false, "expansion": 0, "mirror": false, "locked": false, "zIndex": -1, "specialColor": null}], [{"type": "ATTR", "ticket": 474, "id": "0cbe9290d583d889e0"}, {"partitionId": "", "groupID": 0, "parentId": "0cbe9290d583d889", "layerId": 3, "x": null, "y": null, "key": "Device", "value": "0b029b3bccb9137c", "keyVisible": false, "valueVisible": false, "fontFamily": "default", "fontSize": 45, "strokeWidth": 6, "bold": 0, "italic": 0, "origin": "LEFT_BOTTOM", "angle": -90, "reverse": false, "expansion": 0, "mirror": false, "locked": false, "zIndex": -1, "specialColor": null}], [{"type": "PAD_NET", "ticket": 475, "id": "[\"PAD_NET\",\"0cbe9290d583d889\",\"6\",\"e21\"]"}, {"partitionId": "", "padNet": "DC-", "padLen": null, "attrsMap": {}}], [{"type": "PAD_NET", "ticket": 476, "id": "[\"PAD_NET\",\"0cbe9290d583d889\",\"5\",\"e22\"]"}, {"partitionId": "", "padNet": "GND", "padLen": null, "attrsMap": {}}], [{"type": "PAD_NET", "ticket": 477, "id": "[\"PAD_NET\",\"0cbe9290d583d889\",\"4\",\"e23\"]"}, {"partitionId": "", "padNet": "BAT-", "padLen": null, "attrsMap": {}}], [{"type": "PAD_NET", "ticket": 478, "id": "[\"PAD_NET\",\"0cbe9290d583d889\",\"3\",\"e24\"]"}, {"partitionId": "", "padNet": "DC+", "padLen": null, "attrsMap": {}}], [{"type": "PAD_NET", "ticket": 479, "id": "[\"PAD_NET\",\"0cbe9290d583d889\",\"2\",\"e25\"]"}, {"partitionId": "", "padNet": "V12", "padLen": null, "attrsMap": {}}], [{"type": "PAD_NET", "ticket": 480, "id": "[\"PAD_NET\",\"0cbe9290d583d889\",\"1\",\"e26\"]"}, {"partitionId": "", "padNet": "BAT+", "padLen": null, "attrsMap": {}}]];
+const p = await eda.dmt_Project.getCurrentProjectInfo();
+const doc = await eda.dmt_SelectControl.getCurrentDocumentInfo();
+if (p?.friendlyName !== 'WRO_HUB' || doc?.uuid !== 'ad35aed4d7610fd2') throw Error('Wrong project/document');
+const parse = s => s.trim().split(/\r?\n/).map(l => {
+  const i = l.indexOf('||');
+  return [JSON.parse(l.slice(0, i)), JSON.parse(l.slice(i + 2).replace(/\|\s*$/, ''))];
+});
+const live = parse(await eda.sys_FileManager.getDocumentSource());
+const originals = new Map(BASE.map(r => [r[0].id, r]));
+const target='0cbe9290d583d889';
+if(!live.some(([a])=>a.type==='COMPONENT'&&a.id===target)) throw Error('J3 component identity changed; refusing restore');
+// An invalid footprint save may delete its pad-net records. Restore the complete saved set,
+// including missing pad-net rows; never touch any unrelated component or copper record.
+const out=live.filter(([a,v])=>!originals.has(a.id) && v.parentId!==target &&
+  !(a.type==='PAD_NET' && String(a.id).includes(target)));
+out.push(...BASE);
+const changed=BASE.length;
+if (!await eda.sys_FileManager.setDocumentSource(out.map(r => JSON.stringify(r[0]) + '||' + JSON.stringify(r[1]) + '|').join('\n') + '\n'))
+  throw Error('Restore rejected');
+await eda.pcb_Document.save();
+const c = (await eda.pcb_PrimitiveComponent.get(await eda.pcb_PrimitiveComponent.getAllPrimitiveId())).find(c => c.getState_Designator() === 'J3');
+return { restoredJ3Records: changed, x: c.getState_X(), y: c.getState_Y(), mpn: c.getState_ManufacturerId(), supplierId: c.getState_SupplierId(), pads: (await c.getAllPins()).length };

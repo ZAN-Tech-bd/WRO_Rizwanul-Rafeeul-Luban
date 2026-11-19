@@ -1,0 +1,18 @@
+test_01_exact_seven_removed_no_additions (__main__.SubtractionAcceptance.test_01_exact_seven_removed_no_additions) ... ok
+test_02_all_77_survivors_and_their_pad_nets_byte_identical (__main__.SubtractionAcceptance.test_02_all_77_survivors_and_their_pad_nets_byte_identical) ... ok
+test_03_all_net_definitions_byte_identical (__main__.SubtractionAcceptance.test_03_all_net_definitions_byte_identical) ... ok
+test_04_no_unapproved_pcb_record_changes (__main__.SubtractionAcceptance.test_04_no_unapproved_pcb_record_changes) ... ok
+test_05_all_other_documents_unchanged (__main__.SubtractionAcceptance.test_05_all_other_documents_unchanged) ... ok
+test_06_copper_pours_holes_and_outline_byte_identical (__main__.SubtractionAcceptance.test_06_copper_pours_holes_and_outline_byte_identical) ... ok
+test_07_no_sb_silk_or_bypass_note (__main__.SubtractionAcceptance.test_07_no_sb_silk_or_bypass_note) ... ok
+test_08_hop_resistors_and_port_led_pins (__main__.SubtractionAcceptance.test_08_hop_resistors_and_port_led_pins) ... ok
+test_09_baseline_targets_are_c492401_two_pin_100_mil_headers (__main__.SubtractionAcceptance.test_09_baseline_targets_are_c492401_two_pin_100_mil_headers) ... ok
+test_10_live_geometry_nets_and_silk_match (__main__.SubtractionAcceptance.test_10_live_geometry_nets_and_silk_match) ... ok
+test_11_no_new_drc_findings_and_only_sb_pad_findings_removed (__main__.SubtractionAcceptance.test_11_no_new_drc_findings_and_only_sb_pad_findings_removed) ... ok
+test_12_surviving_schematic_symbols_wires_and_pin_memberships_unchanged (__main__.SubtractionAcceptance.test_12_surviving_schematic_symbols_wires_and_pin_memberships_unchanged) ... ok
+test_13_schematic_stub_allowlist_is_exclusive_to_sb_pins (__main__.SubtractionAcceptance.test_13_schematic_stub_allowlist_is_exclusive_to_sb_pins) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.235s
+
+OK

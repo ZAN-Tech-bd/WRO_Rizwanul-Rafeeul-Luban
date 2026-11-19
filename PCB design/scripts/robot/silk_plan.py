@@ -1,0 +1,492 @@
+# Robot carrier v0.6 PCB — OFFLINE silkscreen planner (labels, outlines, designators). From the attendance rev C
+# planner (pcb-pipeline template); only the label block and the JS headers are board-specific.
+# Inputs: layout_plan.py (placement = what 21_place_pcb.js put on the board) + data/pad_geometry.json (20c output:
+# real pad sizes + font metrics). Checks every text box against pads (+7 mil), holes, the board edge, other texts and
+# part bodies; designators are auto-placed at the best free spot around their part.
+# Writes 23_silkscreen.js (labels + lines, idempotent) and 25_designators.js (designator attributes), and a preview.
+# Usage: python silk_plan.py [--js] [--crop=x0,y0,x1,y1 --scale=1.0]
+import json
+import math
+import os
+import sys
+
+from PIL import Image, ImageDraw, ImageFont
+
+import layout_plan as LP
+
+HERE = LP.HERE
+W, H = LP.W, LP.H
+GEO = json.loads(open(os.path.join(HERE, 'data', 'pad_geometry.json'), encoding='utf-8').read())
+if isinstance(GEO, str):
+    GEO = json.loads(GEO)
+CHAR = 0.64      # text width per character / height (EasyEDA 'default' font, measured: 'LED5'@32 = 78.9 mil)
+PAD_CLR = 7      # silkscreen to pad clearance (JLC clips silk over pads; 6 mil min)
+TEXT_CLR = 4
+EDGE = 15
+DES_SIZE = 32    # 0.81 mm designators, 6 mil stroke (JLC min legible 0.8 mm / 0.15 mm)
+
+# ---- obstacles ----
+# Pad SIZE and pad rotation relative to its part come from the EDA capture (20c); pad POSITION and part rotation come
+# from the current plan, so the planner stays right after parts are moved offline (re-run 21 + 20c before the final).
+_cap = json.loads(open(os.path.join(HERE, 'data', 'pcb_inventory_placed.json'), encoding='utf-8').read())
+if isinstance(_cap, str):
+    _cap = json.loads(_cap)
+CAP_ROT = {l.split('|')[0]: float(l.split('|')[3]) for l in _cap['lines']}
+PADSHAPE = {}
+for row in GEO['pads']:
+    d, num, x, y, rot, shape, w, h, layer = row.split('|')
+    try:
+        w, h = float(w), float(h)
+    except ValueError:
+        w = h = 0.0
+    if shape == 'POLYGON' or not (w > 0 and h > 0):
+        w = h = 90.0
+    PADSHAPE[(d, num)] = (w, h, (float(rot) - CAP_ROT.get(d, 0.0)) % 180)
+PARTS = LP.parse_inventory(LP.INV)
+PADS = []  # (x0, y0, x1, y1, des)
+for d, (x, y, r) in LP.PLAN.items():
+    for num, net, px, py in LP.pads_abs(PARTS[d], x, y, r):
+        if PARTS[d].get('override'):  # footprint swapped since the capture: size from the LCSC footprint file
+            w, h, rel = PARTS[d]['pad'][0], PARTS[d]['pad'][1], 0.0
+        else:
+            w, h, rel = PADSHAPE.get((d, num), (40.0, 40.0, 0.0))
+        if w <= 0:
+            continue
+        if abs(((rel + r) % 180) - 90) < 1:
+            w, h = h, w
+        PADS.append((px - w / 2 - PAD_CLR, py - h / 2 - PAD_CLR, px + w / 2 + PAD_CLR, py + h / 2 + PAD_CLR, d))
+HOLES = [(hx, hy, pad / 2 + PAD_CLR, name) for name, hx, hy, drill, pad, keep, plated in LP.HOLES]
+BODY = {d: LP.shapes(d, PARTS[d], *LP.PLAN[d]) for d in LP.PLAN}
+PADPOS = {}
+for d, (x, y, r) in LP.PLAN.items():
+    for num, net, px, py in LP.pads_abs(PARTS[d], x, y, r):
+        PADPOS[(d, num)] = (px, py)
+
+
+def P(d, n):
+    return PADPOS[(d, str(n))]
+
+
+def tbox(x, y, s, size, rot):
+    w, h = CHAR * size * len(s), size
+    if rot % 180:
+        w, h = h, w
+    return (x - w / 2, y - h / 2, x + w / 2, y + h / 2)
+
+
+def ov(a, b, m=0.0):
+    return min(a[2], b[2]) - max(a[0], b[0]) > -m and min(a[3], b[3]) - max(a[1], b[1]) > -m
+
+
+def circ_hit(b, cx, cy, r):
+    return math.hypot(max(b[0] - cx, 0, cx - b[2]), max(b[1] - cy, 0, cy - b[3])) < r
+
+
+def hard_hits(b, placed, own=None):
+    out = []
+    if b[0] < EDGE or b[1] < EDGE or b[2] > W - EDGE or b[3] > H - EDGE:
+        out.append('edge')
+    for p in PADS:
+        if ov(b, p):
+            out.append('pad ' + p[4])
+            break
+    for cx, cy, r, n in HOLES:
+        if circ_hit(b, cx, cy, r):
+            out.append('hole ' + n)
+    for t in placed:
+        if ov(b, t[0], TEXT_CLR):
+            out.append('text ' + t[1])
+            break
+    return out
+
+
+def soft_cost(b, own):
+    c = 0.0
+    for d, rcs in BODY.items():
+        if d == own:
+            if any(ov(b, rc) for rc in rcs):
+                c += 60  # hidden under its own part after assembly
+            continue
+        if any(ov(b, rc) for rc in rcs):
+            c += 200
+    for name, m in LP.MODULES:
+        if ov(b, m):
+            c += 40  # hidden while the module is plugged in
+    return c
+
+
+# ---------------------------------------------------------------- labels (hand-placed, checked)
+LABELS = []  # [x, y, text, size, rot]
+LINES = []   # [x1, y1, x2, y2]
+
+
+def t(x, y, s, size=30, rot=0):
+    LABELS.append([round(x, 1), round(y, 1), s, size, rot])
+
+
+def rect(x0, y0, x1, y1, skip=()):
+    for i, seg in enumerate([(x0, y0, x1, y0), (x1, y0, x1, y1), (x1, y1, x0, y1), (x0, y1, x0, y0)]):
+        if i not in skip:
+            LINES.append([round(v, 1) for v in seg])
+
+
+# v0.5b (2026-10-25, user): bigger plain-English silkscreen — every port says what plugs in, every module area what goes
+# there, and every resistor / capacitor / diode carries its value inside its outline (what to solder where).
+# Sizes: names 30–44 mil (0.8–1.1 mm), pin names 28–30 mil, values 26–30 mil; strokes >= 6 mil.
+def val(d, txt, size=30):
+    """value label inside a part's outline: along its long side, centred, else shifted across it until it fits"""
+    bx = BODY[d][0]
+    cx, cy = (bx[0] + bx[2]) / 2, (bx[1] + bx[3]) / 2
+    rot = 90 if (bx[3] - bx[1]) > (bx[2] - bx[0]) else 0
+    placed = [(tbox(*l[:2], l[2], l[3], l[4]), l[2]) for l in LABELS]
+    for sz in (size, size - 4):
+        for off in (0, 40, -40, 80, -80, 110, -110):
+            x, y = (cx + off, cy) if rot else (cx, cy + off)
+            if not hard_hits(tbox(x, y, txt, sz, rot), placed):
+                t(x, y, txt, sz, rot)
+                return
+    t(cx, cy, txt, size, rot)   # reported as a problem by plan()
+
+
+# title in the USB lane (only low parts there)
+t(700, 720, 'WRO MUSEUM ROBOT', 40)
+t(700, 660, 'CARRIER v0.6  2026-10', 30)
+# DevKit: outline (top side = board edge, skipped), what goes here, native-USB port, antenna end
+dk = LP.DEVKIT
+rect(dk[0], dk[1], dk[2], dk[3], skip=(2,))
+t(970, 2460, 'ESP32-S3 BOARD', 44)
+t(970, 2385, 'PLUG IN HERE', 34)
+t(LP.USB_X, dk[1] + 50, 'USB-C: UPLOAD', 30)
+t(970, H - 100, 'ANTENNA', 30)
+# L298N (J6): pin names right of the pads, what plugs in + its jumper warning (one upright line)
+for n, s in enumerate(['5V', 'GND', 'ENA', 'IN1', 'IN2', 'IN3', 'IN4', 'ENB'], 1):
+    t(292, P('J6', n)[1], s, 30)
+t(375, LP.PLAN['J6'][1], 'L298N MOTORS: REMOVE ENA ENB 5V JUMPERS', 30, 90)
+# spare pins (J14) + RC522 (J7)
+for n, s in enumerate(['3V3', 'GND', 'IO3', 'IO38'], 1):
+    t(292, P('J14', n)[1], s, 28)
+t(375, LP.PLAN['J14'][1], 'SPARE PINS 3.3V', 30, 90)
+for n, s in enumerate(['3V3', 'GND', 'SS', 'SCK', 'MOSI', 'MISO', 'RST'], 1):
+    t(292, P('J7', n)[1], s, 28)
+t(375, LP.PLAN['J7'][1], 'RC522 RFID READER 3.3V ONLY', 30, 90)
+# obstacle sensors (J11, J15 = wired-OR, D-025) and I2C (J10): pin names under each header, names beside
+for n, s in enumerate(['3V3', 'GND', 'SIG'], 1):
+    t(P('J11', n)[0], 3568, s, 28)
+    t(P('J15', n)[0], 3568, s, 28)
+t(1735, 3762, 'OBSTACLE 1', 30)
+t(1735, 3717, 'FC-51 3.3V', 30)
+t(2987, H - 125, 'OBSTACLE 2', 28, 90)
+for n, s in enumerate(['3V3', 'GND', 'SCL', 'SDA'], 1):
+    t(P('J10', n)[0], 3568, s, 28)
+t(2396, H - 125, 'I2C 3.3V', 28, 90)
+# Mega (J9, rot 180): pin names; what plugs in + the unplug rule (D-022), upright at the USB lane's edge
+for n, s in enumerate(['5V', 'GND', 'TX', 'RX'], 1):
+    t(P('J9', n)[0], 1045, s, 28)
+t(1020, 1128, 'MEGA DISPLAY - UNPLUG J9 FOR MEGA USB', 28, 90)
+# CAM (J8): pin names above the header, name right of it
+for n, s in enumerate(['5V', 'GND', 'TX'], 1):
+    t(P('J8', n)[0], 292, s, 28)
+t(3300, 170, 'ESP32-CAM', 32)
+# buttons: each row = on-board switch + its panel-button port (J12 / J13)
+t(1020, LP.PLAN['SW1'][1], 'MUTE (PANEL: J12)', 30, 90)
+t(1020, LP.PLAN['SW2'][1], 'SPARE (PANEL: J13)', 30, 90)
+# power column: + / - at every XT contact (left of the bodies), what each connector is for in the gaps
+# v0.6 (D-030): vertical XT60, contacts side by side (rot 180: + left, - right): marks under the body
+t(P('J1', 2)[0], 3020, '+', 50)
+t(P('J1', 1)[0], 3020, '-', 50)
+t(3560, 2905, 'BATTERY 3S LIPO', 30)
+t(3100, P('J2', 1)[1], '+', 44)
+t(3100, P('J2', 2)[1], '-', 44)
+t(3460, 2303, 'MOTOR POWER', 30)
+t(3108, P('J3', 1)[1], '+', 36)   # D1's anode sits just left of J3's contacts
+t(3108, P('J3', 2)[1], '-', 36)
+t(3480, 1701, 'TO 5V BUCK IN', 30)
+t(3125, P('J4', 2)[1], '+', 44)
+t(3125, P('J4', 1)[1], '-', 44)
+t(3450, 1100, '5V FROM BUCK', 32)
+t(2850, 3093, 'POWER SWITCH', 28)
+# JP1: amplifier supply jumper (pin 1 = BAT at the bottom, pin 3 = 5V)
+t(2447, 2505, 'AMP PWR', 28)
+t(2500, P('JP1', 1)[1], 'BAT', 26, 90)
+t(2500, P('JP1', 3)[1], '5V', 26, 90)
+# LM386 modules: outlines (40.9 x 13.9 mm), what goes there, VCC side, foam spots, speaker end
+for name, cx, sock in (('RIGHT SPEAKER AMP', LP.AMP_R_X, 'U4'), ('LEFT SPEAKER AMP', LP.AMP_L_X, 'U3')):
+    r = LP.amp_rect(cx)
+    rect(r[0], r[1], r[2], r[3])
+    t(cx, 1450, name, 30)
+    t(cx, 1395, 'LM386, PINS DOWN', 26)
+    t(P(sock, 1)[0], 1700, 'VCC', 26)
+    t(cx, 250, 'FOAM PAD', 28)
+    t(cx, 115, 'SPEAKER ' + name[0], 28)
+# DFPlayer: outline 10 mil outside the module, pin-1 mark, what goes here
+df = LP.DF
+rect(df[0] - 10, df[1] - 10, df[2] + 10, df[3] + 10)
+t(P('U2A', 1)[0], 1925, '1', 28)
+t(2080, 2335, 'DFPLAYER', 32)
+t(2080, 2285, 'MP3 + SD CARD', 26)
+# component values inside each outline (spec §6)
+VALUES = {'R2': '10k', 'R3': '10k', 'R12': '10k', 'R18': '10k', 'R20': '10k', 'R22': '10k',
+          'R4': '47R', 'R5': '47R', 'R6': '47R',
+          'R7': '1k', 'R8': '1k', 'R9': '1k', 'R10': '1k', 'R11': '1k', 'R16': '1k', 'R17': '1k', 'R19': '1k',
+          'R21': '1k', 'R23': '1k', 'R27': '1k', 'R13': '20k', 'R25': '20k', 'R14': '4.7k', 'R15': '4.7k',
+          'R24': '100k', 'R26': '2.2k',
+          'C4': '100nF', 'C6': '100nF', 'C8': '100nF', 'C10': '100nF', 'C11': '100nF', 'C12': '100nF', 'C13': '100nF',
+          'C14': '100nF', 'C3': '470uF', 'C5': '470uF', 'C7': '10uF', 'C9': '1000uF', 'D1': '1N4007', 'D2': '1N4007'}
+for d, v in VALUES.items():
+    val(d, v)
+# names placed next to their part by the same search as the designators: the LEDs (v0.5: no test points, D-026)
+TPN = {'LED1': 'RED=BATT ON', 'LED2': 'GRN=5V OK'}
+DES_OVERRIDE = {'J1': (3217, 3020, 0)}   # v0.6: between J1's + / - marks under the vertical XT60
+
+
+# ---------------------------------------------------------------- designators + TP names: candidate search
+def place_auto(own, text, size, placed, prefer_rot=0):
+    rcs = BODY[own]
+    bx0 = min(r[0] for r in rcs); by0 = min(r[1] for r in rcs); bx1 = max(r[2] for r in rcs); by1 = max(r[3] for r in rcs)
+    if own == 'BT1':
+        bx0, by0, bx1, by1 = rcs[0]
+    for q in PADS:
+        if q[4] == own and own != 'BT1':
+            bx0, by0, bx1, by1 = min(bx0, q[0]), min(by0, q[1]), max(bx1, q[2]), max(by1, q[3])
+    cx, cy = (bx0 + bx1) / 2, (by0 + by1) / 2
+    best = None
+    for rot in (prefer_rot, (prefer_rot + 90) % 180):
+        w, h = CHAR * size * len(text), size
+        if rot:
+            w, h = h, w
+        g = 5
+        cands = [
+            (cx, by1 + g + h / 2), (cx, by0 - g - h / 2), (bx0 - g - w / 2, cy), (bx1 + g + w / 2, cy),
+            (bx0 - g - w / 2, by1 + g + h / 2), (bx1 + g + w / 2, by1 + g + h / 2),
+            (bx0 - g - w / 2, by0 - g - h / 2), (bx1 + g + w / 2, by0 - g - h / 2),
+            (bx0 + w / 2, by1 + g + h / 2), (bx1 - w / 2, by1 + g + h / 2),
+            (bx0 + w / 2, by0 - g - h / 2), (bx1 - w / 2, by0 - g - h / 2),
+            (cx, by1 + 2 * g + h * 1.5), (cx, by0 - 2 * g - h * 1.5), (cx, cy),
+        ]
+        for i, (x, y) in enumerate(cands):
+            b = tbox(x, y, text, size, rot)
+            if hard_hits(b, placed, own):
+                continue
+            cost = i * 3 + soft_cost(b, own) + (25 if rot != prefer_rot else 0) + (80 if i == len(cands) - 1 else 0)
+            if best is None or cost < best[0]:
+                best = (cost, x, y, rot, b)
+    return best
+
+
+def plan():
+    placed = []  # (box, label)
+    problems = []
+    for x, y, s, size, rot in LABELS:
+        b = tbox(x, y, s, size, rot)
+        hits = hard_hits(b, placed)
+        if hits:
+            problems.append('label "%s": %s' % (s, ', '.join(hits)))
+        placed.append((b, s))
+    for x1, y1, x2, y2 in LINES:
+        b = (min(x1, x2) - 3, min(y1, y2) - 3, max(x1, x2) + 3, max(y1, y2) + 3)
+        for p in PADS:
+            if ov(b, p):
+                problems.append('line %s hits pad of %s' % ([x1, y1, x2, y2], p[4]))
+                break
+    tp_texts = []
+    for d, s in TPN.items():
+        best = place_auto(d, s, 28, placed)
+        if not best:
+            problems.append('no spot for TP label ' + d)
+            continue
+        cost, x, y, rot, b = best
+        LABELS.append([round(x, 1), round(y, 1), s, 28, rot])
+        placed.append((b, s))
+    des = []
+    order = sorted(LP.PLAN, key=lambda d: (len(LP.PARTS_ORDER_HINT.get(d, '')), d)) if hasattr(LP, 'PARTS_ORDER_HINT') else sorted(LP.PLAN)
+    # big / crowded parts first so the small passives fill the gaps
+    order = sorted(order, key=lambda d: -(BODY[d][0][2] - BODY[d][0][0]) * (BODY[d][0][3] - BODY[d][0][1]))
+    for d in order:
+        if d in DES_OVERRIDE:  # hand-placed (still checked)
+            x, y, rot = DES_OVERRIDE[d]
+            bx = tbox(x, y, d, DES_SIZE, rot)
+            hits = hard_hits(bx, placed, d)
+            if hits:
+                problems.append('designator override %s: %s' % (d, ', '.join(hits)))
+            des.append([d, x, y, rot, DES_SIZE, True])
+            placed.append((bx, d))
+            continue
+        best, size = place_auto(d, d, DES_SIZE, placed), DES_SIZE
+        if not best or best[0] >= 200:  # nothing free at 32 mil: try 26 mil before going over another part
+            small = place_auto(d, d, 26, placed)
+            if small and (not best or small[0] < best[0]):
+                best, size = small, 26
+        if not best:
+            des.append([d, 0, 0, 0, 0, False])
+            problems.append('designator %s hidden (no free spot)' % d)
+            continue
+        cost, x, y, rot, b = best
+        des.append([d, round(x, 1), round(y, 1), rot, size, True])
+        placed.append((b, d))
+        if cost >= 200:
+            problems.append('designator %s over another part (cost %d)' % (d, cost))
+    return des, placed, problems
+
+
+# ---------------------------------------------------------------- outputs
+def render(des, out_png, scale=0.36, crop=None):
+    LP_render_parts = LP.check(PARTS)[1]
+    s, m = scale, 40
+    img = Image.new('RGB', (int(W * s) + 2 * m, int(H * s) + 2 * m), (0, 70, 30))
+    g = ImageDraw.Draw(img)
+    X = lambda v: m + v * s
+    Y = lambda v: m + (H - v) * s
+    g.rectangle([X(0), Y(H), X(W), Y(0)], outline='white', width=2)
+    for x0, y0, x1, y1, d in PADS:
+        g.rectangle([X(x0 + PAD_CLR), Y(y1 - PAD_CLR), X(x1 - PAD_CLR), Y(y0 + PAD_CLR)], fill=(200, 160, 60))
+    for cx, cy, r, n in HOLES:
+        g.ellipse([X(cx - r), Y(cy + r), X(cx + r), Y(cy - r)], outline=(200, 160, 60), fill=(20, 20, 20))
+    for d, rcs in LP_render_parts.items():
+        for rc in rcs:
+            g.rectangle([X(rc[0]), Y(rc[3]), X(rc[2]), Y(rc[1])], outline=(90, 140, 100))
+    for x1, y1, x2, y2 in LINES:
+        g.line([X(x1), Y(y1), X(x2), Y(y2)], fill='white', width=max(1, int(6 * s)))
+
+    def draw_text(x, y, txt, size, rot, col):
+        px = max(8, int(size * s * 1.25))
+        try:
+            f = ImageFont.truetype('arialbd.ttf', px)
+        except OSError:
+            f = ImageFont.load_default()
+        bb = g.textbbox((0, 0), txt, font=f, anchor='lt')
+        tim = Image.new('RGBA', (max(1, bb[2] - bb[0]), max(1, bb[3] - bb[1])), (0, 0, 0, 0))
+        ImageDraw.Draw(tim).text((-bb[0], -bb[1]), txt, fill=col, font=f, anchor='lt')
+        tim = tim.resize((max(1, int(CHAR * size * len(txt) * s)), max(1, int(size * s))))
+        if rot:
+            tim = tim.rotate(rot, expand=True)
+        img.paste(tim, (int(X(x) - tim.width / 2), int(Y(y) - tim.height / 2)), tim)
+
+    for x, y, txt, size, rot in LABELS:
+        draw_text(x, y, txt, size, rot, (255, 255, 255, 255))
+    for d, x, y, rot, size, vis in des:
+        if vis:
+            draw_text(x, y, d, size, rot, (255, 255, 160, 255))
+    if crop:
+        x0, y0, x1, y1 = crop
+        img = img.crop((int(X(x0)), int(Y(y1)), int(X(x1)), int(Y(y0))))
+    img.save(out_png)
+
+
+SILK_JS = r"""// GENERATED by silk_plan.py (--js). Edit labels in silk_plan.py, not here.
+// Robot carrier v0.5 PCB — step P5e: top-silkscreen labels and outlines (layer 3). Footprint silk and designators are
+// not free primitives, so every free layer-3 string/line belongs to this script.
+// Strokes >= 6 mil = JLC's 0.15 mm minimum silkscreen line (attendance D-041).
+// Run: node "D:\projects\WRO_Rizwanul-Rafeeul-Luban\tools\easyeda-bridge\eda.mjs" exec -f "D:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\robot\23_silkscreen.js"
+const PROJECT = 'WRO_Robot';
+const proj = await eda.dmt_Project.getCurrentProjectInfo();
+if (!proj || (proj.friendlyName || proj.name) !== PROJECT) return JSON.stringify({ abort: 'open project is not ' + PROJECT });
+const tree = await eda.dmt_EditorControl.getSplitScreenTree();
+const tab = ((tree && tree.tabs) || []).find((t) => /pcb/i.test(t.title));
+if (!tab) return JSON.stringify({ abort: 'no PCB tab' });
+await eda.dmt_EditorControl.activateDocument(tab.tabId);   // pcb_* calls fail while a schematic tab is active
+{ const _t = Date.now(); while (Date.now() - _t < 600) await eda.dmt_Project.getCurrentProjectInfo(); }
+const T = /*T*/;
+const L = /*L*/;
+// Incremental + time-boxed (robot: 93 items may not fit one bridge call): keep strings/lines that match the plan, delete
+// every other free layer-3 string/line, create the missing ones until 18 s, report "remaining" (re-run until 0).
+const key = (s, x, y, size, rot) => [s, Math.round(x), Math.round(y), Math.round(size), ((Math.round(rot) % 360) + 360) % 360].join('|');
+const lkey = (x1, y1, x2, y2) => [x1, y1, x2, y2].map((v) => Math.round(v)).join('|');
+const want = new Set(T.map(([x, y, s, size, rot]) => key(s, x, y, size, rot)));
+const wantL = new Set(L.map(([x1, y1, x2, y2]) => lkey(x1, y1, x2, y2)));
+const oldS = ((await eda.pcb_PrimitiveString.getAll()) || []).filter((s) => String(s.getState_Layer()) === '3');
+const have = new Set(), stale = [];
+for (const s of oldS) {
+  const k = key(s.getState_Text(), s.getState_X(), s.getState_Y(), s.getState_FontSize(), s.getState_Rotation());
+  if (want.has(k) && !have.has(k)) have.add(k); else stale.push(s.getState_PrimitiveId());
+}
+if (stale.length) await eda.pcb_PrimitiveString.delete(stale);
+// Silk lines are 2-point polylines (EasyEDA 3.2.206: pcb_PrimitiveLine creates copper only; 2026-10-25). Legacy layer-3
+// pcb_PrimitiveLine items of older builds are removed.
+const legacyL = ((await eda.pcb_PrimitiveLine.getAll()) || []).filter((l) => String(l.getState_Layer()) === '3');
+if (legacyL.length) await eda.pcb_PrimitiveLine.delete(legacyL.map((l) => l.getState_PrimitiveId()));
+const nums = (p) => { try { return (p.getState_Polygon().getSource() || []).filter((v) => typeof v === 'number'); } catch (e) { return []; } };
+const oldL = ((await eda.pcb_PrimitivePolyline.getAll()) || []).filter((l) => String(l.getState_Layer()) === '3');
+const haveL = new Set(), staleL = [];
+for (const l of oldL) {
+  const n = nums(l);
+  const a = n.length === 4 ? lkey(n[0], n[1], n[2], n[3]) : null;
+  const b = n.length === 4 ? lkey(n[2], n[3], n[0], n[1]) : null;
+  const k = a && wantL.has(a) ? a : (b && wantL.has(b) ? b : null);
+  if (k && !haveL.has(k)) haveL.add(k); else staleL.push(l.getState_PrimitiveId());
+}
+if (staleL.length) await eda.pcb_PrimitivePolyline.delete(staleL);
+const t0 = Date.now();
+let made = 0, madeL = 0, remaining = 0;
+for (const [x, y, s, size, rot] of T) {
+  if (have.has(key(s, x, y, size, rot))) continue;
+  if (Date.now() - t0 > 18000) { remaining++; continue; }
+  await eda.pcb_PrimitiveString.create(3, x, y, s, 'default', size, Math.max(6, Math.round(size / 6)), 5, rot, false, 0, false, false);
+  made++;
+}
+for (const [x1, y1, x2, y2] of L) {
+  if (haveL.has(lkey(x1, y1, x2, y2))) continue;
+  if (Date.now() - t0 > 18000) { remaining++; continue; }
+  await eda.pcb_PrimitivePolyline.create('', 3, eda.pcb_MathPolygon.createPolygon([x1, y1, 'L', x2, y2]), 6);
+  madeL++;
+}
+await eda.pcb_Document.save();
+return JSON.stringify({ texts: made, lines: madeL, kept: have.size + haveL.size, removed: stale.length + staleL.length, legacyLinesRemoved: legacyL.length, remaining });
+"""
+
+DES_JS = r"""// GENERATED by silk_plan.py (--js). Edit the planner, not here.
+// Robot carrier v0.5 PCB — step P5f: designators at collision-checked spots (32 mil / 6 mil stroke, centred).
+// [designator, x, y, rotation, size, visible]
+// Run: node "D:\projects\WRO_Rizwanul-Rafeeul-Luban\tools\easyeda-bridge\eda.mjs" exec -f "D:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\robot\25_designators.js"
+const PROJECT = 'WRO_Robot';
+const proj = await eda.dmt_Project.getCurrentProjectInfo();
+if (!proj || (proj.friendlyName || proj.name) !== PROJECT) return JSON.stringify({ abort: 'open project is not ' + PROJECT });
+const tree = await eda.dmt_EditorControl.getSplitScreenTree();
+const tab = ((tree && tree.tabs) || []).find((t) => /pcb/i.test(t.title));
+if (!tab) return JSON.stringify({ abort: 'no PCB tab' });
+await eda.dmt_EditorControl.activateDocument(tab.tabId);   // pcb_* calls fail while a schematic tab is active
+{ const _t = Date.now(); while (Date.now() - _t < 600) await eda.dmt_Project.getCurrentProjectInfo(); }
+const D = /*D*/;
+const want = {};
+for (const r of D) want[r[0]] = r;
+const comps = await eda.pcb_PrimitiveComponent.get(await eda.pcb_PrimitiveComponent.getAllPrimitiveId());
+const desOf = {};
+for (const c of comps) desOf[c.getState_PrimitiveId()] = c.getState_Designator();
+const attrs = ((await eda.pcb_PrimitiveAttribute.getAll()) || []).filter((a) => a.getState_Key() === 'Designator');
+const t0 = Date.now();
+let moved = 0, skipped = 0, remaining = 0;
+const errors = [];
+for (const a of attrs) {
+  const r = want[desOf[a.getState_ParentPrimitiveId()]];
+  if (!r) continue;
+  const [d, x, y, rot, size, vis] = r;
+  if (Math.abs(a.getState_X() - x) < 0.5 && Math.abs(a.getState_Y() - y) < 0.5 && a.getState_Rotation() === rot &&
+      a.getState_FontSize() === size && a.getState_ValueVisible() === vis) { skipped++; continue; }
+  if (Date.now() - t0 > 20000) { remaining++; continue; }
+  try {
+    const m = a.toAsync();
+    if (vis) { m.setState_X(x); m.setState_Y(y); m.setState_Rotation(rot); m.setState_AlignMode(5); m.setState_FontSize(size); m.setState_LineWidth(6); }
+    m.setState_ValueVisible(vis);
+    await m.done();
+    moved++;
+  } catch (e) { errors.push(d + ': ' + e); }
+}
+await eda.pcb_Document.save();
+return JSON.stringify({ designators: attrs.length, moved, skipped, remaining, errors: errors.slice(0, 5) });
+"""
+
+if __name__ == '__main__':
+    des, placed, problems = plan()
+    print('labels', len(LABELS), 'lines', len(LINES), 'designators', len(des), 'visible', sum(1 for d in des if d[5]))
+    print('problems', len(problems))
+    for p in problems:
+        print('  ', p)
+    crop = next((tuple(float(v) for v in a[7:].split(',')) for a in sys.argv if a.startswith('--crop=')), None)
+    scale = next((float(a[8:]) for a in sys.argv if a.startswith('--scale=')), 0.36)
+    out = next((a for a in sys.argv[1:] if not a.startswith('--')), os.path.join(HERE, 'data', 'silk_preview.png'))
+    render(des, out, scale, crop)
+    if '--js' in sys.argv:
+        js = SILK_JS.replace('/*T*/', json.dumps(LABELS)).replace('/*L*/', json.dumps(LINES))
+        open(os.path.join(HERE, '23_silkscreen.js'), 'w', encoding='utf-8').write(js)
+        js = DES_JS.replace('/*D*/', json.dumps(des))
+        open(os.path.join(HERE, '25_designators.js'), 'w', encoding='utf-8').write(js)
+        print('wrote 23_silkscreen.js, 25_designators.js')

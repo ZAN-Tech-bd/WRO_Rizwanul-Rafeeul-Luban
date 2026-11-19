@@ -1,0 +1,30 @@
+{
+ "sourceArchive": "D:\\projects\\WRO_Rizwanul-Rafeeul-Luban\\PCB design\\hub\\WRO_HUB_before_ground_write_20261027-1647.epro2",
+ "verifiedArchive": "PCB design\\hub\\WRO_HUB_after_ground_20261027-1649.epro2",
+ "newGndPieces": 2360,
+ "relocatedGndStitchIds": [
+  "48a3854320122408",
+  "235a61808f8c555a",
+  "a53c0f763e0bbf2d"
+ ],
+ "correctedPolarityLegends": 1,
+ "allComponentsTracksPadsNetsFootprintsOutlineAndSchematicPreserved": true,
+ "actualCopperCheck": {
+  "fillPieces": 2360,
+  "layerCounts": {
+   "1": 701,
+   "2": 1659
+  },
+  "foreignOverlaps": [],
+  "clearanceViolations": [],
+  "minimumClearanceMil": {
+   "normal": 11.899776770409337,
+   "left": 39.89890969631584,
+   "source": 49.899563371690974
+  },
+  "edgeClearanceMil": 16.0,
+  "antennaClearanceMil": 7.9130892426110355,
+  "disconnectedGnd": []
+ },
+ "strictDrcErrors": 0
+}

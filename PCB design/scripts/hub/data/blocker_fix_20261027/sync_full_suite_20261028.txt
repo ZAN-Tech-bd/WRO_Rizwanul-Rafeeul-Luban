@@ -1,0 +1,77 @@
+test_native_plan_changes_no_pad_identity_or_center (test_blocker_fixes.BlockerFixTests.test_native_plan_changes_no_pad_identity_or_center) ... ok
+test_q1_preserves_hole_and_pitch_and_passes_absolute_pth_rules (test_blocker_fixes.BlockerFixTests.test_q1_preserves_hole_and_pitch_and_passes_absolute_pth_rules) ... ok
+test_xt30_has_fit_clearance_and_annular_margin (test_blocker_fixes.BlockerFixTests.test_xt30_has_fit_clearance_and_annular_margin) ... ok
+test_xt60_uses_approved_holes_without_shrinking_existing_pads (test_blocker_fixes.BlockerFixTests.test_xt60_uses_approved_holes_without_shrinking_existing_pads) ... ok
+test_generated_serialized_pieces_are_hole_free (test_final_ground.FinalGroundTests.test_generated_serialized_pieces_are_hole_free) ... ok
+test_j3_slot_axes_and_sizes_follow_native_rotation (test_final_ground.FinalGroundTests.test_j3_slot_axes_and_sizes_follow_native_rotation) ... ok
+test_left_side_other_nets_receive_extra_clearance (test_final_ground.FinalGroundTests.test_left_side_other_nets_receive_extra_clearance) ... ok
+test_native_pad_geometry_matches_live_getters (test_final_ground.FinalGroundTests.test_native_pad_geometry_matches_live_getters) ... ok
+test_planned_copper_has_no_foreign_overlap (test_final_ground.FinalGroundTests.test_planned_copper_has_no_foreign_overlap) ... ok
+test_source_negatives_are_foreign_to_gnd (test_final_ground.FinalGroundTests.test_source_negatives_are_foreign_to_gnd) ... ok
+test_excellon_reads_actual_tools_and_plated_slots_not_comments (test_release_checks.ReleaseChecksTests.test_excellon_reads_actual_tools_and_plated_slots_not_comments) ... ok
+test_gerber_comparison_ignores_unused_apertures_but_not_used_sizes (test_release_checks.ReleaseChecksTests.test_gerber_comparison_ignores_unused_apertures_but_not_used_sizes) ... ok
+test_ground_acceptance_rejects_disconnected_fill_only_island (test_release_checks.ReleaseChecksTests.test_ground_acceptance_rejects_disconnected_fill_only_island) ... ok
+test_slot_matching_rejects_rotation_and_reuse_of_one_actual_slot (test_release_checks.ReleaseChecksTests.test_slot_matching_rejects_rotation_and_reuse_of_one_actual_slot) ... ok
+test_track_comparison_allows_only_identity_changes_not_geometry (test_release_checks.ReleaseChecksTests.test_track_comparison_allows_only_identity_changes_not_geometry) ... ok
+test_regenerated_plane_clears_current_copper_and_connects_all_ground (test_repair_ground.GroundTests.test_regenerated_plane_clears_current_copper_and_connects_all_ground) ... ok
+test_local_reroute_preserves_width_and_endpoints_and_clears_antenna (test_repair_rf.RfTests.test_local_reroute_preserves_width_and_endpoints_and_clears_antenna) ... ok
+test_native_model_uses_corrected_footprints_not_stale_live_inputs (test_repair_silk.SilkStyleTests.test_native_model_uses_corrected_footprints_not_stale_live_inputs) ... ok
+test_text_clearance_rejects_pad_collision_and_keeps_valid_text_fixed (test_repair_silk.SilkStyleTests.test_text_clearance_rejects_pad_collision_and_keeps_valid_text_fixed) ... ok
+test_visible_silk_is_enlarged_without_shrinking_existing_style (test_repair_silk.SilkStyleTests.test_visible_silk_is_enlarged_without_shrinking_existing_style) ... ok
+test_as_built_outline_is_widened_left_and_only_listed_parts_moved (test_rocker_model.RockerGeometryTests.test_as_built_outline_is_widened_left_and_only_listed_parts_moved) ... ok
+test_as_built_placement_rotates_the_pattern_but_not_the_pin_numbers (test_rocker_model.RockerGeometryTests.test_as_built_placement_rotates_the_pattern_but_not_the_pin_numbers)
+As built 2026-10-26 (H-001 retry 2): J3 at (-60, 1495) mil, rotation -90 (x, y -> y, -x). ... ok
+test_conservative_finished_slot_contains_all_blade_corners (test_rocker_model.RockerGeometryTests.test_conservative_finished_slot_contains_all_blade_corners) ... ok
+test_emitted_footprint_has_six_plated_slots_and_no_old_connector_graphics (test_rocker_model.RockerGeometryTests.test_emitted_footprint_has_six_plated_slots_and_no_old_connector_graphics) ... ok
+test_exact_original_terminal_pattern_and_net_map (test_rocker_model.RockerGeometryTests.test_exact_original_terminal_pattern_and_net_map) ... ok
+test_pad_and_slot_axes_match_the_end_view (test_rocker_model.RockerGeometryTests.test_pad_and_slot_axes_match_the_end_view) ... ok
+test_slot_ring_and_between_pole_clearance (test_rocker_model.RockerGeometryTests.test_slot_ring_and_between_pole_clearance) ... ok
+test_01_exact_seven_removed_no_additions (test_sb_removal.SubtractionAcceptance.test_01_exact_seven_removed_no_additions) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_02_all_77_survivors_and_their_pad_nets_byte_identical (test_sb_removal.SubtractionAcceptance.test_02_all_77_survivors_and_their_pad_nets_byte_identical) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_03_all_net_definitions_byte_identical (test_sb_removal.SubtractionAcceptance.test_03_all_net_definitions_byte_identical) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_04_no_unapproved_pcb_record_changes (test_sb_removal.SubtractionAcceptance.test_04_no_unapproved_pcb_record_changes) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_05_all_other_documents_unchanged (test_sb_removal.SubtractionAcceptance.test_05_all_other_documents_unchanged) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_06_copper_pours_holes_and_outline_byte_identical (test_sb_removal.SubtractionAcceptance.test_06_copper_pours_holes_and_outline_byte_identical) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_07_no_sb_silk_or_bypass_note (test_sb_removal.SubtractionAcceptance.test_07_no_sb_silk_or_bypass_note) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_08_hop_resistors_and_port_led_pins (test_sb_removal.SubtractionAcceptance.test_08_hop_resistors_and_port_led_pins) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_09_baseline_targets_are_c492401_two_pin_100_mil_headers (test_sb_removal.SubtractionAcceptance.test_09_baseline_targets_are_c492401_two_pin_100_mil_headers) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_10_live_geometry_nets_and_silk_match (test_sb_removal.SubtractionAcceptance.test_10_live_geometry_nets_and_silk_match) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_11_no_new_drc_findings_and_only_sb_pad_findings_removed (test_sb_removal.SubtractionAcceptance.test_11_no_new_drc_findings_and_only_sb_pad_findings_removed) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_12_surviving_schematic_symbols_wires_and_pin_memberships_unchanged (test_sb_removal.SubtractionAcceptance.test_12_surviving_schematic_symbols_wires_and_pin_memberships_unchanged) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_13_schematic_stub_allowlist_is_exclusive_to_sb_pins (test_sb_removal.SubtractionAcceptance.test_13_schematic_stub_allowlist_is_exclusive_to_sb_pins) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_all_relocated_silk_clears_pads_edges_and_other_text (test_station_cleanup.StationCleanupTests.test_all_relocated_silk_clears_pads_edges_and_other_text) ... ok
+test_complete_station_labels_and_title_are_relocated_by_identity (test_station_cleanup.StationCleanupTests.test_complete_station_labels_and_title_are_relocated_by_identity) ... ok
+test_exact_three_resistors_and_no_other_component_moves (test_station_cleanup.StationCleanupTests.test_exact_three_resistors_and_no_other_component_moves) ... ok
+test_r13_is_close_to_the_mcu_estop_input (test_station_cleanup.StationCleanupTests.test_r13_is_close_to_the_mcu_estop_input) ... ok
+test_r6_is_close_to_the_led_driver_output (test_station_cleanup.StationCleanupTests.test_r6_is_close_to_the_led_driver_output) ... ok
+test_three_resistors_fit_clear_of_all_other_bodies_and_holes (test_station_cleanup.StationCleanupTests.test_three_resistors_fit_clear_of_all_other_bodies_and_holes) ... ok
+test_allowlist_is_exactly_37_unplaced_station_parts (test_station_placement.StationPlacementTests.test_allowlist_is_exactly_37_unplaced_station_parts) ... ok
+test_caps_have_adc_pad_close_to_matching_mcu_input (test_station_placement.StationPlacementTests.test_caps_have_adc_pad_close_to_matching_mcu_input) ... ok
+test_changed_source_coordinates_are_rejected (test_station_placement.StationPlacementTests.test_changed_source_coordinates_are_rejected) ... ok
+test_connectors_make_a_two_row_serpentine_chain (test_station_placement.StationPlacementTests.test_connectors_make_a_two_row_serpentine_chain) ... ok
+test_every_fixed_part_is_unchanged (test_station_placement.StationPlacementTests.test_every_fixed_part_is_unchanged) ... ok
+test_led_hop_resistors_stay_close_to_their_own_port_pair (test_station_placement.StationPlacementTests.test_led_hop_resistors_stay_close_to_their_own_port_pair) ... ok
+test_rotation_preserves_every_pad_net_and_pitch (test_station_placement.StationPlacementTests.test_rotation_preserves_every_pad_net_and_pitch) ... ok
+test_targets_fit_without_new_body_hole_or_edge_collisions (test_station_placement.StationPlacementTests.test_targets_fit_without_new_body_hole_or_edge_collisions) ... ok
+test_custom_device_removes_catalogue_binding_without_touching_other_devices (test_switch_local_package.LocalDeviceTests.test_custom_device_removes_catalogue_binding_without_touching_other_devices) ... ok
+
+----------------------------------------------------------------------
+Ran 55 tests in 138.790s
+
+OK (skipped=13)
+{
+ "fillPieces": 2364,
+ "layerCounts": {
+  "1": 704,
+  "2": 1660
+ },
+ "minimumClearanceMil": {
+  "normal": 11.899776770409337,
+  "left": 39.89890969631584,
+  "source": 49.899563371690974
+ },
+ "edgeClearanceMil": 16.0,
+ "antennaClearanceMil": 7.9130892426110355,
+ "disconnectedGnd": [],
+ "floatingFillPieces": 0
+}

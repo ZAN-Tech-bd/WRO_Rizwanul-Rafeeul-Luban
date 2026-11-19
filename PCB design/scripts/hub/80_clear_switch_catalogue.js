@@ -1,0 +1,17 @@
+// WRITE isolated recovery schematic ONLY: clear false VH-6 supplier/mechanical metadata on J3.
+// Existing explicit custom footprint/Name/pin/wire mappings are preserved. No device-library API.
+const T={"project": "ea32443fed8f1fd5989b3f8520da07a81d65c35e38ca7f144b04f7dc31730e1f", "name": "WRO_HUB_REPAIR_ISOLATED_20261027", "pcb": "8efe5b895e7646ea", "page": "a013c67bfde245d3", "footprint": "de6d9dbe09d94d61"},PLAN=[{"id": "af9d11809b3d2152", "key": "Manufacturer", "value": ""}, {"id": "9645f0f625a02043", "key": "Supplier", "value": ""}, {"id": "2dec7c9a87a59547", "key": "Supplier Part", "value": ""}, {"id": "eff6b1ac2ea1d65c", "key": "LCSC Part Name", "value": ""}, {"id": "ca87e30f7c719249", "key": "JLCPCB Part Class", "value": ""}, {"id": "986d2c4e0baa2a77", "key": "Datasheet", "value": ""}, {"id": "739e1fd7865ab778", "key": "Pins Structure", "value": "2x3P"}, {"id": "6db0017d1d6efeff", "key": "Pitch", "value": "10.5mm"}, {"id": "2847646dfe379c18", "key": "Mounting Style", "value": "Through-hole plated slots"}, {"id": "5964f38f2c332407", "key": "Reference Series", "value": "KCD4"}, {"id": "67dee4c2f0bc5fa4", "key": "Number of Rows", "value": "2"}, {"id": "24a18a9d49ed8b62", "key": "Number of PINs Per Row", "value": "3"}, {"id": "cc5466744b28d020", "key": "Row Spacing", "value": "11.0mm"}, {"id": "cf2e553603996cb2", "key": "Current Rating (Max)", "value": ""}, {"id": "d213308bb2c8aa18", "key": "Contact Material", "value": ""}, {"id": "432d6c4d54a5a3b0", "key": "Contact Plating", "value": ""}, {"id": "4b907b070d113549", "key": "Operating Temperature Range", "value": ""}, {"id": "90c037836470c814", "key": "Rated Voltage (Max)", "value": ""}, {"id": "d514ae3c4101d0e1", "key": "Plastic Material", "value": ""}, {"id": "a1c0e5ed98c1de6c", "key": "Flame Retardant Rating", "value": ""}, {"id": "e2c0f589e08879f1", "key": "Colour", "value": ""}, {"id": "0f04e797a4b6ea99", "key": "Z-Height of the Board", "value": ""}, {"id": "8602982f0547a1af", "key": "X-Length of Bottom Edge on Board (Spacing Line)", "value": ""}, {"id": "f7857ae7e4af93c0", "key": "Y-Width of Bottom Edge on Board", "value": ""}, {"id": "354add211625fc45", "key": "Description", "value": "User-supplied KCD4-203-B DPDT centre-off rocker; custom direct-mount plated-slot footprint. Actual-part fit, mechanical support and contact sequence require hardware verification."}];
+const p=await eda.dmt_Project.getCurrentProjectInfo();
+if(p?.uuid!==T.project||p?.friendlyName!==T.name)throw new Error('Wrong repair project');
+if(document.visibilityState!=='visible')throw new Error('Keep repair editor visible');
+await eda.dmt_EditorControl.openDocument(T.page);
+const j3=(await eda.sch_PrimitiveComponent.getAll()).find(c=>c.getState_Designator()==='J3');
+if(j3?.getState_PrimitiveId()!=='f26ea52ce64d9e40'||j3.getState_Footprint()?.uuid!==T.footprint)throw new Error('Wrong J3 instance');
+const attrs=await eda.sch_PrimitiveAttribute.getAll(j3.getState_PrimitiveId());
+for(const q of PLAN){const a=attrs.find(a=>a.getState_PrimitiveId()===q.id);
+ if(!a||a.getState_Key()!==q.key)throw new Error('J3 attribute identity changed');
+}
+for(const q of PLAN)if(!await eda.sch_PrimitiveAttribute.modify(q.id,{value:q.value}))throw new Error('J3 metadata write failed');
+if(!await eda.sch_Document.save())throw new Error('Schematic save failed');
+const erc=await eda.sch_Drc.check(true,true,true);
+return JSON.stringify({j3MetadataAttributesUpdated:PLAN.length,erc,deviceLibraryWrites:0,wireOrPinEdits:0});

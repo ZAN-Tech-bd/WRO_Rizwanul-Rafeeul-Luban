@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "d:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\hub\verify_gnd_fill_removal.py", line 46, in <module>
+    verify(*args)
+  File "d:\projects\WRO_Rizwanul-Rafeeul-Luban\PCB design\scripts\hub\verify_gnd_fill_removal.py", line 28, in verify
+    assert dict(removed) == {'FILL': expected}, f'unexpected removals: {dict(removed)}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpected removals: {'FILL': 1843, 'ELE_PLACEHOLDER': 30}

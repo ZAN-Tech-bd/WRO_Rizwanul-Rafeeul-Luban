@@ -1,0 +1,42 @@
+{
+  "files": [
+    "Gerber_TopLayer.GTL",
+    "Gerber_BottomLayer.GBL",
+    "Gerber_TopSilkscreenLayer.GTO",
+    "Gerber_BottomSilkscreenLayer.GBO",
+    "Gerber_TopSolderMaskLayer.GTS",
+    "Gerber_BottomSolderMaskLayer.GBS",
+    "Gerber_BoardOutlineLayer.GKO",
+    "Gerber_DocumentLayer.GDL",
+    "Drill_PTH_Through.DRL",
+    "Drill_PTH_Through_Via.DRL",
+    "How-to-order-PCB.txt"
+  ],
+  "drillFile": "Drill_PTH_Through.DRL",
+  "drillHitsBySizeMm": {
+    "0.305": 1,
+    "0.8": 6,
+    "0.9": 11,
+    "1.0": 15,
+    "1.02": 3,
+    "3.2004": 2
+  },
+  "outlineFile": "Gerber_BoardOutlineLayer.GKO",
+  "outlineBoundsMm": {
+    "x": 50.8,
+    "y": 31.877,
+    "closed": true
+  },
+  "viaDrillFile": "Drill_PTH_Through_Via.DRL",
+  "viaDrillHitsBySizeMm": {
+    "0.305": 1
+  },
+  "copperDrawOps": {
+    "Gerber_TopLayer.GTL": 74,
+    "Gerber_BottomLayer.GBL": 2887
+  },
+  "silkLayers": [
+    "Gerber_TopSilkscreenLayer.GTO",
+    "Gerber_BottomSilkscreenLayer.GBO"
+  ]
+}

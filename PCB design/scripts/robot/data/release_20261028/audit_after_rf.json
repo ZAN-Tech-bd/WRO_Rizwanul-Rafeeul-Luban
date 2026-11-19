@@ -1,0 +1,807 @@
+{
+  "trackWidthsByClass": {
+    "PWR_3V3": {
+      "1.0": 10,
+      "0.8": 33,
+      "0.5": 7
+    },
+    "PWR_5V": {
+      "2.0": 30,
+      "3.0": 1,
+      "1.0": 5,
+      "1.5": 5
+    },
+    "PWR_HI": {
+      "3.0": 10,
+      "0.35": 6,
+      "1.2": 4
+    },
+    "SIG": {
+      "0.45": 91,
+      "0.35": 94,
+      "0.254": 6,
+      "0.4": 7
+    },
+    "PWR_AMP": {
+      "1.2": 17
+    },
+    "GND": {
+      "0.4": 1
+    }
+  },
+  "belowMainWidths": [
+    [
+      "PWR_3V3",
+      "+3V3",
+      0.5,
+      2.29,
+      "8e53e43ad67032f0"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      2.16,
+      "fedb7c990a0c7773"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      4.19,
+      "0d885b297a26b721"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      5.03,
+      "56dd106a5ec4f5b0"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      7.24,
+      "5314e1f5fb6a3094"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      12.21,
+      "e3fec0b131ae4c03"
+    ],
+    [
+      "PWR_HI",
+      "BAT+",
+      3.0,
+      3.81,
+      "40f293df4d46aa0b"
+    ],
+    [
+      "PWR_HI",
+      "BAT+",
+      3.0,
+      3.23,
+      "3883aa02b840f905"
+    ],
+    [
+      "PWR_AMP",
+      "VAMP_BAT",
+      1.2,
+      10.96,
+      "3724f4d6cbb038b0"
+    ],
+    [
+      "PWR_AMP",
+      "VAMP_BAT",
+      1.2,
+      1.52,
+      "9c61b88a725f8e5d"
+    ],
+    [
+      "GND",
+      "GND",
+      0.4,
+      2.82,
+      "0d3da9f0f2c82b4c"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      3.0,
+      0.94,
+      "7453bd183195634d"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      1.88,
+      "96c01c765ec8bda9"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      2.58,
+      "488a520d0469064d"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      1.44,
+      "3fe77d9a20e66f9c"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      2.29,
+      "c167ae76c44dea6e"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      2.41,
+      "9902a81198470cb2"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      6.16,
+      "57437cc20be73847"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      4.79,
+      "523cddbf2190a79b"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.0,
+      0.17,
+      "0d096f6029a02b8f"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.0,
+      1.27,
+      "a2cdc5842fb45aa9"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.0,
+      1.52,
+      "2ab5e9a7958a6c8f"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      1.8,
+      "2b9ac502f9e51fb7"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.0,
+      0.36,
+      "19ba201a17876d54"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.0,
+      0.18,
+      "746091f502eb04a1"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      0.35,
+      12.32,
+      "14c813e3b09d3254"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      0.35,
+      4.13,
+      "7b4d2ca47d29be16"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      0.35,
+      20.19,
+      "aa605c808c8c2a03"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      0.35,
+      0.54,
+      "36c11f6570e2c721"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      0.35,
+      1.59,
+      "01ad9307dfe719ce"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      0.35,
+      1.16,
+      "48aea120cda9476d"
+    ],
+    [
+      "PWR_3V3",
+      "+3V3",
+      0.5,
+      0.78,
+      "4cdf33b30efd47b8"
+    ],
+    [
+      "PWR_3V3",
+      "+3V3",
+      0.5,
+      4.77,
+      "b65b4f2ddfa4e0de"
+    ],
+    [
+      "PWR_3V3",
+      "+3V3",
+      0.5,
+      1.23,
+      "da522b8afc81879a"
+    ],
+    [
+      "SIG",
+      "RFID_MISO",
+      0.254,
+      1.08,
+      "5fa436dd4b141d3c"
+    ],
+    [
+      "SIG",
+      "RFID_MISO",
+      0.254,
+      6.71,
+      "3c006a2dd738e03b"
+    ],
+    [
+      "SIG",
+      "RFID_MISO",
+      0.254,
+      1.1,
+      "c9e009e54ca81ccd"
+    ],
+    [
+      "SIG",
+      "RFID_MISO",
+      0.254,
+      0.89,
+      "b861a07679fa7a41"
+    ],
+    [
+      "SIG",
+      "RFID_MISO",
+      0.254,
+      1.35,
+      "9741a8372f9a9d68"
+    ],
+    [
+      "SIG",
+      "RFID_MISO",
+      0.254,
+      2.33,
+      "afb8e01af94923bd"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.5,
+      1.02,
+      "4012d584a9930f8d"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.5,
+      37.91,
+      "364c9f938d1a7529"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.5,
+      2.24,
+      "72cd991ee7f691d7"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.5,
+      3.95,
+      "b84361adc0698ec8"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      1.5,
+      2.94,
+      "bc618309443b44d8"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      6.11,
+      "f1325111e1d64743"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      0.71,
+      "17323b39bb47da66"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      21.46,
+      "3ee6a69c23fa3d14"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      13.59,
+      "cf30761e41319ad8"
+    ],
+    [
+      "PWR_5V",
+      "+5V",
+      2.0,
+      6.65,
+      "84deeb9c1704f91e"
+    ],
+    [
+      "PWR_AMP",
+      "VAMP",
+      1.2,
+      3.63,
+      "c21cb5b410dc00e7"
+    ],
+    [
+      "PWR_AMP",
+      "VAMP",
+      1.2,
+      0.07,
+      "affd0aa1a6cc387b"
+    ],
+    [
+      "PWR_AMP",
+      "VAMP",
+      1.2,
+      0.37,
+      "cbb8960924895bb9"
+    ],
+    [
+      "PWR_AMP",
+      "VAMP",
+      1.2,
+      4.02,
+      "c0638dc0472b0cc5"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      3.0,
+      0.77,
+      "337ff94d98af0b5c"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      3.0,
+      6.09,
+      "0ee5c2e8d3493f02"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      3.0,
+      8.85,
+      "9cded3e0fa0e0a52"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      3.0,
+      2.46,
+      "81940ff49296dbf4"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      3.0,
+      5.69,
+      "3879d15b11993978"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      3.0,
+      3.95,
+      "08230473bcb5482e"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      3.0,
+      7.62,
+      "92d3ba504d7efc0f"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      1.2,
+      2.1,
+      "d3984db13f3982de"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      1.2,
+      1.94,
+      "58a731bbbd564926"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      1.2,
+      3.71,
+      "0fc5936f3a924254"
+    ],
+    [
+      "PWR_HI",
+      "BAT_SW",
+      1.2,
+      1.16,
+      "a8495b98d6e09697"
+    ],
+    [
+      "PWR_3V3",
+      "+3V3",
+      0.5,
+      7.06,
+      "be862afbee56c397"
+    ],
+    [
+      "PWR_3V3",
+      "+3V3",
+      0.5,
+      3.26,
+      "735a2efe651553b3"
+    ],
+    [
+      "PWR_3V3",
+      "+3V3",
+      0.5,
+      8.5,
+      "d6f342c921e900f5"
+    ]
+  ],
+  "minCopperGap": [
+    0.1569,
+    "GND via 127b77c548a2486a",
+    "BAT_SW track 81940ff49296dbf4"
+  ],
+  "gapsBelowDesignSixMil": [],
+  "holeToForeignCopper": [],
+  "holeToHole": [],
+  "minComponentPthRing": [
+    0.2374,
+    "U2A.1"
+  ],
+  "minViaRing": [
+    0.1525,
+    "4bc8856064f5af05"
+  ],
+  "minEdgeMm": 0.4889,
+  "powerInAntenna": [
+    [
+      "+3V3",
+      "pad",
+      "U1A.1"
+    ],
+    [
+      "+3V3",
+      "pad",
+      "U1A.2"
+    ],
+    [
+      "+3V3",
+      "track",
+      "+3V3 track aae0cecd7f205bcf"
+    ],
+    [
+      "+3V3",
+      "track",
+      "+3V3 track de82450445d8f812"
+    ],
+    [
+      "+3V3",
+      "track",
+      "+3V3 track f05c52e56834130a"
+    ],
+    [
+      "+3V3",
+      "track",
+      "+3V3 track 2f6f7bea1cb14ebd"
+    ],
+    [
+      "+3V3",
+      "track",
+      "+3V3 track 2f5e6710791f7cf7"
+    ]
+  ],
+  "disconnectedNetsBeforePour": {
+    "GND": [
+      "C4.2",
+      "C5.2",
+      "C6.2",
+      "C7.2",
+      "C8.2",
+      "C9.2",
+      "C10.2",
+      "C11.2",
+      "C12.2",
+      "C13.2",
+      "C14.2",
+      "J6.2",
+      "J7.2",
+      "J8.2",
+      "J9.2",
+      "J10.2",
+      "J11.2",
+      "J12.2",
+      "J13.2",
+      "J14.2",
+      "LED1.2",
+      "LED2.2",
+      "R2.2",
+      "R3.2",
+      "R13.2",
+      "R25.2",
+      "SW1.3",
+      "SW2.3",
+      "U1A.22",
+      "U1B.1",
+      "U1B.21",
+      "U1B.22",
+      "U2A.7",
+      "U2B.7",
+      "U3.3",
+      "U3.4",
+      "U4.3",
+      "U4.4",
+      "J15.2",
+      "J1.1",
+      "J2.2",
+      "J3.2",
+      "J4.1",
+      "GND via b8e91b745f790bbc",
+      "GND via debedba98eb781b7",
+      "GND via 241739204bf37db1",
+      "GND via ea2aeb162c04dee7",
+      "GND via 2083c522c9f5f331",
+      "GND via 3a9dff8b44e6799e",
+      "GND via 8a91769c11aa547d",
+      "GND via c60eeb861af347c6",
+      "GND via 6f8a24a00c3d5df0",
+      "GND via d69a7bffc96cacea",
+      "GND via 65dd1b8aa9281db9",
+      "GND via d817a64de1390d93",
+      "GND via 3465175f8ebd1c83",
+      "GND via 7ae74d1b9cbb09c8",
+      "GND via 30f9ae53f51d03f7",
+      "GND via a28c9fe50d4483c8",
+      "GND via 1704eb5d34ee7705",
+      "GND via e52bc7aeb0206edc",
+      "GND via 5979f82c48246f3d",
+      "GND via d6418a9caafa9081",
+      "GND via 02caa7ddbfca2466",
+      "GND via fe3b52054268bb2c",
+      "GND via 954b8bd7e7c062d4",
+      "GND via 719f2874a1aeac59",
+      "GND via e9c277911276d39d",
+      "GND via 921dc7c68cd5a275",
+      "GND via e63afcf93867b4e2",
+      "GND via a0761626f54e663e",
+      "GND via 92dd1b238d50d75f",
+      "GND via 1f46822a4e8ad7f4",
+      "GND via 4f488b37326b6c7a",
+      "GND via 9989177c465a6209",
+      "GND via 6f20a6f2876c01e6",
+      "GND via c515f1f7c72d8c3b",
+      "GND via 0ce199babd84dac4",
+      "GND via 0d38894f89ddc7a0",
+      "GND via 9af7d7875e2e78e9",
+      "GND via 9bd7f36d944f7370",
+      "GND via b640b5aa781b79dd",
+      "GND via 092bb28466cca113",
+      "GND via 306ee5e9a4405500",
+      "GND via 29f92cd257c89901",
+      "GND via d2bf98d7d2c3f28b",
+      "GND via 5c701403afecb86d",
+      "GND via eef9b99c2bfe6706",
+      "GND via cac7c046af4b538c",
+      "GND via fc8becccddbd7cf3",
+      "GND via 510fd553be53204d",
+      "GND via 4bb71d8e8a5cfe92",
+      "GND via f383640def1644e8",
+      "GND via 79f15de4962c0827",
+      "GND via cb87e707b554c908",
+      "GND via 4eb13b7e38adee34",
+      "GND via 0e919a3be7940dbb",
+      "GND via 86d2643934d222eb",
+      "GND via ec37f79014a75909",
+      "GND via f5d8f1eea5bd8b8b",
+      "GND via 6b5b5ab186a764e2",
+      "GND via e8a9d04044e948c7",
+      "GND via 322d363d7c4bda4a",
+      "GND via 9f7a4e28178fc543",
+      "GND via 9f84b6be8cdefc9e",
+      "GND via 7e964871f325dce3",
+      "GND via 548da4c83f0e6012",
+      "GND via f60b8887774876b1",
+      "GND via 90d29024fbb31dbe",
+      "GND via 0dc41495729f349a",
+      "GND via 22a1d9e9f563c890",
+      "GND via e2e814d46b66d399",
+      "GND via cdd61a45590ecf2b",
+      "GND via b5876559ea067f6c",
+      "GND via 0b16f64b6fa3244d",
+      "GND via ee7fc7c0916d41c5",
+      "GND via 2e3a954acff1e1f8",
+      "GND via fc9137d243e94353",
+      "GND via da79c6790eae1258",
+      "GND via bb549a5777737658",
+      "GND via 3318ce916b89ef0a",
+      "GND via da286193c45db4c6",
+      "GND via d5c5ff620ef65618",
+      "GND via 5a12ee74177fd4b7",
+      "GND via 9d4b321655fb8ad7",
+      "GND via d9cadbe1f624dc32",
+      "GND via 4a94e9330928edc2",
+      "GND via 9a234a2b4e0e5b7e",
+      "GND via e6a8ac9a4651636c",
+      "GND via 042dce81daf0ad61",
+      "GND via fc04f0a1b814c015",
+      "GND via 626f764f0f3a9b89",
+      "GND via a0c0e4d84b80a42a",
+      "GND via 31243b498e8cb9f7",
+      "GND via cf1cf659124a7667",
+      "GND via abb3ea71d0c3e7f9",
+      "GND via ada48c91a6a5d14a",
+      "GND via 887b10c46fff8e77",
+      "GND via d25262be25dd6d46",
+      "GND via 519934f86699a746",
+      "GND via 2b13a759ca6e8730",
+      "GND via e983e4e9ccb8d73b",
+      "GND via fac044fd52ec4241",
+      "GND via e124df2d24632b6b",
+      "GND via 69d42b69b1d495ba",
+      "GND via 8b5920edcb10f1bc",
+      "GND via eba3aee3ef214345",
+      "GND via b75fe416e24e08a6",
+      "GND via a95f1a554fdcc945",
+      "GND via edda13da3c0aaaa0",
+      "GND via 127b77c548a2486a",
+      "GND via a052d0193d5df1bb",
+      "GND via 35ac561cba3f7832",
+      "GND via fcdcc43e26ce211b",
+      "GND via e73911843dc6f635",
+      "GND via 29a851ba95705f93",
+      "GND via 346602b3f270f67c",
+      "GND via 132031ce3fac01f1",
+      "GND via 6729c26de578a1c8",
+      "GND via 3c0f2225416dd75f",
+      "GND via 3e615fe3a17042ed",
+      "GND via 83c8720c5c15cd93",
+      "GND via a4480e828229ec18",
+      "GND via 75b96d5dd59434da",
+      "GND via 0f7c2d0f412d9394",
+      "GND via dc45434e29b5d43e",
+      "GND via fecaa3a3ecf86c7e",
+      "GND via d9aac51a6b15b747",
+      "GND via 621f3499fe9fe59a",
+      "GND via 5872e404132ee6e3",
+      "GND via 350f0af2bb35190d",
+      "GND via 654724d84fec7179",
+      "GND via 5f524b5eb3cc5b91",
+      "GND via b729775f6da159df",
+      "GND via 4501c6db9e7bb254",
+      "GND via 42d1906dcd17bea0",
+      "GND via 44c5c19f52942515",
+      "GND via f78bf5f57d001202",
+      "GND via 05e5da9ba1a61559",
+      "GND via bee6aba7aa4009a2",
+      "GND via 44628080eda6d090",
+      "GND via 8d8d484983a2a932",
+      "GND via 269649b33954ed5d",
+      "GND via 48f8c94d642fddbd",
+      "GND via 0cd16728a9ed2c13",
+      "GND via d2714eb4735db5ab",
+      "GND via 9b03683dd9227316",
+      "GND via 6f0caee5fa440f82",
+      "GND track 0d3da9f0f2c82b4c"
+    ]
+  },
+  "xtDrillState": [
+    [
+      "eac10ca20e6778ba",
+      "1",
+      4.0,
+      5.499,
+      4.0,
+      null
+    ],
+    [
+      "eac10ca20e6778ba",
+      "2",
+      4.0,
+      5.499,
+      4.0,
+      null
+    ],
+    [
+      "9e78c3c3ca74ad42",
+      "1",
+      2.5,
+      3.5,
+      2.5,
+      3.5
+    ],
+    [
+      "9e78c3c3ca74ad42",
+      "2",
+      2.5,
+      3.5,
+      2.5,
+      3.5
+    ],
+    [
+      "9197bb2e6c38da76",
+      "1",
+      2.5,
+      3.5,
+      2.5,
+      3.5
+    ],
+    [
+      "9197bb2e6c38da76",
+      "2",
+      2.5,
+      3.5,
+      2.5,
+      3.5
+    ]
+  ]
+}

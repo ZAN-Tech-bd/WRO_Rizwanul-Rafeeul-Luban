@@ -1,0 +1,10 @@
+{
+  "release": "D:\\projects\\WRO_Rizwanul-Rafeeul-Luban\\PCB design\\hub\\WRO_HUB_REPAIRED_r5_ground_20261027-2255.epro2",
+  "orderZip": "D:\\projects\\WRO_Rizwanul-Rafeeul-Luban\\exports\\WRO_HUB_ORDER_GERBER_20261027.zip",
+  "fills": 2362,
+  "drcSummary": [
+    "Netlist Error"
+  ],
+  "padNetRows": 270,
+  "r5NotUnderModule": true
+}

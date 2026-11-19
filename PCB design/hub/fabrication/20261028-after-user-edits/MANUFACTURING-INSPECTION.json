@@ -1,0 +1,125 @@
+{
+  "gerberEntries": {
+    "Gerber_TopLayer.GTL": 645489,
+    "Gerber_BottomLayer.GBL": 907183,
+    "Gerber_TopSilkscreenLayer.GTO": 230376,
+    "Gerber_BottomSilkscreenLayer.GBO": 628,
+    "Gerber_TopSolderMaskLayer.GTS": 8937,
+    "Gerber_BottomSolderMaskLayer.GBS": 8940,
+    "Gerber_BoardOutlineLayer.GKO": 765,
+    "Gerber_DocumentLayer.GDL": 19245,
+    "Drill_PTH_Through.DRL": 9892,
+    "Drill_PTH_Through_Via.DRL": 4551,
+    "How-to-order-PCB.txt": 96
+  },
+  "outlineMm": [
+    136.398,
+    100.965
+  ],
+  "outlineVertexCheck": true,
+  "roundDrills": 548,
+  "platedSlots": [
+    {
+      "pin": "6",
+      "net": "DC-",
+      "centerMm": [
+        15.024999159999998,
+        70.82499932
+      ],
+      "diameterMm": 1.79999894,
+      "totalLengthMm": 7.799998940000002,
+      "fullGeometryOrientationCheck": true
+    },
+    {
+      "pin": "5",
+      "net": "GND",
+      "centerMm": [
+        15.024999159999998,
+        60.324999999999996
+      ],
+      "diameterMm": 1.79999894,
+      "totalLengthMm": 7.799998940000002,
+      "fullGeometryOrientationCheck": true
+    },
+    {
+      "pin": "4",
+      "net": "BAT-",
+      "centerMm": [
+        15.024999159999998,
+        49.825000679999995
+      ],
+      "diameterMm": 1.79999894,
+      "totalLengthMm": 7.799998940000002,
+      "fullGeometryOrientationCheck": true
+    },
+    {
+      "pin": "3",
+      "net": "DC+",
+      "centerMm": [
+        4.02500084,
+        70.82499932
+      ],
+      "diameterMm": 1.79999894,
+      "totalLengthMm": 7.799999939999999,
+      "fullGeometryOrientationCheck": true
+    },
+    {
+      "pin": "2",
+      "net": "V12",
+      "centerMm": [
+        4.02500084,
+        60.324999999999996
+      ],
+      "diameterMm": 1.79999894,
+      "totalLengthMm": 7.799999939999999,
+      "fullGeometryOrientationCheck": true
+    },
+    {
+      "pin": "1",
+      "net": "BAT+",
+      "centerMm": [
+        4.02500084,
+        49.825000679999995
+      ],
+      "diameterMm": 1.79999894,
+      "totalLengthMm": 7.799999939999999,
+      "fullGeometryOrientationCheck": true
+    }
+  ],
+  "viaFileDrills": 280,
+  "noteViaDrills": "Main through-drill includes the vias; the standard separate via file duplicates that subset.",
+  "everyNativeDrillMatched": true,
+  "bomPartCount": 77,
+  "bomJ3": {
+    "No.": "6",
+    "Quantity": "1",
+    "Comment": "KCD4-203-B",
+    "Designator": "J3",
+    "Footprint": "CONN-TH-6P-P3.96_B6P-VH-BL-LF-SN",
+    "Value": "",
+    "Manufacturer Part": "KCD4-203-B",
+    "Manufacturer": "User-supplied",
+    "Supplier Part": "Not applicable",
+    "Supplier": "User-supplied"
+  },
+  "bomQ1": {
+    "No.": "14",
+    "Quantity": "1",
+    "Comment": "SS8050-TO-92",
+    "Designator": "Q1",
+    "Footprint": "TO-92-3_L5.1-W4.1-P1.27-L-1",
+    "Value": "",
+    "Manufacturer Part": "SS8050-TO-92",
+    "Manufacturer": "DDF(\u9f0e\u5fb7\u4e30)",
+    "Supplier Part": "C50229519",
+    "Supplier": "LCSC"
+  },
+  "assemblyCaveats": [
+    "J3 raw footprint text is a legacy VH-6 library alias; all six actual slots verified.",
+    "Q1 raw BOM still names SS8050; approved assembly uses user 2N2222A. Verify E-B-C pinout.",
+    "Bare PCB only; no PCBA/CPL release is claimed."
+  ],
+  "physicalDrcFindings": 0,
+  "synchronizationFindings": 1,
+  "releaseStatus": "Fabrication review package; synchronization finding and hardware release gates disclosed"
+}

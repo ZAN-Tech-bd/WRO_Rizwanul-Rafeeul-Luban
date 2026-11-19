@@ -1,0 +1,61 @@
+{
+  "archives": [
+    {
+      "file": "PCB design\\hub\\WRO_HUB_before_sb_removal_20261026-2307.epro2",
+      "bytes": 610668,
+      "sha256": "6b517d9de79d27c82140084361cca20f3dcbdb804cf3ea3f90e8bb60409b8b24"
+    },
+    {
+      "file": "PCB design\\hub\\WRO_HUB_after_sb_removal_reconciled_20261026-2321.epro2",
+      "bytes": 606352,
+      "sha256": "38bd83269fbca71946f8dc51909eae28686a7d38a7e68efdb4d40dbf9693e003"
+    }
+  ],
+  "pcbComponents": [
+    84,
+    77
+  ],
+  "pcbNamedNets": [
+    74,
+    74
+  ],
+  "drcBefore": [
+    [
+      "Connection Error",
+      270
+    ]
+  ],
+  "drcAfter": [
+    [
+      "Connection Error",
+      256
+    ]
+  ],
+  "schematicElectricalComponents": 77,
+  "schematicWires": 256,
+  "schematicNamedNets": 74,
+  "erc": true,
+  "deltas": {
+    "ad35aed4d7610fd2": {
+      "removed": {
+        "COMPONENT": 7,
+        "ATTR": 21,
+        "PAD_NET": 14
+      },
+      "addedNonAllocator": [],
+      "changedNonAllocator": []
+    },
+    "7e64f4e0d47bf001": {
+      "removed": {
+        "ATTR": 280,
+        "WIRE": 14,
+        "LINE": 14,
+        "COMPONENT": 7
+      },
+      "addedNonAllocator": [],
+      "changedNonAllocator": []
+    }
+  },
+  "acceptanceChecks": 13,
+  "existingModelTestsPassed": 14
+}

@@ -1,0 +1,680 @@
+{
+  "poses": {
+    "R4": [
+      2310,
+      1805,
+      90
+    ],
+    "R6": [
+      2145,
+      1805,
+      90
+    ],
+    "R13": [
+      2680,
+      1905,
+      90
+    ]
+  },
+  "texts": {
+    "f3f5837f6f0abe51": {
+      "kind": "station",
+      "text": "S1  Z1",
+      "x": 2836.0,
+      "y": 3650.0,
+      "rotation": 0,
+      "fontSize": 40,
+      "lineWidth": 6
+    },
+    "54158b27196f3961": {
+      "kind": "pin",
+      "text": "5V",
+      "x": 3065.0,
+      "y": 3494.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "6c4b39a86642849c": {
+      "kind": "pin",
+      "text": "GND",
+      "x": 3065.0,
+      "y": 3396.1,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "2d0b93be8b3c9d8a": {
+      "kind": "pin",
+      "text": "3V3",
+      "x": 3065.0,
+      "y": 3297.6,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "b4bd445ac077b170": {
+      "kind": "pin",
+      "text": "DHT",
+      "x": 3065.0,
+      "y": 3199.2,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "a134e3a324d483f6": {
+      "kind": "pin",
+      "text": "MQ",
+      "x": 3065.0,
+      "y": 3100.8,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "81a841777bc82ee2": {
+      "kind": "pin",
+      "text": "PRX",
+      "x": 3065.0,
+      "y": 3002.4,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "73ff891c0b453ef0": {
+      "kind": "pin",
+      "text": "DI",
+      "x": 3065.0,
+      "y": 2903.9,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "750d17987101fcc0": {
+      "kind": "pin",
+      "text": "DO",
+      "x": 3065.0,
+      "y": 2805.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "30f698e37714da52": {
+      "kind": "station",
+      "text": "S2  Z1",
+      "x": 3356.0,
+      "y": 3650.0,
+      "rotation": 0,
+      "fontSize": 40,
+      "lineWidth": 6
+    },
+    "d1391f7cd98d6c14": {
+      "kind": "pin",
+      "text": "5V",
+      "x": 3585.0,
+      "y": 3494.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "0afed7f81b1ea1f1": {
+      "kind": "pin",
+      "text": "GND",
+      "x": 3585.0,
+      "y": 3396.1,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "06b760beb482fa76": {
+      "kind": "pin",
+      "text": "3V3",
+      "x": 3585.0,
+      "y": 3297.6,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "8f2e0e9739e8304e": {
+      "kind": "pin",
+      "text": "DHT",
+      "x": 3585.0,
+      "y": 3199.2,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "f57e5cb7314bfb49": {
+      "kind": "pin",
+      "text": "MQ",
+      "x": 3585.0,
+      "y": 3100.8,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "6fb197703560aa6e": {
+      "kind": "pin",
+      "text": "PRX",
+      "x": 3585.0,
+      "y": 3002.4,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "0bafa8278c00af72": {
+      "kind": "pin",
+      "text": "DI",
+      "x": 3585.0,
+      "y": 2903.9,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "3eccce53b45eec3b": {
+      "kind": "pin",
+      "text": "DO",
+      "x": 3585.0,
+      "y": 2805.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "c8c38473180e93a8": {
+      "kind": "station",
+      "text": "S3  Z2",
+      "x": 3876.0,
+      "y": 3650.0,
+      "rotation": 0,
+      "fontSize": 40,
+      "lineWidth": 6
+    },
+    "1e052ee730289843": {
+      "kind": "pin",
+      "text": "5V",
+      "x": 4105.0,
+      "y": 3494.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "3489bce6d3e7df34": {
+      "kind": "pin",
+      "text": "GND",
+      "x": 4105.0,
+      "y": 3396.1,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "090bf87a6a37f726": {
+      "kind": "pin",
+      "text": "3V3",
+      "x": 4105.0,
+      "y": 3297.6,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "48f99b382efd29d6": {
+      "kind": "pin",
+      "text": "DHT",
+      "x": 4105.0,
+      "y": 3199.2,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "d86547d26f8cb4da": {
+      "kind": "pin",
+      "text": "MQ",
+      "x": 4105.0,
+      "y": 3100.8,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "6b7ce6c45c7aac3e": {
+      "kind": "pin",
+      "text": "PRX",
+      "x": 4105.0,
+      "y": 3002.4,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "388079838749b780": {
+      "kind": "pin",
+      "text": "DI",
+      "x": 4105.0,
+      "y": 2903.9,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "f33ab3faf79af668": {
+      "kind": "pin",
+      "text": "DO",
+      "x": 4105.0,
+      "y": 2805.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "21a685b69ad7e5cb": {
+      "kind": "station",
+      "text": "S4  Z2",
+      "x": 4396.0,
+      "y": 3650.0,
+      "rotation": 0,
+      "fontSize": 40,
+      "lineWidth": 6
+    },
+    "6a6976d3e302d689": {
+      "kind": "pin",
+      "text": "5V",
+      "x": 4625.0,
+      "y": 3494.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "de5dec9914b20b51": {
+      "kind": "pin",
+      "text": "GND",
+      "x": 4625.0,
+      "y": 3396.1,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "f8e01c1b37f5f1c5": {
+      "kind": "pin",
+      "text": "3V3",
+      "x": 4625.0,
+      "y": 3297.6,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "522eb96f1b371b2d": {
+      "kind": "pin",
+      "text": "DHT",
+      "x": 4625.0,
+      "y": 3199.2,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "618b271a1c0c21c3": {
+      "kind": "pin",
+      "text": "MQ",
+      "x": 4625.0,
+      "y": 3100.8,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "efa02ffb27d620be": {
+      "kind": "pin",
+      "text": "PRX",
+      "x": 4625.0,
+      "y": 3002.4,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "3207bd8a923617bb": {
+      "kind": "pin",
+      "text": "DI",
+      "x": 4625.0,
+      "y": 2903.9,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "5212a3e0a604c873": {
+      "kind": "pin",
+      "text": "DO",
+      "x": 4625.0,
+      "y": 2805.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "b6d8f13b2f4eb447": {
+      "kind": "station",
+      "text": "S5  Z3",
+      "x": 4396.0,
+      "y": 1330.0,
+      "rotation": 0,
+      "fontSize": 40,
+      "lineWidth": 6
+    },
+    "e9325422d29f5fe3": {
+      "kind": "pin",
+      "text": "5V",
+      "x": 4625.0,
+      "y": 2174.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "a1bb17b26c7e0636": {
+      "kind": "pin",
+      "text": "GND",
+      "x": 4625.0,
+      "y": 2096.1,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "47c773a82c9f8c33": {
+      "kind": "pin",
+      "text": "3V3",
+      "x": 4625.0,
+      "y": 1997.6,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "60230ee80fc452ab": {
+      "kind": "pin",
+      "text": "DHT",
+      "x": 4625.0,
+      "y": 1899.2,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "d543e01b6ee2e944": {
+      "kind": "pin",
+      "text": "MQ",
+      "x": 4625.0,
+      "y": 1800.8,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "4196ac07d2d9709c": {
+      "kind": "pin",
+      "text": "PRX",
+      "x": 4625.0,
+      "y": 1702.4,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "e00b2b6e42903d32": {
+      "kind": "pin",
+      "text": "DI",
+      "x": 4625.0,
+      "y": 1603.9,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "6c90294705de5770": {
+      "kind": "pin",
+      "text": "DO",
+      "x": 4625.0,
+      "y": 1505.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "173cbe4ec8cc8b40": {
+      "kind": "station",
+      "text": "S6  Z3",
+      "x": 3876.0,
+      "y": 1330.0,
+      "rotation": 0,
+      "fontSize": 40,
+      "lineWidth": 6
+    },
+    "ed81bca88fa9d95f": {
+      "kind": "pin",
+      "text": "5V",
+      "x": 4105.0,
+      "y": 2194.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "c689565300574954": {
+      "kind": "pin",
+      "text": "GND",
+      "x": 4105.0,
+      "y": 2096.1,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "b0070cec5ecbefd5": {
+      "kind": "pin",
+      "text": "3V3",
+      "x": 4105.0,
+      "y": 1997.6,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "d0e240a00a098702": {
+      "kind": "pin",
+      "text": "DHT",
+      "x": 4105.0,
+      "y": 1899.2,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "b845f0b1938ae712": {
+      "kind": "pin",
+      "text": "MQ",
+      "x": 4105.0,
+      "y": 1800.8,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "0460dfa5a53d8628": {
+      "kind": "pin",
+      "text": "PRX",
+      "x": 4105.0,
+      "y": 1702.4,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "4435f3597497027e": {
+      "kind": "pin",
+      "text": "DI",
+      "x": 4105.0,
+      "y": 1603.9,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "b97b071243bfd754": {
+      "kind": "pin",
+      "text": "DO",
+      "x": 4105.0,
+      "y": 1505.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "0b69e1764db9b25a": {
+      "kind": "station",
+      "text": "S7  Z4",
+      "x": 3356.0,
+      "y": 1330.0,
+      "rotation": 0,
+      "fontSize": 40,
+      "lineWidth": 6
+    },
+    "1ee353764870f399": {
+      "kind": "pin",
+      "text": "5V",
+      "x": 3585.0,
+      "y": 2194.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "a7134861c986e0fe": {
+      "kind": "pin",
+      "text": "GND",
+      "x": 3585.0,
+      "y": 2096.1,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "3b0386ef6a37eb35": {
+      "kind": "pin",
+      "text": "3V3",
+      "x": 3585.0,
+      "y": 1997.6,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "fecb6c65fbf2d1fc": {
+      "kind": "pin",
+      "text": "DHT",
+      "x": 3585.0,
+      "y": 1899.2,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "d235d9b18e4448d6": {
+      "kind": "pin",
+      "text": "MQ",
+      "x": 3585.0,
+      "y": 1800.8,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "fde00554b170bb6c": {
+      "kind": "pin",
+      "text": "PRX",
+      "x": 3585.0,
+      "y": 1702.4,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "0e0616c676a070e0": {
+      "kind": "pin",
+      "text": "DI",
+      "x": 3585.0,
+      "y": 1603.9,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "8e9cc2184871a139": {
+      "kind": "pin",
+      "text": "DO",
+      "x": 3585.0,
+      "y": 1505.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "af38dcc6b329a1e5": {
+      "kind": "station",
+      "text": "S8  Z4",
+      "x": 2836.0,
+      "y": 1330.0,
+      "rotation": 0,
+      "fontSize": 40,
+      "lineWidth": 6
+    },
+    "149fe6ea8db9f68f": {
+      "kind": "pin",
+      "text": "5V",
+      "x": 3065.0,
+      "y": 2194.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "80e0d38df8112322": {
+      "kind": "pin",
+      "text": "GND",
+      "x": 3065.0,
+      "y": 2096.1,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "854d6077bb265cc9": {
+      "kind": "pin",
+      "text": "3V3",
+      "x": 3065.0,
+      "y": 1997.6,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "3e5fbcf5c6311a8b": {
+      "kind": "pin",
+      "text": "nc",
+      "x": 3065.0,
+      "y": 1899.2,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "bb3bf94532e3159f": {
+      "kind": "pin",
+      "text": "nc",
+      "x": 3065.0,
+      "y": 1800.8,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "ebeba8d15519de4b": {
+      "kind": "pin",
+      "text": "PRX",
+      "x": 3065.0,
+      "y": 1702.4,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "eabee398036d0d00": {
+      "kind": "pin",
+      "text": "DI",
+      "x": 3065.0,
+      "y": 1603.9,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "8223acdd11491b73": {
+      "kind": "pin",
+      "text": "DO",
+      "x": 3065.0,
+      "y": 1505.5,
+      "rotation": 0,
+      "fontSize": 32,
+      "lineWidth": 6
+    },
+    "747bd27b97b0637b": {
+      "kind": "title",
+      "text": "MUSEUM HUB PCB v0.4",
+      "x": 3560,
+      "y": 620,
+      "rotation": 0,
+      "fontSize": 50,
+      "lineWidth": 7
+    }
+  },
+  "bodyProblems": [],
+  "silkProblems": []
+}

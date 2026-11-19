@@ -1,0 +1,34 @@
+{
+  "componentsMoved": [
+    "R4",
+    "R6",
+    "R13"
+  ],
+  "freeTextsMoved": 73,
+  "ownedAttributesAdjusted": 7,
+  "otherComponentsFrozen": 74,
+  "allOtherPcbAndProjectRecordsUnchanged": true,
+  "drcBefore": [
+    [
+      "Physical Error",
+      25
+    ],
+    [
+      "Connection Error",
+      230
+    ]
+  ],
+  "drcAfter": [
+    [
+      "Physical Error",
+      25
+    ],
+    [
+      "Connection Error",
+      230
+    ]
+  ],
+  "newDrcFindings": 0,
+  "checkedMovedSilkObjects": 76,
+  "silkPadEdgeOverlapProblems": 0
+}

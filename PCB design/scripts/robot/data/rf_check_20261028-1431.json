@@ -1,0 +1,270 @@
+{
+  "before": "PCB design\\Robot\\WRO_Robot_xt_verified_20261028-1351.epro2",
+  "after": "PCB design\\Robot\\WRO_Robot_rf_verified_20261028-1431.epro2",
+  "documentsBefore": 110,
+  "documentsAfter": 110,
+  "recordChanges": [
+    {
+      "document": "643ce99542452c8f",
+      "type": "LINE",
+      "id": "08b2b30513a78cdc",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/endX",
+          "before": 560,
+          "after": 1765
+        },
+        {
+          "path": "/startX",
+          "before": 555,
+          "after": 1540
+        },
+        {
+          "path": "/startY",
+          "before": 3850,
+          "after": 3819.348
+        },
+        {
+          "path": "/width",
+          "before": 39.3701,
+          "after": 31.4961
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "LINE",
+      "id": "2f5e6710791f7cf7",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/endX",
+          "before": 1765,
+          "after": 1540
+        },
+        {
+          "path": "/endY",
+          "before": 3850,
+          "after": 3819.348
+        },
+        {
+          "path": "/startY",
+          "before": 3850,
+          "after": 3819.348
+        },
+        {
+          "path": "/width",
+          "before": 39.3701,
+          "after": 31.4961
+        }
+      ]
+    },
+    {
+      "document": "643ce99542452c8f",
+      "type": "LINE",
+      "id": "de82450445d8f812",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/endY",
+          "before": 3850,
+          "after": 3819.348
+        },
+        {
+          "path": "/width",
+          "before": 39.3701,
+          "after": 31.4961
+        }
+      ]
+    }
+  ],
+  "documentHeaderChanges": [
+    {
+      "document": "643ce99542452c8f",
+      "changes": [
+        {
+          "path": "/updateTime",
+          "before": 1793163413305,
+          "after": 1793176252476
+        },
+        {
+          "path": "/version",
+          "before": "1793163413305",
+          "after": "1793176252476"
+        }
+      ]
+    }
+  ],
+  "serializationOnlyChanges": [],
+  "unchangedBodiesByType": {
+    "ATTR": 3130,
+    "CANVAS": 67,
+    "CIRCLE": 7,
+    "ELE_PLACEHOLDER": 521,
+    "META": 109,
+    "PART": 37,
+    "PIN": 125,
+    "RECT": 38,
+    "ACTIVE_LAYER": 30,
+    "FILL": 210,
+    "LAYER": 686,
+    "PAD": 115,
+    "POLY": 334,
+    "ELLIPSE": 7,
+    "ARC": 6,
+    "COMPONENT": 133,
+    "LINE": 531,
+    "TEXT": 7,
+    "WIRE": 189,
+    "LAYER_PHYS": 17,
+    "NET": 56,
+    "PAD_NET": 213,
+    "PANELIZE": 1,
+    "PREFERENCE": 2,
+    "PRIMITIVE": 37,
+    "RULE": 18,
+    "RULE_SELECTOR": 51,
+    "RULE_TEMPLATE": 1,
+    "SILK_OPTS": 2,
+    "STRING": 125,
+    "VIA": 157,
+    "OBJ": 1,
+    "TABLE": 1,
+    "BLOB": 1,
+    "UNIVERSAL": 1
+  },
+  "archiveMemberChanges": [
+    {
+      "name": "IMAGE/643ce99542452c8f.webp",
+      "beforeSha256": "3e17ebe05821202d433d2333a2cde4e7df335735a504d8052538763165ff2371",
+      "afterSha256": "0bb40ca3702f7bd504b51bb1d1afde5f320ec7a307527c3169957bbd779ef765"
+    },
+    {
+      "name": "WRO_Robot.epru",
+      "beforeSha256": "0649500598a872c673a4cf810b657e2222c2d9bba6bb55d27554118e252e1d50",
+      "afterSha256": "5504ba35671fcab66abbd61052fcc0d8bc2ff25d811cee1149ac86d1f0984f1c"
+    }
+  ],
+  "pcbRecordCounts": {
+    "META": 1,
+    "PRIMITIVE": 37,
+    "CANVAS": 1,
+    "LAYER": 60,
+    "LAYER_PHYS": 9,
+    "ACTIVE_LAYER": 1,
+    "RULE_TEMPLATE": 1,
+    "RULE": 16,
+    "SILK_OPTS": 2,
+    "PREFERENCE": 1,
+    "PANELIZE": 1,
+    "NET": 52,
+    "ELE_PLACEHOLDER": 146,
+    "COMPONENT": 66,
+    "PAD_NET": 213,
+    "ATTR": 198,
+    "LINE": 345,
+    "PAD": 4,
+    "STRING": 121,
+    "POLY": 16,
+    "VIA": 157,
+    "RULE_SELECTOR": 51
+  },
+  "xtFootprintPads": {
+    "eac10ca20e6778ba": [
+      {
+        "id": "e10",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 157.48,
+          "height": 157.48
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 216.5,
+          "height": 216.5
+        }
+      },
+      {
+        "id": "e11",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 157.48,
+          "height": 157.48
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 216.5,
+          "height": 216.5
+        }
+      }
+    ],
+    "9e78c3c3ca74ad42": [
+      {
+        "id": "e24",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      },
+      {
+        "id": "e25",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      }
+    ],
+    "9197bb2e6c38da76": [
+      {
+        "id": "e18",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      },
+      {
+        "id": "e19",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 98.425,
+          "height": 98.425
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 137.795,
+          "height": 137.795
+        }
+      }
+    ]
+  },
+  "allNativeBodiesAndDocumentHeadersEqual": false,
+  "sha256": {
+    "PCB design\\Robot\\WRO_Robot_xt_verified_20261028-1351.epro2": "763301148fdcec1f257b91e9dacc0baed27f96cd7579dedb45a5bee3ecd5f3e7",
+    "PCB design\\Robot\\WRO_Robot_rf_verified_20261028-1431.epro2": "bce057c09732011bb4f126dd6224df64688e37ce270fa612141dcec679708418"
+  }
+}

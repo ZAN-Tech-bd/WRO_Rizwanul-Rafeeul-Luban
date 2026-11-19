@@ -1,0 +1,805 @@
+{
+  "texts": [
+    {
+      "text": "Team \nQuantum \nPhysics",
+      "x": 430,
+      "y": 160,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "5V",
+      "x": 1374.5,
+      "y": 305,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "GND",
+      "x": 1276.1,
+      "y": 305,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "3V3",
+      "x": 1177.6000000000001,
+      "y": 305,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "DHT",
+      "x": 1079.2,
+      "y": 305,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "MQ",
+      "x": 980.8,
+      "y": 305,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "PROX",
+      "x": 882.4,
+      "y": 305,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "DIN",
+      "x": 783.9,
+      "y": 305,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "DOUT",
+      "x": 685.5,
+      "y": 305,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "HUB CABLE (1:1)",
+      "x": 1030,
+      "y": 210,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "5V",
+      "x": 242.3980000000003,
+      "y": 928.8999999999999,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "GND",
+      "x": 340.79800000000006,
+      "y": 928.8999999999999,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "DIN",
+      "x": 439.1980000000004,
+      "y": 928.8999999999999,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "DOUT",
+      "x": 537.5980000000002,
+      "y": 928.8999999999999,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "LED STICK",
+      "x": 389.9980000000002,
+      "y": 883.8999999999999,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "3V3",
+      "x": 1673.7275,
+      "y": 434.1285000000005,
+      "rotation": 270,
+      "layer": 3
+    },
+    {
+      "text": "GND",
+      "x": 1673.7275,
+      "y": 335.72850000000017,
+      "rotation": 270,
+      "layer": 3
+    },
+    {
+      "text": "DHT",
+      "x": 1673.7275,
+      "y": 237.32849999999985,
+      "rotation": 270,
+      "layer": 3
+    },
+    {
+      "text": "DHT11 CABLE",
+      "x": 1608.7275,
+      "y": 335.72850000000017,
+      "rotation": 270,
+      "layer": 3
+    },
+    {
+      "text": "5V",
+      "x": 350.54899999999986,
+      "y": 768.1510000000001,
+      "rotation": 90,
+      "layer": 3
+    },
+    {
+      "text": "GND",
+      "x": 350.54899999999986,
+      "y": 669.7509999999999,
+      "rotation": 90,
+      "layer": 3
+    },
+    {
+      "text": "AO",
+      "x": 350.54899999999986,
+      "y": 571.3509999999998,
+      "rotation": 90,
+      "layer": 3
+    },
+    {
+      "text": "DO",
+      "x": 350.54899999999986,
+      "y": 472.8509999999997,
+      "rotation": 90,
+      "layer": 3
+    },
+    {
+      "text": "MQ-5 CABLE",
+      "x": 120,
+      "y": 630,
+      "rotation": 90,
+      "layer": 3
+    },
+    {
+      "text": "OUT",
+      "x": 950,
+      "y": 1000,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "GND",
+      "x": 1050,
+      "y": 1000,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "VCC",
+      "x": 1150,
+      "y": 1000,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "IR SENSOR",
+      "x": 1050,
+      "y": 910,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "+",
+      "x": 1540,
+      "y": 745,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "BUZZER 5V ACTIVE",
+      "x": 1895,
+      "y": 805,
+      "rotation": 90,
+      "layer": 3
+    },
+    {
+      "text": "C",
+      "x": 1210,
+      "y": 865.8959371075758,
+      "rotation": 360,
+      "layer": 3
+    },
+    {
+      "text": "B",
+      "x": 1110,
+      "y": 865.8959371075758,
+      "rotation": 360,
+      "layer": 3
+    },
+    {
+      "text": "E",
+      "x": 1010,
+      "y": 865.8959371075758,
+      "rotation": 360,
+      "layer": 3
+    },
+    {
+      "text": "1k",
+      "x": 1130,
+      "y": 600,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "68k",
+      "x": 615,
+      "y": 735,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "100k",
+      "x": 615,
+      "y": 575,
+      "rotation": 0,
+      "layer": 3
+    },
+    {
+      "text": "1N5819",
+      "x": 1085,
+      "y": 446.70000000000005,
+      "rotation": 0,
+      "layer": 3
+    }
+  ],
+  "rules": {
+    "config": {
+      "Spacing": {
+        "Safe Spacing": {
+          "copperThickness1oz": {
+            "editName": "copperThickness1oz",
+            "unit": "mm",
+            "isSetDefault": true,
+            "column": [
+              "Track",
+              "SMD Pad",
+              "TH Pad",
+              "SMD Test Point",
+              "TH Test Point",
+              "Via",
+              "Fill Region/Teardrop",
+              "Copper/Plane Zone",
+              "Slot Region",
+              "Line",
+              "Text/Image",
+              "Board Outline"
+            ],
+            "row": [
+              "Track",
+              "SMD Pad",
+              "TH Pad",
+              "SMD Test Point",
+              "TH Test Point",
+              "Via",
+              "Fill Region/Teardrop",
+              "Copper/Plane Zone",
+              "Slot Region",
+              "Line",
+              "Text/Image",
+              "Board Outline",
+              "Hole"
+            ],
+            "status": 0,
+            "tables": {
+              "1": {
+                "status": 1,
+                "content": [
+                  [
+                    0.10199878
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254
+                  ],
+                  [
+                    0.29999939999999997,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.254,
+                    0.15239999999999998
+                  ],
+                  [
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.254,
+                    0.29999939999999997,
+                    0.15239999999999998
+                  ],
+                  [
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.254,
+                    0.15239999999999998,
+                    0.15239999999999998,
+                    0.15239999999999998
+                  ],
+                  [
+                    0.29972,
+                    0.29972,
+                    0.29972,
+                    0.29972,
+                    0.29972,
+                    0.29972,
+                    0.29972,
+                    0.254,
+                    0.29972,
+                    0.29972,
+                    0.29972
+                  ],
+                  [
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.254,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966
+                  ]
+                ]
+              }
+            }
+          },
+          "copperThickness2oz": {
+            "editName": "copperThickness2oz",
+            "unit": "mm",
+            "isSetDefault": false,
+            "column": [
+              "Track",
+              "SMD Pad",
+              "TH Pad",
+              "SMD Test Point",
+              "TH Test Point",
+              "Via",
+              "Fill Region/Teardrop",
+              "Copper/Plane Zone",
+              "Slot Region",
+              "Line",
+              "Text/Image",
+              "Board Outline"
+            ],
+            "row": [
+              "Track",
+              "SMD Pad",
+              "TH Pad",
+              "SMD Test Point",
+              "TH Test Point",
+              "Via",
+              "Fill Region/Teardrop",
+              "Copper/Plane Zone",
+              "Slot Region",
+              "Line",
+              "Text/Image",
+              "Board Outline",
+              "Hole"
+            ],
+            "status": 0,
+            "tables": {
+              "1": {
+                "status": 1,
+                "content": [
+                  [
+                    0.20299933999999997
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254,
+                    0.254
+                  ],
+                  [
+                    0.29999939999999997,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.254,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.254,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122,
+                    0.254,
+                    0.15200122,
+                    0.15200122,
+                    0.15200122
+                  ],
+                  [
+                    0.29999939999999997,
+                    0.29999939999999997,
+                    0.29999939999999997,
+                    0.29999939999999997,
+                    0.29999939999999997,
+                    0.29999939999999997,
+                    0.29999939999999997,
+                    0.254,
+                    0.29999939999999997,
+                    0.29999939999999997,
+                    0.29999939999999997
+                  ],
+                  [
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.254,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966,
+                    0.1759966
+                  ]
+                ]
+              }
+            }
+          }
+        },
+        "Other Spacing": {
+          "otherClearance": {
+            "editName": "otherClearance",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "device2device": 0,
+              "thru2Smd": 0,
+              "hole2Hole": 0.29999939999999997
+            }
+          }
+        },
+        "Creepage Distance": {
+          "creepage": {
+            "editName": "creepage",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "creepageDistance": 0,
+              "ignoreLayer": true
+            }
+          }
+        }
+      },
+      "Physics": {
+        "Track": {
+          "copperThickness1oz": {
+            "editName": "copperThickness1oz",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "status": 1,
+              "data": {
+                "1": {
+                  "minValue": 0.127,
+                  "defaultValue": 0.254,
+                  "maxValue": 2.54
+                }
+              }
+            }
+          },
+          "copperThickness2oz": {
+            "editName": "copperThickness2oz",
+            "unit": "mm",
+            "isSetDefault": false,
+            "form": {
+              "status": 1,
+              "data": {
+                "1": {
+                  "minValue": 0.20299933999999997,
+                  "defaultValue": 0.254,
+                  "maxValue": 2.54
+                }
+              }
+            }
+          }
+        },
+        "Net Length Range": {
+          "netLength": {
+            "editName": "netLength",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "netLengthMin": 0,
+              "netLengthMax": 0
+            }
+          }
+        },
+        "Net Length Tolerance": {
+          "netLengthTolerance": {
+            "editName": "netLengthTolerance",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "netLengthTolerance": 25.4
+            }
+          }
+        },
+        "Differential Pair": {
+          "differentialPair": {
+            "editName": "differentialPair",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "strokeWidthTables": {
+                "status": 1,
+                "data": {
+                  "1": {
+                    "minValue": 0.127,
+                    "defaultValue": 0.254,
+                    "maxValue": 2.54
+                  }
+                }
+              },
+              "diffPairSpacingTables": {
+                "status": 1,
+                "data": {
+                  "1": {
+                    "minValue": 0.15239999999999998,
+                    "defaultValue": 0.15239999999999998,
+                    "maxValue": null
+                  }
+                }
+              },
+              "differentailPairLenTolerMax": 0.254
+            }
+          }
+        },
+        "Blind/Buried Via": {
+          "blindVia": {
+            "editName": "blindVia",
+            "isSetDefault": true,
+            "table": []
+          }
+        },
+        "Via Size": {
+          "viaSize": {
+            "editName": "viaSize",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "viaOuterdiameterMin": 0.49999899999999997,
+              "viaOuterdiameterMax": 10.00000032,
+              "viaOuterdiameterDefault": 0.61000132,
+              "viaInnerdiameterMin": 0.29999939999999997,
+              "viaInnerdiameterMax": 6.2999975599999996,
+              "viaInnerdiameterDefault": 0.30499812
+            }
+          }
+        }
+      },
+      "Plane": {
+        "Plane Zone": {
+          "innerPlane": {
+            "editName": "innerPlane",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "status": 1,
+              "data": {
+                "1": {
+                  "connectMode": 0,
+                  "lineClearance": 0.254,
+                  "lineWidth": 0.254,
+                  "lineAngle": 90
+                }
+              }
+            }
+          }
+        },
+        "Copper Zone": {
+          "copperRegion": {
+            "editName": "copperRegion",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "singleLayerPadModel": {
+                "status": 1,
+                "data": {
+                  "1": {
+                    "connectMode": 0,
+                    "lineClearance": 0.254,
+                    "lineWidth": 0.254,
+                    "lineAngle": 90
+                  }
+                }
+              },
+              "multiLayerPadModel": {
+                "status": 1,
+                "data": {
+                  "1": {
+                    "connectMode": 0,
+                    "lineClearance": 0.254,
+                    "lineWidth": 0.254,
+                    "lineAngle": 90
+                  }
+                }
+              },
+              "trackConnectModel": {
+                "status": 1,
+                "data": {
+                  "1": {
+                    "trackConnectMode": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Expansion": {
+        "Solder Mask Expansion": {
+          "solderMaskExpansion": {
+            "editName": "solderMaskExpansion",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "padToplayerExpansion": 0.0508,
+              "padBottomlayerExpansion": 0.0508,
+              "viaToplayerExpansion": -25.4,
+              "viaBottomlayerExpansion": -25.4,
+              "testPointToplayerExpansion": 0.0508,
+              "testPointBottomlayerExpansion": 0.0508
+            }
+          }
+        },
+        "Paste Mask Expansion": {
+          "pasteMaskExpansion": {
+            "editName": "pasteMaskExpansion",
+            "unit": "mm",
+            "isSetDefault": true,
+            "form": {
+              "padToplayerExpansion": 0,
+              "padBottomlayerExpansion": 0,
+              "testPointToplayerExpansion": -25.4,
+              "testPointBottomlayerExpansion": -25.4
+            }
+          }
+        }
+      }
+    },
+    "name": "JLCPCB Capability(Two Layers Board)"
+  }
+}

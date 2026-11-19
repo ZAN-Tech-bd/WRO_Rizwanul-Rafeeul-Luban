@@ -1,0 +1,61 @@
+{
+  "net": "+3V3",
+  "layerId": 1,
+  "widthMil": 31.4961,
+  "modify": {
+    "de82450445d8f812": {
+      "source": {
+        "net": "+3V3",
+        "layerId": 1,
+        "width": 39.3701,
+        "startX": 470,
+        "startY": 3760,
+        "endX": 560,
+        "endY": 3850
+      },
+      "startX": 470,
+      "startY": 3760,
+      "endX": 560,
+      "endY": 3819.348,
+      "lineWidth": 31.4961
+    },
+    "08b2b30513a78cdc": {
+      "source": {
+        "net": "+3V3",
+        "layerId": 1,
+        "width": 39.3701,
+        "startX": 555,
+        "startY": 3850,
+        "endX": 560,
+        "endY": 3850
+      },
+      "startX": 1540,
+      "startY": 3819.348,
+      "endX": 1765,
+      "endY": 3850,
+      "lineWidth": 31.4961
+    },
+    "2f5e6710791f7cf7": {
+      "source": {
+        "net": "+3V3",
+        "layerId": 1,
+        "width": 39.3701,
+        "startX": 560,
+        "startY": 3850,
+        "endX": 1765,
+        "endY": 3850
+      },
+      "startX": 560,
+      "startY": 3819.348,
+      "endX": 1540,
+      "endY": 3819.348,
+      "lineWidth": 31.4961
+    }
+  },
+  "antennaBox": [
+    410.0,
+    3840.2,
+    1530.0,
+    4086.2
+  ]
+}

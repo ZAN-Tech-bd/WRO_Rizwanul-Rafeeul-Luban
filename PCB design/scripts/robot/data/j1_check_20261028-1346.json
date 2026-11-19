@@ -1,0 +1,227 @@
+{
+  "before": "PCB design\\Robot\\WRO_Robot_association_check_20261028-1324.epro2",
+  "after": "PCB design\\Robot\\WRO_Robot_j1_check_20261028-1346.epro2",
+  "documentsBefore": 110,
+  "documentsAfter": 110,
+  "recordChanges": [
+    {
+      "document": "eac10ca20e6778ba",
+      "type": "PAD",
+      "id": "e10",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/hole/height",
+          "before": 181.102,
+          "after": 157.48
+        },
+        {
+          "path": "/hole/width",
+          "before": 181.102,
+          "after": 157.48
+        }
+      ]
+    },
+    {
+      "document": "eac10ca20e6778ba",
+      "type": "PAD",
+      "id": "e11",
+      "kind": "modified",
+      "changes": [
+        {
+          "path": "/hole/height",
+          "before": 181.102,
+          "after": 157.48
+        },
+        {
+          "path": "/hole/width",
+          "before": 181.102,
+          "after": 157.48
+        }
+      ]
+    }
+  ],
+  "documentHeaderChanges": [
+    {
+      "document": "eac10ca20e6778ba",
+      "changes": [
+        {
+          "path": "/updateTime",
+          "before": 1793165565230,
+          "after": 1793173583319
+        },
+        {
+          "path": "/version",
+          "before": "1793165565230",
+          "after": "1793173583319"
+        }
+      ]
+    }
+  ],
+  "serializationOnlyChanges": [],
+  "unchangedBodiesByType": {
+    "ATTR": 3130,
+    "CANVAS": 67,
+    "CIRCLE": 7,
+    "ELE_PLACEHOLDER": 521,
+    "META": 109,
+    "PART": 37,
+    "PIN": 125,
+    "RECT": 38,
+    "ACTIVE_LAYER": 30,
+    "FILL": 210,
+    "LAYER": 686,
+    "PAD": 113,
+    "POLY": 334,
+    "ELLIPSE": 7,
+    "ARC": 6,
+    "COMPONENT": 133,
+    "LINE": 534,
+    "TEXT": 7,
+    "WIRE": 189,
+    "LAYER_PHYS": 17,
+    "NET": 56,
+    "PAD_NET": 213,
+    "PANELIZE": 1,
+    "PREFERENCE": 2,
+    "PRIMITIVE": 37,
+    "RULE": 18,
+    "RULE_SELECTOR": 51,
+    "RULE_TEMPLATE": 1,
+    "SILK_OPTS": 2,
+    "STRING": 125,
+    "VIA": 157,
+    "OBJ": 1,
+    "TABLE": 1,
+    "BLOB": 1,
+    "UNIVERSAL": 1
+  },
+  "archiveMemberChanges": [
+    {
+      "name": "WRO_Robot.epru",
+      "beforeSha256": "4671ff4ff97aa7e456d9cbed97415e90ece2d312c14ddc6ede593e3890bd0e15",
+      "afterSha256": "83ae9dc33b3e02647da5fb8a0ba5a4060531a34c854a1222089de8ac269d8ce0"
+    }
+  ],
+  "pcbRecordCounts": {
+    "META": 1,
+    "PRIMITIVE": 37,
+    "CANVAS": 1,
+    "LAYER": 60,
+    "LAYER_PHYS": 9,
+    "ACTIVE_LAYER": 1,
+    "RULE_TEMPLATE": 1,
+    "RULE": 16,
+    "SILK_OPTS": 2,
+    "PREFERENCE": 1,
+    "PANELIZE": 1,
+    "NET": 52,
+    "ELE_PLACEHOLDER": 146,
+    "COMPONENT": 66,
+    "PAD_NET": 213,
+    "ATTR": 198,
+    "LINE": 345,
+    "PAD": 4,
+    "STRING": 121,
+    "POLY": 16,
+    "VIA": 157,
+    "RULE_SELECTOR": 51
+  },
+  "xtFootprintPads": {
+    "eac10ca20e6778ba": [
+      {
+        "id": "e10",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 157.48,
+          "height": 157.48
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 216.5,
+          "height": 216.5
+        }
+      },
+      {
+        "id": "e11",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 157.48,
+          "height": 157.48
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 216.5,
+          "height": 216.5
+        }
+      }
+    ],
+    "9e78c3c3ca74ad42": [
+      {
+        "id": "e24",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 86.614,
+          "height": 86.614
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 126,
+          "height": 126
+        }
+      },
+      {
+        "id": "e25",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 86.614,
+          "height": 86.614
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 126,
+          "height": 126
+        }
+      }
+    ],
+    "9197bb2e6c38da76": [
+      {
+        "id": "e18",
+        "num": "1",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 70.866,
+          "height": 70.866
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 98.4,
+          "height": 98.4
+        }
+      },
+      {
+        "id": "e19",
+        "num": "2",
+        "hole": {
+          "holeType": "ROUND",
+          "width": 70.866,
+          "height": 70.866
+        },
+        "pad": {
+          "padType": "ELLIPSE",
+          "width": 98.4,
+          "height": 98.4
+        }
+      }
+    ]
+  },
+  "allNativeBodiesAndDocumentHeadersEqual": false,
+  "sha256": {
+    "PCB design\\Robot\\WRO_Robot_association_check_20261028-1324.epro2": "bc26b9b92558c16fed0e7ae1c63aba775203e3cb623b1c35eeed4316c6ac822f",
+    "PCB design\\Robot\\WRO_Robot_j1_check_20261028-1346.epro2": "8e140f224f98d9abd1a2a73c2c08d09ce423b760df5132918ae1cdaceeffe7fe"
+  }
+}

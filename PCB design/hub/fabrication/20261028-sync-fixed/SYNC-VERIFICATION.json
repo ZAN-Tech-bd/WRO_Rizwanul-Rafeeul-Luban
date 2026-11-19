@@ -1,0 +1,86 @@
+{
+  "cause": "25 stale J3 PCB descriptive attributes differed from the corrected schematic.",
+  "action": "User applied reviewed metadata-only ECO with track-net updating unchecked.",
+  "changedRecord": {
+    "document": "8efe5b895e7646ea",
+    "type": "COMPONENT",
+    "id": "0cbe9290d583d889"
+  },
+  "propertyCount": 25,
+  "properties": [
+    "Colour",
+    "Contact Material",
+    "Contact Plating",
+    "Current Rating (Max)",
+    "Datasheet",
+    "Description",
+    "Flame Retardant Rating",
+    "JLCPCB Part Class",
+    "LCSC Part Name",
+    "Manufacturer",
+    "Mounting Style",
+    "Number of PINs Per Row",
+    "Number of Rows",
+    "Operating Temperature Range",
+    "Pins Structure",
+    "Pitch",
+    "Plastic Material",
+    "Rated Voltage (Max)",
+    "Reference Series",
+    "Row Spacing",
+    "Supplier",
+    "Supplier Part",
+    "X-Length of Bottom Edge on Board (Spacing Line)",
+    "Y-Width of Bottom Edge on Board",
+    "Z-Height of the Board"
+  ],
+  "erc": {
+    "erc": true,
+    "detailed": []
+  },
+  "strictPcbDrc": [],
+  "allOtherNativeRecordsByteIdentical": true,
+  "allImageObjectsAndResourcesPreserved": true,
+  "copperDrillOutlineAndMaskGerbersUnchanged": true,
+  "j3CustomSlotsPreserved": true,
+  "j3Nets": {
+    "6": "DC-",
+    "5": "GND",
+    "4": "BAT-",
+    "3": "DC+",
+    "2": "V12",
+    "1": "BAT+"
+  },
+  "ground": {
+    "fillPieces": 2331,
+    "layerCounts": {
+      "1": 682,
+      "2": 1649
+    },
+    "foreignOverlaps": [],
+    "clearanceViolations": [],
+    "minimumClearanceMil": {
+      "normal": 11.899776770409337,
+      "left": 39.89890969631584,
+      "source": 49.899563371690974
+    },
+    "edgeClearanceMil": 16.0,
+    "antennaClearanceMil": 7.9130892426110355,
+    "disconnectedGnd": [],
+    "floatingFillPieces": 0
+  },
+  "topSilkscreenGerberBytes": 226348,
+  "rasterImage": {
+    "filename": "hub_PCBSILK2.png",
+    "layer": 3,
+    "preserved": true,
+    "ordinaryGerberIncludesRaster": false,
+    "imageOnlyProbeHasGeometry": false
+  },
+  "artworkGate": "Convert/prepare image for ordinary monochrome fabrication or verify a supported color-silkscreen workflow; no conversion was authorized or performed.",
+  "hardwareGates": [
+    "real switch fit/support/contact action",
+    "actual Q1 pinout",
+    "full-load voltage-drop/thermal testing"
+  ]
+}

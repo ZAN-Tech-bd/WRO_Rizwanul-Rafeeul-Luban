@@ -1,0 +1,11 @@
+test_generated_serialized_pieces_are_hole_free (__main__.FinalGroundTests.test_generated_serialized_pieces_are_hole_free) ... ok
+test_j3_slot_axes_and_sizes_follow_native_rotation (__main__.FinalGroundTests.test_j3_slot_axes_and_sizes_follow_native_rotation) ... ok
+test_left_side_other_nets_receive_extra_clearance (__main__.FinalGroundTests.test_left_side_other_nets_receive_extra_clearance) ... ok
+test_native_pad_geometry_matches_live_getters (__main__.FinalGroundTests.test_native_pad_geometry_matches_live_getters) ... ok
+test_planned_copper_has_no_foreign_overlap (__main__.FinalGroundTests.test_planned_copper_has_no_foreign_overlap) ... ok
+test_source_negatives_are_foreign_to_gnd (__main__.FinalGroundTests.test_source_negatives_are_foreign_to_gnd) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 19.619s
+
+OK

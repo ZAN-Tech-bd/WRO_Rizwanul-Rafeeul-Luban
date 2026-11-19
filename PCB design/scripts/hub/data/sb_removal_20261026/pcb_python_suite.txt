@@ -1,0 +1,42 @@
+Test directories:
+PCB design\scripts\hub
+PCB design\scripts\station
+test_as_built_outline_is_widened_left_and_only_listed_parts_moved (test_rocker_model.RockerGeometryTests.test_as_built_outline_is_widened_left_and_only_listed_parts_moved) ... ok
+test_as_built_placement_rotates_the_pattern_but_not_the_pin_numbers (test_rocker_model.RockerGeometryTests.test_as_built_placement_rotates_the_pattern_but_not_the_pin_numbers)
+As built 2026-10-26 (H-001 retry 2): J3 at (-60, 1495) mil, rotation -90 (x, y -> y, -x). ... ok
+test_conservative_finished_slot_contains_all_blade_corners (test_rocker_model.RockerGeometryTests.test_conservative_finished_slot_contains_all_blade_corners) ... ok
+test_emitted_footprint_has_six_plated_slots_and_no_old_connector_graphics (test_rocker_model.RockerGeometryTests.test_emitted_footprint_has_six_plated_slots_and_no_old_connector_graphics) ... ok
+test_exact_original_terminal_pattern_and_net_map (test_rocker_model.RockerGeometryTests.test_exact_original_terminal_pattern_and_net_map) ... ok
+test_pad_and_slot_axes_match_the_end_view (test_rocker_model.RockerGeometryTests.test_pad_and_slot_axes_match_the_end_view) ... ok
+test_slot_ring_and_between_pole_clearance (test_rocker_model.RockerGeometryTests.test_slot_ring_and_between_pole_clearance) ... ok
+test_01_exact_seven_removed_no_additions (test_sb_removal.SubtractionAcceptance.test_01_exact_seven_removed_no_additions) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_02_all_77_survivors_and_their_pad_nets_byte_identical (test_sb_removal.SubtractionAcceptance.test_02_all_77_survivors_and_their_pad_nets_byte_identical) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_03_all_net_definitions_byte_identical (test_sb_removal.SubtractionAcceptance.test_03_all_net_definitions_byte_identical) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_04_no_unapproved_pcb_record_changes (test_sb_removal.SubtractionAcceptance.test_04_no_unapproved_pcb_record_changes) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_05_all_other_documents_unchanged (test_sb_removal.SubtractionAcceptance.test_05_all_other_documents_unchanged) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_06_copper_pours_holes_and_outline_byte_identical (test_sb_removal.SubtractionAcceptance.test_06_copper_pours_holes_and_outline_byte_identical) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_07_no_sb_silk_or_bypass_note (test_sb_removal.SubtractionAcceptance.test_07_no_sb_silk_or_bypass_note) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_08_hop_resistors_and_port_led_pins (test_sb_removal.SubtractionAcceptance.test_08_hop_resistors_and_port_led_pins) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_09_baseline_targets_are_c492401_two_pin_100_mil_headers (test_sb_removal.SubtractionAcceptance.test_09_baseline_targets_are_c492401_two_pin_100_mil_headers) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_10_live_geometry_nets_and_silk_match (test_sb_removal.SubtractionAcceptance.test_10_live_geometry_nets_and_silk_match) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_11_no_new_drc_findings_and_only_sb_pad_findings_removed (test_sb_removal.SubtractionAcceptance.test_11_no_new_drc_findings_and_only_sb_pad_findings_removed) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_12_surviving_schematic_symbols_wires_and_pin_memberships_unchanged (test_sb_removal.SubtractionAcceptance.test_12_surviving_schematic_symbols_wires_and_pin_memberships_unchanged) ... skipped 'Run acceptance tests with explicit project archive paths'
+test_13_schematic_stub_allowlist_is_exclusive_to_sb_pins (test_sb_removal.SubtractionAcceptance.test_13_schematic_stub_allowlist_is_exclusive_to_sb_pins) ... skipped 'Run acceptance tests with explicit project archive paths'
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.099s
+
+OK (skipped=13)
+test_absolute_pad_rotation_and_drill (test_manual_model.LiveModelTests.test_absolute_pad_rotation_and_drill) ... ok
+test_current_outline_and_holes_not_old_layout (test_manual_model.LiveModelTests.test_current_outline_and_holes_not_old_layout) ... ok
+test_reject_missing_absolute_component_pad (test_manual_model.LiveModelTests.test_reject_missing_absolute_component_pad) ... ok
+test_reject_nonrectangular_outline (test_manual_model.LiveModelTests.test_reject_nonrectangular_outline) ... ok
+test_reject_unhandled_keepout (test_manual_model.LiveModelTests.test_reject_unhandled_keepout) ... ok
+test_reject_unknown_copper_geometry (test_manual_model.LiveModelTests.test_reject_unknown_copper_geometry) ... ok
+test_uses_standalone_drill_not_component_proxy (test_manual_model.LiveModelTests.test_uses_standalone_drill_not_component_proxy) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.747s
+
+OK
+Directory exit codes: [0, 0]
